@@ -1,0 +1,11 @@
+filename,total
+data/commits-lines-git-novice.csv,54680
+data/commits-lines-python-novice-gapminder.csv,96446
+data/commits-lines-r-novice-gapminder.csv,109252
+data/commits-lines-shell-novice.csv,206774
+data/commits-lines-sql-novice-survey.csv,63844
+data/commits-lines-numpy.csv,771834
+data/commits-lines-pandas.csv,1032206
+data/commits-lines-scikit-image.csv,399427
+data/commits-lines-scikit-learn.csv,1808751
+data/commits-lines-scipy.csv,-328141

@@ -1,0 +1,31 @@
+<!DOCTYPE html lang="en">
+<html>
+  {% include "head.html" %}
+  <body>
+    <textarea id="source">
+
+class: slide-title
+
+<p>
+  {{ site.title }}
+  <br>
+  <a href="https://{{ site.domain }}">{{ site.author }}</a>
+</p>
+<h1>{{ node.title }}</h1>
+<div class="bottom">
+  <a href="../">chapter</a>
+</div>
+
+---
+
+{{node.html}}
+
+    </textarea>
+    <script src="@root/remark-latest.min.js"></script>
+    <script>
+      var slideshow = remark.create({
+        highlightLines: true
+      })
+    </script>
+  </body>
+</html>

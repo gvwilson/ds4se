@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../mccole.css">
+  <link rel="stylesheet" href="../tango.css">
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script
+    type="text/javascript"
+    id="MathJax-script"
+    async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <script defer src="../mccole.js"></script>
+  <title>Data Science for Software Engineers: The Law of Large Numbers</title>
+</head>
+
+  <body>
+    <div class="row">
+      <div class="sidebar">
+        <p>
+  
+  <img src="../logo.svg" alt="site logo" class="logo" />
+  <a href="../">Data Science for Software Engineers</a>
+  
+</p>
+<ol class="toc-chapter">
+  
+  <li>
+    <a href="../introduction/">
+      Introduction
+    </a>
+  </li>
+  
+  <li>
+    <a href="../basics/">
+      Basic Tools
+    </a>
+  </li>
+  
+  <li>
+    <a href="../robust/">
+      Robust Analysis
+    </a>
+  </li>
+  
+  <li>
+    <a href="../hyptest/">
+      Hypothesis Testing
+    </a>
+  </li>
+  
+  <li>
+    <a href="../large/">
+      <strong>The Law of Large Numbers</strong>
+    </a>
+  </li>
+  
+  <li>
+    <a href="../nonpar/">
+      Nonparametric Statistics
+    </a>
+  </li>
+  
+  <li>
+    <a href="../conclusion/">
+      Conclusion
+    </a>
+  </li>
+  
+</ol>
+<ol class="toc-appendix">
+  
+  <li>
+    <a href="../bibliography/">
+      Bibliography
+    </a>
+  </li>
+  
+  <li>
+    <a href="../theory/">
+      Theory
+    </a>
+  </li>
+  
+  <li>
+    <a href="../syllabus/">
+      Syllabus
+    </a>
+  </li>
+  
+  <li>
+    <a href="../license/">
+      License
+    </a>
+  </li>
+  
+  <li>
+    <a href="../conduct/">
+      Code of Conduct
+    </a>
+  </li>
+  
+  <li>
+    <a href="../contributing/">
+      Contributing
+    </a>
+  </li>
+  
+  <li>
+    <a href="../glossary/">
+      Glossary
+    </a>
+  </li>
+  
+  <li>
+    <a href="../credits/">
+      Credits
+    </a>
+  </li>
+  
+  <li>
+    <a href="../contents/">
+      Index
+    </a>
+  </li>
+  
+</ol>
+
+<p><a href="../sdxpy-examples.zip" type="application/zip">download examples</a></p>
+
+
+      </div>
+      <div id="printable" class="contents bordered">
+        <main>
+          
+  <h1>Chapter 5: The Law of Large Numbers</h1>
+
+
+          
+            
+<div class="draft">
+  <p>DRAFT</p>
+</div>
+
+
+            
+  
+
+  
+
+  
+
+  
+  <ul class="syllabus">
+  
+  <li markdown="1">The Central Limit Theorem states that the distribution of the mean of a sample has a normal distribution.</li>
+  
+  <li markdown="1">Use a Z-test or t-test to determine whether two populations are the same or different.</li>
+  
+  </ul>
+  
+
+
+            
+<p class="definitions">
+  Terms defined: <a class="gl-ref" href="../glossary/#t_distribution" markdown="1">*t* distribution</a>, <a class="gl-ref" href="../glossary/#t_test" markdown="1">*t* test</a>, <a class="gl-ref" href="../glossary/#alternative_hypothesis" markdown="1">alternative hypothesis</a>, <a class="gl-ref" href="../glossary/#bessel_correction" markdown="1">Bessel correction</a>, <a class="gl-ref" href="../glossary/#bonferroni_correction" markdown="1">Bonferroni correction</a>, <a class="gl-ref" href="../glossary/#central_limit_theorem" markdown="1">Central Limit Theorem</a>, <a class="gl-ref" href="../glossary/#confidence_interval" markdown="1">confidence interval</a>, <a class="gl-ref" href="../glossary/#cdf" markdown="1">cumulative distribution function</a>, <a class="gl-ref" href="../glossary/#degrees_of_freedom" markdown="1">degrees of freedom</a>, <a class="gl-ref" href="../glossary/#false_negative" markdown="1">false negative</a>, <a class="gl-ref" href="../glossary/#false_positive" markdown="1">false positive</a>, <a class="gl-ref" href="../glossary/#mean" markdown="1">mean</a>, <a class="gl-ref" href="../glossary/#normal_distribution" markdown="1">normal distribution</a>, <a class="gl-ref" href="../glossary/#null_hypothesis" markdown="1">null hypothesis</a>, <a class="gl-ref" href="../glossary/#pdf" markdown="1">probability density function</a>, <a class="gl-ref" href="../glossary/#pmf" markdown="1">probability mass function</a>, <a class="gl-ref" href="../glossary/#sample_variance" markdown="1">sample variance</a>, <a class="gl-ref" href="../glossary/#standard_deviation" markdown="1">standard deviation</a>, <a class="gl-ref" href="../glossary/#standard_normal" markdown="1">standard normal distribution</a>, <a class="gl-ref" href="../glossary/#standard_uniform" markdown="1">standard uniform distribution</a>, <a class="gl-ref" href="../glossary/#uniform_distribution" markdown="1">uniform distribution</a>, <a class="gl-ref" href="../glossary/#variance" markdown="1">variance</a>, <a class="gl-ref" href="../glossary/#z_test" markdown="1">Z test</a>
+</p>
+
+
+            <div class="page-toc"></div>
+            <ul>
+<li>Problem: how can we do hypothesis testing<ul>
+<li>More quickly (five hours of simulation to answer one question is a lot)</li>
+<li>And more confidently (is 5000 simulations enough? Would 100 work? Do we need a million?)</li>
+</ul>
+</li>
+<li>Solution: use statistics<ul>
+<li>Make some very general assumptions about our data</li>
+<li>Calculate an answer based on rules that hold for large datasets</li>
+</ul>
+</li>
+</ul>
+<h2>What is the law of large numbers?</h2>
+<ul>
+<li>Function describing probabilities of discrete events is called the <a class="gl-ref" href="../glossary/#pmf" markdown="1">probability mass function</a></li>
+<li>When describing continuous events, use:<ul>
+<li><a class="gl-ref" href="../glossary/#cdf" markdown="1">Cumulative distribution function</a> \(F(x) = P(X \leq x)\)</li>
+<li><a class="gl-ref" href="../glossary/#pdf" markdown="1">Probability density function</a> \(f(x) = dF/dx\)</li>
+</ul>
+</li>
+<li>So \(P(a \lt X \lt B) = \int_{a}^{b} f(x) dx\)</li>
+<li>Require \(\int_{-\infty}^{\infty} f(x) dx = 1\)<ul>
+<li>I.e., <em>something</em> has to happen</li>
+</ul>
+</li>
+<li>And notice \(P(x) = P(x \leq X \leq x) = \int_{x}^{x} f(x) dx = 0\)<ul>
+<li>I.e., probability of any specific exact value is 0</li>
+<li>So always talk about ranges</li>
+</ul>
+</li>
+<li><a class="gl-ref" href="../glossary/#mean" markdown="1">Mean</a> is \(\mu = \int_{-\infty}^{\infty} x f(x) dx\)</li>
+<li><a class="gl-ref" href="../glossary/#variance" markdown="1">Variance</a> is \(\sigma^2 = \int_{-\infty}^{\infty} (x - \mu)^2 f(x) dx =  \int_{-\infty}^{\infty} x^2 f(x) dx - \mu^2\)</li>
+<li>
+<p>Normally use <a class="gl-ref" href="../glossary/#standard_deviation" markdown="1">standard deviation</a> \(\sigma\) because it has the same units as the data</p>
+<ul>
+<li>Saves us from trying to figure out what a squared price is&hellip;</li>
+</ul>
+</li>
+<li>
+<p>Example: <a class="gl-ref" href="../glossary/#uniform_distribution" markdown="1">uniform distribution</a> has equal probability over a finite range \([a \ldots b]\)</p>
+<ul>
+<li>\(f(x) = \frac{1}{b - a}\)</li>
+<li>\(P(a \leq t \leq X \leq t+h \leq b) = \frac{h}{b - a}\)</li>
+<li>I.e., probability is proportional to fraction of range</li>
+<li><a class="gl-ref" href="../glossary/#standard_uniform" markdown="1">Standard uniform distribution</a> has range \([0 \ldots 1]\)<ul>
+<li>\(\mu = \frac{1}{2}\)</li>
+<li>\(\sigma^2 = \int_{0}^1 x^2 dx - (\frac{1}{2})^2 = \frac{1}{12}\)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2>What is the normal distribution and why do we care?</h2>
+<ul>
+<li>In its full glory, <a class="gl-ref" href="../glossary/#normal_distribution" markdown="1">normal distribution</a> has</li>
+</ul>
+<p>\(
+\begin{align<em>}
+f(x) &amp; = &amp; \frac{1}{\sigma \sqrt{2 \pi}} e^{- \frac{(x - \mu)^2}{2 \sigma^2}}
+\end{align</em>}
+\)</p>
+<ul>
+<li>There is no closed formula for the integral \(F(x)\)<ul>
+<li>But as the notation suggests, mean is \(\mu\) and variance is \(\sigma^2\)</li>
+</ul>
+</li>
+<li>
+<p>The <a class="gl-ref" href="../glossary/#standard_normal" markdown="1">standard normal distribution</a> \(Z\) has mean \(\mu = 0\) and standard deviation \(\sigma = 1\)</p>
+<ul>
+<li>Easy to move back and forth between this and arbitrary distribution \(X = \mu + \sigma Z\)</li>
+</ul>
+</li>
+<li>
+<p><a class="gl-ref" href="../glossary/#central_limit_theorem" markdown="1">Central Limit Theorem</a></p>
+<ul>
+<li>Let \(S_n = X_1 + X_2 + \ldots + X_n\) be the sum of \(n\) independent random variables,
+    all with mean \(\mu\) and standard deviation \(\sigma\)</li>
+<li>Can be drawn from (almost) any distribution</li>
+<li>As \(n \rightarrow \infty\), \(\frac{S_n - n\mu}{\sigma \sqrt{n}}\) converges on a standard normal random variable<ul>
+<li>I.e., the distribution of our estimates of the mean is normal regardless of the underlying distribution</li>
+</ul>
+</li>
+<li>Rate of convergence is \(\frac{1}{\sqrt{n}}\)<ul>
+<li>I.e., to double the precision, quadruple the sample size</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Heuristic: for \(n \gt 30\), \(S_n\) is distributed normally</p>
+</li>
+<li>
+<p>Sample mean \(\bar{X}\) estimates the population mean</p>
+</li>
+<li>Variance of \(\bar{X}\) is \(\frac{\sigma^2}{n}\)</li>
+<li>Distribution of sample means is normal, i.e. \(\frac{\bar{X} - \mu}{\sigma / \sqrt{n}}\) is standard normal as \(n \rightarrow \infty\)<ul>
+<li>Regardless of the underlying distribution of \(X\)</li>
+</ul>
+</li>
+<li>FIXME: add program to sample various uniform distributions and see how the sampling converges on a uniform distribution</li>
+</ul>
+<h2>How can we use this to quantify confidence?</h2>
+<ul>
+<li>A <a class="gl-ref" href="../glossary/#confidence_interval" markdown="1">confidence interval</a> is an interval \([a \ldots b]\)
+    that has some probability \(p\) of containing the actual value of a statistic<ul>
+<li>E.g., &ldquo;There is a 90% probability that the actual mean of this population lies between 2.5 and 3.5&rdquo;</li>
+<li>Larger intervals are less precise but have a higher probability</li>
+</ul>
+</li>
+<li>If there are more than 30 samples or the standard deviation \(\sigma\) is known, use a <a class="gl-ref" href="../glossary/#z_test" markdown="1">Z-test</a>:<ol>
+<li>Choose a confidence level \(C\) (typically 95%)</li>
+<li>Find the value \(z^{\star}\) such that \(P(x \leq z^{\star}) \leq \frac{1 - C}{2}\)
+    in a standard normal distribution<ul>
+<li>Divide by 2 because the normal curve has two symmetric tails</li>
+</ul>
+</li>
+<li>Calculate the sample mean \(\bar{X}\)</li>
+<li>Interval is \(\bar{X} \pm z^{\star}\frac{\sigma}{\sqrt{n}}\)</li>
+</ol>
+</li>
+</ul>
+<figure id="two-tailed-test">
+  <img src="../fixme.svg" alt="Normal curve overlaid on grid. Symmetric segments in the low and high ends of the normal curve are highlighted to show regions more than a certain distance from the center."/>
+  <figcaption markdown="1">Figure 5.1: Two-Tailed Significance Test</figcaption>
+</figure>
+
+<ul>
+<li>FIXME: example</li>
+</ul>
+<h2>Student&rsquo;s <em>t</em>-distribution</h2>
+<ul>
+<li>Usually don&rsquo;t know the distribution&rsquo;s variance</li>
+<li>The <a class="gl-ref" href="../glossary/#sample_variance" markdown="1">sample variance</a> is:</li>
+</ul>
+<p>\(
+\begin{align<em>}
+s^2 &amp; = &amp; \frac{1}{n-1} \sum_{i=1}^{n}(X_i - \bar{X})^2 \
+    &amp; = &amp; \frac{\sum X_i^2 - n\bar{X}^2}{n - 1}
+\end{align</em>}
+\)</p>
+<ul>
+<li>Using \(n-1\) instead of \(n\) ensures that \(s^2\) is unbiased (the <a class="gl-ref" href="../glossary/#bessel_correction" markdown="1">Bessel correction</a>)<ul>
+<li>See <a href="../theory/#bessel-correction">proof</a></li>
+</ul>
+</li>
+<li><a class="gl-ref" href="../glossary/#t_distribution" markdown="1">Student&rsquo;s <em>t</em>-distribution</a> is used to estimate the mean of a normally distributed population
+    when the sample size is small (e.g., less 30) and the variance is unknown<ul>
+<li>Named comes from a pseudonym used by the mathematician who first used it this way</li>
+</ul>
+</li>
+<li>The variable \(\frac{\bar{X} - \mu}{\sigma / \sqrt{n}}\) has a standard normal distribution</li>
+<li>However, the variable \(\frac{\bar{X} - \mu}{s / \sqrt{n}}\) has a <em>t</em>-distribution
+    with \(n-1\) <a class="gl-ref" href="../glossary/#degrees_of_freedom" markdown="1">degrees of freedom</a><ul>
+<li>Called degrees of freedom because once \(n-1\) values are known, the value of the \(n^{th}\) is fixed</li>
+<li>\(n-1\) because there&rsquo;s a step in the calculation that normalizes the \(n\) values to unit length</li>
+</ul>
+</li>
+<li>The exact formula for the <em>t</em>-distribution is <a href="../theory/#student-t">a little bit scary</a>.<ul>
+<li>The PDF&rsquo;s shape resembles that of a normal distribution with mean 0 and variance 1,
+    but is slightly lower and wider.</li>
+<li>The two become closer as the degrees of freedom \(\nu\) gets larger.</li>
+</ul>
+</li>
+<li>
+<p>A <a class="gl-ref" href="../glossary/#t_test" markdown="1">t-test</a> follows the same steps as a Z-test:</p>
+<ol>
+<li>Choose a confidence level \(C\)</li>
+<li>Find a value \(t^{\star}\) such that \(P(x \leq t^{\star}) \leq \frac{1 - C}{2}\)
+    in a Student&rsquo;s <em>t</em>-distribution with \(n-1\) degrees of freedom</li>
+<li>Estimate the standard deviation \(s\)</li>
+<li>Interval is \(\bar{X} \pm t^{\star}\frac{s}{\sqrt{n}}\)</li>
+</ol>
+</li>
+<li>
+<p>FIXME: example</p>
+</li>
+</ul>
+<h2>How can we compare the means of two datasets?</h2>
+<ul>
+<li>What is the probability of seeing this difference between two datasets?<ul>
+<li>The <a class="gl-ref" href="../glossary/#null_hypothesis" markdown="1">null hypothesis</a> \(H_0\) is that the samples come from a single population
+    and the observed difference is purely due to chance</li>
+<li>The <a class="gl-ref" href="../glossary/#alternative_hypothesis" markdown="1">alternative hypothesis</a> \(H_A\) is that
+    the samples come from two difference populations</li>
+<li><a class="gl-ref" href="../glossary/#false_positive" markdown="1">False positive</a>: decide that the difference is not purely random when it is</li>
+<li><a class="gl-ref" href="../glossary/#false_negative" markdown="1">False negative</a>: decide the difference is purely random when it isn&rsquo;t</li>
+<li>Also called Type I and Type II errors (but see <a href="https://twitter.com/neilccbrown/status/1202595479890124801">https://twitter.com/neilccbrown/status/1202595479890124801</a>)</li>
+</ul>
+</li>
+<li>Adapt the simulation program (keep a subset of the command-line parameters)</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">ttest_ind</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># ...parse arguments...</span>
+
+    <span class="c1"># ...read data and calculate actual means and difference...</span>
+
+    <span class="c1"># test and report</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">ttest_ind</span><span class="p">(</span><span class="n">data_left</span><span class="p">,</span> <span class="n">data_right</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>Run</li>
+</ul>
+<p><div class="highlight"><pre><span></span><code>python bin/t-test.py --left ../hypothesis-testing/data/javascript-counts.csv --right ../hypothesis-testing/data/python-counts.csv --low <span class="m">1</span> --high <span class="m">200</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Ttest_indResult(statistic=-269.67014904687954, pvalue=0.0)
+</code></pre></div></p>
+<ul>
+<li>The \(p\) value is so small that the computer can&rsquo;t distinguish it from zero</li>
+<li>
+<p>Which means the chances of getting this difference by randomly splitting a single population is vanishingly small</p>
+</li>
+<li>
+<p>Look at the hours worked per day in 2019</p>
+</li>
+<li>Data is (date, hours) pairs taken from a spreadsheet<ul>
+<li>There are a lot of spreadsheets in data science</li>
+</ul>
+</li>
+<li>Split into weekday and weekend subsets and visualize (<a class="fig-ref" href="../large/#programmer-hours">Figure 5.2</a>)<ul>
+<li>Note that hours are never actually negative, but the curve is drawn that way</li>
+</ul>
+</li>
+</ul>
+<figure id="programmer-hours">
+  <img src="../fixme.svg" alt="A pair of vertical violin plots. The mean for weekday equals false is near 2.1 hours per day and the mean for weekday equals true is slightly above 7 hours per day. The profile for weekday equals false does not look normal, but the profile for weekday equals true looks more normal."/>
+  <figcaption markdown="1">Figure 5.2: Programmer Hours (Weekday vs. Weekend)</figcaption>
+</figure>
+
+<ul>
+<li>They certainly <em>seem</em> different</li>
+<li>And a t-test confirms it<ul>
+<li>The odds are large enough this time to be printable&hellip;</li>
+</ul>
+</li>
+</ul>
+<p><div class="highlight"><pre><span></span><code>python bin/weekends.py --data data/programmer-hours.csv
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>weekday mean 6.804375000071998
+weekend mean 3.232482993312492
+Ttest_indResult(statistic=12.815512046971827, pvalue=6.936182610195961e-31)
+</code></pre></div></p>
+<div class="callout">
+<h3>Higher standards</h3>
+<ul>
+<li>Recall discussion of \(p\) hacking from <a class="x-ref" href="../hyptest/">Chapter 4</a><ul>
+<li>If we analyze the data enough different ways, one of them will be &ldquo;significant&rdquo;</li>
+</ul>
+</li>
+<li>Use the <a class="gl-ref" href="../glossary/#bonferroni_correction" markdown="1">Bonferroni correction</a><ul>
+<li>The more tests we do, the more stringest our significance criteria must be</li>
+</ul>
+</li>
+</ul>
+</div>
+          
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

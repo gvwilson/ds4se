@@ -1,0 +1,214 @@
+# A
+
+- key: acorn
+  url: https://github.com/acornjs/acorn
+  en: acorn
+- key: argparse
+  url: https://docs.python.org/3/library/argparse.html
+  en: argparse
+- key: ast-py
+  url: https://docs.python.org/3/library/ast.html
+  en: ast
+- key: awk
+  url: https://en.wikipedia.org/wiki/AWK
+  en: awk
+
+# B
+
+- key: beautiful-soup
+  url: https://www.crummy.com/software/BeautifulSoup/
+  en: Beautiful Soup
+
+# C
+
+- key: csv-py
+  url: https://docs.python.org/3/library/csv.html
+  en: csv
+
+# D
+
+- key: doi2bib
+  url: https://www.doi2bib.org/
+  en: doi2bib
+- key: drake
+  url: https://docs.ropensci.org/drake/
+  en: Drake
+
+# E
+
+- key: elbakyan-alexandra
+  url: https://en.wikipedia.org/wiki/Alexandra_Elbakyan
+  en: Alexandra Elbakyan
+- key: explain-shell
+  url: https://explainshell.com/
+  en: explainshell
+
+# F
+
+- key: fair-principles
+  url: https://www.go-fair.org/fair-principles/
+  en: FAIR Principles
+
+# G
+
+- key: gfm
+  url: https://github.github.com/gfm/
+  en: GitHub-Flavored Markdown
+- key: goodharts-law
+  url: https://en.wikipedia.org/wiki/Goodhart%27s_law
+  en: Goodhart's Law
+- key: graf-david
+  url: https://github.com/davidagraf
+  en: David Graf
+- key: guest-gini
+  url: https://github.com/oliviaguest/gini
+  en: Gini coefficient calculation
+- key: github-pages
+  url: https://pages.github.com/
+  en: GitHub Pages
+- key: gitpython
+  url: https://gitpython.readthedocs.io/
+  en: GitPython
+- key: glob
+  url: https://docs.python.org/3/library/glob.html
+  en: glob
+
+# H
+
+- key: harrer-gitpython
+  url: https://www.feststelltaste.de/storing-git-commit-information-into-pandas-dataframe/
+  en: GitPython example
+- key: hoye-count-from-zero
+  url: http://exple.tive.org/blarg/2013/10/22/citation-needed/
+  en: Citation Needed
+
+# I
+
+# J
+
+- key: jekyll
+  url: https://jekyllrb.com/
+  en: Jekyll
+
+# K
+
+- key: kolmogorov-smirnov
+  url: https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test
+  en: Kolmogorov-Smirnov test
+
+# L
+
+# M
+
+- key: make
+  url: https://www.gnu.org/software/make/
+  en: GNU Make
+- key: matplotlib
+  url: https://matplotlib.org/
+  en: matplotlib
+
+# N
+
+- key: npm
+  url: https://www.npmjs.com/
+  en: Node Package Manager (NPM)
+- key: numpy
+  url: https://numpy.org/
+  en: NumPy
+- key: nwit
+  url: http://neverworkintheory.org/
+  en: It Will Never Work in Theory
+
+# O
+
+- key: odbl
+  url: https://opendatacommons.org/licenses/odbl/1.0/
+  en: Open Database License
+
+# P
+
+- key: pandas
+  url: https://pandas.pydata.org/
+  en: Pandas
+- key: plotly
+  url: https://plot.ly/python/plotly-express/
+  en: Plotly Express
+- key: prechelt-data
+  url: http://page.mi.fu-berlin.de/prechelt/packages/jccpprtTR.csv
+  en: Prechelt productivity data
+- key: pwlf
+  url: https://github.com/cjekel/piecewise_linear_fit_py
+  en: pwlf
+- key: pycodestyle
+  url: https://pycodestyle.pycqa.org/en/latest/
+  en: pycodestyle
+- key: pydriller
+  url: https://pydriller.readthedocs.io/en/latest/index.html
+  en: PyDriller
+- key: pygit2
+  url: https://www.pygit2.org/
+  en: pygit2
+- key: pypi
+  url: https://pypi.org/
+  en: Python Package Index (PyPI)
+
+# Q
+
+# R
+
+- key: register-yim
+  url: https://towardsdatascience.com/@yimregister
+  en: Yim Register
+- key: regular-expressions-html
+  url: https://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags/1732454#1732454
+  en: Parsing HTML with regular expressions.
+- key: requests
+  url: https://requests.kennethreitz.org/en/master/
+  en: "Requests: HTTP for Humans"
+- key: rstudio
+  url: http://rstudio.com
+  en: RStudio
+
+# S
+
+- key: scihub
+  url: https://sci-hub.tw/
+  en: Sci-Hub
+- key: sed
+  url: https://en.wikipedia.org/wiki/sed
+  en: sed
+- key: silge-julia
+  url: https://juliasilge.com/
+  en: Julia Silge
+- key: silge-survey-analysis
+  url: https://juliasilge.com/blog/salary-gender/
+  en: Modeling Salary and Gender in the Tech Industry
+- key: silva-raniere
+  url: http://rgaiacs.com/
+  en: Raniere Silva
+- key: snakemake
+  url: https://snakemake.readthedocs.io/en/stable/
+  en: Snakemake
+- key: stack-exchange-api
+  url: https://api.stackexchange.com/docs
+  en: Stack Exchange API
+- key: stack-overflow
+  url: https://stackoverflow.com/
+  en: Stack Overflow
+- key: stack-overflow-survey-data
+  url: https://insights.stackoverflow.com/survey/
+  en: Stack Overflow Survey Dat
+
+# T
+
+# U
+
+# V
+
+# W
+
+# X
+
+# Y
+
+# Z

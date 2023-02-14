@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../mccole.css">
+  <link rel="stylesheet" href="../tango.css">
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script
+    type="text/javascript"
+    id="MathJax-script"
+    async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <script defer src="../mccole.js"></script>
+  <title>Data Science for Software Engineers: Robust Analysis</title>
+</head>
+
+  <body>
+    <div class="row">
+      <div class="sidebar">
+        <p>
+  
+  <img src="../logo.svg" alt="site logo" class="logo" />
+  <a href="../">Data Science for Software Engineers</a>
+  
+</p>
+<ol class="toc-chapter">
+  
+  <li>
+    <a href="../introduction/">
+      Introduction
+    </a>
+  </li>
+  
+  <li>
+    <a href="../basics/">
+      Basic Tools
+    </a>
+  </li>
+  
+  <li>
+    <a href="../robust/">
+      <strong>Robust Analysis</strong>
+    </a>
+  </li>
+  
+  <li>
+    <a href="../hyptest/">
+      Hypothesis Testing
+    </a>
+  </li>
+  
+  <li>
+    <a href="../large/">
+      The Law of Large Numbers
+    </a>
+  </li>
+  
+  <li>
+    <a href="../nonpar/">
+      Nonparametric Statistics
+    </a>
+  </li>
+  
+  <li>
+    <a href="../conclusion/">
+      Conclusion
+    </a>
+  </li>
+  
+</ol>
+<ol class="toc-appendix">
+  
+  <li>
+    <a href="../bibliography/">
+      Bibliography
+    </a>
+  </li>
+  
+  <li>
+    <a href="../theory/">
+      Theory
+    </a>
+  </li>
+  
+  <li>
+    <a href="../syllabus/">
+      Syllabus
+    </a>
+  </li>
+  
+  <li>
+    <a href="../license/">
+      License
+    </a>
+  </li>
+  
+  <li>
+    <a href="../conduct/">
+      Code of Conduct
+    </a>
+  </li>
+  
+  <li>
+    <a href="../contributing/">
+      Contributing
+    </a>
+  </li>
+  
+  <li>
+    <a href="../glossary/">
+      Glossary
+    </a>
+  </li>
+  
+  <li>
+    <a href="../credits/">
+      Credits
+    </a>
+  </li>
+  
+  <li>
+    <a href="../contents/">
+      Index
+    </a>
+  </li>
+  
+</ol>
+
+<p><a href="../sdxpy-examples.zip" type="application/zip">download examples</a></p>
+
+
+      </div>
+      <div id="printable" class="contents bordered">
+        <main>
+          
+  <h1>Chapter 3: Robust Analysis</h1>
+
+
+          
+            
+<div class="draft">
+  <p>DRAFT</p>
+</div>
+
+
+            
+  
+
+  
+  <ul class="syllabus">
+  
+  <li markdown="1">Use the `requests` package to get data from the web.</li>
+  
+  <li markdown="1">Build logging and restart into programs that may take a long time or experience outages.</li>
+  
+  <li markdown="1">Use mean, median, variance, and standard deviation to describe properties of data.</li>
+  
+  <li markdown="1">Use histograms, violin plots, and box-and-whisker plots to visualize the properties of data.</li>
+  
+  <li markdown="1">Create a Git repository for each analysis project.</li>
+  
+  <li markdown="1">Put runnable programs in the `bin` directory.</li>
+  
+  <li markdown="1">Put raw data in the `data` directory.</li>
+  
+  <li markdown="1">Put results and figures in the `results` and `figures` directories.</li>
+  
+  <li markdown="1">Put documentation and manuscripts in the `doc` directory.</li>
+  
+  <li markdown="1">Use filenames that can easily be matched with shell wildcards.</li>
+  
+  <li markdown="1">Put `MANIFEST.yml` files in the `data` and `results` directories to describe each data file.</li>
+  
+  <li markdown="1">Use a build tool like Make to track file dependencies and re-run commands when necessary.</li>
+  
+  </ul>
+  
+
+  
+
+  
+
+
+            
+<p class="definitions">
+  Terms defined: <a class="gl-ref" href="../glossary/#bin" markdown="1">bin</a>, <a class="gl-ref" href="../glossary/#box_and_whisker_plot" markdown="1">box-and-whisker plot</a>, <a class="gl-ref" href="../glossary/#build_prerequisite" markdown="1">build prerequisite</a>, <a class="gl-ref" href="../glossary/#build_rule" markdown="1">build rule</a>, <a class="gl-ref" href="../glossary/#build_target" markdown="1">build target</a>, <a class="gl-ref" href="../glossary/#build_tool" markdown="1">build tool</a>, <a class="gl-ref" href="../glossary/#data_manifest" markdown="1">data manifest</a>, <a class="gl-ref" href="../glossary/#descriptive_statistics" markdown="1">descriptive statistics</a>, <a class="gl-ref" href="../glossary/#docstring" markdown="1">docstring</a>, <a class="gl-ref" href="../glossary/#escape_character" markdown="1">escape character</a>, <a class="gl-ref" href="../glossary/#gzip" markdown="1">gzip</a>, <a class="gl-ref" href="../glossary/#iqr" markdown="1">interquartile range</a>, <a class="gl-ref" href="../glossary/#iso_date_format" markdown="1">ISO date format</a>, <a class="gl-ref" href="../glossary/#main_driver" markdown="1">main driver</a>, <a class="gl-ref" href="../glossary/#mean" markdown="1">mean</a>, <a class="gl-ref" href="../glossary/#median" markdown="1">median</a>, <a class="gl-ref" href="../glossary/#nobles_rules" markdown="1">Noble's Rules</a>, <a class="gl-ref" href="../glossary/#na" markdown="1">Not Available</a>, <a class="gl-ref" href="../glossary/#quartile" markdown="1">quartile</a>, <a class="gl-ref" href="../glossary/#regular_expression" markdown="1">regular expression</a>, <a class="gl-ref" href="../glossary/#standard_deviation" markdown="1">standard deviation</a>, <a class="gl-ref" href="../glossary/#tar" markdown="1">tar</a>, <a class="gl-ref" href="../glossary/#taschuks_rules" markdown="1">Taschuk's Rules</a>, <a class="gl-ref" href="../glossary/#throttle" markdown="1">throttle</a>, <a class="gl-ref" href="../glossary/#tidy_data" markdown="1">tidy data</a>, <a class="gl-ref" href="../glossary/#variance" markdown="1">variance</a>, <a class="gl-ref" href="../glossary/#violin_plot" markdown="1">violin plot</a>, <a class="gl-ref" href="../glossary/#wheel" markdown="1">wheel</a>
+</p>
+
+
+            <div class="page-toc"></div>
+            <ul>
+<li>The steps in most data analysis projects are:<ol>
+<li>Find data</li>
+<li>Collect it</li>
+<li>Tidy it</li>
+<li>Do calculations</li>
+<li>Report results</li>
+</ol>
+</li>
+<li>How can we make all of this easier to understand, reproduce, and extend?</li>
+<li>To illustrate, let&rsquo;s find out how many versions of Python packages there are</li>
+</ul>
+<h2 id="robust-get">Section 3.1: Getting Data</h2>
+<ul>
+<li>Data source is simple <a href="https://pypi.org/">PyPI</a> package index page <a href="https://pypi.org/simple/">https://pypi.org/simple/</a><ul>
+<li>Has HTML links to one page per package</li>
+</ul>
+</li>
+<li>Each package&rsquo;s page has links to released versions in various formats<ul>
+<li>205K entries in total</li>
+</ul>
+</li>
+<li>Some redundancy, e.g., <a class="gl-ref" href="../glossary/#wheel" markdown="1">wheels</a> and <a class="gl-ref" href="../glossary/#gzip" markdown="1">gzip&rsquo;d</a> <a class="gl-ref" href="../glossary/#tar" markdown="1">tar</a> files<ul>
+<li>We have to decide whether to count these separately or fold them together</li>
+<li>Every statistical result is the product of many decisions</li>
+<li>Different decisions produce different results</li>
+</ul>
+</li>
+<li>Use the <a href="https://requests.kennethreitz.org/en/master/"><code>requests</code></a> library to get page</li>
+<li>HTML is very highly structured,
+    so we can get away with using <a class="gl-ref" href="../glossary/#regular_expression" markdown="1">regular expressions</a> to extract fields<ul>
+<li><a href="https://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags/1732454#1732454">This is a sin</a></li>
+<li>Look at better ways in an exercise</li>
+</ul>
+</li>
+</ul>
+<div class="code-sample lang-py" title="get-index-page-initial.py">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+
+<span class="c1"># Match package URL in main index page.</span>
+<span class="n">RE_PACKAGE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&lt;a href=&quot;(.+?)&quot;&gt;&#39;</span><span class="p">)</span>
+
+<span class="c1"># Match release URL in package index page.</span>
+<span class="n">RE_RELEASE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&lt;a href=&quot;.+?&quot;&gt;(.+?)&lt;/a&gt;&#39;</span><span class="p">)</span>
+
+<span class="c1"># PyPI domain.</span>
+<span class="n">DOMAIN</span> <span class="o">=</span> <span class="s1">&#39;https://pypi.org&#39;</span>
+
+
+<span class="n">index_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">DOMAIN</span><span class="si">}</span><span class="s1">/simple/&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Package,Releases&#39;</span><span class="p">)</span>
+<span class="n">all_packages</span> <span class="o">=</span> <span class="n">RE_PACKAGE</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">index_response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">package</span> <span class="ow">in</span> <span class="n">all_packages</span><span class="p">:</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">package</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">DOMAIN</span><span class="si">}{</span><span class="n">package</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">package_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">RE_RELEASE</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">package_response</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<ul>
+<li>First run crashed after a few minutes because of a missing sub-page</li>
+<li>So add a check on the HTTP status codes from queries<ul>
+<li>Record <a class="gl-ref" href="../glossary/#na" markdown="1"><code>NA</code></a> for those pages</li>
+<li>And hope that analysis software interprets this as &ldquo;not available&rdquo;
+    rather than Namibia or the element sodium</li>
+</ul>
+</li>
+<li>Add some logging so that we can tell how long the program is going to take to run<ul>
+<li>About 30K seconds, or 8.5 hours</li>
+</ul>
+</li>
+</ul>
+<div class="code-sample lang-py" title="get-index-page.py">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+
+<span class="c1"># Match package URL in main index page.</span>
+<span class="n">RE_PACKAGE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&lt;a href=&quot;(.+?)&quot;&gt;&#39;</span><span class="p">)</span>
+
+<span class="c1"># Match release URL in package index page.</span>
+<span class="n">RE_RELEASE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&lt;a href=&quot;.+?&quot;&gt;(.+?)&lt;/a&gt;&#39;</span><span class="p">)</span>
+
+<span class="c1"># PyPI domain.</span>
+<span class="n">DOMAIN</span> <span class="o">=</span> <span class="s1">&#39;https://pypi.org&#39;</span>
+
+
+<span class="c1"># Get main index page.</span>
+<span class="n">index_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">DOMAIN</span><span class="si">}</span><span class="s1">/simple/&#39;</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">index_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">,</span> \
+    <span class="sa">f</span><span class="s1">&#39;Unexpected status for index page </span><span class="si">{</span><span class="n">index_response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s1">&#39;</span>
+
+<span class="c1"># Get sub-pages and count releases in each.</span>
+<span class="n">num_seen</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">t_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Package,Releases&#39;</span><span class="p">)</span>
+<span class="n">all_packages</span> <span class="o">=</span> <span class="n">RE_PACKAGE</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">index_response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">package</span> <span class="ow">in</span> <span class="n">all_packages</span><span class="p">:</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">package</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">DOMAIN</span><span class="si">}{</span><span class="n">package</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">package_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">package_response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unexpected status for package page </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">package_response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+              <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="s1">&#39;NA&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">RE_RELEASE</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">package_response</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">num_seen</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">num_seen</span> <span class="o">%</span> <span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">t_elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t_start</span>
+        <span class="n">t_expected</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_packages</span><span class="p">)</span> <span class="o">*</span> <span class="n">t_elapsed</span> <span class="o">/</span> <span class="n">num_seen</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">num_seen</span><span class="si">}</span><span class="s1"> @ </span><span class="si">{</span><span class="n">t_elapsed</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> / </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">all_packages</span><span class="p">)</span><span class="si">}</span><span class="s1"> @ </span><span class="si">{</span><span class="n">t_expected</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+              <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<ul>
+<li>Still not a friendly program<ul>
+<li>If several thousand people run this program at the same time it will slow PyPI down</li>
+</ul>
+</li>
+<li>Unlikely in this case,
+    but a school could easily wind up being blacklisted
+    if a hundred students are grabbing data at the same time</li>
+<li>Popular data sources have to manage floods of requests</li>
+<li>Programs should <a class="gl-ref" href="../glossary/#throttle" markdown="1">throttle</a> their own activity</li>
+</ul>
+<h2 id="robust-report">Section 3.2: Reporting</h2>
+<ul>
+<li><a class="gl-ref" href="../glossary/#descriptive_statistics" markdown="1">Descriptive statistics</a> are key facts about data</li>
+<li>The <a class="gl-ref" href="../glossary/#median" markdown="1">median</a> is the middle value<ul>
+<li>If \(N\) is odd, sort and take the middle</li>
+<li>If \(N\) is even, sort and average the two middle values</li>
+</ul>
+</li>
+<li>The <a class="gl-ref" href="../glossary/#mean" markdown="1">mean</a> is the weighted center of the data<ul>
+<li>\( \mu = \frac{1}{N} \sum x_i \)</li>
+</ul>
+</li>
+<li>If there are a few outliers, the mean can be very different from the median<ul>
+<li>Mean of <code>[1, 2, 3, 4, 100]</code> is 22, but median is 3</li>
+<li>Which is why those who have like to quote means rather than medians</li>
+</ul>
+</li>
+<li><a class="gl-ref" href="../glossary/#variance" markdown="1">Variance</a> measures the spread of values<ul>
+<li>\( \sigma^2 = \frac{1}{N} \sigma (x_i - \mu)^2 \)</li>
+<li>Squaring the differences gives extra weight to outliers&hellip;</li>
+<li>&hellip;but makes variance hard to use directly, since its units are (for example) lines squared</li>
+</ul>
+</li>
+<li>Instead, use the <a class="gl-ref" href="../glossary/#standard_deviation" markdown="1">standard deviation</a><ul>
+<li>Square root of the variance, so it has the same units as the data</li>
+</ul>
+</li>
+</ul>
+<div class="code-sample lang-py" title="version-statistics.py">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">datafile</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">packages</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">datafile</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">packages</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;median&#39;</span><span class="p">,</span> <span class="s1">&#39;var&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">,</span> <span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">]))</span>
+</code></pre></div>
+</div>
+<div class="code-sample lang-sh" title="version-statistics.sh">
+<div class="highlight"><pre><span></span><code>python version-statistics.py release-count.csv
+</code></pre></div>
+</div>
+<div class="code-sample lang-out" title="version-statistics.out">
+<div class="highlight"><pre><span></span><code>            Releases
+mean       11.236351
+median      4.000000
+var      2501.398099
+std        50.013979
+min         0.000000
+max     10797.000000
+</code></pre></div>
+</div>
+<ul>
+<li>Half of all packages have had fewer than four releases</li>
+<li>The mean is only slightly higher (1/5 of a standard deviation)</li>
+<li>And yeah, a package with almost 11,000 releases will pull things up<ul>
+<li><code>ccxt</code> is a cryptocurrency, so they might be using releases as ledger updates</li>
+</ul>
+</li>
+</ul>
+<h2 id="robust-plot">Section 3.3: Plotting</h2>
+<ul>
+<li>Again, a histogram shows the distribution of values<ul>
+<li>Its shape (and hence our interpretation) depends on how we <a class="gl-ref" href="../glossary/#bin" markdown="1">bin</a> the data</li>
+</ul>
+</li>
+<li>Given how long data collection takes,
+    most sensible thing is to collect the data once and write separate plotting programs to view it<ul>
+<li>Provide name of data file on the command line</li>
+</ul>
+</li>
+</ul>
+<div class="code-sample lang-py" title="version-histogram.py">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+
+<span class="n">datafile</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">packages</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">datafile</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Distribution of Releases&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">packages</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Releases&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">packages</span><span class="p">[</span><span class="s2">&quot;Releases&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s1"> missing values&#39;</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">packages</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Releases&#39;</span><span class="p">,</span> <span class="n">nbins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">log_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s1">&#39;figures/release-count.svg&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="code-sample lang-sh" title="version-histogram.sh">
+<div class="highlight"><pre><span></span><code>python version-histogram.py release-count.csv
+</code></pre></div>
+</div>
+<div class="code-sample lang-out" title="version-histogram.out">
+<div class="highlight"><pre><span></span><code>Distribution of Releases
+          Package
+Releases
+0.0         11721
+1.0         33992
+2.0         32829
+3.0         14999
+4.0         18339
+5.0          8946
+...
+4505.0          1
+5133.0          1
+6460.0          1
+10797.0         1
+
+[561 rows x 1 columns]
+14 missing values
+</code></pre></div>
+</div>
+<figure id="release-count">
+  <img src="./figures/release-count.svg" alt="Histogram showing steeply declining curve from X equals 0 to X above 10,000 with peak over 200,000 at X equals 0."/>
+  <figcaption markdown="1">Figure 3.1: Release Count</figcaption>
+</figure>
+
+<ul>
+<li>Printed output includes the value for packages with zero releases</li>
+<li>But does the histogram?<ul>
+<li>What does Plotly do with <code>log(0)</code>?</li>
+</ul>
+</li>
+<li>Let&rsquo;s try:</li>
+</ul>
+<div class="code-sample lang-py" title="version-histogram-low.py">
+<div class="highlight"><pre><span></span><code><span class="nb">slice</span> <span class="o">=</span> <span class="n">packages</span><span class="p">[</span><span class="n">packages</span><span class="p">[</span><span class="s1">&#39;Releases&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">]</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="nb">slice</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Releases&#39;</span><span class="p">,</span> <span class="n">nbins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">log_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s1">&#39;figures/release-count-low.svg&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<figure id="release-count-low">
+  <img src="./figures/release-count-low.svg" alt="Histogram showing smoothly declining curve from X equals 0 to X equals 100 with over 10,000 values at X equals zero and alternating high and low bars."/>
+  <figcaption markdown="1">Figure 3.2: Release Count (Low End)</figcaption>
+</figure>
+
+<ul>
+<li>It seems to include zero</li>
+<li>But that double-stepping looks weird</li>
+<li>
+<p>Is it a plotting artifact or a result of double-counting packages that are released in multiple formats?</p>
+<ul>
+<li>For that, we need better data</li>
+</ul>
+</li>
+<li>
+<p>Use a <a class="gl-ref" href="../glossary/#violin_plot" markdown="1">violin plot</a> to get a feel for the shape of the data</p>
+</li>
+</ul>
+<div class="code-sample lang-py" title="version-other-plots.py">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+
+<span class="n">datafile</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">packages</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">datafile</span><span class="p">)</span>
+<span class="nb">slice</span> <span class="o">=</span> <span class="n">packages</span><span class="p">[</span><span class="n">packages</span><span class="p">[</span><span class="s1">&#39;Releases&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">]</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">violin</span><span class="p">(</span><span class="nb">slice</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Releases&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s1">&#39;figures/release-count-violin.svg&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<figure id="release-count-violin">
+  <img src="./figures/release-count-violin.svg" alt="Symmetric vertical violin plot with almost all values in bulge at bottom end."/>
+  <figcaption markdown="1">Figure 3.3: Violin Plot (Low End)</figcaption>
+</figure>
+
+<ul>
+<li>Can also use a <a class="gl-ref" href="../glossary/#box_and_whisker_plot" markdown="1">box-and-whisker plot</a><ul>
+<li>Lines show minimum, first <a class="gl-ref" href="../glossary/#quartile" markdown="1">quartile</a>, median, third quartile, and maximum</li>
+<li>Box shows first quartile to third quartile (so half the data lies inside the box)</li>
+</ul>
+</li>
+<li>Distance from first quartile to third quartile is the <a class="gl-ref" href="../glossary/#iqr" markdown="1">inter-quartile range</a><ul>
+<li>Lower and upper lines cut off at 1.5\(\times\)IQR</li>
+<li>Anything beyond that is considered an outlier and shown as a point</li>
+</ul>
+</li>
+</ul>
+<div class="code-sample lang-py" title="version-other-plots-box.py">
+<div class="highlight"><pre><span></span><code><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="nb">slice</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Releases&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s1">&#39;figures/release-count-box.svg&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<figure id="release-count-box">
+  <img src="./figures/release-count-box.svg" alt="Symmetric vertical box plot with almost all values at low end."/>
+  <figcaption markdown="1">Figure 3.4: Box-and-Whisker Plot (Low End)</figcaption>
+</figure>
+
+<h2 id="robust-structure">Section 3.4: Structuring Data Analysis Projects</h2>
+<ul>
+<li>Data analysis projects include programs and programming,
+    but are not the same as software development projects</li>
+<li>Starting point is <a class="gl-ref" href="../glossary/#taschuks_rules" markdown="1">Taschuk&rsquo;s Rules</a>:<ol>
+<li>Use version control.</li>
+<li>Document your code and usage</li>
+<li>Make common operations easy to control.</li>
+<li>Version your releases.</li>
+<li>Reuse software (within reason)</li>
+<li>Rely on build tools and package managers for installation.</li>
+<li>Do not require root or other special privileges to install or run.</li>
+<li>Eliminate hard-coded paths.</li>
+<li>Include a small test set that can be run to ensure the software is actually working.</li>
+<li>Produce identical results when given identical inputs.</li>
+</ol>
+</li>
+<li>The first three rules are the most important<ul>
+<li>We assume you are already using version control</li>
+</ul>
+</li>
+<li>Restructure our program</li>
+</ul>
+<h3>Main driver</h3>
+<ul>
+<li>The <a class="gl-ref" href="../glossary/#main_driver" markdown="1">main driver</a> lays out the overall flow of the program<ul>
+<li>Parse command-line options</li>
+<li>Set up</li>
+<li>Produce output incrementally while processing data
+    (rather than read-process-write)</li>
+</ul>
+</li>
+<li>Include a <a class="gl-ref" href="../glossary/#docstring" markdown="1">docstring</a> for help</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Main driver.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parse_args</span><span class="p">()</span>
+    <span class="n">all_packages</span> <span class="o">=</span> <span class="n">get_package_list</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">progress</span> <span class="o">=</span> <span class="n">initialize_progress</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">all_packages</span><span class="p">)</span>
+    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">lineterminator</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s1">&#39;Package&#39;</span><span class="p">,</span> <span class="s1">&#39;Release&#39;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">package</span> <span class="ow">in</span> <span class="n">all_packages</span><span class="p">:</span>
+        <span class="n">get_package_info</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">writer</span><span class="p">)</span>
+        <span class="n">report_progress</span><span class="p">(</span><span class="n">progress</span><span class="p">)</span>
+
+<span class="c1"># ...</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<!-- {: title="bin/get-all-versions.py"} -->
+
+<ul>
+<li>Uses the <a href="https://docs.python.org/3/library/csv.html"><code>csv</code></a> package to format output instead of printing strings ourselves<ul>
+<li>Takes care of <a class="gl-ref" href="../glossary/#escape_character" markdown="1">escaping</a> special characters</li>
+</ul>
+</li>
+</ul>
+<h3>Parse command-line arguments</h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">parse_args</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Parse command-line arguments.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--restart&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;restart from this package&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--verbose&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;show progress&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+</code></pre></div>
+<!-- {: title="bin/get-all-versons.py"} -->
+
+<ul>
+<li>Use <a href="https://docs.python.org/3/library/argparse.html"><code>argparse</code></a> to parse command-line arguments<ul>
+<li><code>--verbose</code> to track progress (because it takes hours)</li>
+<li><code>--restart</code> to start from a specified point because networks fail<ul>
+<li>May result in redundant records</li>
+<li>Definitely results in header appearing multiple times</li>
+<li>Clean up afterward</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Get the main package list</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Match package URL in main index page.</span>
+<span class="n">RE_PACKAGE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&lt;a href=&quot;(.+?)&quot;&gt;&#39;</span><span class="p">)</span>
+
+<span class="c1"># ...</span>
+
+<span class="k">def</span> <span class="nf">get_package_list</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Get main package listing page and extract values.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">BASE_URL</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">,</span> \
+        <span class="sa">f</span><span class="s1">&#39;Unexpected status for index page </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">all_packages</span> <span class="o">=</span> <span class="n">RE_PACKAGE</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">all_packages</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">all_packages</span><span class="p">]</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">restart</span><span class="p">):</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">all_packages</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">restart</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">start</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unable to find </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">restart</span><span class="si">}</span><span class="s1"> in package list&#39;</span><span class="p">,</span>
+                  <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">all_packages</span> <span class="o">=</span> <span class="n">all_packages</span><span class="p">[</span><span class="n">start</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="n">all_packages</span>
+</code></pre></div>
+<!-- {: title="bin/get-all-versons.py"} -->
+
+<ul>
+<li>Regular expression is at the top of the file with other &ldquo;constants&rdquo;<ul>
+<li>Unfortunately no way to attach a docstring</li>
+</ul>
+</li>
+<li>Get the main package listing page<ul>
+<li>Fail if it can&rsquo;t be found rather than supporting restart</li>
+<li>Slice here to get the package list</li>
+</ul>
+</li>
+<li>Handle restart here as well (and fail if that isn&rsquo;t going to work)</li>
+<li>Use <code>all_packages</code> rather than just <code>packages</code> as a name
+    so that the code reads aloud more clearly<ul>
+<li>Look at consistent variable naming in the exercises</li>
+</ul>
+</li>
+</ul>
+<h3>Get information about a single package</h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_package_info</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">writer</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Get and print information about a specific package.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">BASE_URL</span><span class="si">}{</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unexpected status for package page </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+              <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;NA&#39;</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">all_releases</span> <span class="o">=</span> <span class="n">RE_RELEASE</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">release</span> <span class="ow">in</span> <span class="n">all_releases</span><span class="p">:</span>
+            <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="n">name</span><span class="p">,</span> <span class="n">release</span><span class="p">])</span>
+</code></pre></div>
+<!-- {: title="bin/get-all-versions.py"} -->
+
+<ul>
+<li>Get packages one at a time<ul>
+<li>Some attempts fail (status code is not 200)</li>
+<li>Record these as <code>NA</code> rather than failing because we <em>can</em> proceed</li>
+</ul>
+</li>
+</ul>
+<h3>Report progress</h3>
+<ul>
+<li>Anything that takes long enough to worry about should tell users it&rsquo;s OK<ul>
+<li>But that should be an option so that it <em>doesn&rsquo;t</em> ask for attention in a production pipeline</li>
+</ul>
+</li>
+<li>Could initialize the record-keeping in <code>main</code>,
+    but that function reads more cleanly if this low-level detail is hidden away</li>
+<li>Goes to <code>sys.stderr</code> so that regular output can be redirected to file</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">initialize_progress</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">packages</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Initialize record keeping for progress monitoring.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;report&#39;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
+        <span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span>
+        <span class="s1">&#39;expected&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">packages</span><span class="p">),</span>
+        <span class="s1">&#39;seen&#39;</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">report_progress</span><span class="p">(</span><span class="n">progress</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Report progress, updating the progress record as a side effect.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">progress</span><span class="p">[</span><span class="s1">&#39;report&#39;</span><span class="p">]):</span>
+        <span class="k">return</span>
+    <span class="n">progress</span><span class="p">[</span><span class="s1">&#39;seen&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">progress</span><span class="p">[</span><span class="s1">&#39;seen&#39;</span><span class="p">]</span> <span class="o">%</span> <span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">progress</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">]</span>
+        <span class="n">duration</span> <span class="o">=</span> <span class="n">progress</span><span class="p">[</span><span class="s1">&#39;expected&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">elapsed</span> <span class="o">/</span> <span class="n">progress</span><span class="p">[</span><span class="s1">&#39;seen&#39;</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">progress</span><span class="p">[</span><span class="s1">&#39;seen&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> @ </span><span class="si">{</span><span class="n">elapsed</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> / </span><span class="si">{</span><span class="n">progress</span><span class="p">[</span><span class="s1">&#39;expected&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> @ </span><span class="si">{</span><span class="n">duration</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+              <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+</code></pre></div>
+<!-- {: title="bin/get-all-versions.py"} -->
+
+<h3>What&rsquo;s missing</h3>
+<ul>
+<li>This program does not have an option for output file<ul>
+<li>Should probably have one option to create a new file and another to append to an existing file</li>
+</ul>
+</li>
+<li>Should probably also have an option to stop trying if enough pages fail</li>
+</ul>
+<h2 id="robust-where">Section 3.5: What Goes Where</h2>
+<p><a class="gl-ref" href="../glossary/#nobles_rules" markdown="1">Noble&rsquo;s Rules</a> are a way to organize small data analysis projects.
+Each one lives in a separate Git repository
+whose subdirectories are organized by purpose:</p>
+<ul>
+<li>
+<p><code>src</code> (short for &ldquo;source&rdquo;) holds source code
+    for programs written in languages like C or C++ that need to be compiled.
+    Many projects don&rsquo;t have this directory
+    because all of their code is written in languages that don&rsquo;t need compilation.</p>
+</li>
+<li>
+<p>Runnable programs go in <code>bin</code> (an old Unix abbreviation for &ldquo;binary&rdquo;, meaning &ldquo;not text&rdquo;).
+    This includes the compiled and runnable versions of C and C++ programs,
+    and also shell scripts,
+    Python or R programs,
+    and everything else that can be executed.</p>
+</li>
+<li>
+<p>Raw data goes in in <code>data</code> and is never modified after being stored.</p>
+</li>
+<li>
+<p>Results are put in <code>results</code>.
+    This includes cleaned-up data
+    and everything else that can be rebuilt using what&rsquo;s in <code>bin</code> and <code>data</code>.
+    If intermediate results can be re-created quickly and easily,
+    they might not be stored in version control,
+    but anything that is included in a report should be here.</p>
+</li>
+<li>
+<p>Finally,
+    documentation and manuscripts go in <code>doc</code>.</p>
+</li>
+</ul>
+<p>Documentation is often generated from source code,
+and it&rsquo;s usually a bad idea to mix handwritten and machine-generated files,
+so most projects now use separate subdirectories for software documentation (<code>doc</code>)
+and reports (<code>reports</code> or <code>papers</code>).
+People also often create a <code>figures</code> directory to hold generated figures
+rather than putting them in <code>results</code>.</p>
+<p>The directories in the top level of each project are organized by purpose,
+but the directories within <code>data</code> and <code>results</code> are organized chronologically
+so that it&rsquo;s easy to see when data was gathered and when results were generated.
+These directories all have names in <a class="gl-ref" href="../glossary/#iso_date_format" markdown="1">ISO date format</a> like <code>YYYY-MM-DD</code>
+to make it easy to sort them chronologically.
+This naming is particularly helpful when data and results are used in several reports.</p>
+<p>At all levels,
+filenames should be easy to match with simple patterns.
+For example,
+a project might use <code><em>species</em><em><em>organ</em></em><em>treatment</em>.csv</code>
+as a file-naming convention,
+giving filenames like <code>human_kidney_cm200.csv</code>.
+This allows <code>human_*_cm200.csv</code> to match all human organs
+or <code>*_kidney_*.csv</code> to match all kidney data.
+It does produce long filenames,
+but tab completion means you only have to type them once.
+Long filenames are just as easy to match in programs:
+Python&rsquo;s <a href="https://docs.python.org/3/library/glob.html"><code>glob</code></a> module will take a pattern and return a list of matching filenames.</p>
+<h2 id="robust-tracking">Section 3.6: Tracking Data</h2>
+<ul>
+<li>Data should be published along with reports<ul>
+<li>How else can people check or extend your work?</li>
+</ul>
+</li>
+<li>Large datasets that are archived and maintained by trusted institutions (e.g., open government data)
+    don&rsquo;t need to be stored<ul>
+<li>Just include a link, a method for downloading, and a date</li>
+</ul>
+</li>
+<li>If a report involves a new dataset:<ul>
+<li>Always use <a class="gl-ref" href="../glossary/#tidy_data" markdown="1">tidy data</a>.</li>
+<li>Include keywords describing the data in the project&rsquo;s <code>README.md</code>
+    so that they appear on its home page and can easily be found by search engines.</li>
+<li>Give every dataset and every report a unique identifier.</li>
+<li>Use well-known formats like CSV and HDF5.</li>
+<li>Include an explicit license.</li>
+<li>Include units and other metadata.</li>
+</ul>
+</li>
+</ul>
+<p>The last point is often the hardest for people to implement,
+since many researchers have never seen a well-documented dataset.
+The <a class="gl-ref" href="../glossary/#data_manifest" markdown="1">data manifest</a> for <cite>Diehm2018</cite> is a good example;
+each dataset is described by an entry like this:</p>
+<div class="callout">
+<ul>
+<li>What is this?: This file contains all of the measurements for 80 pairs of blue jeans from the most popular and widely available brands in the US.</li>
+<li>Source(s): All data was collected from manual measurements by Jan Diehm and Amber Thomas at brick and mortar stores in Nashville, New York, and Seattle.
+    All measurements of front pockets were taken of the right-hand-side front pocket of empty jeans.</li>
+<li>Last Modified: August 13, 2018</li>
+<li>Contact Information: Amber Thomas</li>
+<li>Spatial Applicability: United States</li>
+<li>Temporal Applicability: All measurements were collected between June 29 and August 6, 2018</li>
+<li>Observations (Rows): Each row represents data from a single pair of jeans.</li>
+<li>Variables (Columns):</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Header</th>
+<th>Datatype</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>brand</code></td>
+<td>text</td>
+<td>The full brand name.</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>text</td>
+<td>The cut of each pair of jeans (in our analysis, we combined straight and boot-cut styles and skinny and slim styles, but these remain separated here).</td>
+</tr>
+<tr>
+<td><code>menWomen</code></td>
+<td>text</td>
+<td>Whether the jeans were listed as &ldquo;men&rsquo;s&rdquo; or &ldquo;women&rsquo;s&ldquo;.</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>text</td>
+<td>The name of the specific style of measured pair of jeans as indicated by the tag. (e.g., <code>Fave Super Skinny Jean</code>).</td>
+</tr>
+<tr>
+<td><code>brandSize</code></td>
+<td>text</td>
+<td>The size of jeans we measured. Each size reflects the sizing for each brand closest to a 32-inch waistband as indicated by the brand&rsquo;s website.</td>
+</tr>
+<tr>
+<td><code>waistSize</code></td>
+<td>number</td>
+<td>The waistband size (in inches) of each measured pair as reported on the brand&rsquo;s website.</td>
+</tr>
+<tr>
+<td>&hellip;</td>
+<td>&hellip;</td>
+<td>&hellip;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="callout">
+<h3>FAIR play</h3>
+<p>The <a href="https://www.go-fair.org/fair-principles/">FAIR Principles</a> <cite>Brock2019</cite>
+state that data should be <em>findable</em>, <em>accessible</em>, <em>interoperable</em>, and <em>reusable</em>.
+They are still aspirational for most researchers,
+but they tell us what to aim for.</p>
+</div>
+<h2 id="robust-workflow">Section 3.7: Workflow</h2>
+<p>It&rsquo;s easy to run one program to process a single data file,
+but what happens when our analysis depends on many files,
+or when we need to re-do the analysis every time new data arrives?
+What should we do if the analysis has several steps
+that we have to do in a particular order?</p>
+<p>If we try to keep track of this ourselves,
+we will inevitably forget some crucial steps,
+and it will be hard for other people to pick up our work.
+Instead,
+we should use a <a class="gl-ref" href="../glossary/#build_tool" markdown="1">build tool</a>
+to keep track of what depends on what
+and run our analysis programs automatically.
+These tools were invented to help programmers rebuild complex software,
+but can be used to automate any workflow.</p>
+<div class="callout">
+<h3>Make</h3>
+<p>The first widely-used build tool, Make, written in 1976.  Programmers have
+created many replacements for it in the decades since then—so many, in fact,
+that none have attracted enough users to displace it entirely.</p>
+</div>
+<p>When Snakemake runs,
+it reads <a class="gl-ref" href="../glossary/#build_rule" markdown="1">build rules</a> from a file called <code>Snakefile</code>.
+(It can be called other things, but that&rsquo;s the convention.)
+Each rule explains how to update a <a class="gl-ref" href="../glossary/#build_target" markdown="1">target</a>
+if it is out of date compared to any of its <a class="gl-ref" href="../glossary/#build_prerequisite" markdown="1">prerequisites</a>.
+Here&rsquo;s a rule to regenerate a compressed data file <code>data/all-versions.csv.gz</code>
+if the file is older than the script used to create it:</p>
+<div class="highlight"><pre><span></span><code><span class="n">rule</span> <span class="n">all_versions</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;Download all version info from PyPI - takes several hours.&#39;&#39;&#39;</span>
+    <span class="n">output</span><span class="p">:</span>
+        <span class="n">protected</span><span class="p">(</span><span class="s1">&#39;data/all-versions.csv.gz&#39;</span><span class="p">)</span>
+    <span class="n">shell</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        python bin/get-all-versions.py &gt; data/all-versions.csv</span>
+<span class="sd">        gzip data/all-versions.csv</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+</code></pre></div>
+<ul>
+<li>First line gives the rule a meaningful name</li>
+<li>Second is a docstring<ul>
+<li><code>snakemake --list</code> will show the rules and their docstrings</li>
+</ul>
+</li>
+<li><code>output</code> section tells Snakemake what file(s) this rule produces<ul>
+<li>The <code>protected</code> function tells Snakemake to change permissions on the file so it won&rsquo;t accidentally be deleted</li>
+<li>Only do this for files that take a long time to re-create</li>
+</ul>
+</li>
+<li><code>shell</code> section tells Snakemake what command(s) to run to create the output<ul>
+<li>It will automatically create the <code>data</code> directory if need be</li>
+<li>We can put Python directly in the Snakefile, but I prefer scripts so that commands can be re-run independently</li>
+</ul>
+</li>
+</ul>
+<div class="callout">
+<h3>Compressing Data</h3>
+<p>Compressing this dataset takes file from 103.8 Mbyte to 9.5 Mbyte, which is
+almost a factor of 11.  However, version control can only diff and merge plain
+text files, so if the file is compressed, Git can&rsquo;t help us track changes to
+individual lines.  On the other hand we probably shouldn&rsquo;t be changing a dataset
+anyway&hellip;</p>
+</div>
+<ul>
+<li>Execute these commands with</li>
+</ul>
+<div class="highlight"><pre><span></span><code>snakemake -j <span class="m">1</span> all_versions
+</code></pre></div>
+<p>Since that will take several hours to complete,
+let&rsquo;s add another rule to the same file:</p>
+<div class="highlight"><pre><span></span><code><span class="n">rule</span> <span class="n">releases_per_package</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;How many releases are there for each package?&#39;&#39;&#39;</span>
+    <span class="nb">input</span><span class="p">:</span>
+        <span class="s1">&#39;data/all-versions.csv.gz&#39;</span>
+    <span class="n">output</span><span class="p">:</span>
+        <span class="s1">&#39;results/releases.csv&#39;</span>
+    <span class="n">shell</span><span class="p">:</span>
+        <span class="s1">&#39;python bin/count-releases.py </span><span class="si">{input}</span><span class="s1"> &gt; </span><span class="si">{output}</span><span class="s1">&#39;</span>
+</code></pre></div>
+<ul>
+<li><code>-j1</code> means &ldquo;only run one job at a time&rdquo;<ul>
+<li>Snakemake can run many jobs in parallel</li>
+</ul>
+</li>
+<li><code>results/releases.csv</code> depends on an input data file</li>
+<li>Snakemake only runs the commands if the output doesn&rsquo;t exist or is older than the input</li>
+</ul>
+<p><code>count-releases.py</code> is only a few lines long.
+It takes advantage of the fact that if we give Pandas&rsquo; <code>read_csv</code> function
+a string instead of a stream
+it assumes that parameter is a filename,
+and that it can read directly from compressed files
+(which it identifies by looking for common endings like <code>.zip</code> or <code>.gz</code>).</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># !/usr/bin/env python</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Count how many releases there are per package.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Main driver.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Package&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Release</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+    <span class="n">result</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<!-- {: title="bin/count-releases.py"} -->
+
+<p>If we run:</p>
+<div class="highlight"><pre><span></span><code>snakemake -j1 releases_per_package
+</code></pre></div>
+<p>and wait a few seconds,
+we have a file with the following:</p>
+<div class="highlight"><pre><span></span><code>Package,Release
+0,1
+0-0-1,1
+0-core-client,9
+0-orchestrator,14
+00print-lol,2
+01d61084-d29e-11e9-96d1-7c5cf84ffe8e,2
+021,1
+...
+</code></pre></div>
+<p>Creating a Snakefile may seem like extra work,
+but few things in life are as satisfying as running one command
+and watching an entire multi-step analysis run itself:</p>
+<ol>
+<li>
+<p>It reduces errors,
+    since we only have to type commands correctly once
+    instead of over and over again.</p>
+</li>
+<li>
+<p>More importantly,
+    it documents our workflow
+    so that someone else (including our future self)
+    can see exactly what steps we used in what order.</p>
+</li>
+</ol>
+<h2 id="robust-redundant">Section 3.8: Removing Redundant Releases</h2>
+<ul>
+<li>How many packages are released in redundant formats (e.g., as both <code>.tar.gz</code> and <code>.whl</code>)?</li>
+<li>First step is to find out what formats are represented in the data<ul>
+<li>Break names on <code>.</code></li>
+<li>Count how often each type of field appears</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1"># !/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Count frequency of &#39;.&#39;-separated components of names.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Release&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">del</span> <span class="n">data</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="s1">&#39;Component&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;Count&#39;</span><span class="p">})</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="o">~</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Component&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^\d+$&#39;</span><span class="p">,</span> <span class="n">na</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;Count&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<!-- {: title="bin/components.py"} -->
+
+<ul>
+<li>
+<p>In order:</p>
+<ul>
+<li>Read the file</li>
+<li>Split the <code>Release</code> column on <code>.</code>, creating new columns for the fragments</li>
+<li>Flatten all those columns into a single vector</li>
+<li>Count how often each component appears</li>
+<li>Remove the <code>None</code> value (because splitting on <code>.</code> created a lot of blanks)</li>
+<li>Turn the result back into a dataframe and reset the index<ul>
+<li>We explore why we need to reset the index in the exercises</li>
+</ul>
+</li>
+<li>Give the columns sensible names</li>
+<li>Keep values that aren&rsquo;t composed entirely of digits (after inspection)</li>
+<li>Sort by count</li>
+<li>Save</li>
+</ul>
+</li>
+<li>
+<p>We did <em>not</em> write this all at once</p>
+<ul>
+<li>Write the first couple of steps</li>
+<li><code>gunzip -c data/all-versions.csv | head -n 10 &gt; /tmp/test-data.csv.gz</code> to create a test dataset</li>
+<li>Keep adding steps</li>
+<li>Enlarge the test set once the pipeline seems to be working</li>
+</ul>
+</li>
+<li>
+<p>Add a rule to <code>Snakefile</code></p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nf">rule count_name_components</span><span class="o">:</span>
+    <span class="s1">&#39;&#39;&#39;How often does each component of a dotted name occur?&#39;&#39;&#39;</span>
+    input:
+        <span class="s1">&#39;data/all-versions.csv.gz&#39;</span>
+    output:
+        <span class="s1">&#39;results/name-component-count.csv&#39;</span>
+    shell:
+        <span class="s1">&#39;python bin/components.py {input} &gt; {output}&#39;</span>
+</code></pre></div>
+<ul>
+<li>Run</li>
+</ul>
+<div class="highlight"><pre><span></span><code>Component,Count
+tar,1298365
+gz,1294773
+whl,833181
+py3-none-any,219230
+egg,83174
+zip,79232
+0-py2,56429
+0-py3-none-any,53955
+1-py3-none-any,46384
+1-py2,42507
+2-py3-none-any,29974
+2-py2,27282
+3-py3-none-any,21383
+3-py2,19175
+exe,17161
+0-py2-none-any,16079
+4-py3-none-any,15782
+4-py2,14105
+5-py3-none-any,12791
+1-py2-none-any,11683
+5-py2,11233
+...
+</code></pre></div>
+<ul>
+<li>
+<p>Most common suffixes are <code>.tar.gz</code>, <code>.tar</code>, <code>.whl</code>, <code>.egg</code>, <code>.zip</code>, and <code>.exe</code></p>
+<ul>
+<li>Need domain knowledge to recognize these</li>
+<li>And to know that <code>.tar</code> and <code>.gz</code> appear together</li>
+</ul>
+</li>
+<li>
+<p>Add this rule at the top of the file</p>
+<ul>
+<li>Depends on two files but doesn&rsquo;t have an action</li>
+<li>Snakemake re-creates both files</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">rule</span> <span class="nb">all</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;Dummy rule to rebuild everything.&#39;&#39;&#39;</span>
+    <span class="nb">input</span><span class="p">:</span>
+        <span class="p">[</span><span class="s1">&#39;results/releases.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;results/name-component-count.csv&#39;</span><span class="p">]</span>
+</code></pre></div>
+<ul>
+<li>Next, calculate how many releases there are per package once we remove duplicates</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Count releases before and after de-duplication.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">num_packages</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">Stripped</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Release&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\.(tar\.gz|tar|whl|egg|zip|exe)$&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Complete&#39;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Package&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Release</span><span class="o">.</span><span class="n">nunique</span><span class="p">(),</span>
+                           <span class="s1">&#39;Stripped&#39;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Package&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Stripped</span><span class="o">.</span><span class="n">nunique</span><span class="p">()})</span>
+    <span class="n">num_shorter</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">result</span><span class="o">.</span><span class="n">Complete</span> <span class="o">&gt;</span> <span class="n">result</span><span class="o">.</span><span class="n">Stripped</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">num_shorter</span><span class="si">}</span><span class="s1"> / </span><span class="si">{</span><span class="n">num_packages</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">num_shorter</span> <span class="o">/</span> <span class="n">num_packages</span><span class="p">)</span><span class="si">:</span><span class="s1">6.2</span><span class="si">}</span><span class="s1">%) shorter&#39;</span><span class="p">)</span>
+</code></pre></div>
+<!-- {: title="bin/remove-duplicates.py"} -->
+
+<ul>
+<li>Rule in Snakefile doesn&rsquo;t produce an output file<ul>
+<li>Just shows us</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">rule</span> <span class="n">count_redundant_releases</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;How many duplicated (redundant) releases are there?&#39;&#39;&#39;</span>
+    <span class="nb">input</span><span class="p">:</span>
+        <span class="s1">&#39;data/all-versions.csv.gz&#39;</span>
+    <span class="n">shell</span><span class="p">:</span>
+        <span class="s1">&#39;python bin/remove-duplicates.py data/all-versions.csv.gz&#39;</span>
+</code></pre></div>
+<ul>
+<li>Output</li>
+</ul>
+<div class="highlight"><pre><span></span><code>2255 / 2312545 ( 0.098%) shorter
+</code></pre></div>
+<ul>
+<li>So this <em>isn&rsquo;t</em> a big enough issue to explain the even-numbered jagginess of our earlier figure</li>
+</ul>
+<h2 id="robust-summary">Section 3.9: Summary</h2>
+<ul>
+<li>We now have a layout for small data analysis projects</li>
+<li>And a way to make steps reproducible</li>
+<li>It&rsquo;s time to do some statistics</li>
+</ul>
+<h2 id="robust-exercises">Section 3.10: Exercises</h2>
+<h3 class="exercise">Why <code>NA</code>?</h3>
+<p>Why do statistical packages prefer <code>NA</code> to (for example) an empty cell in a table?</p>
+<h3 class="exercise">Getting All Releases</h3>
+<p>Rewrite the data collection script to capture all release filenames so we can filter duplicates, look at numbering, etc.
+When you&rsquo;re getting data, get <em>all</em> the data.</p>
+<h3 class="exercise">Controlling Logging</h3>
+<p>Rewrite the script to make progress logging controllable with command-line option.</p>
+<h3 class="exercise">Beautiful Soup</h3>
+<p>Rewrite the script to parse the HTML using <a href="https://www.crummy.com/software/BeautifulSoup/">Beautiful Soup</a>.
+(You may find the documentation on searching the document tree helpful.)</p>
+<h3 class="exercise">Logarithmic Zeroes</h3>
+<p>How should packages with zero releases be displayed when we are scaling logarithmically?
+(Those entries are currently discarded because \(log(0)\) is undefined.)</p>
+<h3 class="exercise">Fifty Per Cent</h3>
+<p>Suppose that 50% of the links in the index page failed to resolve.
+How would this change our script?
+How would it change what statistics we calculate or how we report them?</p>
+<h3 class="exercise">Linting</h3>
+<p><a href="https://pycodestyle.pycqa.org/en/latest/"><code>pycodestyle</code></a> is a [linter][linter]:
+a program that checks whether other programs conform to coding style guidelines.
+Run it on the scripts we have built in this chapter.
+What does it complain about?
+Do you agree with its recommendations?</p>
+<h3 class="exercise">Compressing Results</h3>
+<p>We decided to compress the source data file used in this chapter.
+Should we compress the results file(s) we generate as well?
+Why or why not?</p>
+<h3 class="exercise">Resetting a Dataframe&rsquo;s Index</h3>
+<p>What does resetting the index of a dataframe do?
+Why do we have to reset the index
+in the script that counts the frequency of &lsquo;.&rsquo;-separated components of names?</p>
+          
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

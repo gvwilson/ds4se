@@ -1,0 +1,25 @@
+- schema.csv
+  - What is this?: Schema of subset of survey data from Stack Overflow survey 2019.
+  - Format: CSV
+  - Source(s):
+    - Description of 2019 survey at https://insights.stackoverflow.com/survey/2019.
+    - Data at https://insights.stackoverflow.com/survey.
+    - Subset created using `./bin/subset-survey.py --data_in survey_results_public.csv --data_out survey.csv --schema_in survey_results_schema.csv --schema_out schema.csv --nrow 10000 --seed 12345`.
+  - Last Modified: 2019-12-02
+  - Contact: Greg Wilson <gvwilson@third-bit.com>
+  - Fields:
+    - `Column` (text): column name.
+    - `QuestionText` (text): question asked.
+
+- survey.csv
+  - What is this?: Subset of data from Stack Overflow survey 2019.
+  - Format: CSV
+  - Source(s):
+    - Description of 2019 survey at https://insights.stackoverflow.com/survey/2019.
+    - Data at https://insights.stackoverflow.com/survey.
+    - Subset created using `./bin/subset-survey.py --data_in survey_results_public.csv --data_out survey.csv --schema_in survey_results_schema.csv --schema_out schema.csv --nrow 10000 --seed 12345`.
+  - Last Modified: 2019-12-02
+  - Contact: Greg Wilson <gvwilson@third-bit.com>
+  - Fields:
+    - See `schema.csv` for full description of fields.
+    - `RowID` (numeric, additional): record ID from original complete dataset.

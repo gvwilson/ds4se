@@ -1,0 +1,4 @@
+V1 = Number of test cases
+V2 = Quality % (as described in the paper)
+V3 = Productivity % (as described in the paper)
+V4  and V5 I need to ask my co-authors as I am not sure.

@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../mccole.css">
+  <link rel="stylesheet" href="../tango.css">
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script
+    type="text/javascript"
+    id="MathJax-script"
+    async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <script defer src="../mccole.js"></script>
+  <title>Data Science for Software Engineers: Basic Tools</title>
+</head>
+
+  <body>
+    <div class="row">
+      <div class="sidebar">
+        <p>
+  
+  <img src="../logo.svg" alt="site logo" class="logo" />
+  <a href="../">Data Science for Software Engineers</a>
+  
+</p>
+<ol class="toc-chapter">
+  
+  <li>
+    <a href="../introduction/">
+      Introduction
+    </a>
+  </li>
+  
+  <li>
+    <a href="../basics/">
+      <strong>Basic Tools</strong>
+    </a>
+  </li>
+  
+  <li>
+    <a href="../robust/">
+      Robust Analysis
+    </a>
+  </li>
+  
+  <li>
+    <a href="../hyptest/">
+      Hypothesis Testing
+    </a>
+  </li>
+  
+  <li>
+    <a href="../large/">
+      The Law of Large Numbers
+    </a>
+  </li>
+  
+  <li>
+    <a href="../nonpar/">
+      Nonparametric Statistics
+    </a>
+  </li>
+  
+  <li>
+    <a href="../conclusion/">
+      Conclusion
+    </a>
+  </li>
+  
+</ol>
+<ol class="toc-appendix">
+  
+  <li>
+    <a href="../bibliography/">
+      Bibliography
+    </a>
+  </li>
+  
+  <li>
+    <a href="../theory/">
+      Theory
+    </a>
+  </li>
+  
+  <li>
+    <a href="../syllabus/">
+      Syllabus
+    </a>
+  </li>
+  
+  <li>
+    <a href="../license/">
+      License
+    </a>
+  </li>
+  
+  <li>
+    <a href="../conduct/">
+      Code of Conduct
+    </a>
+  </li>
+  
+  <li>
+    <a href="../contributing/">
+      Contributing
+    </a>
+  </li>
+  
+  <li>
+    <a href="../glossary/">
+      Glossary
+    </a>
+  </li>
+  
+  <li>
+    <a href="../credits/">
+      Credits
+    </a>
+  </li>
+  
+  <li>
+    <a href="../contents/">
+      Index
+    </a>
+  </li>
+  
+</ol>
+
+<p><a href="../sdxpy-examples.zip" type="application/zip">download examples</a></p>
+
+
+      </div>
+      <div id="printable" class="contents bordered">
+        <main>
+          
+  <h1>Chapter 2: Basic Tools</h1>
+
+
+          
+            
+<div class="draft">
+  <p>DRAFT</p>
+</div>
+
+
+            
+  
+  <ul class="syllabus">
+  
+  <li markdown="1">Store small datasets in tidy CSV files.</li>
+  
+  <li markdown="1">Use Unix command-line tools for simple data collection and filtering.</li>
+  
+  <li markdown="1">Use NumPy and Pandas to process tabular statistical data.</li>
+  
+  <li markdown="1">Use method chaining to create data pipelines.</li>
+  
+  <li markdown="1">If you're writing a loop to process a table, you're doing something wrong.</li>
+  
+  <li markdown="1">Use Plotly Express to create simple plots.</li>
+  
+  </ul>
+  
+
+  
+
+  
+
+  
+
+
+            
+<p class="definitions">
+  Terms defined: <a class="gl-ref" href="../glossary/#aggregation" markdown="1">aggregation</a>, <a class="gl-ref" href="../glossary/#alias" markdown="1">alias</a>, <a class="gl-ref" href="../glossary/#boolean" markdown="1">Boolean</a>, <a class="gl-ref" href="../glossary/#broadcast" markdown="1">broadcast</a>, <a class="gl-ref" href="../glossary/#csv" markdown="1">comma-separated values</a>, <a class="gl-ref" href="../glossary/#dataframe" markdown="1">dataframe</a>, <a class="gl-ref" href="../glossary/#filter" markdown="1">filter</a>, <a class="gl-ref" href="../glossary/#header_row" markdown="1">header row</a>, <a class="gl-ref" href="../glossary/#histogram" markdown="1">histogram</a>, <a class="gl-ref" href="../glossary/#key" markdown="1">key</a>, <a class="gl-ref" href="../glossary/#method_chaining" markdown="1">method chaining</a>, <a class="gl-ref" href="../glossary/#nan" markdown="1">Not a Number</a>, <a class="gl-ref" href="../glossary/#na" markdown="1">Not Available</a>, <a class="gl-ref" href="../glossary/#null" markdown="1">null</a>, <a class="gl-ref" href="../glossary/#outlier" markdown="1">outlier</a>, <a class="gl-ref" href="../glossary/#property" markdown="1">property</a>, <a class="gl-ref" href="../glossary/#raster_graphics" markdown="1">raster graphics</a>, <a class="gl-ref" href="../glossary/#relational_database" markdown="1">relational database</a>, <a class="gl-ref" href="../glossary/#reproducible_research" markdown="1">reproducible research</a>, <a class="gl-ref" href="../glossary/#svg" markdown="1">Scalable Vector Graphics</a>, <a class="gl-ref" href="../glossary/#slice" markdown="1">slice</a>, <a class="gl-ref" href="../glossary/#sql" markdown="1">SQL</a>, <a class="gl-ref" href="../glossary/#tidy_data" markdown="1">tidy data</a>, <a class="gl-ref" href="../glossary/#vector_graphics" markdown="1">vector graphics</a>
+</p>
+
+
+            <div class="page-toc"></div>
+            <ul>
+<li>Motivating problem: how big is the average Python package?<ul>
+<li>What do we mean by &ldquo;big&rdquo;?<ul>
+<li>Count lines and characters for now</li>
+</ul>
+</li>
+<li>What do we mean by &ldquo;average&rdquo;?<ul>
+<li>Analyze the packages on this computer to start</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2>How can we get some data?</h2>
+<ul>
+<li>Where is Python installed?</li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>/anaconda3/lib/python37.zip
+/anaconda3/lib/python3.7
+/anaconda3/lib/python3.7/lib-dynload
+/anaconda3/lib/python3.7/site-packages
+</code></pre></div></p>
+<ul>
+<li>The blank at the start is the empty string, which means &ldquo;current directory&rdquo;</li>
+<li>Use the shell to find and display Python file sizes</li>
+</ul>
+<p><div class="highlight"><pre><span></span><code>find /anaconda3 -name <span class="s1">&#39;*.py&#39;</span> -exec wc -l -c <span class="o">{}</span> <span class="se">\;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>      27     877 /anaconda3/bin/rst2xetex.py
+      26     797 /anaconda3/bin/rst2latex.py
+      67    1704 /anaconda3/bin/rst2odt_prepstyles.py
+      26     720 /anaconda3/bin/rst2html4.py
+      35    1145 /anaconda3/bin/rst2html5.py
+...
+</code></pre></div></p>
+<ul>
+<li>We could convert this output to <a class="gl-ref" href="../glossary/#csv" markdown="1">comma-separated values</a> (CSV) with command-line tools like <a href="https://en.wikipedia.org/wiki/AWK">awk</a> or <a href="https://en.wikipedia.org/wiki/sed">sed</a><ul>
+<li>But since we&rsquo;re using Python anyway&hellip;</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Lines,Characters,Path&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="p">:</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">,</span><span class="si">{}</span><span class="s1">,</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">fields</span><span class="p">))</span>
+</code></pre></div>
+<!-- {: title="wc2csv.py"} -->
+
+<ul>
+<li>Run it as shown below<ul>
+<li>Break lines to make commands more visible (and to prevent long lines)</li>
+</ul>
+</li>
+</ul>
+<p><div class="highlight"><pre><span></span><code>find /anaconda3 -name <span class="s1">&#39;*.py&#39;</span> -exec wc -l -c <span class="o">{}</span> <span class="se">\;</span> <span class="se">\</span>
+  <span class="p">|</span> python wc2csv.py <span class="se">\</span>
+  &gt; python-local-package-size.csv
+cat python-local-package-size.csv
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Lines,Characters,Path
+27,877,/anaconda3/bin/rst2xetex.py
+26,797,/anaconda3/bin/rst2latex.py
+67,1704,/anaconda3/bin/rst2odt_prepstyles.py
+26,720,/anaconda3/bin/rst2html4.py
+35,1145,/anaconda3/bin/rst2html5.py
+...
+</code></pre></div></p>
+<ul>
+<li>This is <a class="gl-ref" href="../glossary/#tidy_data" markdown="1">tidy data</a><ol>
+<li>Each column contains one statistical variable
+    (i.e., one property that was measured or observed)</li>
+<li>Each different observation is in a different row</li>
+<li>There is one table for each set of observations</li>
+<li>If there are multiple tables,
+    each table has a column containing a unique <a class="gl-ref" href="../glossary/#key" markdown="1">key</a>
+    so that related data can be linked</li>
+</ol>
+</li>
+</ul>
+<h2>How can we analyze tabular data?</h2>
+<ul>
+<li>There&rsquo;s a lot of tabular data in the world</li>
+<li>People want to do a lot of complex things with it, so Python&rsquo;s tools can be bewildering at first<ol>
+<li>Built-in lists and the <code>array</code> module</li>
+<li><a href="https://numpy.org/">NumPy</a> provides multidimensional arrays</li>
+<li><a href="https://pandas.pydata.org/">Pandas</a> provides <a class="gl-ref" href="../glossary/#dataframe" markdown="1">dataframes</a> with named columns for tidy data</li>
+</ol>
+</li>
+<li>We will use a small subset of Pandas<ul>
+<li>Gives us tables whose columns can have different datatypes</li>
+<li>Access columns by name</li>
+<li>Access rows by index</li>
+</ul>
+</li>
+<li>Load our CSV data into memory and have a look</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;python-local-package-size.csv&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div>
+<!-- {: title="pandas-read-display.py"} -->
+<div class="highlight"><pre><span></span><code>       Lines  Characters                                               Path
+0         27         877                        /anaconda3/bin/rst2xetex.py
+1         26         797                        /anaconda3/bin/rst2latex.py
+2         67        1704               /anaconda3/bin/rst2odt_prepstyles.py
+...
+33243    256       10135  /anaconda3/share/glib-2.0/codegen/codegen_main.py
+33244    431       17774     /anaconda3/share/glib-2.0/codegen/dbustypes.py
+33245   3469      206544       /anaconda3/share/glib-2.0/codegen/codegen.py
+
+[33246 rows x 3 columns]
+</code></pre></div>
+<ul>
+<li>The <a class="gl-ref" href="../glossary/#header_row" markdown="1">header row</a> tells us the names of the columns</li>
+<li>We can get these names using the dataframe&rsquo;s <code>columns</code> <a class="gl-ref" href="../glossary/#property" markdown="1">property</a><ul>
+<li>Not a method call</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</code></pre></div>
+<!-- {: title="pandas-read-display.py"} -->
+<div class="highlight"><pre><span></span><code>Index([&#39;Lines&#39;, &#39;Characters&#39;, &#39;Path&#39;], dtype=&#39;object&#39;)
+</code></pre></div>
+<ul>
+<li>Result is an <code>Index</code> object containing the columns&rsquo; names and other information</li>
+<li>Its <code>values</code> property contains just the names</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+</code></pre></div>
+<!-- {: title="pandas-read-display.py"} -->
+<div class="highlight"><pre><span></span><code>[&#39;Lines&#39; &#39;Characters&#39; &#39;Path&#39;]
+</code></pre></div>
+<ul>
+<li>We normally import Pandas using an <a class="gl-ref" href="../glossary/#alias" markdown="1">alias</a> called <code>pd</code>
+    to save a few characters of typing and (more importantly) make code a little easier to read</li>
+<li>Re-load our data that way<ul>
+<li>And use a more meaningful name than <code>data</code></li>
+<li>Then select a column by name</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">packages</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;python-local-package-size.csv&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">packages</span><span class="p">[</span><span class="s1">&#39;Path&#39;</span><span class="p">])</span>
+</code></pre></div>
+<!-- {: title="pandas-select-col.py"} -->
+<div class="highlight"><pre><span></span><code>0                              /anaconda3/bin/rst2xetex.py
+1                              /anaconda3/bin/rst2latex.py
+2                     /anaconda3/bin/rst2odt_prepstyles.py
+...
+33243    /anaconda3/share/glib-2.0/codegen/codegen_main.py
+33244       /anaconda3/share/glib-2.0/codegen/dbustypes.py
+33245         /anaconda3/share/glib-2.0/codegen/codegen.py
+Name: Path, Length: 33246, dtype: object
+</code></pre></div>
+<ul>
+<li>The line at the end tells us:<ul>
+<li>The name of the column we selected</li>
+<li>How many records there are</li>
+<li>The column&rsquo;s data type</li>
+</ul>
+</li>
+<li>We can select several columns at once by giving a list of names<ul>
+<li>Which results in double square brackets</li>
+<li>Outer brackets mean &ldquo;we&rsquo;re selecting something&rdquo;</li>
+<li>Inner ones means &ldquo;we&rsquo;re providing a list to specify what we&rsquo;re selecting&rdquo;</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">packages</span><span class="p">[[</span><span class="s1">&#39;Lines&#39;</span><span class="p">,</span> <span class="s1">&#39;Characters&#39;</span><span class="p">]])</span>
+</code></pre></div>
+<!-- {: title="pandas-select-col.py"} -->
+<div class="highlight"><pre><span></span><code>       Lines  Characters
+0         27         877
+1         26         797
+2         67        1704
+...
+33243    256       10135
+33244    431       17774
+33245   3469      206544
+
+[33246 rows x 2 columns]
+</code></pre></div>
+<ul>
+<li>What if we want to select a row?</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">packages</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</code></pre></div>
+<!-- {: title="pandas-select-row-fail.py"} -->
+<div class="highlight"><pre><span></span><code>Traceback (most recent call last):
+  File &quot;/anaconda3/lib/python3.7/site-packages/pandas/core/indexes/base.py&quot;, line 2657, in get_loc
+    return self._engine.get_loc(key)
+  File &quot;pandas/_libs/index.pyx&quot;, line 108, in pandas._libs.index.IndexEngine.get_loc
+  File &quot;pandas/_libs/index.pyx&quot;, line 132, in pandas._libs.index.IndexEngine.get_loc
+  File &quot;pandas/_libs/hashtable_class_helper.pxi&quot;, line 1601, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File &quot;pandas/_libs/hashtable_class_helper.pxi&quot;, line 1608, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File &quot;pandas-select-row-fail.py&quot;, line 4, in &lt;module&gt;
+    print(packages[0])
+  File &quot;/anaconda3/lib/python3.7/site-packages/pandas/core/frame.py&quot;, line 2927, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File &quot;/anaconda3/lib/python3.7/site-packages/pandas/core/indexes/base.py&quot;, line 2659, in get_loc
+    return self._engine.get_loc(self._maybe_cast_indexer(key))
+  File &quot;pandas/_libs/index.pyx&quot;, line 108, in pandas._libs.index.IndexEngine.get_loc
+  File &quot;pandas/_libs/index.pyx&quot;, line 132, in pandas._libs.index.IndexEngine.get_loc
+  File &quot;pandas/_libs/hashtable_class_helper.pxi&quot;, line 1601, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File &quot;pandas/_libs/hashtable_class_helper.pxi&quot;, line 1608, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 0
+</code></pre></div>
+<ul>
+<li>Pandas error messages aren&rsquo;t particularly readable</li>
+<li>Pandas doesn&rsquo;t allow us to select rows by numeric index<ul>
+<li>Ambiguous, since <code>1</code> could mean &ldquo;first column&rdquo; rather than &ldquo;first row&rdquo;</li>
+</ul>
+</li>
+<li>Instead, use a property of the dataframe called <code>iloc</code> (for &ldquo;indexed location&rdquo;)</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">packages</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</code></pre></div>
+<!-- {: title="pandas-select-row-iloc.py"} -->
+<div class="highlight"><pre><span></span><code>Lines                                  27
+Characters                            877
+Path          /anaconda3/bin/rst2xetex.py
+Name: 0, dtype: object
+</code></pre></div>
+<ul>
+<li>
+<p>Displays a two-column table with keys and values</p>
+<ul>
+<li>Count from zero (for <a href="http://exple.tive.org/blarg/2013/10/22/citation-needed/">surprising reasons</a>)</li>
+</ul>
+</li>
+<li>
+<p>We can use a <a class="gl-ref" href="../glossary/#slice" markdown="1">slice</a> to select multiple rows</p>
+<ul>
+<li>If you&rsquo;re writing a loop to process a table, you&rsquo;re doing something wrong</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">packages</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>
+</code></pre></div>
+<!-- {: title="pandas-select-row-iloc.py"} -->
+<div class="highlight"><pre><span></span><code>   Lines  Characters                                  Path
+0     27         877           /anaconda3/bin/rst2xetex.py
+1     26         797           /anaconda3/bin/rst2latex.py
+2     67        1704  /anaconda3/bin/rst2odt_prepstyles.py
+3     26         720           /anaconda3/bin/rst2html4.py
+4     35        1145           /anaconda3/bin/rst2html5.py
+</code></pre></div>
+<ul>
+<li>We can mix names and numbers to select subsections by column and then row<ul>
+<li>Don&rsquo;t need <code>iloc</code> in this case because
+    selecting by column gives us back a one-dimensional <code>Series</code> object
+    that interprets an integer index the way we want</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">packages</span><span class="p">[</span><span class="s1">&#39;Characters&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>
+</code></pre></div>
+<!-- {: title="pandas-select-row-iloc.py"} -->
+<div class="highlight"><pre><span></span><code>0     877
+1     797
+2    1704
+Name: Characters, dtype: int64
+</code></pre></div>
+<ul>
+<li>Can also select by row and then column using <code>iloc</code><ul>
+<li>But indexing out of order makes code harder to read, so don&rsquo;t do this</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">packages</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">][</span><span class="s1">&#39;Characters&#39;</span><span class="p">])</span>
+</code></pre></div>
+<!-- {: title="pandas-select-row-iloc.py"} -->
+<div class="highlight"><pre><span></span><code>0     877
+1     797
+2    1704
+Name: Characters, dtype: int64
+</code></pre></div>
+<h2>How can we visualize what&rsquo;s in a dataframe?</h2>
+<ul>
+<li><a href="https://matplotlib.org/"><code>matplotlib</code></a> is the most widely used plotting module for Python,
+    but is fairly low-level</li>
+<li><a href="https://plot.ly/python/plotly-express/">Plotly Express</a> is newer and better suited to creating graphics for browsers<ul>
+<li>Usually import using the alias <code>px</code></li>
+</ul>
+</li>
+<li>Use this to create a simple scatter plot<ul>
+<li>The figure object&rsquo;s <code>show</code> method runs a local server and opens the image in the browser for viewing</li>
+<li>Its <code>write_image</code> method saves it as a file</li>
+<li>We put the generated figure in a <code>figures</code> sub-directory to avoid clutter</li>
+<li>And use <a class="gl-ref" href="../glossary/#svg" markdown="1">SVG</a> because <a class="gl-ref" href="../glossary/#vector_graphics" markdown="1">vector graphics</a> resizes better than <a class="gl-ref" href="../glossary/#raster_graphics" markdown="1">raster graphics</a></li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+
+<span class="n">packages</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;python-local-package-size.csv&#39;</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">packages</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Lines&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Characters&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s1">&#39;scatter-lines-characters.svg&#39;</span><span class="p">)</span>
+</code></pre></div>
+<!-- {: title="scatter-lines-characters.py"} -->
+
+<figure id="scatter-lines-characters">
+  <img src="./scatter-lines-characters.svg" alt="Scatter plot with most values clustered in the range X equals 0 to 5,000 and Y equals 0 to 0.2 million, with some outliers."/>
+  <figcaption markdown="1">Figure 2.1: Characters vs. Lines</figcaption>
+</figure>
+
+<h2>How can we do calculations with dataframes?</h2>
+<ul>
+<li>Best way to explore Pandas is by example</li>
+<li>Since we don&rsquo;t know what answers to expect from calculations using the package data,
+    construct a small example that we can check while we explore</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">example</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[[</span>  <span class="mi">1</span><span class="p">,</span>   <span class="mi">2</span><span class="p">,</span>   <span class="mi">3</span><span class="p">],</span>
+                             <span class="p">[</span> <span class="mi">10</span><span class="p">,</span>  <span class="mi">20</span><span class="p">,</span>  <span class="mi">30</span><span class="p">],</span>
+                             <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">]],</span>
+                       <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="s1">&#39;middle&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">example</span><span class="p">)</span>
+</code></pre></div>
+<!-- {: title="aggregation.py"} -->
+<div class="highlight"><pre><span></span><code>   left  middle  right
+0     1       2      3
+1    10      20     30
+2   100     200    300
+</code></pre></div>
+<ul>
+<li>Break this down:<ul>
+<li><code>pd</code> is the alias for Pandas</li>
+<li><code>DataFrame</code> is the kind of object we want to create</li>
+<li><code>data</code> is a list-of-lists with the values we want in our dataframe</li>
+<li><code>columns</code> is the names we want to give the columns</li>
+<li>We could provide <code>data</code> and <code>columns</code> in the opposite order
+    and everything would still work
+    because we&rsquo;re naming them explicitly</li>
+<li>Result is three columns and three rows</li>
+</ul>
+</li>
+<li>We can do arithmetic on entire columns</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">example</span><span class="p">[</span><span class="s1">&#39;middle&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">example</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">])</span>
+</code></pre></div>
+<!-- {: title="aggregation.py"} -->
+<div class="highlight"><pre><span></span><code>0      5
+1     50
+2    500
+dtype: int64
+</code></pre></div>
+<ul>
+<li>If we use a plain old number it is automatically <a class="gl-ref" href="../glossary/#broadcast" markdown="1">broadcast</a> to the size of the column</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="mi">7</span> <span class="o">*</span> <span class="n">example</span><span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">])</span>
+</code></pre></div>
+<!-- {: title="aggregation.py"} -->
+<div class="highlight"><pre><span></span><code>0      7
+1     70
+2    700
+Name: left, dtype: int64
+</code></pre></div>
+<ul>
+<li>Sums, averages, and other functions that turn many values into one are called <a class="gl-ref" href="../glossary/#aggregation" markdown="1">aggregations</a><ul>
+<li><code>count</code>: number of elements (excluding <a class="gl-ref" href="../glossary/#nan" markdown="1"><code>NaN</code></a>)</li>
+<li><code>describe</code>: descriptive statistics</li>
+<li><code>first</code>: first value</li>
+<li><code>last</code>: last value</li>
+<li><code>max</code>: largest value</li>
+<li><code>mean</code>: average value</li>
+<li><code>min</code>: least value</li>
+<li><code>nth</code> : \( n^{th} \) value</li>
+<li><code>sem</code>: standard error of the mean</li>
+<li><code>size</code>: group size (including <code>NaN</code>)</li>
+<li><code>std</code>: standard deviation</li>
+<li><code>sum</code>: sum of values</li>
+<li><code>var</code>: variance</li>
+</ul>
+</li>
+</ul>
+<div class="callout">
+<h3>Not a Number, Not Available, Null, and None</h3>
+<p><code>NaN</code> stands for &ldquo;Not a Number&rdquo;, a special value used to represent things like
+0/0 <cite>Kahan1997</cite>.  Despite the similarity in their names, it is <em>not</em>
+the same thing as <a class="gl-ref" href="../glossary/#na" markdown="1"><code>NA</code></a> (Not Available), which is a
+placeholder for missing values.  To make things more confusing, <a class="gl-ref" href="../glossary/#sql" markdown="1">SQL</a> (the standard language for querying <a class="gl-ref" href="../glossary/#relational_database" markdown="1">relational databases</a>) uses <a class="gl-ref" href="../glossary/#null" markdown="1"><code>null</code></a> instead of <code>NA</code> to signal missing data, while many
+programming languages use <code>null</code> to mean &ldquo;a reference that doesn&rsquo;t refer to
+anything&rdquo;.  Python uses <code>None</code> instead of <code>null</code>, but we must be careful when
+reading and writing data to distinguish between empty strings, missing values,
+and the country code for Namibia.</p>
+</div>
+<ul>
+<li>Use the method <code>agg</code> to calculate aggregates<ul>
+<li>Give it the name of a function as a string</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;sum&#39;</span><span class="p">))</span>
+</code></pre></div>
+<!-- {: title="aggregation.py"} -->
+<div class="highlight"><pre><span></span><code>left      111
+middle    222
+right     333
+dtype: int64
+</code></pre></div>
+<ul>
+<li>The sum of column <code>left</code> is 111, of column <code>middle</code> is 222, and of <code>right</code> is 333<ul>
+<li>Once again <code>dtype</code> is the data type</li>
+</ul>
+</li>
+<li>We can calculate several aggregate values at once by giving <code>DataFrame.agg</code> a list of function names<ul>
+<li>Exercise: is this more efficient or not?</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">]))</span>
+</code></pre></div>
+<!-- {: title="aggregation.py"} -->
+<div class="highlight"><pre><span></span><code>       left  middle  right
+sum   111.0   222.0  333.0
+mean   37.0    74.0  111.0
+</code></pre></div>
+<h2>How can we select subsets of data?</h2>
+<ul>
+<li>Suppose we want to look at the low values in the data</li>
+<li>Do this by <a class="gl-ref" href="../glossary/#filter" markdown="1">filtering</a> data and calculating values for the rows we have kept<ul>
+<li>&ldquo;Keep&rdquo; would have been a better name than &ldquo;filter&rdquo;, but we&rsquo;re stuck with it</li>
+</ul>
+</li>
+<li>Create another small dataframe to demonstrate</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">colors</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">],</span>
+                      <span class="n">data</span><span class="o">=</span><span class="p">[[</span><span class="s1">&#39;yellow&#39;</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+                            <span class="p">[</span><span class="s1">&#39;aqua&#39;</span><span class="p">,</span>    <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+                            <span class="p">[</span><span class="s1">&#39;fuchsia&#39;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span>
+</code></pre></div>
+<!-- {: title="filter.py"} -->
+<div class="highlight"><pre><span></span><code>      name  red  green  blue
+0   yellow  1.0    1.0   0.0
+1     aqua  0.0    1.0   1.0
+2  fuchsia  1.0    0.0   1.0
+</code></pre></div>
+<ul>
+<li>We know how to select the <code>red</code> column</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">red</span> <span class="o">=</span> <span class="n">colors</span><span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">red</span><span class="p">)</span>
+</code></pre></div>
+<!-- {: title="filter.py"} -->
+<div class="highlight"><pre><span></span><code>0    1.0
+1    0.0
+2    1.0
+Name: red, dtype: float64
+</code></pre></div>
+<ul>
+<li>Now let&rsquo;s see where values are 1.0 and where they aren&rsquo;t</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">has_red</span> <span class="o">=</span> <span class="p">(</span><span class="n">red</span> <span class="o">==</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">has_red</span><span class="p">)</span>
+</code></pre></div>
+<!-- {: title="filter.py"} -->
+<div class="highlight"><pre><span></span><code>0     True
+1    False
+2     True
+Name: red, dtype: bool
+</code></pre></div>
+<ul>
+<li>The expression <code>(red == 1.0)</code> is no different from <code>(red + 3)</code>, except the result is <a class="gl-ref" href="../glossary/#boolean" markdown="1">Boolean</a> instead of numeric</li>
+<li>If we use a Boolean vector as an index, the result is a smaller table containing only the rows where the index was <code>True</code><ul>
+<li>But just as we had to use <code>.iloc[...]</code>, we have to use <code>.loc[...]</code> (for &ldquo;location&rdquo;)</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">rows_with_red</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">has_red</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rows_with_red</span><span class="p">)</span>
+</code></pre></div>
+<!-- {: title="filter.py"} -->
+<div class="highlight"><pre><span></span><code>      name  red  green  blue
+0   yellow  1.0    1.0   0.0
+2  fuchsia  1.0    0.0   1.0
+</code></pre></div>
+<ul>
+<li>So we can calculate the average red, green, and blue for all colors for the whole table:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">colors</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">))</span>
+</code></pre></div>
+<!-- {: title="filter.py"} -->
+<div class="highlight"><pre><span></span><code>red      0.666667
+green    0.666667
+blue     0.666667
+dtype: float64
+</code></pre></div>
+<ul>
+<li>Or select only those colors that contain some red and calculate the average for them:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">rows_with_red</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">))</span>
+</code></pre></div>
+<!-- {: title="filter.py"} -->
+<div class="highlight"><pre><span></span><code>red      1.0
+green    0.5
+blue     0.5
+dtype: float64
+</code></pre></div>
+<ul>
+<li>Creating temporary variables is unnecessary: we can index the table directly<ul>
+<li>Though this can be hard to read because the order of operations doesn&rsquo;t match left-to-right reading order</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">colors</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">colors</span><span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mf">1.0</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">&#39;mean&#39;</span><span class="p">))</span>
+</code></pre></div>
+<!-- {: title="filter.py"} -->
+<div class="highlight"><pre><span></span><code>red      1.0
+green    0.5
+blue     0.5
+dtype: float64
+</code></pre></div>
+<ul>
+<li>This style of programming is called <a class="gl-ref" href="../glossary/#method_chaining" markdown="1">method chaining</a><ul>
+<li>Each operation like <code>loc</code> and <code>agg</code> creates a new object</li>
+<li>We immediately call a method of that new object</li>
+<li>Then call a method of the object that method returns, and so on</li>
+</ul>
+</li>
+<li>Behind the scenes, Pandas re-uses most of the data rather than copying it to make things faster</li>
+</ul>
+<h2>How are lines and characters in Python files related?</h2>
+<ul>
+<li>Created a scatter plot earlier</li>
+<li>Construct a <a class="gl-ref" href="../glossary/#histogram" markdown="1">histogram</a> to see how many <a class="gl-ref" href="../glossary/#outlier" markdown="1">outliers</a> there are<ul>
+<li>Add width and height for the print version</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+
+<span class="n">packages</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;python-local-package-size.csv&#39;</span><span class="p">)</span>
+<span class="n">packages</span> <span class="o">=</span> <span class="n">packages</span><span class="p">[</span><span class="n">packages</span><span class="p">[</span><span class="s1">&#39;Lines&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">packages</span><span class="p">[</span><span class="s1">&#39;ratio&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">packages</span><span class="p">[</span><span class="s1">&#39;Characters&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">packages</span><span class="p">[</span><span class="s1">&#39;Lines&#39;</span><span class="p">]</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">packages</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;ratio&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s1">&#39;hist-ratio-unscaled.svg&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+</code></pre></div>
+<!-- {: title="ratio.py"} -->
+
+<figure id="hist-ratio-unscaled">
+  <img src="./hist-ratio-unscaled.svg" alt="Linear-linear histogram with a single sharp spike at X equals 0 going up to Y equals 2,200 and nothing else visible up to X equals 9,000."/>
+  <figcaption markdown="1">Figure 2.2: Ratio of Characters to Lines (Unscaled)</figcaption>
+</figure>
+
+<ul>
+<li>That&rsquo;s not very informative<ul>
+<li>A few large values near x=0</li>
+<li>But a few very small values that go up over x=8000</li>
+</ul>
+</li>
+<li>Plot the logarithm of the ratio to show things more clearly <a class="fig-ref" href="../basics/#hist-ratio-scaled">Figure 2.3</a></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">packages</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;ratio&#39;</span><span class="p">,</span> <span class="n">nbins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">log_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s1">&#39;hist-ratio-scaled.svg&#39;</span><span class="p">)</span>
+</code></pre></div>
+<!-- {: title="ratio.py"} -->
+
+<figure id="hist-ratio-scaled">
+  <img src="./hist-ratio-scaled.svg" alt="Log-linear histogram with a single sharp spike at X equals 0 going up to Y equals 3,000 and a sharp decline to Y equals 2 near X equals 1,800 and one outlier of Y equals 2 at X equals 9,000."/>
+  <figcaption markdown="1">Figure 2.3: Ratio of Characters to Lines (Scaled)</figcaption>
+</figure>
+
+<ul>
+<li>Play with a threshold for a bit and discover that less than 0.3% of records are above 100 characters per line</li>
+<li>Plot all the values except these <em>without</em> logarithmic scaling<ul>
+<li>Report how many were excluded so that readers know they&rsquo;re not seeing all the data</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Excluding </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">packages</span><span class="p">[</span><span class="n">packages</span><span class="p">[</span><span class="s1">&#39;ratio&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">])</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">packages</span><span class="p">)</span><span class="si">}</span><span class="s2"> data points&quot;</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">packages</span><span class="p">[</span><span class="n">packages</span><span class="p">[</span><span class="s1">&#39;ratio&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;ratio&#39;</span><span class="p">,</span> <span class="n">nbins</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s1">&#39;hist-ratio-most.svg&#39;</span><span class="p">)</span>
+</code></pre></div>
+<!-- {: title="ratio.py"} -->
+<div class="highlight"><pre><span></span><code>Excluding 92 data points
+</code></pre></div>
+<figure id="hist-ratio-most">
+  <img src="./hist-ratio-most.svg" alt="Linear-linear histogram with apparently normal distribution peaking at Y equals 2200 near X equals 35."/>
+  <figcaption markdown="1">Figure 2.4: Ratio of Characters to Lines (Most)</figcaption>
+</figure>
+
+<ul>
+<li>Data is easier to see</li>
+<li>But what (if anything) does it <em>mean</em>?</li>
+<li>For that, we need some statistics</li>
+</ul>
+<h2>Summary</h2>
+<ul>
+<li>We have some insights, but we have sinned</li>
+<li>Some of our analysis involves manual steps (shell commands that aren&rsquo;t written down anywhere)</li>
+<li>Our scripts are not documented<ul>
+<li>Which makes life harder for the next person to work on this project</li>
+<li>Which will probably be us a few months from now</li>
+</ul>
+</li>
+<li>Data isn&rsquo;t described either<ul>
+<li>What does it mean? When and where was it collected?</li>
+</ul>
+</li>
+<li>And our statistics could use some work too<ul>
+<li>&ldquo;Play with the threshold&rdquo; is a danger sign</li>
+</ul>
+</li>
+<li>In short, this is not <a class="gl-ref" href="../glossary/#reproducible_research" markdown="1">reproducible research</a></li>
+<li>The next few lessons fix these shortcomings</li>
+</ul>
+<h2>Exercises</h2>
+<h3 class="exercise">Is average meaningful?</h3>
+<p>Is &ldquo;average&rdquo; a meaningful statistic for a [one-sided distribution][one-sided-distribution] with a [long tail][long-tail]?
+What would be a better way to characterize this distribution?</p>
+<h3 class="exercise">Size of Python source files</h3>
+<p>Write a short Python script to find Python source files and get their size.
+(Hint: use the [<code>glob</code>][glob-py] module to find files.)</p>
+<h3 class="exercise">Better plots</h3>
+<p>Add meaningful axis labels to all of the plots in this chapter.</p>
+<h3 class="exercise">Characters per line</h3>
+<p>What does the distribution of characters per line tell you about these files?
+How does the ratio for your own files compare?</p>
+<h3 class="exercise">Empty Python files</h3>
+<p>Why do empty Python files exist?
+Why do some files have such very long lines?
+Do any files have some characters but zero lines?
+How should we represent these in our visualization?</p>
+<h3 class="exercise">Dissecting the <code>find</code> command</h3>
+<p>Use <a href="https://explainshell.com/">explainshell</a> to dissect the <code>find</code> command used to get Python file sizes.
+Why is the semi-colon needed, and why does it have to have a backslash in front of it?</p>
+          
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

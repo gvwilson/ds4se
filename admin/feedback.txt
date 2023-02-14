@@ -1,0 +1,107 @@
+Brett Becker:
+
+Hi Greg, 
+
+I hope all is good. I am forever thinking that I still owe you feedback on the last thing you sent me. I think you said you were aiming for September on that - I will get to it soon if it's still of use. 
+
+A few thoughts on the recent topic:
+
+1. I'd move into correcting for multiple tests (I see you are going to discuss Bonferroni) - that's what I was thinking.
+2. I'd look at effect size next. 
+3. Although this could complicate things, I'd look at the current thinking of the ASA, specifically https://www.amstat.org/asa/files/pdfs/p-valuestatement.pdf and the paper linked there. It gets hairy though. The main point is: testing for stat sig has a place, but it's not the be-all and end-all. Combining stat sig with effect size is really essential. I'm not sure you want to go down that road though. 
+4. Stefik and Neil Brown know way more than I do on this stuff. 
+5. On data: I don't have any data that is suitable for examples (I don't think). Frankly I'd look at using some of Neil's Blackbox data. That's accessible, and in a structured format that's way better to deal with and is so broad, you could pick a particular subset that is nice and juicy. 
+
+Other notes:
+
+A. https://gvwilson.github.io/ds4se/hypothesis-testing/#how-can-we-tell-if-two-populations-are-different
+
+says:
+
+    p values can be mis-used in several ways. The most obvious is to choose a p value after the fact in order to get a significant result: if you ever see reports that mix several different p values or use odd numbers like 0.073, this is probably what’s going on.
+
+
+I'd find a different word than "odd". It could be interpreted as parity, but that makes no sense for non-integers. 
+
+Also, if one is using Bonferroni, etc. the p-values (if stated) will be "odd" yet, not a sign of something amiss.
+
+Finally, I'd mention that there is nothing special about .05 other than it's become a convention. It is of course totally arbitrary and not any better than any other choice. They are all correct, in that they all do what they say. 
+
+I hope that helps! 
+
+If you are going down the effect size road, Stefik is your man. I believe that hedge's g is preferred by many in as much as it's kinda like the t-test but for effect size - by that I mean it's pretty robust (I think) - by that I mean that it's relatively robust for most data, much as the t-test is almost always legit even if the data isn't normal. Of course there are purists that will argue against that till the day they die, but almost always, running a t-test and some non-parametric test on non-normal data yield the same result. 
+
+I was on an ICER 2019 paper looking at the use of inferential statistics at ICER - we looked at every paper ever published at ICER up until 2018. Some of the above mentioned bits are mentioned/refereced in that. 
+
+Brett
+
+----------------------------------------
+
+Christoph Treude
+
+Hi Greg,
+
+I would next discuss that the t-test assumes normal distributions, and introduce alternatives (e.g., Mann-Whitney-Wilcoxon) as well as measures for effect size (e.g., Cliff's delta) since p-values tend to be significant if the data is large enough. There should be lots of SE datasets and papers out there which use this kind of analysis. From our own work, the investigation of the impact of rapid release cycles on the integration delay of fixed issues comes to mind https://cs.adelaide.edu.au/~christoph/emse17b.pdf (comparing integration delay in rapid releases to integration delay in traditional releases). Let me know if you'd like to use this example -- the data appears to live on the first authors' computer instead of an online archive (don't get me started).
+
+Hope you're doing well!
+
+Cheers,
+  Christoph
+
+----------------------------------------
+
+Andreas Stefik
+
+Greg,
+
+Of course dude. Attempted answers inline.
+
+On Fri, May 28, 2021 at 6:23 AM Greg Wilson <gvwilson@third-bit.com> wrote:
+
+    Hey,
+
+    I hope you don't mind me asking a favor, but I've started warming up
+    https://gvwilson.github.io/ds4se/ again - promised myself I wouldn't do
+    another technical book, but I just don't have it in me to do coding
+    (tidyblocks is stalled until someone builds a better framework) or
+    fiction (can't concentrate). 
+
+
+Ok, so as it happens, the grant I just won is funding literally this. We have about 2-years of funding to make an accessible blocks framework, all on top of Quorum. Exactly "how" we're going to build it is being heavily debated by the team. There are multiple options on how to make it accessible and we're experimenting with a bunch of them at once this summer. As of right now, I have 3 other people working on it and I'm on it full-time myself too. I've built Quorum's core statistics library already (No QA yet, but lots of unit tests and math checks) and we've built prototypes of our charting library, which we're doing QA on right now. We've also heavily piloted our usual "word choices." So, like, we are re-imagining what all the tests are called.
+
+Once that's done, the current thinking is to build the blocks on top of OpenGL, which lets us cross-compile across our desktop and web infrastructures in Quorum. That gives us graphical power the other block languages can't even dream of touching + accessibility, which they also don't have (and is illegal in the U.S., but nevermind that). We'll see though. It wouldn't surprise me if we have to re-think as we invent the thing. Finally, I have a team in st louis and maine working on a vibro-tactile layer for tablets (long story).
+ 
+
+    The next section is going to introduce
+    t-tests; what would you do after that, and what would you use as data?
+
+
+This is actually a question I've been investigating, because if I'm building out a stats library for Quorum, I want to know which tests people actually use, so it's useful to people. So far as I can tell, there's no definitive source here, and I've looked. So far, I've pulled my inspiration from 3 sources:
+
+1. Code.org Unit 9: This won't answer your question, but crucially, they offer a lot of free data sets (your question below). They're excellent and well-curated.
+
+https://github.com/qorf/CSP-Widgets
+
+Unit 9: Data --- for all their files as CSV. They are creative commons and code.org and I have a good partnership. This is my repo no theirs, but it's easier to use these CSVs than pulling it down from code.org
+
+2. College Board Statistics in High-School: I don't have it handy, but the college board's high school statistics exam makes explicit which tests they think they should know. I found it helpful, but really, they only include a few tests and it's not enough. Like, you'd do CHI-squared next if you considered this source, but it wouldn't help you much past that. It's still a resource worth mentioning though, for younger ages.
+
+3. Brett Becker's paper from ICER. I don't have the exact reference immediately handy (I'm out of town for a few days blowing off steam with the family). But, crucially, they tracked all papers within a time frame from ICER. Not exactly a generalizable sample, but crucially they tracked which tests people used, how often, and stuff like that. The data isn't perfect and neither he nor I knows of any more generalizable data, but basically the paper showed what you might expect: t-tests/anova (well, same thing, with a different k, but nevermind), non-parametric equiv (again, mostly just rank transforms, but nevermind), the typical correlations (e.g., pearson, spearman --- ignore that spearman got the equations wrong and that nobody calculates it that way, so why the hell we even call it spearman is beyond me). Then, there's a handful of papers that use factor analysis (survey design) or IRT modeling, + a handful more that use chi-sq or kappa, but that's about it.
+
+Now that's not too shocking for ICER. They aren't statisticians, so it's not surprising there is nothing fancy. I think it would be much more interesting to see how it varies across scientific communities, but we haven't had the cycles to take on a project of that size. My hunch is that data probably generalizes to other social science areas (e.g., psychology, education), but less so to others (e.g., medical doesn't do that as much IMO, astronomers are all bayesian I think, my friends at the CDC tell me they almost exclusively use logistic regression --- so really just GLM again, but with their own twist). I don't "know" that though --- it's just my best guess.
+
+ 
+
+    I
+    figure there's got to be an interesting analysis from a subset of the
+    data you and yours have been collecting that could be used to introduce
+    some other kind of statistical testing/analysis/whatever to undergrads
+    in CS...
+
+
+Yup, so in a crazy twist of fate, we wrote two data science grants, assuming both would get killed. The first one got funded. For the second, we got word from the PO recently that we had "good reviews," which normally means you won, but legally we can't announce and we don't know until it's officially up or down --- so we'll see. So realistically, we may have won both grants, which would put us at trying to create a full pipeline platform for all this, from high-school through Ph.D., as each targeted different groups. That would be a full stats architecture, with blocks (optional), on tablets, the web, and desktop, accessible, in Quorum.
+
+Anyway, I'm out of town, but I hope that helps. I'm happy to chat sometime, as always, or collaborate in some way. I'm highly interested in this space lately. It feels like getting this all right is a damned important problem. I'm probably wrong, but that's what I've been learning as we pilot and take measurements.
+
+Stefik
+

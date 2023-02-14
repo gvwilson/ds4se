@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../mccole.css">
+  <link rel="stylesheet" href="../tango.css">
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script
+    type="text/javascript"
+    id="MathJax-script"
+    async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <script defer src="../mccole.js"></script>
+  <title>Data Science for Software Engineers: Nonparametric Statistics</title>
+</head>
+
+  <body>
+    <div class="row">
+      <div class="sidebar">
+        <p>
+  
+  <img src="../logo.svg" alt="site logo" class="logo" />
+  <a href="../">Data Science for Software Engineers</a>
+  
+</p>
+<ol class="toc-chapter">
+  
+  <li>
+    <a href="../introduction/">
+      Introduction
+    </a>
+  </li>
+  
+  <li>
+    <a href="../basics/">
+      Basic Tools
+    </a>
+  </li>
+  
+  <li>
+    <a href="../robust/">
+      Robust Analysis
+    </a>
+  </li>
+  
+  <li>
+    <a href="../hyptest/">
+      Hypothesis Testing
+    </a>
+  </li>
+  
+  <li>
+    <a href="../large/">
+      The Law of Large Numbers
+    </a>
+  </li>
+  
+  <li>
+    <a href="../nonpar/">
+      <strong>Nonparametric Statistics</strong>
+    </a>
+  </li>
+  
+  <li>
+    <a href="../conclusion/">
+      Conclusion
+    </a>
+  </li>
+  
+</ol>
+<ol class="toc-appendix">
+  
+  <li>
+    <a href="../bibliography/">
+      Bibliography
+    </a>
+  </li>
+  
+  <li>
+    <a href="../theory/">
+      Theory
+    </a>
+  </li>
+  
+  <li>
+    <a href="../syllabus/">
+      Syllabus
+    </a>
+  </li>
+  
+  <li>
+    <a href="../license/">
+      License
+    </a>
+  </li>
+  
+  <li>
+    <a href="../conduct/">
+      Code of Conduct
+    </a>
+  </li>
+  
+  <li>
+    <a href="../contributing/">
+      Contributing
+    </a>
+  </li>
+  
+  <li>
+    <a href="../glossary/">
+      Glossary
+    </a>
+  </li>
+  
+  <li>
+    <a href="../credits/">
+      Credits
+    </a>
+  </li>
+  
+  <li>
+    <a href="../contents/">
+      Index
+    </a>
+  </li>
+  
+</ol>
+
+<p><a href="../sdxpy-examples.zip" type="application/zip">download examples</a></p>
+
+
+      </div>
+      <div id="printable" class="contents bordered">
+        <main>
+          
+  <h1>Chapter 6: Nonparametric Statistics</h1>
+
+
+          
+            
+<div class="draft">
+  <p>DRAFT</p>
+</div>
+
+
+            
+  
+
+  
+
+  
+
+  
+
+
+            
+<p class="definitions">
+  Terms defined: <a class="gl-ref" href="../glossary/#effect_size" markdown="1">effect size</a>, <a class="gl-ref" href="../glossary/#mann_whitney_u" markdown="1">Mann-Whitney U test</a>, <a class="gl-ref" href="../glossary/#tdd" markdown="1">test-driven development</a>, <a class="gl-ref" href="../glossary/#wilcoxon_rank_sum" markdown="1">Wilcoxon rank sum test</a>
+</p>
+
+
+            <div class="page-toc"></div>
+            <p><a class="x-ref" href="../introduction/">Chapter 1</a> asked whether some programmers are more productive than others.
+The answer was &ldquo;yes&rdquo;,
+which immediately begs the question &ldquo;why?&rdquo;
+Is there a &ldquo;geek gene&rdquo;,
+i.e.,
+are some people just naturally better at programming?
+<cite>Patitsas2016</cite> showed that
+there is little evidence for that theory in students&rsquo; grades
+and that confirmation bias probably explains why some instructors believe it.</p>
+<p>Another possibility is that some programmers discovered or been taught
+more productive working practices.
+One practice that is frequently mentioned is <a class="gl-ref" href="../glossary/#tdd" markdown="1">test-driven development</a> (TDD):
+instead of writing code and then writing tests,
+programmers write tests and then write just enough code to make them pass.
+The idea is that writing tests first:</p>
+<ol>
+<li>
+<p>helps developers figure out exactly what the code is supposed to do,</p>
+</li>
+<li>
+<p>avoids confirmation bias, and</p>
+</li>
+<li>
+<p>prevents gold-plating (when the tests pass, the work is done).</p>
+</li>
+</ol>
+<p>TDD has many passionate advocates, but does it actually work?</p>
+<ul>
+<li>Discussion based on <cite>Fucci2016</cite><ul>
+<li>Use non-parametric tests when data isn&rsquo;t normal (and most data isn&rsquo;t in software engineering)</li>
+<li>Introduce <a class="gl-ref" href="../glossary/#mann_whitney_u" markdown="1">Mann-Whitney U test</a>
+    (also called <a class="gl-ref" href="../glossary/#wilcoxon_rank_sum" markdown="1">Wilcoxon rank sum test</a>)</li>
+<li>Also introduce <a class="gl-ref" href="../glossary/#effect_size" markdown="1">effect size</a>
+    (in particular, the common-language effect size)</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+The research questions driving the part of the baseline study replicated in this paper were:
+
+1. Do test-first developers write more tests than test-last developers?
+2.  Do test-first developers produce solutions with higher external quality than test-last developers?
+3.  Are test-first developers more productive than test-last developers?
+
+The independent variable was...development approach (i.e., TDD or TLD), whereas the dependent variables were:
+testing effort (TESTS),
+software external quality (QLTY),
+and developers’ productivity (PROD).
+Note that,
+following from the research questions,
+the hypotheses were formulated as directional for consistency with <cite>Erdogmus2005</cite>,
+but analyzed as non-directional
+since the existing body of knowledge regarding the postulated impact of TDD
+does not suggest a specific direction of the effect.
+</blockquote>
+
+<ul>
+<li>FIXME: unpack this quote</li>
+</ul>
+<hr />
+<p>Each row is a mistake (label in first column),
+then the next two columns are the real rank in frequency (1 = most frequent) and time-to-fix (TTF) in Blackbox.
+Then it&rsquo;s a column for each educator for their frequency rank predictions,
+same again for TTF prediction.</p>
+<p>There&rsquo;s also a set for &ldquo;spread&rdquo;
+which was a question we asked about whether the mistakes were concentrated in a few users or evenly spread across them all.
+We dropped that after I decided I wasn&rsquo;t confident how best to operationalise that in the data (variance?  entropy?).</p>
+<p>The original analysis was done in SPSS,
+so I don&rsquo;t have any R code for you.
+But hopefully we described it well enough in the paper:
+I recommend the journal version: http://twistedsquare.com/Educators-TOCE.pdf.
+Section 6.1 describes comparing educators amongst themselves,
+and section 7.1 describes comparing educators to Blackbox.</p>
+          
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+li {
+  font-size:large;
+  margin-bottom:.5%;
+}
+
+
+
+main{
+   margin-bottom: 100px;
+   margin-right: 10%;
+   margin-left: 10%;"
+}
+
+footer {
+    text-align: center;
+}
+
+img.footer {
+    vertical-align: middle;
+    height: 2em;
+    padding: 0.25em;
+}
+
+dt {
+    font-weight: bold;
+}

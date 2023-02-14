@@ -1,0 +1,1163 @@
+- key: ast
+  en:
+    term: "abstract syntax tree"
+    acronym: AST
+    def: >
+      FIXME
+
+- key: accuracy
+  en:
+    term: "accuracy"
+    acronym: AST
+    def: >
+      FIXME
+
+- key: aggregation
+  en:
+    term: "aggregation"
+    def: >
+      FIXME
+
+- key: alias
+  en:
+    term: "alias"
+    def: >
+      FIXME
+
+- key: alternative_hypothesis
+  ref:
+    - null_hypothesis
+    - p_value
+  en:
+    term: "alternative hypothesis"
+    def: >
+      FIXME
+
+- key: amdahls_law
+  en:
+    term: "Amdahl's Law"
+    def: >
+      FIXME
+
+- key: anova
+  en:
+    term: "analysis of variance"
+    acronym: ANOVA
+    def: >
+      FIXME
+
+- key: automatic_variable
+  en:
+    term: "automatic variable"
+    def: >
+      FIXME
+
+- key: bayes_rule
+  en:
+    term: "Bayes' Rule"
+    def: >
+      FIXME
+
+- key: benjamini_hochberg
+  en:
+    term: "Benjamini-Hochberg *p* value correction"
+    def: >
+      FIXME
+
+- key: bernoulli_distribution
+  en:
+    term: "Bernoulli distribution"
+    def: >
+      FIXME
+
+- key: bessel_correction
+  en:
+    term: "Bessel correction"
+    def: >
+      FIXME
+
+- key: bin
+  en:
+    term: "bin"
+    def: >
+      FIXME
+
+- key: binomial_distribution
+  en:
+    term: "binomial distribution"
+    def: >
+      FIXME
+
+- key: blob
+  en:
+    term: "blob"
+    def: >
+      FIXME
+
+- key: bonferroni_correction
+  ref:
+    - p_hacking
+    - p_value
+  en:
+    term: "Bonferroni correction"
+    def: >
+      FIXME
+
+- key: boolean
+  en:
+    term: Boolean
+    def: >
+      Relating to a variable or data type that can have either a logical value
+      of true or false. Named for George Boole, a 19th century mathematician.
+
+- key: box_and_whisker_plot
+  en:
+    term: "box-and-whisker plot"
+    def: >
+      FIXME
+
+- key: broadcast
+  en:
+    term: "broadcast"
+    def: >
+      FIXME
+
+- key: build_action
+  en:
+    term: "build action"
+    def: >
+      FIXME
+
+- key: build_prerequisite
+  en:
+    term: "build prerequisite"
+    def: >
+      FIXME
+
+- key: build_rule
+  en:
+    term: "build rule"
+    def: >
+      FIXME
+
+- key: build_target
+  en:
+    term: "build target"
+    def: >
+      FIXME
+
+- key: build_tool
+  en:
+    term: "build tool"
+    def: >
+      FIXME
+
+- key: central_limit_theorem
+  en:
+    term: "Central Limit Theorem"
+    def: >
+      FIXME
+
+- key: central_moment
+  en:
+    term: "central moment"
+    def: >
+      FIXME
+
+- key: character_encoding
+  en:
+    term: "character encoding"
+    def: >
+      FIXME
+
+- key: chebyshev_inequality
+  en:
+    term: "Chebyshev's Inequality"
+    def: >
+      FIXME
+
+- key: chi_square
+  en:
+    term: "chi-square test"
+    def: >
+      FIXME
+
+- key: cliffs_delta
+  en:
+    term: "Cliff's $$\\delta$$"
+    def: >
+      FIXME
+
+- key: cohens_d
+  en:
+    term: "Cohen's *d*"
+    def: >
+      FIXME
+
+- key: cohens_kappa
+  en:
+    term: "Cohen's kappa coefficient"
+    def: >
+      FIXME
+
+- key: csv
+  en:
+    term: "comma-separated values"
+    acronym: CSV
+    def: >
+      FIXME
+
+- key: conditional_probability
+  en:
+    term: "conditional probability"
+    def: >
+      FIXME
+
+- key: confidence_interval
+  en:
+    term: "confidence interval"
+    def: >
+      FIXME
+
+- key: continuity_correction
+  en:
+    term: "continuity correction"
+    def: >
+      FIXME
+
+- key: convergence
+  en:
+    term: "convergence"
+    def: >
+      FIXME
+
+- key: convolution
+  en:
+    term: "convolution"
+    def: >
+      FIXME
+
+- key: correlation
+  en:
+    term: "correlation"
+    def: >
+      FIXME
+
+- key: covariance
+  en:
+    term: "covariance"
+    def: >
+      FIXME
+
+- key: covariance_matrix
+  en:
+    term: "covariance matrix"
+    def: >
+      FIXME
+
+- key: cdf
+  en:
+    term: "cumulative distribution function"
+    acronym: CDF
+    def: >
+      FIXME
+
+- key: curve_fitting
+  en:
+    term: "curve fitting"
+    def: >
+      FIXME
+
+- key: data_manifest
+  en:
+    term: "data manifest"
+    def: >
+      FIXME explain where data comes from.
+
+- key: data_science
+  en:
+    term: "data science"
+    def: >
+      Statistics, but less rigorous and better paid.
+
+- key: dataframe
+  en:
+    term: "dataframe"
+    def: >
+      FIXME
+
+- key: de_anonymization
+  en:
+    term: "de-anonymization"
+    def: >
+      FIXME
+
+- key: degrees_of_freedom
+  en:
+    term: "degrees of freedom"
+    def: >
+      FIXME
+
+- key: dependent_variable
+  ref:
+    - response_variable
+  en:
+    term: "dependent variable"
+    def: >
+      FIXME
+
+- key: descriptive_statistics
+  en:
+    term: "descriptive statistics"
+    def: >
+      FIXME
+
+- key: docstring
+  en:
+    term: "docstring"
+    def: >
+      FIXME
+
+- key: effect_size
+  en:
+    term: "effect size"
+    def: >
+      FIXME
+
+- key: escape_character
+  en:
+    term: "escape character"
+    def: >
+      FIXME
+
+- key: event
+  en:
+    term: "event"
+    def: >
+      FIXME
+
+- key: expected_value
+  ref:
+    - mean
+  en:
+    term: "expected value"
+    def: >
+      FIXME
+
+- key: explanatory_variable
+  en:
+    term: "explanatory variable"
+    def: >
+      A variable whose value is an input to a [statistical model](#statistical-model)
+      rather than being predicted by it.
+      Explanatory variables determine the values of [response variables](#response-variable).
+
+- key: f_measure
+  en:
+    term: "F measure"
+    def: >
+      FIXME
+
+- key: f_test
+  en:
+    term: "F test"
+    def: >
+      FIXME
+
+- key: false_negative
+  en:
+    term: "false negative"
+    def: >
+      FIXME
+
+- key: false_positive
+  en:
+    term: "false positive"
+    def: >
+      FIXME
+
+- key: fat_arrow_function
+  en:
+    term: "fat arrow function"
+    def: >
+      FIXME
+
+- key: filter
+  en:
+    term: "filter"
+    def: >
+      FIXME
+
+- key: gamma_distribution
+  en:
+    term: "Gamma distribution"
+    def: >
+      FIXME
+
+- key: gamma_function
+  en:
+    term: "Gamma function"
+    def: >
+      FIXME
+
+- key: geometric_distribution
+  en:
+    term: "geometric distribution"
+    def: >
+      FIXME
+
+- key: gini_coefficient
+  en:
+    term: "Gini coefficient"
+    def: >
+      FIXME
+
+- key: gqm
+  en:
+    term: "goal-question-metric"
+    acronym: GQM
+    def: >
+      FIXME
+
+- key: greenhouse_geisser_correction
+  en:
+    term: "Greenhouse-Geisser correction"
+    def: >
+      FIXME
+
+- key: gzip
+  en:
+    term: "gzip"
+    def: >
+      FIXME
+
+- key: harmonic_mean
+  en:
+    term: "harmonic mean"
+    def: >
+      FIXME
+
+- key: header_row
+  en:
+    term: "header row"
+    def: >
+      FIXME
+
+- key: hero_developer
+  en:
+    term: "hero developer"
+    def: >
+      FIXME
+
+- key: histogram
+  en:
+    term: "histogram"
+    def: >
+      FIXME
+
+- key: independent_variable
+  ref:
+    - explanatory_variable
+  en:
+    term: "independent variable"
+    def: >
+      FIXME
+
+- key: iqr
+  en:
+    term: "interquartile range"
+    acronym: IQR
+    def: >
+      FIXME
+
+- key: iso_date_format
+  en:
+    term: "ISO date format"
+    def: >
+      FIXME
+
+- key: jitter
+  en:
+    term: "jitter"
+    def: >
+      FIXME
+
+- key: kano_scale
+  en:
+    term: "Kano scale"
+    def: >
+      FIXME
+
+- key: key
+  en:
+    term: "key"
+    def: >
+      FIXME
+
+- key: kruskal_wallis
+  en:
+    term: "Kruskal-Wallis test"
+    def: >
+      FIXME
+
+- key: learner_persona
+  en:
+    term: "learner persona"
+    def: >
+      A brief description of an idealized learner that captures key demographic features of a lesson's intended audience.
+
+- key: likert_scale
+  en:
+    term: "Likert scale"
+    def: >
+      FIXME
+
+- key: linear_regression
+  en:
+    term: "linear regression"
+    def: >
+      A modeling technique that assumes *y = ax+b*
+      where *y* is a [response variable](#response-variable)
+      and *x* is an [explanatory variable](#explanatory-variable).
+
+- key: linter
+  en:
+    term: "linter"
+    def: >
+      FIXME
+
+- key: littles_law
+  en:
+    term: "Little's Law"
+    def: >
+      FIXME
+
+- key: logistic_regression
+  en:
+    term: "logistic regression"
+    def: >
+      FIXME
+
+- key: long_tail
+  en:
+    term: "long tail"
+    def: >
+      FIXME
+
+- key: lorenz_curve
+  en:
+    term: "Lorenz curve"
+    def: >
+      FIXME
+
+- key: magic_number
+  en:
+    term: "magic number"
+    def: >
+      FIXME
+
+- key: main_driver
+  en:
+    term: "main driver"
+    def: >
+      FIXME
+
+- key: "mann_whitney_u"
+  en:
+    term: "Mann-Whitney U test"
+    def: >
+      FIXME
+      Also known as a [Wilcoxon rank sum test](#wilcoxon_rank_sum) test.
+
+
+- key: marthas_rules
+  en:
+    term: "Martha's Rules"
+    def: >
+      A simple set of guidelines for consensus-based decision making.
+
+- key: mauchly_sphericity
+  en:
+    term: "Mauchly's test for sphericity"
+    def: >
+      FIXME
+
+- key: maximum_likelihood_estimation
+  en:
+    term: "maximum likelihood estimation"
+    def: >
+      FIXME
+
+- key: mean
+  en:
+    term: "mean"
+    def: >
+      FIXME
+
+- key: median
+  en:
+    term: "median"
+    def: >
+      FIXME
+
+- key: method_chaining
+  en:
+    term: "method chaining"
+    def: >
+      FIXME
+
+- key: method_of_moments
+  en:
+    term: "method of moments"
+    def: >
+      FIXME
+
+- key: minification
+  en:
+    term: "minification"
+    def: >
+      FIXME
+
+- key: multiple_linear_regression
+  en:
+    term: "multiple linear regression"
+    def: >
+      FIXME
+
+- key: n_gram_analysis
+  en:
+    term: "n-gram analysis"
+    def: >
+      FIXME
+
+- key: negative_binomial_distribution
+  en:
+    term: "negative binomial distribution"
+    def: >
+      FIXME
+
+- key: negative_binomial_regression
+  en:
+    term: "negative binomial regression"
+    def: >
+      FIXME
+
+- key: nobles_rules
+  en:
+    term: "Noble's Rules"
+    def: >
+      A simple set of guidelines for organizing a small data analysis project.
+
+- key: normal_distribution
+  en:
+    term: "normal distribution"
+    def: >
+      FIXME
+
+- key: na
+  en:
+    term: "Not Available"
+    acronym: "NA"
+    def: >
+      FIXME
+
+- key: nan
+  en:
+    term: "Not a Number"
+    acronym: "NaN"
+    def: >
+      FIXME
+
+- key: nuisance_factor
+  en:
+    term: "nuisance factor"
+    def: >
+      FIXME
+
+- key: "null"
+  en:
+    term: "null"
+    def: >
+      FIXME
+
+- key: null_hypothesis
+  ref:
+    - alternative-hypothesis
+    - p_value
+  en:
+    term: "null hypothesis"
+    def: >
+      FIXME
+
+- key: one_sided_distribution
+  en:
+    term: "one-sided distribution"
+    def: >
+      FIXME
+
+- key: one_sided_test
+  ref:
+    - two_sided_test
+  en:
+    term: "one-sided test"
+    def: >
+      FIXME
+
+- key: outlier
+  en:
+    term: "outlier"
+    def: >
+      FIXME
+
+- key: overdispersion
+  en:
+    term: "overdispersion"
+    def: >
+      FIXME
+
+- key: p_hacking
+  ref:
+    - bonferroni_correction
+    - p_value
+  en:
+    term: "*p* hacking"
+    def: >
+      FIXME
+
+- key: p_value
+  ref:
+    - alternative_hypothesis
+    - null_hypothesis
+  en:
+    term: "*p* value"
+    def: >
+      FIXME
+
+- key: pair_programming
+  en:
+    term: "pair programming"
+    def: >
+      FIXME
+
+- key: pattern_rule
+  en:
+    term: "pattern rule"
+    def: >
+      FIXME
+
+- key: pearson_correlation_coefficient
+  en:
+    term: "Pearson correlation coefficient"
+    def: >
+      FIXME
+
+- key: percentile
+  en:
+    term: "percentile"
+    def: >
+      FIXME
+
+- key: pid
+  en:
+    term: "personal identifying information"
+    acronym: PID
+    def: >
+      FIXME
+
+- key: phony_target
+  en:
+    term: "phony target"
+    def: >
+      FIXME
+
+- key: poisson_distribution
+  en:
+    term: "Poisson distribution"
+    def: >
+      FIXME
+
+- key: pooled_sample_variance
+  en:
+    term: "pooled sample variance"
+    def: >
+      FIXME
+
+- key: population
+  en:
+    term: "population"
+    def: >
+      FIXME
+
+- key: population_moment
+  en:
+    term: "population moment"
+    def: >
+      FIXME
+
+- key: power_law_distribution
+  en:
+    term: "power law distribution"
+    def: >
+      FIXME
+
+- key: pre_registration
+  en:
+    term: "pre-registration"
+    def: >
+      FIXME
+
+- key: precision
+  en:
+    term: "precision"
+    def: >
+      FIXME
+
+- key: pca
+  en:
+    term: "principal component analysis"
+    acronym: PCA
+    def: >
+      FIXME
+
+- key: pdf
+  en:
+    term: "probability density function"
+    acronym: PDF
+    def: >
+      FIXME
+
+- key: pmf
+  en:
+    term: "probability mass function"
+    acronym: PMF
+    def: >
+      FIXME
+
+- key: property
+  en:
+    term: "property"
+    def: >
+      FIXME
+
+- key: quartile
+  en:
+    term: "quartile"
+    def: >
+      FIXME
+
+- key: queueing_theory
+  en:
+    term: "queueing theory"
+    def: >
+      FIXME
+
+- key: rng
+  en:
+    term: "random number generator"
+    acronym: RNG
+    def: >
+      FIXME
+
+- key: rank_correlation
+  en:
+    term: "rank correlation"
+    def: >
+      FIXME
+
+- key: raster_graphics
+  en:
+    term: "raster graphics"
+    def: >
+      FIXME
+
+- key: recall
+  en:
+    term: "recall"
+    acronym: AST
+    def: >
+      FIXME
+
+- key: regular_expression
+  en:
+    term: "regular expression"
+    def: >
+      FIXME
+
+- key: relational_database
+  en:
+    term: "relational database"
+    def: >
+      FIXME
+
+- key: reproducible_research
+  en:
+    term: "reproducible research"
+    def: >
+      FIXME
+
+- key: response_variable
+  en:
+    term: "response variable"
+    def: >
+      A variable whose value depends on
+      (and hopefully can be predicted from)
+      the value of an [explanatory variable](#explanatory_variable).
+
+- key: right_censoring
+  en:
+    term: "right censoring"
+    def: >
+      FIXME
+
+- key: sample
+  en:
+    term: "sample"
+    def: >
+      FIXME
+
+- key: sample_moment
+  en:
+    term: "sample moment"
+    def: >
+      FIXME
+
+- key: sample_variance
+  en:
+    term: "sample variance"
+    def: >
+      FIXME
+
+- key: svg
+  en:
+    term: "Scalable Vector Graphics"
+    acronym: SVG
+    def: >
+      FIXME
+
+- key: rng_seed
+  ref:
+    - rng
+  en:
+    term: "seed"
+    def: >
+      FIXME
+
+- key: shapiro_wilk
+  en:
+    term: "Shapiro-Wilk test"
+    def: >
+      FIXME
+
+- key: sigmoidal_curve
+  en:
+    term: "sigmoidal curve"
+    def: >
+      FIXME
+
+- key: slice
+  en:
+    term: "slice"
+    def: >
+      FIXME
+
+- key: sliding_window
+  en:
+    term: "sliding window"
+    def: >
+      FIXME
+
+- key: smoothing
+  en:
+    term: "smoothing"
+    def: >
+      FIXME
+
+- key: spearmans_rank_correlation
+  en:
+    term: "Spearman's rank correlation"
+    def: >
+      FIXME
+
+- key: sql
+  en:
+    term: "SQL"
+    def: >
+      FIXME
+
+- key: standard_deviation
+  en:
+    term: "standard deviation"
+    def: >
+      FIXME
+
+- key: standard_normal
+  en:
+    term: "standard normal distribution"
+    def: >
+      FIXME
+
+- key: standard_uniform
+  en:
+    term: "standard uniform distribution"
+    def: >
+      FIXME
+
+- key: state_machine
+  en:
+    term: "state machine"
+    def: >
+      FIXME
+
+- key: statistic
+  en:
+    term: "statistic"
+    def: >
+      FIXME
+
+- key: statistical_model
+  en:
+    term: "statistical model"
+    def: >
+      FIXME
+
+- key: t_distribution
+  en:
+    term: "*t* distribution"
+    def: >
+      FIXME
+
+- key: t_test
+  en:
+    term: "*t* test"
+    def: >
+      FIXME
+
+- key: tar
+  en:
+    term: "tar"
+    def: >
+      FIXME
+
+- key: taschuks_rules
+  en:
+    term: "Taschuk's Rules"
+    def: >
+      A simple set of guidelines for writing robust data analysis scripts.
+
+- key: tdd
+  en:
+    term: "test-driven development"
+    def: >
+      FIXME
+
+- key: throttle
+  en:
+    term: "throttle"
+    def: >
+      FIXME
+
+- key: tidy_data
+  en:
+    term: "tidy data"
+    def: >
+      Tabular data that satisfies four conditions:
+      1.  Each column contains one statistical variable
+          (i.e., one property that was measured or observed).
+      2.  Each different observation is in a different row.
+      3.  There is one table for each set of observations.
+      4.  If there are multiple tables,
+          each table has a column containing a unique key
+          so that related data can be linked.
+
+- key: two_sided_test
+  ref:
+    - one_sided_test
+  en:
+    term: "two-sided test"
+    def: >
+      FIXME
+
+- key: uniform_distribution
+  en:
+    term: "uniform distribution"
+    def: >
+      FIXME
+
+- key: utilization
+  en:
+    term: "utilization"
+    def: >
+      FIXME
+
+- key: variance
+  en:
+    term: "variance"
+    def: >
+      FIXME
+
+- key: vector_graphics
+  en:
+    term: "vector graphics"
+    def: >
+      FIXME
+
+- key: violin_plot
+  en:
+    term: "violin plot"
+    def: >
+      FIXME
+
+- key: visitor_pattern
+  en:
+    term: "Visitor pattern"
+    def: >
+      FIXME
+
+- key: weighting
+  en:
+    term: "weighting"
+    def: >
+      FIXME
+
+- key: wheel
+  en:
+    term: "wheel"
+    def: >
+      FIXME
+
+- key: wilcoxon_rank_sum
+  en:
+    term: "Wilcoxon rank sum test"
+    def: >
+      Another name for the [Mann-Whitney U test](#mann_whitney_u).
+
+- key: wilcoxon_signed_rank
+  en:
+    term: "Wilcoxon signed rank test"
+    def: >
+      FIXME
+
+- key: yaml
+  en:
+    term: "YAML"
+    def: >
+      FIXME
+
+- key: z_test
+  en:
+    term: "Z test"
+    def: >
+      FIXME
+
+- key: zipfs_law
+  en:
+    term: "Zipf's Law"
+    link: https://en.wikipedia.org/wiki/Zipf%27s_law
+    def: >
+      An empirical rule stating that frequency is inversely proportional to rank.
+
+- key: zipf_mandelbrot_distribution
+  en:
+    term: "Zipf-Mandelbrot distribution"
+    def: >
+      FIXME

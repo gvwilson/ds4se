@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="icon" type="image/x-icon" href="../../favicon.ico">
+  <link rel="stylesheet" href="../../mccole.css">
+  <link rel="stylesheet" href="../../tango.css">
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script
+    type="text/javascript"
+    id="MathJax-script"
+    async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <script defer src="../../mccole.js"></script>
+  <title>Data Science for Software Engineers</title>
+</head>
+
+  <body>
+    <div class="row">
+      <div class="sidebar">
+        <p>
+  
+  <img src="../../logo.svg" alt="site logo" class="logo" />
+  <a href="../../">Data Science for Software Engineers</a>
+  
+</p>
+<ol class="toc-chapter">
+  
+  <li>
+    <a href="../../introduction/">
+      Introduction
+    </a>
+  </li>
+  
+  <li>
+    <a href="../../basics/">
+      Basic Tools
+    </a>
+  </li>
+  
+  <li>
+    <a href="../../robust/">
+      Robust Analysis
+    </a>
+  </li>
+  
+  <li>
+    <a href="../../hyptest/">
+      Hypothesis Testing
+    </a>
+  </li>
+  
+  <li>
+    <a href="../../large/">
+      The Law of Large Numbers
+    </a>
+  </li>
+  
+  <li>
+    <a href="../../nonpar/">
+      Nonparametric Statistics
+    </a>
+  </li>
+  
+  <li>
+    <a href="../../conclusion/">
+      Conclusion
+    </a>
+  </li>
+  
+</ol>
+<ol class="toc-appendix">
+  
+  <li>
+    <a href="../../bibliography/">
+      Bibliography
+    </a>
+  </li>
+  
+  <li>
+    <a href="../../theory/">
+      Theory
+    </a>
+  </li>
+  
+  <li>
+    <a href="../../syllabus/">
+      Syllabus
+    </a>
+  </li>
+  
+  <li>
+    <a href="../../license/">
+      License
+    </a>
+  </li>
+  
+  <li>
+    <a href="../../conduct/">
+      Code of Conduct
+    </a>
+  </li>
+  
+  <li>
+    <a href="../../contributing/">
+      Contributing
+    </a>
+  </li>
+  
+  <li>
+    <a href="../../glossary/">
+      Glossary
+    </a>
+  </li>
+  
+  <li>
+    <a href="../../credits/">
+      Credits
+    </a>
+  </li>
+  
+  <li>
+    <a href="../../contents/">
+      Index
+    </a>
+  </li>
+  
+</ol>
+
+<p><a href="../../sdxpy-examples.zip" type="application/zip">download examples</a></p>
+
+
+      </div>
+      <div id="printable" class="contents bordered">
+        <main>
+          
+  <h1>Data Science for Software Engineers</h1>
+  <p><em>a tool-based introduction</em></p>
+
+
+          
+            
+<div class="draft">
+  <p>DRAFT</p>
+</div>
+
+
+            
+  
+
+  
+
+  
+
+  
+
+
+            
+
+            <div class="page-toc"></div>
+            <ul>
+<li>
+<p>path: simple-index.html
+  format: HTML
+  who: &ldquo;Greg Wilson <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#118;&#119;&#105;&#108;&#115;&#111;&#110;&#64;&#116;&#104;&#105;&#114;&#100;&#45;&#98;&#105;&#116;&#46;&#99;&#111;&#109;">&#103;&#118;&#119;&#105;&#108;&#115;&#111;&#110;&#64;&#116;&#104;&#105;&#114;&#100;&#45;&#98;&#105;&#116;&#46;&#99;&#111;&#109;</a>&rdquo;
+  what: &ldquo;Main Python package index page&rdquo;
+  where: &ldquo;https://pypi.org/simple/&rdquo;
+  when: 2019-11-18
+  how: &ldquo;Downloaded&rdquo;</p>
+</li>
+<li>
+<p>path: 0805nexter-index.html
+  format: HTML
+  who: &ldquo;Greg Wilson <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#118;&#119;&#105;&#108;&#115;&#111;&#110;&#64;&#116;&#104;&#105;&#114;&#100;&#45;&#98;&#105;&#116;&#46;&#99;&#111;&#109;">&#103;&#118;&#119;&#105;&#108;&#115;&#111;&#110;&#64;&#116;&#104;&#105;&#114;&#100;&#45;&#98;&#105;&#116;&#46;&#99;&#111;&#109;</a>&rdquo;
+  what: &ldquo;Sample package description page&rdquo;
+  where: &ldquo;https://pypi.org/simple/0805nexter/&rdquo;
+  when: 2019-11-18
+  how: &ldquo;Downloaded&rdquo;</p>
+</li>
+<li>
+<p>path: release-count-timings.txt
+  format: transcript
+  who: &ldquo;Greg Wilson <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#118;&#119;&#105;&#108;&#115;&#111;&#110;&#64;&#116;&#104;&#105;&#114;&#100;&#45;&#98;&#105;&#116;&#46;&#99;&#111;&#109;">&#103;&#118;&#119;&#105;&#108;&#115;&#111;&#110;&#64;&#116;&#104;&#105;&#114;&#100;&#45;&#98;&#105;&#116;&#46;&#99;&#111;&#109;</a>&rdquo;
+  what: &ldquo;Elapsed time to download Python package information&rdquo;
+  where: &ldquo;https://pypi.org/&rdquo;
+  when: 2019-11-18
+  how: &ldquo;Verbose output from bin/get-index-page.py&rdquo;</p>
+</li>
+<li>
+<p>path: data/all-versions.csv.gz
+  format: CSV+gzip
+  who: &ldquo;Greg Wilson <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#118;&#119;&#105;&#108;&#115;&#111;&#110;&#64;&#116;&#104;&#105;&#114;&#100;&#45;&#98;&#105;&#116;&#46;&#99;&#111;&#109;">&#103;&#118;&#119;&#105;&#108;&#115;&#111;&#110;&#64;&#116;&#104;&#105;&#114;&#100;&#45;&#98;&#105;&#116;&#46;&#99;&#111;&#109;</a>&rdquo;
+  what: &ldquo;All releases of all Python packages on PyPI&rdquo;
+  where: &ldquo;https://pypi.org/&rdquo;
+  when: 2019-11-18
+  how: &ldquo;Scraped using bin/get-all-versions-.py&rdquo;
+  fields:</p>
+</li>
+<li>name: Package
+    type: text
+    content: package name</li>
+<li>
+<p>name: Releases
+    type: text
+    content: release filename</p>
+</li>
+<li>
+<p>path: results/name-component-count.csv
+  format: CSV
+  who: &ldquo;Greg Wilson <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#118;&#119;&#105;&#108;&#115;&#111;&#110;&#64;&#116;&#104;&#105;&#114;&#100;&#45;&#98;&#105;&#116;&#46;&#99;&#111;&#109;">&#103;&#118;&#119;&#105;&#108;&#115;&#111;&#110;&#64;&#116;&#104;&#105;&#114;&#100;&#45;&#98;&#105;&#116;&#46;&#99;&#111;&#109;</a>&rdquo;
+  what: &ldquo;Count of types of release files&rdquo;
+  where: &ldquo;data/all-versions.csv.gz&rdquo;
+  when: 2019-11-18
+  how: bin/components.py
+  fields:</p>
+</li>
+<li>name: Component
+    type: text
+    content: type of component in filename</li>
+<li>
+<p>name: Count
+    type: integer
+    content: number of occurences</p>
+</li>
+<li>
+<p>path: results/releases.csv
+  format: HTML
+  who: &ldquo;Greg Wilson <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#118;&#119;&#105;&#108;&#115;&#111;&#110;&#64;&#116;&#104;&#105;&#114;&#100;&#45;&#98;&#105;&#116;&#46;&#99;&#111;&#109;">&#103;&#118;&#119;&#105;&#108;&#115;&#111;&#110;&#64;&#116;&#104;&#105;&#114;&#100;&#45;&#98;&#105;&#116;&#46;&#99;&#111;&#109;</a>&rdquo;
+  what: &ldquo;Number of releases for each Python package&rdquo;
+  where: &ldquo;https://pypi.org/&rdquo;
+  when: 2019-11-18
+  how: &ldquo;Scraped using bin/get-index-page.py&rdquo;
+  fields:</p>
+</li>
+<li>name: Package
+    type: text
+    content: package name</li>
+<li>name: Releases
+    type: integer
+    content: number of releases</li>
+</ul>
+          
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

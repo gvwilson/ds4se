@@ -1,0 +1,26 @@
+- <145Questions.xlsx>
+  - What is this?: Summary of survey results from Begel & Zimmermann's "[Analyze This!](https://dl.acm.org/citation.cfm?id=2568233)"
+  - Format: Excel
+  - Source(s): <https://www.microsoft.com/en-us/research/publication/analyze-this-145-questions-for-data-scientists-in-software-engineering/>
+  - Last Modified: October 2013
+  - Contact: Andrew Begel <abegel@microsoft.com>
+  - Spatial Applicability: global
+  - Temporal Applicability: 2013
+  - Fields:
+    - QuestionID
+    - Category
+    - Question
+    - Essential
+    - Worthwhile
+    - Unimportant
+    - Unwise
+    - Don't Know
+    - Distribution
+    - Percentages
+      - Essential
+      - Worthwhile+
+      - Unwise
+    - Rank
+      - Essential
+      - Worthwhile+
+      - Unwise

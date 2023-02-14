@@ -1,0 +1,22 @@
+LANGS = ['javascript', 'python']
+KINDS = ['all', 'trimmed']
+
+rule all:
+    input:
+        expand('figures/{lang}-counts-{kind}.svg', lang=LANGS, kind=KINDS)
+
+rule count_all:
+    input:
+        'data/{lang}-counts.csv'
+    output:
+        'figures/{lang}-counts-all.svg'
+    shell:
+        'python bin/length-frequency-plot.py --data {input} --fig {output} --logx'
+
+rule count_trimmed:
+    input:
+        'data/{lang}-counts.csv'
+    output:
+        'figures/{lang}-counts-trimmed.svg'
+    shell:
+        'python bin/length-frequency-plot.py --data {input} --fig {output} --low 2 --high 200'
