@@ -1,0 +1,12 @@
+| Column | Meaning |
+| ------ | ------- |
+| person | subject identifier |
+| lang | programming language used |
+| z1000t | running time for z1000 input file |
+| z0t | running time for z0 input file |
+| z1000mem | memory consumption at end of z1000 run |
+| stmtL | program length in statement lines of code |
+| z1000rel | output reliability for z1000 input file |
+| m1000rel | output reliability for m1000 input file |
+| whours | total subject work time |
+| caps | subject self-evaluation |

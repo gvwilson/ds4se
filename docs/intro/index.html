@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../logo.svg">
+<link rel="stylesheet" href="../tango.css" type="text/css">
+<link rel="stylesheet" href="../mccole.css" type="text/css">
+<title>Data Science for Software Engineers &middot; Introduction</title>
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']]
+    }
+  };
+</script>
+<script
+  type="text/javascript"
+  id="MathJax-script"
+  async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+
+  </head>
+  <body>
+    <main>
+      <div class="row notex">
+  <div class="col-12 center">
+    
+      <h1>Introduction</h1>
+    
+  </div>
+</div>
+
+      
+<nav class="row-always notex">
+  <div class="col-1 left">
+    
+  </div>
+  <div class="col-10 center">
+    <a href="../" title="home" class="undecorated">&#9737;</a>
+  </div>
+  <div class="col-1 right">
+    <a href="../tools/" title="next" class="undecorated">&#8680;</a>
+  </div>
+</nav>
+
+
+      
+      <p class="terms">Terms defined: 
+<a class="gl-ref" href="../glossary/#gl:box_and_whisker_plot" markdown="1">box-and-whisker plot</a>, <a class="gl-ref" href="../glossary/#gl:jitter" markdown="1">jitter</a>, <a class="gl-ref" href="../glossary/#gl:learner_persona" markdown="1">learner persona</a>, <a class="gl-ref" href="../glossary/#gl:median" markdown="1">median</a>, <a class="gl-ref" href="../glossary/#gl:percentile" markdown="1">percentile</a>
+</p>
+      <p>Are some programmers really ten times more productive than average?
+To find out,
+<span class="bib-ref">[<a class="bib-ref" href="../bib/#Prechelt2000">Prechelt2000</a>]</span> had a group of programmers solve the same problem
+in the language of their choice,
+then looked at how long it took them,
+how good their solutions were,
+and how fast those solutions ran.
+The data is <a href="http://page.mi.fu-berlin.de/prechelt/packages/jccpprtTR.csv">available online</a>,
+and the first few rows look like this:</p>
+<div class="highlight"><pre><span></span><code>person,lang,z1000t,z0t,z1000mem,stmtL,z1000rel,m1000rel,whours,caps
+s015,C++,0.050,0.050,24616,374,99.24,100.0,11.20,??
+s017,Java,0.633,0.433,41952,509,100.00,10.2,48.90,??
+s018,C,0.017,0.017,22432,380,98.10,96.8,16.10,??
+s020,C++,1.983,0.550,6384,166,98.48,98.4,3.00,??
+s021,C++,4.867,0.017,5312,298,100.00,98.4,19.10,??
+s023,Java,2.633,0.650,89664,384,7.60,98.4,7.10,??
+s025,C++,0.083,0.083,28568,150,99.24,98.4,3.50,??
+…
+</code></pre></div>
+<p>The columns hold the information shown in <a class="tbl-ref" href="../intro/#intro_prechelt_key">Table&nbsp;1.1</a>.
+The <code>z1000rel</code> and <code>m1000rel</code> columns tell us that
+all of these implementations are correct 98% of the time or better,
+which is considered acceptable.</p>
+<table id="intro_prechelt_key"><caption>Table&nbsp;1.1: Columns in Prechelt Data</caption>
+<thead>
+<tr>
+<th>Column</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>person</td>
+<td>subject identifier</td>
+</tr>
+<tr>
+<td>lang</td>
+<td>programming language used</td>
+</tr>
+<tr>
+<td>z1000t</td>
+<td>running time for z1000 input file</td>
+</tr>
+<tr>
+<td>z0t</td>
+<td>running time for z0 input file</td>
+</tr>
+<tr>
+<td>z1000mem</td>
+<td>memory consumption at end of z1000 run</td>
+</tr>
+<tr>
+<td>stmtL</td>
+<td>program length in statement lines of code</td>
+</tr>
+<tr>
+<td>z1000rel</td>
+<td>output reliability for z1000 input file</td>
+</tr>
+<tr>
+<td>m1000rel</td>
+<td>output reliability for m1000 input file</td>
+</tr>
+<tr>
+<td>whours</td>
+<td>total subject work time</td>
+</tr>
+<tr>
+<td>caps</td>
+<td>subject self-evaluation</td>
+</tr>
+</tbody>
+</table>
+
+<p>The rest of the data is much easier to understand as a <a class="gl-ref" href="../glossary/#gl:box_and_whisker_plot" markdown="1">box-and-whisker plot</a>
+of the working time in hours (the <code>whours</code> column from the table).
+Each dot is a single data point
+(<a class="gl-ref" href="../glossary/#gl:jitter" markdown="1">jittered</a> up or down a bit to be easier to see).
+The left and right boundaries of the box show the 25th and 75th <a class="gl-ref" href="../glossary/#gl:percentile" markdown="1">percentiles</a> respectively,
+i.e., 25% of the points lie below the box and 25% lie above it,
+and the mark in the middle shows the <a class="gl-ref" href="../glossary/#gl:median" markdown="1">&ldquo;median</a>
+(<a class="fig-ref" href="../intro/#intro_boxplot">Figure&nbsp;1.1</a>).</p>
+<figure id="intro_boxplot">
+<img src="./boxplot.svg" alt="Box-and-whisker plot show that most developers spent between zero and 20 hours but a handful took as long as 63 hours."/>
+<figcaption>Figure&nbsp;1.1: Development Time</figcaption>
+</figure>
+
+<p>So what does this data tell us about productivity?
+As <span class="bib-ref">[<a class="bib-ref" href="../bib/#Prechelt2019">Prechelt2019</a>]</span> explains,
+that depends on exactly what we mean.
+The shortest and longest development times were 0.6 and 63 hours respectively,
+giving a ratio of 105X.
+However,
+the subjects used seven different languages;
+if we only look at those who used Java (about 30% of the whole)
+the shortest and longest times are 3.8 and 63 hours,
+giving a ratio of &ldquo;only&rdquo; 17X.</p>
+<p>But comparing the best and the worst of anything is guaranteed to give us
+an exaggerated impression of the difference.
+If we compare the 75th percentile (which is the middle of the top half of the data)
+to the 25th percentile (which is the middle of the bottom half)
+we get a ratio of 18.5/7.25 or 2.55;
+if we compare the 90th percentile to the 50th we get 3.7,
+and other comparisons give us other values.</p>
+<h2>Who are these lessons for?</h2>
+<p>Every lesson should aim to meet the needs of specific people <span class="bib-ref">[<a class="bib-ref" href="../bib/#Wilson2019">Wilson2019</a>]</span>.
+As these <a class="gl-ref" href="../glossary/#gl:learner_persona" markdown="1">learner personas</a> suggest,
+these lessons assume readers can write short Python programs and remember some college-level mathematics:</p>
+<ul>
+<li>
+<p>Florian is a third-year undergraduate in computer science.
+    They are enjoying their data structures and algorithms class,
+    though they struggle a bit with the math when doing complexity analysis.
+    They know data science is a hot topic,
+    but find the examples in most online tutorials hard to relate to.
+    This material will introduce them to modern computational statistical methods
+    using examples they can relate to.</p>
+</li>
+<li>
+<p>Yi Qing leads a four-person team at a website development and hosting company.
+    They frequently have to estimate how long development of new features will take,
+    and are also occasionally involved in selecting new programming tools and practices.
+    This material will show them the answers we have to questions like these
+    and why we believe those answers to be true.</p>
+</li>
+</ul>
+<p>If you know what a Python dictionary is
+and can explain the difference between an exponent and a logarithm,
+you are probably ready to start.
+We cover data tidying and visualization,
+descriptive statistics,
+modeling,
+statistical tests,
+and reproducible research practices,
+and then use those tools to explore key findings from empirical software engineering research.</p>
+<h2>What does this material cover?</h2>
+<p>We chose our topics to teach people
+how to analyze messy real-world data correctly,
+what we already know about software and software development,
+and why we believe it&rsquo;s true.
+Our choice of examples was guided by <span class="bib-ref">[<a class="bib-ref" href="../bib/#Begel2014">Begel2014</a>]</span>,
+which asked several hundred professional software engineers
+what questions they most most wanted researchers to answer.
+The most highly-ranked questions include:</p>
+<ul>
+<li>How do users typically use my application?</li>
+<li>What parts of a software product are most used and/or loved by customers?</li>
+<li>How effective are the quality gates we run at checkin?</li>
+<li>How can we improve collaboration and sharing between teams?</li>
+<li>What are best key performance indicators for monitoring services?</li>
+<li>What is the impact of a code change or requirements change to the project and tests?</li>
+<li>What is the impact of tools on productivity?</li>
+<li>How do I avoid reinventing the wheel by sharing and/or searching for code?</li>
+<li>What are the common patterns of execution in my application?</li>
+<li>How well does test coverage correspond to actual code usage by our customers?</li>
+<li>What tools can help us measure and estimate the risk associated with code changes?</li>
+<li>What are effective metrics for ship quality?</li>
+<li>How much do design changes cost us and how can we reduce their risk?</li>
+<li>What are the best ways to change a product&rsquo;s features without losing customers?</li>
+<li>Which test strategies find the most impactful bugs?</li>
+<li>When should I write code from scratch versus reusing legacy code?</li>
+</ul>
+<p>Our lessons don&rsquo;t answer all of these—in fact,
+most of them don&rsquo;t <em>have</em> answers—but we hope we can help people get started.</p>
+<p><span class="bib-ref">[<a class="bib-ref" href="../bib/#Begel2014">Begel2014</a>]</span> also asked what topics would be unwise for researchers to examine;
+all of the top responses were variations on,
+&ldquo;Anything that measures individual employees&rsquo; productivity.&rdquo;
+This belief reflects <a href="https://en.wikipedia.org/wiki/Goodhart%27s_law">Goodhart&rsquo;s Law</a>:
+as soon as a measure is used to evaluate people,
+they adjust their behavior so that it ceases to be a useful measure.</p>
+<p>We display source code like this:</p>
+<div class="language-py" title="loop.py">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">project</span>
+
+<span class="k">for</span> <span class="n">observation</span> <span class="ow">in</span> <span class="n">project</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+    <span class="n">analyze</span><span class="p">(</span><span class="n">observation</span><span class="p">)</span>
+
+<span class="n">report</span><span class="p">()</span>
+</code></pre></div>
+</div>
+<p>and Unix shell commands like this:</p>
+<div class="language-sh" title="loop.sh">
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env bash</span>
+
+<span class="k">for</span><span class="w"> </span>filename<span class="w"> </span><span class="k">in</span><span class="w"> </span>*.dat
+<span class="k">do</span>
+<span class="w">    </span>analyze<span class="w"> </span><span class="nv">$filename</span>
+<span class="k">done</span>
+</code></pre></div>
+</div>
+<p>Data and output are shown like this:</p>
+<div class="language-out" title="sample.out">
+<div class="highlight"><pre><span></span><code>Package,Releases
+0,1
+0-0,0
+0-0-1,1
+00print-lol,2
+00smalinux,0
+01changer,0
+</code></pre></div>
+</div>
+<h2>Acknowledgments</h2>
+<p>We are grateful to:</p>
+<ul>
+<li>Steve McConnell and Robert Glass,
+    whose books sent us down this road years ago <span class="bib-ref">[<a class="bib-ref" href="../bib/#McConnell2004">McConnell2004</a>, <a class="bib-ref" href="../bib/#Glass2002">Glass2002</a>]</span></li>
+<li>The many contributors to <span class="bib-ref">[<a class="bib-ref" href="../bib/#Oram2010">Oram2010</a>]</span></li>
+<li><a href="https://en.wikipedia.org/wiki/Alexandra_Elbakyan">Alexandra Elbakyan</a> for <a href="https://sci-hub.tw/">Sci-Hub</a>,
+    without whom this work would not have been possible.</li>
+</ul>
+    </main>
+    <footer>
+  © 2024 <a href="https://third-bit.com/">Greg Wilson</a>
+  &middot;
+  <a href="../">home</a>
+  &middot;
+  <a href="https://github.com/gvwilson/ds4se">repository</a>
+  &middot;
+  <a href="../license/">license</a>
+</footer>
+
+  </body>
+</html>

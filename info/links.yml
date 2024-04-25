@@ -1,0 +1,93 @@
+# A
+
+- key: "ark"
+  url: "https://www.dmulholl.com/docs/ark/main/"
+  title: "Ark static site generator"
+
+- key: "atkinson"
+  url: "https://brailleinstitute.org/freefont"
+  title: "Atkinson Hyperlegible font"
+
+# B
+
+- key: "bs4"
+  url: "https://pypi.org/project/beautifulsoup4/"
+  title: "Beautiful Soup"
+
+# D
+
+- key: "draw_io"
+  url: "https://www.drawio.com/"
+  title: "draw.io"
+
+# E
+
+- key: elbakyan_alexandra
+  url: "https://en.wikipedia.org/wiki/Alexandra_Elbakyan"
+  title: "Alexandra Elbakyan"
+
+# G
+
+- key: "ghp"
+  url: "https://pages.github.com/"
+  title: "GitHub Pages"
+
+- key: goodharts_law
+  url: "https://en.wikipedia.org/wiki/Goodhart%27s_law"
+  title: "Goodhart's Law"
+
+# H
+
+- key: "highlight_css"
+  url: "https://numist.github.io/highlight-css/"
+  title: "highlight-css"
+
+- key: "html5validator"
+  url: "https://pypi.org/project/html5validator/"
+  title: "html5validator"
+
+# N
+
+- key: navarro_danielle
+  url: "https://art.djnavarro.net/"
+  title: "Danielle Navarro"
+
+# P
+
+- key: "plausible"
+  url: "https://plausible.io/"
+  title: "Plausible"
+
+- key: prechelt_data
+  url: http://page.mi.fu-berlin.de/prechelt/packages/jccpprtTR.csv
+  title: "Prechelt productivity data"
+
+- key: "pybtex"
+  url: "https://pypi.org/project/pybtex/"
+  title: "pybtex"
+
+# R
+
+- key: "ruff"
+  url: "https://pypi.org/project/ruff/"
+  title: "ruff"
+
+# S
+
+- key: "scihub"
+  url: "https://sci-hub.tw/"
+  title: "Sci-Hub"
+
+- key: "stamps"
+  url: "https://third-bit.com/colophon/"
+  title: "Classic Canadian postage stamps"
+
+# W
+
+- key: "wave"
+  url: "https://wave.webaim.org/"
+  title: "WebAIM WAVE"
+
+- key: "wilson_greg"
+  url: "https://third-bit.com/"
+  title: "Greg Wilson"
