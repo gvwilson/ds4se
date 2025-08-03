@@ -1,0 +1,13 @@
+# Unused material.
+
+- link: "/parameter-estimation/"
+  name: "Parameter Estimation"
+  lede: "How can we fit a model to data?"
+
+- link: "/other-peoples-data/"
+  name: "Other People's Data"
+  lede: "How can we tidy up data from various sources?"
+
+- link: "/programmer-survey/"
+  name: "Programmer Survey"
+  lede: "What can we learn about people who use Stack Overflow?"

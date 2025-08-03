@@ -1,0 +1,80 @@
+- path: javascript-counts.csv
+  format: CSV
+  who: "Greg Wilson <gvwilson@third-bit.com>"
+  what: "Line lengths of JavaScript files"
+  when: 2019-11-29
+  where: "The node_modules directory of the TidyBlocks project"
+  how: "bin/file-size.py"
+  fields:
+  - name: FileID
+    type: integer
+    content: "foreign key to filename in javascript-filenames.csv"
+  - name: Length
+    type: integer
+    content: "line length in characters"
+  - name: Count
+    type: integer
+    content: "number of times that line length was seen in that file"
+
+- path: javascript-filenames.csv
+  format: CSV
+  who: "Greg Wilson <gvwilson@third-bit.com>"
+  what: "Names of JavaScript files whose line lengths have been summarized"
+  when: 2019-11-29
+  where: "The node_modules directory of the TidyBlocks project"
+  how: "bin/file-size.py"
+  fields:
+  - name: Filename
+    type: text
+    content: "name of file"
+  - name: FileID
+    type: integer
+    content: "unique key for filename used in javascript-counts.csv"
+
+- path: python-counts.csv
+  format: CSV
+  who: "Greg Wilson <gvwilson@third-bit.com>"
+  what: "Line lengths of Python files"
+  when: 2019-11-29
+  where: "/anaconda3 installation directory of a Mac"
+  how: "bin/file-size.py"
+  fields:
+  - name: FileID
+    type: integer
+    content: "foreign key to filename in python-filenames.csv"
+  - name: Length
+    type: integer
+    content: "line length in characters"
+  - name: Count
+    type: integer
+    content: "number of times that line length was seen in that file"
+
+- path: python-filenames.csv
+  format: CSV
+  who: "Greg Wilson <gvwilson@third-bit.com>"
+  what: "Names of Python files whose line lengths have been summarized"
+  when: 2019-11-29
+  where: "/anaconda3 installation directory of a Mac"
+  how: "bin/file-size.py"
+  fields:
+  - name: Filename
+    type: text
+    content: "name of file"
+  - name: FileID
+    type: integer
+    content: "unique key for filename used in python-counts.csv"
+
+- path: programmer-hours.csv
+  format: CSV
+  who: "Greg Wilson <gvwilson@third-bit.com>"
+  what: "Hours worked per day in 2019"
+  when: 2019-12-01
+  where: "Programmer's timesheet (confidential: raw data not available)"
+  how: "bin/extract-xlsx.py"
+  fields:
+  - name: Date
+    type: date
+    content: "day reported"
+  - name: Hours
+    type: number
+    content: "hours worked (fractional rather than hours:minutes:seconds)"

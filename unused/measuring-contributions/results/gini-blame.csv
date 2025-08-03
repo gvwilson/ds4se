@@ -1,0 +1,11 @@
+filename,gini_blame
+data/blame-git-novice.csv,0.9157452574867309
+data/blame-python-novice-gapminder.csv,0.9272909094338905
+data/blame-r-novice-gapminder.csv,0.932197825986616
+data/blame-shell-novice.csv,0.9655761143335672
+data/blame-sql-novice-survey.csv,0.9157452574867309
+data/blame-numpy.csv,0.9624721223054877
+data/blame-pandas.csv,0.9443714124121041
+data/blame-scikit-image.csv,0.8673790355050635
+data/blame-scikit-learn.csv,0.9162004998245282
+data/blame-scipy.csv,0.9464943909447591

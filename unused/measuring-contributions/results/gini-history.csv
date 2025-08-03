@@ -1,0 +1,11 @@
+filename,gini_commits,gini_lines
+data/commits-lines-git-novice.csv,0.7866998040388113,0.03062252512497036
+data/commits-lines-python-novice-gapminder.csv,0.8249755186962371,0.0981742979715675
+data/commits-lines-r-novice-gapminder.csv,0.7898824229528253,0.029889029027633244
+data/commits-lines-shell-novice.csv,0.795546160650246,0.036219289347757
+data/commits-lines-sql-novice-survey.csv,0.8100670747941322,0.04621866848595135
+data/commits-lines-numpy.csv,0.9097219595494738,0.010469733388970472
+data/commits-lines-pandas.csv,0.8742776539549505,0.030613618471269796
+data/commits-lines-scikit-image.csv,0.8547586689426747,0.2495389310644179
+data/commits-lines-scikit-learn.csv,0.8836508848568956,0.004922384080240883
+data/commits-lines-scipy.csv,0.8821056087045867,0.00474378363382528

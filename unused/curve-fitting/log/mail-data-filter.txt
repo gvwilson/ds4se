@@ -1,0 +1,4 @@
+259072 records
+229049 after removing duplicates
+218311 after removing "Recovered"
+130996 after removing "partial"

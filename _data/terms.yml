@@ -1,0 +1,214 @@
+authors: []
+basic-tools:
+- key: aggregation
+  term: aggregation
+- key: alias
+  term: alias
+- key: boolean
+  term: Boolean
+- key: broadcast
+  term: broadcast
+- key: csv
+  term: comma-separated values
+- key: dataframe
+  term: dataframe
+- key: filter
+  term: filter
+- key: header_row
+  term: header row
+- key: histogram
+  term: histogram
+- key: key
+  term: key
+- key: method_chaining
+  term: method chaining
+- key: na
+  term: Not Available
+- key: nan
+  term: Not a Number
+- key: 'null'
+  term: 'null'
+- key: outlier
+  term: outlier
+- key: property
+  term: property
+- key: raster_graphics
+  term: raster graphics
+- key: relational_database
+  term: relational database
+- key: reproducible_research
+  term: reproducible research
+- key: slice
+  term: slice
+- key: sql
+  term: SQL
+- key: svg
+  term: Scalable Vector Graphics
+- key: tidy_data
+  term: tidy data
+- key: vector_graphics
+  term: vector graphics
+bibliography: []
+conduct: []
+contributing: []
+glossary: []
+hypothesis-testing:
+- key: alternative_hypothesis
+  term: alternative hypothesis
+- key: automatic_variable
+  term: automatic variable
+- key: character_encoding
+  term: character encoding
+- key: convergence
+  term: convergence
+- key: de_anonymization
+  term: de-anonymization
+- key: magic_number
+  term: magic number
+- key: minification
+  term: minification
+- key: null_hypothesis
+  term: null hypothesis
+- key: one_sided_test
+  term: one-sided test
+- key: p_hacking
+  term: '*p* hacking'
+- key: p_value
+  term: '*p* value'
+- key: pattern_rule
+  term: pattern rule
+- key: phony_target
+  term: phony target
+- key: pid
+  term: personal identifying information
+- key: pre_registration
+  term: pre-registration
+- key: rng
+  term: random number generator
+- key: rng_seed
+  term: seed
+- key: two_sided_test
+  term: two-sided test
+- key: yaml
+  term: YAML
+index: []
+introduction:
+- key: box_and_whisker_plot
+  term: box-and-whisker plot
+- key: jitter
+  term: jitter
+- key: learner_persona
+  term: learner persona
+- key: median
+  term: median
+- key: percentile
+  term: percentile
+large-numbers:
+- key: alternative_hypothesis
+  term: alternative hypothesis
+- key: bessel_correction
+  term: Bessel correction
+- key: bonferroni_correction
+  term: Bonferroni correction
+- key: cdf
+  term: cumulative distribution function
+- key: central_limit_theorem
+  term: Central Limit Theorem
+- key: confidence_interval
+  term: confidence interval
+- key: degrees_of_freedom
+  term: degrees of freedom
+- key: false_negative
+  term: false negative
+- key: false_positive
+  term: false positive
+- key: normal_distribution
+  term: normal distribution
+- key: null_hypothesis
+  term: null hypothesis
+- key: pdf
+  term: probability density function
+- key: pmf
+  term: probability mass function
+- key: sample_variance
+  term: sample variance
+- key: standard_normal
+  term: standard normal distribution
+- key: standard_uniform
+  term: standard uniform distribution
+- key: t_distribution
+  term: '*t* distribution'
+- key: t_test
+  term: '*t* test'
+- key: uniform_distribution
+  term: uniform distribution
+- key: z_test
+  term: Z test
+license: []
+links: []
+non-parametric:
+- key: effect_size
+  term: effect size
+- key: mann_whitney_u
+  term: Mann-Whitney U test
+- key: tdd
+  term: test-driven development
+- key: wilcoxon_rank_sum
+  term: Wilcoxon rank sum test
+robust-analysis:
+- key: bin
+  term: bin
+- key: box_and_whisker_plot
+  term: box-and-whisker plot
+- key: build_prerequisite
+  term: build prerequisite
+- key: build_rule
+  term: build rule
+- key: build_target
+  term: build target
+- key: build_tool
+  term: build tool
+- key: data_manifest
+  term: data manifest
+- key: descriptive_statistics
+  term: descriptive statistics
+- key: docstring
+  term: docstring
+- key: escape_character
+  term: escape character
+- key: gzip
+  term: gzip
+- key: iqr
+  term: interquartile range
+- key: iso_date_format
+  term: ISO date format
+- key: main_driver
+  term: main driver
+- key: mean
+  term: mean
+- key: median
+  term: median
+- key: na
+  term: Not Available
+- key: nobles_rules
+  term: Noble's Rules
+- key: quartile
+  term: quartile
+- key: regular_expression
+  term: regular expression
+- key: standard_deviation
+  term: standard deviation
+- key: tar
+  term: tar
+- key: taschuks_rules
+  term: Taschuk's Rules
+- key: throttle
+  term: throttle
+- key: tidy_data
+  term: tidy data
+- key: variance
+  term: variance
+- key: violin_plot
+  term: violin plot
+- key: wheel
+  term: wheel

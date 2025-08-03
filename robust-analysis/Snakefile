@@ -1,0 +1,39 @@
+rule all:
+    '''Dummy rule to rebuild everything.'''
+    input:
+        ['results/releases.csv', 'results/name-component-count.csv']
+
+rule releases_per_package:
+    '''How many releases are there for each package?'''
+    input:
+        'data/all-versions.csv.gz'
+    output:
+        'results/releases.csv'
+    shell:
+        'python bin/count-releases.py {input} > {output}'
+
+rule count_name_components:
+    '''How often does each component of a dotted name occur?'''
+    input:
+        'data/all-versions.csv.gz'
+    output:
+        'results/name-component-count.csv'
+    shell:
+        'python bin/components.py {input} > {output}'
+
+rule count_redundant_releases:
+    '''How many duplicated (redundant) releases are there?'''
+    input:
+        'data/all-versions.csv.gz'
+    shell:
+        'python bin/remove-duplicates.py data/all-versions.csv.gz'
+
+rule all_versions:
+    '''Download all version info from PyPI - takes several hours.'''
+    output:
+        protected('data/all-versions.csv.gz')
+    shell:
+        '''
+        python bin/get-all-versions.py > data/all-versions.csv
+        gzip data/all-versions.csv
+        '''

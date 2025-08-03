@@ -1,0 +1,235 @@
+title: Data Science for Software Engineers
+subtitle: "code + statistics = useful insights"
+url: https://gvwilson.github.io/ds4se/
+repository: gvwilson/ds4se
+default_image: /static/fixme.svg
+cover_image: /static/ds4se-600.jpg
+
+chapters:
+  - slug: "introduction"
+    title: "Introduction"
+    lede: "Who you are and what we are going to cover"
+    keypoints:
+      - "The answer you get depends on the question you ask."
+  - slug: basic-tools
+    title: "Basic Tools"
+    lede: "Using Python, NumPy, and Pandas for simple data analysis"
+    keypoints:
+      - "Store small datasets in tidy CSV files."
+      - "Use Unix command-line tools for simple data collection and filtering."
+      - "Use NumPy and Pandas to process tabular statistical data."
+      - "Use method chaining to create data pipelines."
+      - "If you're writing a loop to process a table, you're doing something wrong."
+      - "Use Plotly Express to create simple plots."
+    exercises:
+      - slug: "x-explain-shell"
+        title: "Dissecting the `find` Command"
+      - slug: "x-one-sided-average"
+        title: "One-Sided Average"
+      - slug: "x-find-python-files"
+        title: "Finding Python Files"
+      - slug: "x-empty-python-files"
+        title: "Empty Python Files"
+      - slug: "x-axis-labels"
+        title: "Meaningful Axis Labels"
+      - slug: "x-chars-per-line"
+        title: "Characters Per Line"
+  - slug: robust-analysis
+    title: "Robust Analysis"
+    lede: "Organizing a small data analysis project"
+    keypoints:
+      - "Use the `requests` package to get data from the web."
+      - "Build logging and restart into programs that may take a long time or experience outages."
+      - "Use mean, median, variance, and standard deviation to describe properties of data."
+      - "Use histograms, violin plots, and box-and-whisker plots to visualize the properties of data."
+      - "Create a Git repository for each analysis project."
+      - "Put runnable programs in the `bin` directory."
+      - "Put raw data in the `data` directory."
+      - "Put results and figures in the `results` and `figures` directories."
+      - "Put documentation and manuscripts in the `doc` directory."
+      - "Use filenames that can easily be matched with shell wildcards."
+      - "Put `MANIFEST.md` files in the `data` and `results` directories to describe each data file."
+      - "Use a build tool like Make to track file dependencies and re-run commands when necessary."
+    exercises:
+      - slug: "x-why-na"
+        title: "Why `NA`?"
+      - slug: "x-all-releases"
+        title: "Getting All Releases"
+      - slug: "x-control-logging"
+        title: "Controlling Logging"
+      - slug: "x-beautiful-soup"
+        title: "Beautiful Soup"
+      - slug: "x-logarithmic-zeroes"
+        title: "Logarithmic Zeroes"
+      - slug: "x-fifty-percent"
+        title: "Fifty Per Cent"
+      - slug: "x-linting"
+        title: "Linting"
+      - slug: "x-compress-results"
+        title: "Compressing Results"
+      - slug: "x-dataframe-index"
+        title: "Resetting a Dataframe's Index"
+  - slug: hypothesis-testing
+    title: "Hypothesis Testing"
+    lede: "Checking hypotheses via simulation"
+    keypoints:
+      - "Store large datasets by compressing them or by replacing redundant information with keys into a second table."
+      - "Reject the null hypothesis that two samples come from the same population if simulation shows it is highly unlikely."
+      - "Specify how unlikely 'unlikely' is by choosing a confidence interval based on a significance threshold."
+      - "Reject the null hypothesis that two samples come from the same population if a t-test tells us it is highly unlikely."
+    exercises:
+      - slug: "x-error-file"
+        title: "Recording Errors"
+      - slug: "x-two-sided-test"
+        title: "A Two-Sided Test"
+      - slug: "x-test-simulation"
+        title: "Testing the Simulation Program"
+      - slug: "x-report-periodically"
+        title: "Reporting Periodically"
+      - slug: "x-keep-all-data"
+        title: "Keeping All the Data"
+  - slug: large-numbers
+    title: "The Law of Large Numbers"
+    lede: "Checking hypotheses using statistics"
+    keypoints:
+      - "The Central Limit Theorem states that the distribution of the mean of a sample has a normal distribution."
+      - "Use a Z-test or t-test to determine whether two populations are the same or different."
+  - slug: non-parametric
+    title: "Non-Parametric Tests"
+    lede: "How to test when data isn't normal"
+    keypoints:
+      - "FIXME"
+  - appendix: true
+  - slug: "license"
+    title: "License"
+    file: "LICENSE.md"
+  - slug: "bibliography"
+    title: "Bibliography"
+  - slug: "conduct"
+    title: "Code of Conduct"
+    file: "CONDUCT.md"
+  - slug: "contributing"
+    title: "Contributing"
+    file: "CONTRIBUTING.md"
+  - slug: "glossary"
+    title: "Glossary"
+  - slug: "links"
+    title: "Links"
+  - slug: "authors"
+    title: "Authors"
+  - slug: "index"
+    title: "Index"
+    skip: true
+
+unused:
+  - slug: correlation
+    title: "Correlation"
+    lede: "Measuring how strongly values are related"
+    keypoints:
+      - "Process source code with parsers and then analyze their abstract syntax trees (ASTs)."
+      - "Test feature extraction on small programs before trusting it on large ones."
+    exercises:
+      - slug: "x-reanalyze-js-func"
+        title: "Reanalyzing JavaScript Function Data"
+      - slug: "x-py-func-length"
+        title: "Python Function Names and Lengths"
+  - slug: curve-fitting
+    title: "Curve Fitting"
+    lede: "Creating simple models for messy data"
+    keypoints:
+      - "Use curve-fitting or smoothing to get a sense of the trends in a sample."
+    exercises:
+      - slug: "x-smoothed-curves"
+        title: "Looking at Smoothed Curves"
+  - slug: survival-analysis
+    title: "Survival Analysis"
+    lede: "Predicting how long things last"
+  - slug: capacity-planning
+    title: "Capacity Planning"
+    lede: "Simple formulas for service times and server loads"
+  - slug: measuring-contributions
+    title: "Measuring Contributions"
+    lede: "Who does how much on a project?"
+    exercises:
+      - slug: "x-adaptive-gini"
+        title: "An Adaptive Gini Coefficient"
+      - slug: "x-contribution-data"
+        title: "Collecting Contribution Data"
+
+author:
+  name: Greg Wilson
+  url: third-bit.com
+  email: gvwilson@third-bit.com
+  github: https://github.com/gvwilson
+  twitter: https://twitter.com/gvwilson
+  linkedin: https://www.linkedin.com/in/greg-wilson-a26510b6/
+
+markdown: kramdown
+
+kramdown:
+  syntax_highlighter_opts:
+    disable: true
+  link_defs: >
+    {
+      "acorn": ["https://github.com/acornjs/acorn", "acorn"],
+      "argparse": ["https://docs.python.org/3/library/argparse.html", "argparse"],
+      "ast-py": ["https://docs.python.org/3/library/ast.html", "ast"],
+      "awk": ["https://en.wikipedia.org/wiki/AWK", "awk"],
+      "beautiful-soup": ["https://www.crummy.com/software/BeautifulSoup/", "Beautiful Soup"],
+      "csv-py": ["https://docs.python.org/3/library/csv.html", "csv"],
+      "doi2bib": ["https://www.doi2bib.org/", "doi2bib"],
+      "drake": ["https://docs.ropensci.org/drake/", "Drake"],
+      "elbakyan-alexandra": ["https://en.wikipedia.org/wiki/Alexandra_Elbakyan", "Alexandra Elbakyan"],
+      "explain-shell": ["https://explainshell.com/", "explainshell"],
+      "fair-principles": ["https://www.go-fair.org/fair-principles/", "FAIR Principles"],
+      "gfm": ["https://github.github.com/gfm/", "GitHub-Flavored Markdown"],
+      "goodharts-law": ["https://en.wikipedia.org/wiki/Goodhart%27s_law", "Goodhart's Law"],
+      "graf-david": ["https://github.com/davidagraf", "David Graf"],
+      "guest-gini": ["https://github.com/oliviaguest/gini", "Gini coefficient calculation"],
+      "github-pages": ["https://pages.github.com/", "GitHub Pages"],
+      "gitpython": ["https://gitpython.readthedocs.io/", "GitPython"],
+      "glob": ["https://docs.python.org/3/library/glob.html", "glob"],
+      "harrer-gitpython": ["https://www.feststelltaste.de/storing-git-commit-information-into-pandas-dataframe/", "GitPython example"],
+      "hoye-count-from-zero": ["http://exple.tive.org/blarg/2013/10/22/citation-needed/", "Citation Needed"],
+      "jekyll": ["https://jekyllrb.com/", "Jekyll"],
+      "kolmogorov-smirnov": ["https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test", "Kolmogorov-Smirnov test"],
+      "make": ["https://www.gnu.org/software/make/", "GNU Make"],
+      "matplotlib": ["https://matplotlib.org/", "matplotlib"],
+      "npm": ["https://www.npmjs.com/", "Node Package Manager (NPM)"],
+      "numpy": ["https://numpy.org/", "NumPy"],
+      "nwit": ["http://neverworkintheory.org/", "It Will Never Work in Theory"],
+      "odbl": ["https://opendatacommons.org/licenses/odbl/1.0/", "Open Database License"],
+      "pandas": ["https://pandas.pydata.org/", "Pandas"],
+      "plotly": ["https://plot.ly/python/plotly-express/", "Plotly Express"],
+      "prechelt-data": ["http://page.mi.fu-berlin.de/prechelt/packages/jccpprtTR.csv", "Prechelt productivity data"],
+      "pwlf": ["https://github.com/cjekel/piecewise_linear_fit_py", "pwlf"],
+      "pycodestyle": ["https://pycodestyle.pycqa.org/en/latest/", "pycodestyle"],
+      "pydriller": ["https://pydriller.readthedocs.io/en/latest/index.html", "PyDriller"],
+      "pygit2": ["https://www.pygit2.org/", "pygit2"],
+      "pypi": ["https://pypi.org/", "Python Package Index (PyPI)"],
+      "register-yim": ["https://towardsdatascience.com/@yimregister", "Yim Register"],
+      "regular-expressions-html": ["https://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags/1732454#1732454", "Parsing HTML with regular expressions."],
+      "requests": ["https://requests.kennethreitz.org/en/master/", "Requests: HTTP for Humans"],
+      "rstudio": ["http://rstudio.com", "RStudio"],
+      "scihub": ["https://sci-hub.tw/", "Sci-Hub"],
+      "sed": ["https://en.wikipedia.org/wiki/sed", "sed"],
+      "silge-julia": ["https://juliasilge.com/", "Julia Silge"],
+      "silge-survey-analysis": ["https://juliasilge.com/blog/salary-gender/", "Modeling Salary and Gender in the Tech Industry"],
+      "silva-raniere": ["http://rgaiacs.com/", "Raniere Silva"],
+      "snakemake": ["https://snakemake.readthedocs.io/en/stable/", "Snakemake"],
+      "stack-exchange-api": ["https://api.stackexchange.com/docs", "Stack Exchange API"],
+      "stack-overflow": ["https://stackoverflow.com/", "Stack Overflow"],
+      "stack-overflow-survey-data": ["https://insights.stackoverflow.com/survey/", "Stack Overflow Survey Data"]
+    }
+
+exclude:
+  - '*.sublime-*'
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - Makefile
+  - unused
+  - vendor/bundle
+  - book.*
+
+permalink: pretty

@@ -1,0 +1,100 @@
+## Peter Rigby
+
+We quantified risk from turnover, and found that previous risk thresholds of the
+truck factor, such as 60% of your files being abandoned, turned into the
+"airplane factor" on large projects. We introduce more realistic risk estimates
+using techniques from financial risk management. I've attached the copy of the
+ICSE paper.
+
+rigby2016.pdf
+
+## Peggy Storey
+
+- laura's study with youtube (we found how developers learn through youtube),
+  published at icpc, invited for journal extension (waiting to hear on that)
+
+- alexey's study with github for education , published at cscw
+
+- two studies on pull based development in github (published with georgious
+  gousios in two icse papers, show the integrator and contributor perspectives)
+
+- surveys over two years on challenges and advantages of using social and
+  communication tools (just submitted the second version of that to TSE and I'm
+  optimistic it will get it -- I can share it with you, not yet published
+  though)
+
+- the whole participatory culture thing - which I presented at ICSE future track
+  a couple of years ago
+
+## Emerson Murphy-Hill
+
+Another recent favorite of mine is Laura Inozemtseva and Reid Holmes',
+"Coverage Is Not Strongly Correlated with Test Suite Effectiveness".
+
+inozemtseva2014.pdf
+
+## Premkumar Devanbu
+
+Agree with all the above (Thanks Tim, for the kind words) and in addition would
+add this nice paper [nagappan2015] from Mei Nagappan about goto statements. In
+my view, this gives long-due repose to a rather facile and attention-grabbing
+claim that a PL Nabob (Dijkstra) pulled ad lib out of his navel.
+
+One hopes  more such well-grounded empirical refutations of other, popular,
+software engineering-related fantasies are on the way. 
+
+As far as our paper on repetition and "naturalness" in source code, I'd suggest
+our upcoming CACM Research Highlights paper [ray2017.pdf]; the "Plastic Surgery"
+paper [barr-plastic-surgery.pdf] finds that a very large number of fixes and
+changes to code are actually "graftable" from code already in github.
+
+## Walter Tichy
+
+my favorite is this *pair* of papers. The authors use the same data set, namely
+300 professional programmers.  The papers show how to do a highly realistic
+experiment that was quite expensive by CS standards (340.000 Euros), but allowed
+the authors to tease apart a number of variables, namely software complexity,
+programmer expertise, and personality when doing pair programming.
+
+Jo Erskine Hannay, Erik Arisholm, Harald Engvik, Dag I. K. Sjøberg: Effects of
+Personality on Pair Programming. IEEE Trans. Software Eng. 36(1): 61-80 (2010)
+
+Erik Arisholm, Hans Gallis, Tore Dybå, Dag I. K. Sjøberg: Evaluating Pair
+Programming with Respect to System Complexity and Programmer Expertise. IEEE
+Trans. Software Eng. 33(2): 65-86 (2007)
+
+I did an interview with one of the authors (Sjoberg) regarding these studies
+that puts the papers in perspective (such as what are reasonable costs and how
+to fund them. theories, etc).  Dag Sjoberg is quite outspoken about a number of
+things that can’t be said in a scientific article.  You can read the interview
+on Ubiquity:
+
+http://ubiquity.acm.org/article.cfm?id=1998374
+
+Best,
+Walter
+
+## Diomidis Spinellis
+
+Over the past three years I've been working on a repository of Unix
+history [1].  Based on that we conducted a study on trends regarding the
+evolution of programming style (attached, will appear in this year's
+ICSE).  It seems code style has evolved over the years to take advantage
+of technology's affordances.  Interestingly, programmers are nowadays
+focusing more on writing clear code than on extensive commenting.
+
+I'd be interested to hear what the others say.
+
+[1] https://github.com/dspinellis/unix-history-repo
+
+## Tim Menzies
+
+the attached is another report similar to result2 (but this time from me and
+forrest, and not from microsoft, see phaseDelay.pdf).  section3 is general notes
+on strange stories of truisms and how they live on despite no evidence. the rest
+of that paper is evidence that we've had "phase delay" wrong for a very long
+time.  for decades its been telling our students that the longer we wait on
+fixing issues, the more expensive it is to fix. but recently i looked at that
+again with new eyes and found (a) the prior evidence for this idea is appalling
+weak and contradictory; (b) there is no evidence in modern data. which begs the
+question... why do we keep outdates for so long?

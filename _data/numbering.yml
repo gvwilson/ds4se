@@ -1,0 +1,88 @@
+entries:
+- file: ./introduction/index.md
+  kind: Chapter
+  label: '1'
+  slug: introduction
+  title: Introduction
+- file: ./basic-tools/index.md
+  kind: Chapter
+  label: '2'
+  slug: basic-tools
+  title: Basic Tools
+- file: ./robust-analysis/index.md
+  kind: Chapter
+  label: '3'
+  slug: robust-analysis
+  title: Robust Analysis
+- file: ./hypothesis-testing/index.md
+  kind: Chapter
+  label: '4'
+  slug: hypothesis-testing
+  title: Hypothesis Testing
+- file: ./large-numbers/index.md
+  kind: Chapter
+  label: '5'
+  slug: large-numbers
+  title: The Law of Large Numbers
+- file: ./non-parametric/index.md
+  kind: Chapter
+  label: '6'
+  slug: non-parametric
+  title: Non-Parametric Tests
+- file: LICENSE.md
+  kind: Appendix
+  label: A
+  slug: license
+  title: License
+- file: ./bibliography/index.md
+  kind: Appendix
+  label: B
+  slug: bibliography
+  title: Bibliography
+- file: CONDUCT.md
+  kind: Appendix
+  label: C
+  slug: conduct
+  title: Code of Conduct
+- file: CONTRIBUTING.md
+  kind: Appendix
+  label: D
+  slug: contributing
+  title: Contributing
+- file: ./glossary/index.md
+  kind: Appendix
+  label: E
+  slug: glossary
+  title: Glossary
+- file: ./links/index.md
+  kind: Appendix
+  label: F
+  slug: links
+  title: Links
+- file: ./authors/index.md
+  kind: Appendix
+  label: G
+  slug: authors
+  title: Authors
+- file: ./index/index.md
+  kind: Appendix
+  label: H
+  slug: index
+  title: Index
+figures:
+  boxplot: '1.1'
+  hist-ratio-most: '2.4'
+  hist-ratio-scaled: '2.3'
+  hist-ratio-unscaled: '2.2'
+  javascript-counts-all: '4.1'
+  javascript-counts-trimmed: '4.3'
+  programmer-hours: '5.2'
+  python-counts-all: '4.2'
+  python-counts-trimmed: '4.4'
+  release-count: '3.1'
+  release-count-box: '3.4'
+  release-count-low: '3.2'
+  release-count-violin: '3.3'
+  scatter-lines-characters: '2.1'
+  two-tailed-test: '5.1'
+tables: {}
