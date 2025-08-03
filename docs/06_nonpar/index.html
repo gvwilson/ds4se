@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Non-Parametric Statistics</title>
+<link href="../static/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="../static/mccole.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<nav>
+<a href="../">Home</a>
+      ·
+      <span class="dropdown">
+<a href="#">Lessons</a>
+<span class="dropdown-content">
+<a href="../01_intro/">Introduction</a>
+<a href="../02_meeting/">How to Run a Meeting</a>
+<a href="../03_gst/">Goals, Strategies, and Tactics</a>
+<a href="../04_power/">Power</a>
+<a href="../05_start/">Starting</a>
+<a href="../06_finish/">Finishing</a>
+</span>
+</span>
+      ·
+      <span class="dropdown">
+<a href="#">Extras</a>
+<span class="dropdown-content">
+<a href="../license/">License</a>
+<a href="../conduct/">Code of Conduct</a>
+<a href="../bibliography/">Bibliography</a>
+<a href="../glossary/">Glossary</a>
+</span>
+</span>
+</nav>
+<main>
+<h1>Non-Parametric Statistics</h1>
+<p><span x="introduction"></span> asked whether some programmers are more productive than others.
+The answer was "yes",
+which immediately begs the question "why?"
+Is there a "geek gene",
+i.e.,
+are some people just naturally better at programming?
+<cite>Patitsas2016</cite> showed that
+there is little evidence for that theory in students' grades
+and that confirmation bias probably explains why some instructors believe it.</p>
+<p>Another possibility is that some programmers discovered or been taught
+more productive working practices.
+One practice that is frequently mentioned is <span g="tdd">test-driven development</span> (TDD):
+instead of writing code and then writing tests,
+programmers write tests and then write just enough code to make them pass.
+The idea is that writing tests first:</p>
+<ol>
+<li>
+<p>helps developers figure out exactly what the code is supposed to do,</p>
+</li>
+<li>
+<p>avoids confirmation bias, and</p>
+</li>
+<li>
+<p>prevents gold-plating (when the tests pass, the work is done).</p>
+</li>
+</ol>
+<p>TDD has many passionate advocates, but does it actually work?</p>
+<ul>
+<li>Discussion based on <cite>Fucci2016</cite><ul>
+<li>Use non-parametric tests when data isn't normal (and most data isn't in software engineering)</li>
+<li>Introduce <span g="mann_whitney_u">Mann-Whitney U test</span>
+    (also called <span g="wilcoxon_rank_sum">Wilcoxon rank sum test</span>)</li>
+<li>Also introduce <span g="effect_size">effect size</span>
+    (in particular, the common-language effect size)</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+The research questions driving the part of the baseline study replicated in this paper were:
+
+1. Do test-first developers write more tests than test-last developers?
+2.  Do test-first developers produce solutions with higher external quality than test-last developers?
+3.  Are test-first developers more productive than test-last developers?
+
+The independent variable was...development approach (i.e., TDD or TLD), whereas the dependent variables were:
+testing effort (TESTS),
+software external quality (QLTY),
+and developers’ productivity (PROD).
+Note that,
+following from the research questions,
+the hypotheses were formulated as directional for consistency with <cite>Erdogmus2005</cite>,
+but analyzed as non-directional
+since the existing body of knowledge regarding the postulated impact of TDD
+does not suggest a specific direction of the effect.
+</blockquote>
+<ul>
+<li>FIXME: unpack this quote</li>
+</ul>
+<hr/>
+<p>Each row is a mistake (label in first column),
+then the next two columns are the real rank in frequency (1 = most frequent) and time-to-fix (TTF) in Blackbox.
+Then it's a column for each educator for their frequency rank predictions,
+same again for TTF prediction.</p>
+<p>There's also a set for "spread"
+which was a question we asked about whether the mistakes were concentrated in a few users or evenly spread across them all.
+We dropped that after I decided I wasn't confident how best to operationalise that in the data (variance?  entropy?).</p>
+<p>The original analysis was done in SPSS,
+so I don't have any R code for you.
+But hopefully we described it well enough in the paper:
+I recommend the journal version: http://twistedsquare.com/Educators-TOCE.pdf.
+Section 6.1 describes comparing educators amongst themselves,
+and section 7.1 describes comparing educators to Blackbox.</p>
+</main>
+<footer>
+<a href="../">Organizational Change for Open Science</a>
+      copyright © 2025
+      <a href="../01_intro/#acknowledgments">the authors</a>
+</footer>
+</body>
+</html>

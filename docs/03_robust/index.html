@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Robust Analysis</title>
+<link href="../static/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="../static/mccole.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<nav>
+<a href="../">Home</a>
+      ·
+      <span class="dropdown">
+<a href="#">Lessons</a>
+<span class="dropdown-content">
+<a href="../01_intro/">Introduction</a>
+<a href="../02_meeting/">How to Run a Meeting</a>
+<a href="../03_gst/">Goals, Strategies, and Tactics</a>
+<a href="../04_power/">Power</a>
+<a href="../05_start/">Starting</a>
+<a href="../06_finish/">Finishing</a>
+</span>
+</span>
+      ·
+      <span class="dropdown">
+<a href="#">Extras</a>
+<span class="dropdown-content">
+<a href="../license/">License</a>
+<a href="../conduct/">Code of Conduct</a>
+<a href="../bibliography/">Bibliography</a>
+<a href="../glossary/">Glossary</a>
+</span>
+</span>
+</nav>
+<main>
+<h1>Robust Analysis</h1>
+<ul>
+<li>The steps in most data analysis projects are:<ol>
+<li>Find data</li>
+<li>Collect it</li>
+<li>Tidy it</li>
+<li>Do calculations</li>
+<li>Report results</li>
+</ol>
+</li>
+<li>How can we make all of this easier to understand, reproduce, and extend?</li>
+<li>To illustrate, let's find out how many versions of Python packages there are</li>
+</ul>
+<h2>Where can we get data?</h2>
+<ul>
+<li>Data source is simple [PyPI][pypi] package index page <a href="https://pypi.org/simple/">https://pypi.org/simple/</a><ul>
+<li>Has HTML links to one page per package</li>
+</ul>
+</li>
+<li>Each package's page has links to released versions in various formats<ul>
+<li>205K entries in total</li>
+</ul>
+</li>
+<li>Some redundancy, e.g., <span g="wheel">wheels</span> and <span g="gzip">gzip'd</span> <span g="tar">tar</span> files<ul>
+<li>We have to decide whether to count these separately or fold them together</li>
+<li>Every statistical result is the product of many decisions</li>
+<li>Different decisions produce different results</li>
+</ul>
+</li>
+</ul>
+<h2>How can we collect data from web pages?</h2>
+<ul>
+<li>Use the [<code>requests</code>][requests] library to get page</li>
+<li>HTML is very highly structured,
+    so we can get away with using <span g="regular_expression">regular expressions</span> to extract fields<ul>
+<li>[This is a sin][regular-expressions-html]</li>
+<li>Look at better ways in an exercise</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-py">import sys
+import requests
+import re
+import time
+
+
+# Match package URL in main index page.
+RE_PACKAGE = re.compile(r'&lt;a href="(.+?)"&gt;')
+
+# Match release URL in package index page.
+RE_RELEASE = re.compile(r'&lt;a href=".+?"&gt;(.+?)&lt;/a&gt;')
+
+# PyPI domain.
+DOMAIN = 'https://pypi.org'
+
+
+index_response = requests.get(f'{DOMAIN}/simple/')
+print('Package,Releases')
+all_packages = RE_PACKAGE.findall(index_response.text)
+for package in all_packages:
+    name = package.strip('/').split('/')[-1]
+    url = f'{DOMAIN}{package}'
+    package_response = requests.get(url)
+    count = len(RE_RELEASE.findall(package_response.text))
+    print(f'{name},{count}')
+</code></pre>
+<p>{: title="get-index-page-initial.py"}</p>
+<ul>
+<li>First run crashed after a few minutes because of a missing sub-page</li>
+<li>So add a check on the HTTP status codes from queries<ul>
+<li>Record <span g="na"><code>NA</code></span> for those pages</li>
+<li>And hope that analysis software interprets this as "not available"
+    rather than Namibia or the element sodium</li>
+</ul>
+</li>
+<li>Add some logging so that we can tell how long the program is going to take to run<ul>
+<li>About 30K seconds, or 8.5 hours</li>
+</ul>
+</li>
+</ul>
+<div class="callout">
+<h3>A Small Grumble</h3>
+<p>Ideally, the code above would morph into the code shown below
+so that you could see what was the same and what was different.
+A second-best solution would be an easy way to highlight modified lines,
+with an emphasis on "easy".
+One day...</p>
+</div>
+<pre><code class="language-py">#!/usr/bin/env python
+
+import sys
+import requests
+import re
+import time
+
+
+# Match package URL in main index page.
+RE_PACKAGE = re.compile(r'&lt;a href="(.+?)"&gt;')
+
+# Match release URL in package index page.
+RE_RELEASE = re.compile(r'&lt;a href=".+?"&gt;(.+?)&lt;/a&gt;')
+
+# PyPI domain.
+DOMAIN = 'https://pypi.org'
+
+
+# Get main index page.
+index_response = requests.get(f'{DOMAIN}/simple/')
+assert index_response.status_code == 200, \
+    f'Unexpected status for index page {index_response.status_code}'
+
+# Get sub-pages and count releases in each.
+num_seen = 0
+t_start = time.time()
+print('Package,Releases')
+all_packages = RE_PACKAGE.findall(index_response.text)
+for package in all_packages:
+    name = package.strip('/').split('/')[-1]
+    url = f'{DOMAIN}{package}'
+    package_response = requests.get(url)
+    if package_response.status_code != 200:
+        print(f'Unexpected status for package page {url}: {package_response.status_code}',
+              file=sys.stderr)
+        count = 'NA'
+    else:
+        count = len(RE_RELEASE.findall(package_response.text))
+    print(f'{name},{count}')
+    num_seen += 1
+    if (num_seen % 10) == 0:
+        t_elapsed = time.time() - t_start
+        t_expected = len(all_packages) * t_elapsed / num_seen
+        print(f'{num_seen} @ {t_elapsed:.1f} / {len(all_packages)} @ {t_expected:.1f}',
+              file=sys.stderr)
+</code></pre>
+<p>{: title="get-index-page.py"}</p>
+<ul>
+<li>Still not a friendly program<ul>
+<li>If several thousand people run this program at the same time it will slow PyPI down</li>
+</ul>
+</li>
+<li>Unlikely in this case,
+    but a school could easily wind up being blacklisted
+    if a hundred students are grabbing data at the same time</li>
+<li>Popular data sources have to manage floods of requests</li>
+<li>Programs should <span g="throttle">throttle</span> their own activity</li>
+</ul>
+<h2>How can we report results?</h2>
+<ul>
+<li><span g="descriptive_statistics">Descriptive statistics</span> are key facts about data</li>
+<li>The <span g="median">median</span> is the middle value<ul>
+<li>If $$N$$ is odd, sort and take the middle</li>
+<li>If $$N$$ is even, sort and average the two middle values</li>
+</ul>
+</li>
+<li>The <span g="mean">mean</span> is the weighted center of the data<ul>
+<li>$$ \mu = \frac{1}{N} \sum x_i $$</li>
+</ul>
+</li>
+<li>If there are a few outliers, the mean can be very different from the median<ul>
+<li>Mean of <code>[1, 2, 3, 4, 100]</code> is 22, but median is 3</li>
+<li>Which is why those who have like to quote means rather than medians</li>
+</ul>
+</li>
+<li><span g="variance">Variance</span> measures the spread of values<ul>
+<li>$$ \sigma^2 = \frac{1}{N} \sigma (x_i - \mu)^2 $$</li>
+<li>Squaring the differences gives extra weight to outliers...</li>
+<li>...but makes variance hard to use directly, since its units are (for example) lines squared</li>
+</ul>
+</li>
+<li>Instead, use the <span g="standard_deviation">standard deviation</span><ul>
+<li>Square root of the variance, so it has the same units as the data</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-py">import sys
+import pandas as pd
+
+datafile = sys.argv[1]
+packages = pd.read_csv(datafile)
+print(packages.agg(['mean', 'median', 'var', 'std']))
+</code></pre>
+<p>{: title="version-statistics.py"}</p>
+<pre><code class="language-sh">python version-statistics.py release-count.csv
+</code></pre>
+<pre><code class="language-txt">            Releases
+mean       11.236351
+median      4.000000
+var      2501.398099
+std        50.013979
+min         0.000000
+max     10797.000000
+</code></pre>
+<ul>
+<li>Half of all packages have had fewer than four releases</li>
+<li>The mean is only slightly higher (1/5 of a standard deviation)</li>
+<li>And yeah, a package with almost 11,000 releases will pull things up<ul>
+<li><code>ccxt</code> is a cryptocurrency, so they might be using releases as ledger updates</li>
+</ul>
+</li>
+</ul>
+<h2>How can we display the results</h2>
+<ul>
+<li>Again, a histogram shows the distribution of values<ul>
+<li>Its shape (and hence our interpretation) depends on how we <span g="bin">bin</span> the data</li>
+</ul>
+</li>
+<li>Given how long data collection takes,
+    most sensible thing is to collect the data once and write separate plotting programs to view it<ul>
+<li>Provide name of data file on the command line</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-py">import sys
+import pandas as pd
+import plotly.express as px
+
+datafile = sys.argv[1]
+packages = pd.read_csv(datafile)
+
+print('Distribution of Releases')
+print(packages.groupby('Releases').count())
+print(f'{packages["Releases"].isna().sum()} missing values')
+
+fig = px.histogram(packages, x='Releases', nbins=100, log_y=True, width=600, height=400)
+fig.show()
+fig.write_image('figures/release-count.svg')
+</code></pre>
+<p>{: title="version-histogram.py"}</p>
+<pre><code class="language-sh">python version-histogram.py release-count.csv
+</code></pre>
+<pre><code class="language-txt">Distribution of Releases
+          Package
+Releases         
+0.0         11721
+1.0         33992
+2.0         32829
+3.0         14999
+4.0         18339
+5.0          8946
+...
+4505.0          1
+5133.0          1
+6460.0          1
+10797.0         1
+
+[561 rows x 1 columns]
+14 missing values
+</code></pre>
+<p>{% include figure
+   id="release-count"
+   img="figures/release-count.svg"
+   alt="FIXME"
+   cap="Release Count"
+   title="Histogram showing steeply declining curve from X equals 0 to X above 10,000 with peak over 200,000 at X equals 0." %}</p>
+<ul>
+<li>Printed output includes the value for packages with zero releases</li>
+<li>But does the histogram?<ul>
+<li>What does Plotly do with <code>log(0)</code>?</li>
+</ul>
+</li>
+<li>Let's try:</li>
+</ul>
+<pre><code class="language-py">slice = packages[packages['Releases'] &lt; 100]
+fig = px.histogram(slice, x='Releases', nbins=100, log_y=True, width=600, height=400)
+fig.show()
+fig.write_image('figures/release-count-low.svg')
+</code></pre>
+<p>{: title="version-histogram.py"}</p>
+<p>{% include figure
+   id="release-count-low"
+   img="figures/release-count-low.svg"
+   cap="Release Count (Low End)"
+   alt="FIXME"
+   title="Histogram showing smoothly declining curve from X equals 0 to X equals 100 with over 10,000 values at X equals zero and alternating high and low bars." %}</p>
+<ul>
+<li>It seems to include zero</li>
+<li>But that double-stepping looks weird</li>
+<li>
+<p>Is it a plotting artifact or a result of double-counting packages that are released in multiple formats?</p>
+<ul>
+<li>For that, we need better data</li>
+</ul>
+</li>
+<li>
+<p>Use a <span g="violin_plot">violin plot</span> to get a feel for the shape of the data</p>
+</li>
+</ul>
+<pre><code class="language-py">datafile = sys.argv[1]
+packages = pd.read_csv(datafile)
+slice = packages[packages['Releases'] &lt; 100]
+fig = px.violin(slice, y='Releases', width=600, height=400)
+fig.show()
+fig.write_image('figures/release-count-violin.svg')
+</code></pre>
+<p>{: title="version-other-plots.py"}</p>
+<p>{% include figure
+   id="release-count-violin"
+   img="figures/release-count-violin.svg"
+   cap="Violin Plot (Low End)"
+   alt="FIXME"
+   title="Symmetric vertical violin plot with almost all values in bulge at bottom end." %}</p>
+<ul>
+<li>Can also use a <span g="box_and_whisker_plot">box-and-whisker plot</span><ul>
+<li>Lines show minimum, first <span g="quartile">quartile</span>, median, third quartile, and maximum</li>
+<li>Box shows first quartile to third quartile (so half the data lies inside the box)</li>
+</ul>
+</li>
+<li>Distance from first quartile to third quartile is the <span g="iqr">inter-quartile range</span><ul>
+<li>Lower and upper lines cut off at 1.5$$\times$$IQR</li>
+<li>Anything beyond that is considered an outlier and shown as a point</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-py">fig = px.box(slice, y='Releases', width=600, height=400)
+fig.show()
+fig.write_image('figures/release-count-box.svg')
+</code></pre>
+<p>{: title="version-other-plots.py"}</p>
+<p>{% include figure
+   id="release-count-box"
+   img="figures/release-count-box.svg"
+   cap="Box-and-Whisker Plot (Low End)"
+   alt="FIXME"
+   title="Symmetric vertical box plot with almost all values at low end." %}</p>
+<h2>How should we structure data analysis projects?</h2>
+<ul>
+<li>Data analysis projects include programs and programming,
+    but are not the same as software development projects</li>
+<li>Starting point is <span g="taschuks_rules">Taschuk's Rules</span>:<ol>
+<li>Use version control.</li>
+<li>Document your code and usage</li>
+<li>Make common operations easy to control.</li>
+<li>Version your releases.</li>
+<li>Reuse software (within reason)</li>
+<li>Rely on build tools and package managers for installation.</li>
+<li>Do not require root or other special privileges to install or run.</li>
+<li>Eliminate hard-coded paths.</li>
+<li>Include a small test set that can be run to ensure the software is actually working.</li>
+<li>Produce identical results when given identical inputs.</li>
+</ol>
+</li>
+<li>The first three rules are the most important<ul>
+<li>We assume you are already using version control</li>
+</ul>
+</li>
+<li>Restructure our program</li>
+</ul>
+<h3>Main driver</h3>
+<ul>
+<li>The <span g="main_driver">main driver</span> lays out the overall flow of the program<ul>
+<li>Parse command-line options</li>
+<li>Set up</li>
+<li>Produce output incrementally while processing data
+    (rather than read-process-write)</li>
+</ul>
+</li>
+<li>Include a <span g="docstring">docstring</span> for help</li>
+</ul>
+<pre><code class="language-py">def main():
+    '''
+    Main driver.
+    '''
+    args = parse_args()
+    all_packages = get_package_list(args)
+    progress = initialize_progress(args, all_packages)
+    writer = csv.writer(sys.stdout, lineterminator='\n')
+    writer.writerow(['Package', 'Release'])
+    for package in all_packages:
+        get_package_info(package, writer)
+        report_progress(progress)
+
+# ...
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+<p>{: title="bin/get-all-versions.py"}</p>
+<ul>
+<li>Uses the [<code>csv</code>][csv-py] package to format output instead of printing strings ourselves<ul>
+<li>Takes care of <span g="escape_character">escaping</span> special characters</li>
+</ul>
+</li>
+</ul>
+<h3>Parse command-line arguments</h3>
+<pre><code class="language-py">def parse_args():
+    '''
+    Parse command-line arguments.
+    '''
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--restart', type=str, help='restart from this package')
+    parser.add_argument('--verbose', action='store_true', help='show progress')
+    return parser.parse_args()
+</code></pre>
+<p>{: title="bin/get-all-versons.py"}</p>
+<ul>
+<li>Use [<code>argparse</code>][argparse] to parse command-line arguments<ul>
+<li><code>--verbose</code> to track progress (because it takes hours)</li>
+<li><code>--restart</code> to start from a specified point because networks fail<ul>
+<li>May result in redundant records</li>
+<li>Definitely results in header appearing multiple times</li>
+<li>Clean up afterward</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Get the main package list</h3>
+<pre><code class="language-py"># Match package URL in main index page.
+RE_PACKAGE = re.compile(r'&lt;a href="(.+?)"&gt;')
+
+# ...
+
+def get_package_list(args):
+    '''
+    Get main package listing page and extract values.
+    '''
+    response = requests.get(f'{BASE_URL}')
+    assert response.status_code == 200, \
+        f'Unexpected status for index page {response.status_code}'
+    all_packages = RE_PACKAGE.findall(response.text)
+    all_packages = [p.strip('/').split('/')[-1] for p in all_packages]
+    if (args.restart):
+        start = all_packages.index(args.restart)
+        if (start &lt; 0):
+            print(f'Unable to find {args.restart} in package list',
+                  file=sys.stderr)
+            sys.exit(1)
+        all_packages = all_packages[start:]
+    return all_packages
+</code></pre>
+<p>{: title="bin/get-all-versons.py"}</p>
+<ul>
+<li>Regular expression is at the top of the file with other "constants"<ul>
+<li>Unfortunately no way to attach a docstring</li>
+</ul>
+</li>
+<li>Get the main package listing page<ul>
+<li>Fail if it can't be found rather than supporting restart</li>
+<li>Slice here to get the package list</li>
+</ul>
+</li>
+<li>Handle restart here as well (and fail if that isn't going to work)</li>
+<li>Use <code>all_packages</code> rather than just <code>packages</code> as a name
+    so that the code reads aloud more clearly<ul>
+<li>Look at consistent variable naming in the exercises</li>
+</ul>
+</li>
+</ul>
+<h3>Get information about a single package</h3>
+<pre><code class="language-py">def get_package_info(name, writer):
+    '''
+    Get and print information about a specific package.
+    '''
+    url = f'{BASE_URL}{name}'
+    response = requests.get(url)
+    if response.status_code != 200:
+        print(f'Unexpected status for package page {url}: {response.status_code}',
+              file=sys.stderr)
+        writer.writerow([name, 'NA'])
+    else:
+        all_releases = RE_RELEASE.findall(response.text)
+        for release in all_releases:
+            writer.writerow([name, release])
+</code></pre>
+<p>{: title="bin/get-all-versions.py"}</p>
+<ul>
+<li>Get packages one at a time<ul>
+<li>Some attempts fail (status code is not 200)</li>
+<li>Record these as <code>NA</code> rather than failing because we <em>can</em> proceed</li>
+</ul>
+</li>
+</ul>
+<h3>Report progress</h3>
+<ul>
+<li>Anything that takes long enough to worry about should tell users it's OK<ul>
+<li>But that should be an option so that it <em>doesn't</em> ask for attention in a production pipeline</li>
+</ul>
+</li>
+<li>Could initialize the record-keeping in <code>main</code>,
+    but that function reads more cleanly if this low-level detail is hidden away</li>
+<li>Goes to <code>sys.stderr</code> so that regular output can be redirected to file</li>
+</ul>
+<pre><code class="language-py">def initialize_progress(args, packages):
+    '''
+    Initialize record keeping for progress monitoring.
+    '''
+    return {
+        'report': args.verbose,
+        'start': time.time(),
+        'expected': len(packages),
+        'seen': 0
+    }
+
+
+def report_progress(progress):
+    '''
+    Report progress, updating the progress record as a side effect.
+    '''
+    if (not progress['report']):
+        return
+    progress['seen'] += 1
+    if (progress['seen'] % 10) == 0:
+        elapsed = time.time() - progress['start']
+        duration = progress['expected'] * elapsed / progress['seen']
+        print(f"{progress['seen']} @ {elapsed:.1f} / {progress['expected']} @ {duration:.1f}",
+              file=sys.stderr)
+</code></pre>
+<p>{: title="bin/get-all-versions.py"}</p>
+<h3>What's missing</h3>
+<ul>
+<li>This program does not have an option for output file<ul>
+<li>Should probably have one option to create a new file and another to append to an existing file</li>
+</ul>
+</li>
+<li>Should probably also have an option to stop trying if enough pages fail</li>
+</ul>
+<h2>What should go where?</h2>
+<p><span g="nobles_rules">Noble's Rules</span> are a way to organize small data analysis projects.
+Each one lives in a separate Git repository
+whose subdirectories are organized by purpose:</p>
+<ul>
+<li>
+<p><code>src</code> (short for "source") holds source code
+    for programs written in languages like C or C++ that need to be compiled.
+    Many projects don't have this directory
+    because all of their code is written in languages that don't need compilation.</p>
+</li>
+<li>
+<p>Runnable programs go in <code>bin</code> (an old Unix abbreviation for "binary", meaning "not text").
+    This includes the compiled and runnable versions of C and C++ programs,
+    and also shell scripts,
+    Python or R programs,
+    and everything else that can be executed.</p>
+</li>
+<li>
+<p>Raw data goes in in <code>data</code> and is never modified after being stored.</p>
+</li>
+<li>
+<p>Results are put in <code>results</code>.
+    This includes cleaned-up data
+    and everything else that can be rebuilt using what's in <code>bin</code> and <code>data</code>.
+    If intermediate results can be re-created quickly and easily,
+    they might not be stored in version control,
+    but anything that is included in a report should be here.</p>
+</li>
+<li>
+<p>Finally,
+    documentation and manuscripts go in <code>doc</code>.</p>
+</li>
+</ul>
+<p>Documentation is often generated from source code,
+and it's usually a bad idea to mix handwritten and machine-generated files,
+so most projects now use separate subdirectories for software documentation (<code>doc</code>)
+and reports (<code>reports</code> or <code>papers</code>).
+People also often create a <code>figures</code> directory to hold generated figures
+rather than putting them in <code>results</code>.</p>
+<p>The directories in the top level of each project are organized by purpose,
+but the directories within <code>data</code> and <code>results</code> are organized chronologically
+so that it's easy to see when data was gathered and when results were generated.
+These directories all have names in <span g="iso_date_format">ISO date format</span> like <code>YYYY-MM-DD</code>
+to make it easy to sort them chronologically.
+This naming is particularly helpful when data and results are used in several reports.</p>
+<p>At all levels,
+filenames should be easy to match with simple patterns.
+For example,
+a project might use <code><em>species</em><em><em>organ</em></em><em>treatment</em>.csv</code>
+as a file-naming convention,
+giving filenames like <code>human_kidney_cm200.csv</code>.
+This allows <code>human_*_cm200.csv</code> to match all human organs
+or <code>*_kidney_*.csv</code> to match all kidney data.
+It does produce long filenames,
+but tab completion means you only have to type them once.
+Long filenames are just as easy to match in programs:
+Python's [<code>glob</code>][glob] module will take a pattern and return a list of matching filenames.</p>
+<h2>How should we keep track of our data?</h2>
+<ul>
+<li>Data should be published along with reports<ul>
+<li>How else can people check or extend your work?</li>
+</ul>
+</li>
+<li>Large datasets that are archived and maintained by trusted institutions (e.g., open government data)
+    don't need to be stored<ul>
+<li>Just include a link, a method for downloading, and a date</li>
+</ul>
+</li>
+<li>If a report involves a new dataset:<ul>
+<li>Always use <span g="tidy_data">tidy data</span>.</li>
+<li>Include keywords describing the data in the project's <code>README.md</code>
+    so that they appear on its home page and can easily be found by search engines.</li>
+<li>Give every dataset and every report a unique identifier.</li>
+<li>Use well-known formats like CSV and HDF5.</li>
+<li>Include an explicit license.</li>
+<li>Include units and other metadata.</li>
+</ul>
+</li>
+</ul>
+<p>The last point is often the hardest for people to implement,
+since many researchers have never seen a well-documented dataset.
+The <span g="data_manifest">data manifest</span> for <cite>Diehm2018</cite> is a good example;
+each dataset is described by an entry like this:</p>
+<div class="callout">
+<ul>
+<li>What is this?: This file contains all of the measurements for 80 pairs of blue jeans from the most popular and widely available brands in the US.</li>
+<li>Source(s): All data was collected from manual measurements by Jan Diehm and Amber Thomas at brick and mortar stores in Nashville, New York, and Seattle.
+    All measurements of front pockets were taken of the right-hand-side front pocket of empty jeans.</li>
+<li>Last Modified: August 13, 2018</li>
+<li>Contact Information: Amber Thomas</li>
+<li>Spatial Applicability: United States</li>
+<li>Temporal Applicability: All measurements were collected between June 29 and August 6, 2018</li>
+<li>Observations (Rows): Each row represents data from a single pair of jeans.</li>
+<li>Variables (Columns):</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Header</th>
+<th>Datatype</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>brand</code></td>
+<td>text</td>
+<td>The full brand name.</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>text</td>
+<td>The cut of each pair of jeans (in our analysis, we combined straight and boot-cut styles and skinny and slim styles, but these remain separated here).</td>
+</tr>
+<tr>
+<td><code>menWomen</code></td>
+<td>text</td>
+<td>Whether the jeans were listed as "men's" or "women's".</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>text</td>
+<td>The name of the specific style of measured pair of jeans as indicated by the tag. (e.g., <code>Fave Super Skinny Jean</code>).</td>
+</tr>
+<tr>
+<td><code>brandSize</code></td>
+<td>text</td>
+<td>The size of jeans we measured. Each size reflects the sizing for each brand closest to a 32-inch waistband as indicated by the brand's website.</td>
+</tr>
+<tr>
+<td><code>waistSize</code></td>
+<td>number</td>
+<td>The waistband size (in inches) of each measured pair as reported on the brand's website.</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="callout">
+<h3>FAIR play</h3>
+<p>The [FAIR Principles][fair-principles] <cite>Brock2019</cite>
+state that data should be <em>findable</em>, <em>accessible</em>, <em>interoperable</em>, and <em>reusable</em>.
+They are still aspirational for most researchers,
+but they tell us what to aim for.</p>
+</div>
+<h2>How should we keep track of our workflow?</h2>
+<p>It's easy to run one program to process a single data file,
+but what happens when our analysis depends on many files,
+or when we need to re-do the analysis every time new data arrives?
+What should we do if the analysis has several steps
+that we have to do in a particular order?</p>
+<p>If we try to keep track of this ourselves,
+we will inevitably forget some crucial steps,
+and it will be hard for other people to pick up our work.
+Instead,
+we should use a <span g="build_tool">build tool</span>
+to keep track of what depends on what
+and run our analysis programs automatically.
+These tools were invented to help programmers rebuild complex software,
+but can be used to automate any workflow.</p>
+<div class="callout">
+<h3>Make</h3>
+<p>The first widely-used build tool, Make, written in 1976.  Programmers have
+created many replacements for it in the decades since then—so many, in fact,
+that none have attracted enough users to displace it entirely.</p>
+</div>
+<p>When Snakemake runs,
+it reads <span g="build_rule">build rules</span> from a file called <code>Snakefile</code>.
+(It can be called other things, but that's the convention.)
+Each rule explains how to update a <span g="build_target">target</span>
+if it is out of date compared to any of its <span g="build_prerequisite">prerequisites</span>.
+Here's a rule to regenerate a compressed data file <code>data/all-versions.csv.gz</code>
+if the file is older than the script used to create it:</p>
+<pre><code class="language-python">rule all_versions:
+    '''Download all version info from PyPI - takes several hours.'''
+    output:
+        protected('data/all-versions.csv.gz')
+    shell:
+        '''
+        python bin/get-all-versions.py &gt; data/all-versions.csv
+        gzip data/all-versions.csv
+        '''
+</code></pre>
+<ul>
+<li>First line gives the rule a meaningful name</li>
+<li>Second is a docstring<ul>
+<li><code>snakemake --list</code> will show the rules and their docstrings</li>
+</ul>
+</li>
+<li><code>output</code> section tells Snakemake what file(s) this rule produces<ul>
+<li>The <code>protected</code> function tells Snakemake to change permissions on the file so it won't accidentally be deleted</li>
+<li>Only do this for files that take a long time to re-create</li>
+</ul>
+</li>
+<li><code>shell</code> section tells Snakemake what command(s) to run to create the output<ul>
+<li>It will automatically create the <code>data</code> directory if need be</li>
+<li>We can put Python directly in the Snakefile, but I prefer scripts so that commands can be re-run independently</li>
+</ul>
+</li>
+</ul>
+<div class="callout">
+<h3>Compressing Data</h3>
+<p>Compressing this dataset takes file from 103.8 Mbyte to 9.5 Mbyte, which is
+almost a factor of 11.  However, version control can only diff and merge plain
+text files, so if the file is compressed, Git can't help us track changes to
+individual lines.  On the other hand we probably shouldn't be changing a dataset
+anyway...</p>
+</div>
+<ul>
+<li>Execute these commands with</li>
+</ul>
+<pre><code class="language-sh">snakemake -j 1 all_versions
+</code></pre>
+<p>Since that will take several hours to complete,
+let's add another rule to the same file:</p>
+<pre><code class="language-python">rule releases_per_package:
+    '''How many releases are there for each package?'''
+    input:
+        'data/all-versions.csv.gz'
+    output:
+        'results/releases.csv'
+    shell:
+        'python bin/count-releases.py {input} &gt; {output}'
+</code></pre>
+<ul>
+<li><code>-j1</code> means "only run one job at a time"<ul>
+<li>Snakemake can run many jobs in parallel</li>
+</ul>
+</li>
+<li><code>results/releases.csv</code> depends on an input data file</li>
+<li>Snakemake only runs the commands if the output doesn't exist or is older than the input</li>
+</ul>
+<p><code>count-releases.py</code> is only a few lines long.
+It takes advantage of the fact that if we give Pandas' <code>read_csv</code> function
+a string instead of a stream
+it assumes that parameter is a filename,
+and that it can read directly from compressed files
+(which it identifies by looking for common endings like <code>.zip</code> or <code>.gz</code>).</p>
+<pre><code class="language-py">#!/usr/bin/env python
+
+'''
+Count how many releases there are per package.
+'''
+
+import sys
+import pandas as pd
+
+def main():
+    '''
+    Main driver.
+    '''
+    data = pd.read_csv(sys.argv[1])
+    result = data.groupby('Package').Release.nunique()
+    result.to_csv(sys.stdout, header=True)
+
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+<p>{: title="bin/count-releases.py"}</p>
+<p>If we run:</p>
+<pre><code class="language-sh">snakemake -j1 releases_per_package
+</code></pre>
+<p>and wait a few seconds,
+we have a file with the following:</p>
+<pre><code class="language-txt">Package,Release
+0,1
+0-0-1,1
+0-core-client,9
+0-orchestrator,14
+00print-lol,2
+01d61084-d29e-11e9-96d1-7c5cf84ffe8e,2
+021,1
+...
+</code></pre>
+<p>Creating a Snakefile may seem like extra work,
+but few things in life are as satisfying as running one command
+and watching an entire multi-step analysis run itself:</p>
+<ol>
+<li>
+<p>It reduces errors,
+    since we only have to type commands correctly once
+    instead of over and over again.</p>
+</li>
+<li>
+<p>More importantly,
+    it documents our workflow
+    so that someone else (including our future self)
+    can see exactly what steps we used in what order.</p>
+</li>
+</ol>
+<h2>How can we remove redundant releases?</h2>
+<ul>
+<li>How many packages are released in redundant formats (e.g., as both <code>.tar.gz</code> and <code>.whl</code>)?</li>
+<li>First step is to find out what formats are represented in the data<ul>
+<li>Break names on <code>.</code></li>
+<li>Count how often each type of field appears</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-py">#!/usr/bin/env python
+
+import sys
+import pandas as pd
+from collections import Counter
+
+def main():
+    '''
+    Count frequency of '.'-separated components of names.
+    '''
+    data = pd.read_csv(sys.argv[1])
+    data = data['Release'].str.split('.', expand=True)
+    data = data.values.flatten()
+    data = Counter(data)
+    del data[None]
+    data = pd.DataFrame.from_dict(data, orient='index').reset_index()
+    data = data.rename(columns={'index': 'Component', 0: 'Count'})
+    data = data[~ data['Component'].str.match(r'^\d+$', na=False)]
+    data = data.sort_values(by='Count', ascending=False)
+    data.to_csv(sys.stdout, header=True, index=False)
+
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+<p>{: title="bin/components.py"}</p>
+<ul>
+<li>
+<p>In order:</p>
+<ul>
+<li>Read the file</li>
+<li>Split the <code>Release</code> column on <code>.</code>, creating new columns for the fragments</li>
+<li>Flatten all those columns into a single vector</li>
+<li>Count how often each component appears</li>
+<li>Remove the <code>None</code> value (because splitting on <code>.</code> created a lot of blanks)</li>
+<li>Turn the result back into a dataframe and reset the index<ul>
+<li>We explore why we need to reset the index in the exercises</li>
+</ul>
+</li>
+<li>Give the columns sensible names</li>
+<li>Keep values that aren't composed entirely of digits (after inspection)</li>
+<li>Sort by count</li>
+<li>Save</li>
+</ul>
+</li>
+<li>
+<p>We did <em>not</em> write this all at once</p>
+<ul>
+<li>Write the first couple of steps</li>
+<li><code>gunzip -c data/all-versions.csv | head -n 10 &gt; /tmp/test-data.csv.gz</code> to create a test dataset</li>
+<li>Keep adding steps</li>
+<li>Enlarge the test set once the pipeline seems to be working</li>
+</ul>
+</li>
+<li>
+<p>Add a rule to <code>Snakefile</code></p>
+</li>
+</ul>
+<pre><code class="language-make">rule count_name_components:
+    '''How often does each component of a dotted name occur?'''
+    input:
+        'data/all-versions.csv.gz'
+    output:
+        'results/name-component-count.csv'
+    shell:
+        'python bin/components.py {input} &gt; {output}'
+</code></pre>
+<ul>
+<li>Run</li>
+</ul>
+<pre><code class="language-txt">Component,Count
+tar,1298365
+gz,1294773
+whl,833181
+py3-none-any,219230
+egg,83174
+zip,79232
+0-py2,56429
+0-py3-none-any,53955
+1-py3-none-any,46384
+1-py2,42507
+2-py3-none-any,29974
+2-py2,27282
+3-py3-none-any,21383
+3-py2,19175
+exe,17161
+0-py2-none-any,16079
+4-py3-none-any,15782
+4-py2,14105
+5-py3-none-any,12791
+1-py2-none-any,11683
+5-py2,11233
+...
+</code></pre>
+<ul>
+<li>
+<p>Most common suffixes are <code>.tar.gz</code>, <code>.tar</code>, <code>.whl</code>, <code>.egg</code>, <code>.zip</code>, and <code>.exe</code></p>
+<ul>
+<li>Need domain knowledge to recognize these</li>
+<li>And to know that <code>.tar</code> and <code>.gz</code> appear together</li>
+</ul>
+</li>
+<li>
+<p>Add this rule at the top of the file</p>
+<ul>
+<li>Depends on two files but doesn't have an action</li>
+<li>Snakemake re-creates both files</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-python">rule all:
+    '''Dummy rule to rebuild everything.'''
+    input:
+        ['results/releases.csv', 'results/name-component-count.csv']
+</code></pre>
+<ul>
+<li>Next, calculate how many releases there are per package once we remove duplicates</li>
+</ul>
+<pre><code class="language-py">def main():
+    '''
+    Count releases before and after de-duplication.
+    '''
+    data = pd.read_csv(sys.argv[1])
+    num_packages = len(data)
+    data = data.assign(Stripped=data['Release'].str.replace(r'\.(tar\.gz|tar|whl|egg|zip|exe)$', ''))
+    result = pd.DataFrame({'Complete': data.groupby('Package').Release.nunique(),
+                           'Stripped': data.groupby('Package').Stripped.nunique()})
+    num_shorter = len(result[result.Complete &gt; result.Stripped])
+    print(f'{num_shorter} / {num_packages} ({(100 * num_shorter / num_packages):6.2}%) shorter')
+</code></pre>
+<p>{: title="bin/remove-duplicates.py"}</p>
+<ul>
+<li>Rule in Snakefile doesn't produce an output file<ul>
+<li>Just shows us</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-python">rule count_redundant_releases:
+    '''How many duplicated (redundant) releases are there?'''
+    input:
+        'data/all-versions.csv.gz'
+    shell:
+        'python bin/remove-duplicates.py data/all-versions.csv.gz'
+</code></pre>
+<ul>
+<li>Output</li>
+</ul>
+<pre><code class="language-txt">2255 / 2312545 ( 0.098%) shorter
+</code></pre>
+<ul>
+<li>So this <em>isn't</em> a big enough issue to explain the even-numbered jagginess of our earlier figure</li>
+</ul>
+<h2>Summary</h2>
+<ul>
+<li>We now have a layout for small data analysis projects</li>
+<li>And a way to make steps reproducible</li>
+<li>It's time to do some statistics</li>
+</ul>
+</main>
+<footer>
+<a href="../">Organizational Change for Open Science</a>
+      copyright © 2025
+      <a href="../01_intro/#acknowledgments">the authors</a>
+</footer>
+</body>
+</html>

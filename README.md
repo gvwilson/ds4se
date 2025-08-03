@@ -17,7 +17,12 @@ FIXME
 
 <div id="syllabus" markdown="1">
 
-1.  [Introduction](./01_intro/): what this training does and doesn't cover.
+1.  [Introduction](./01_intro/)
+1.  [Basic Tools](./02_basic/)
+1.  [Robust Analysis](./03_robust/)
+1.  [Hypothesis Testing](./04_hypotest/)
+1.  [The Law of Large Numbers](./05_largenum/)
+1.  [Non-Parametric Statistics](./06_nonpar/)
 
 </div>
 
@@ -29,6 +34,7 @@ FIXME
 1.  [Code of Conduct](./CODE_OF_CONDUCT.md)
 1.  [Bibliography](./bibliography.md)
 1.  [Glossary](./glossary.md)
+1.  [Theory](./theory/)
 
 </div>
 

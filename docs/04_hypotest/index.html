@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hypothesis Testing</title>
+<link href="../static/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="../static/mccole.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<nav>
+<a href="../">Home</a>
+      ·
+      <span class="dropdown">
+<a href="#">Lessons</a>
+<span class="dropdown-content">
+<a href="../01_intro/">Introduction</a>
+<a href="../02_meeting/">How to Run a Meeting</a>
+<a href="../03_gst/">Goals, Strategies, and Tactics</a>
+<a href="../04_power/">Power</a>
+<a href="../05_start/">Starting</a>
+<a href="../06_finish/">Finishing</a>
+</span>
+</span>
+      ·
+      <span class="dropdown">
+<a href="#">Extras</a>
+<span class="dropdown-content">
+<a href="../license/">License</a>
+<a href="../conduct/">Code of Conduct</a>
+<a href="../bibliography/">Bibliography</a>
+<a href="../glossary/">Glossary</a>
+</span>
+</span>
+</nav>
+<main>
+<h1>Hypothesis Testing</h1>
+<ul>
+<li>Problem: how to estimate development effort or likely fault rates<ul>
+<li>Intuitively seems like this should depend on some measurable properties of the software</li>
+<li>Lines of code (LoC) is easy to count but seems like a pretty coarse measure</li>
+<li>How can we count other things?</li>
+<li>How can we tell whether a hypothesis is true or not?</li>
+</ul>
+</li>
+<li>Steps are:<ul>
+<li>Collect data</li>
+<li>Formulate testable hypotheses</li>
+<li>Calculate likelihood of getting the answer we observe</li>
+<li>Decide whether that answer is so unlikely that we probably didn't get it by chance</li>
+</ul>
+</li>
+</ul>
+<h2>How can we get data on file sizes?</h2>
+<ul>
+<li>Start by asking whether Python and JavaScript files are different,
+    i.e., how our measurements depend on source language</li>
+<li>Parsing arguments and writing CSV is normal by now</li>
+<li>Use <code>os.walk</code> to recurse through directories</li>
+<li>After the first failure because of bad <span g="character_encoding">character encoding</span>, add error handling</li>
+<li>Then capture <code>stderr</code> to a log file for later inspection</li>
+<li>Then realize that storing (filename, length, count):<ol>
+<li>Is too big for GitHub unless we compress it</li>
+<li>Contains a lot of redundancy</li>
+</ol>
+</li>
+<li>Instead of compressing the file, create two files:<ul>
+<li>One stores (filename, unique ID)</li>
+<li>The other stores (unique ID, length, count)</li>
+<li>So the largest field (filename) only appears once</li>
+<li>And gives us a natural way to record files we couldn't read because of character encoding issues (<code>NA</code> for file ID)</li>
+</ul>
+</li>
+<li>
+<p>This technique is also useful when storing <span g="pid">personal identifying information</span> (PID)</p>
+<ul>
+<li>Shareable data is keyed</li>
+<li>Personal data is not shared</li>
+<li>Beware of <span g="de_anonymization">de-anonymization</span></li>
+</ul>
+</li>
+<li>
+<p>Main driver is straightforward</p>
+</li>
+</ul>
+<pre><code class="language-py">def main():
+    '''
+    Main driver.
+    '''
+    args = parse_args()
+    counts = lengths(args)
+    report_filenames(args.output, counts)
+    report_counts(args.output, counts)
+</code></pre>
+<p>{: title="bin/file-size.py"}</p>
+<ul>
+<li>Parse arguments<ul>
+<li>Root directory</li>
+<li>Filename extension</li>
+<li>Stem of output files (because there are two)</li>
+<li>E.g., processing <code>data/python</code> will produce <code>data/python-filenames.csv</code> and <code>data/python-counts.csv</code></li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-py">def parse_args():
+    '''
+    Handle command-line arguments.
+    '''
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--root', type=str, help='root directory')
+    parser.add_argument('--ext', type=str, help='extension')
+    parser.add_argument('--output', type=str, help='stem of output files')
+    return parser.parse_args()
+</code></pre>
+<p>{: title="bin/file-size.py"}</p>
+<ul>
+<li>Find files and record lengths<ul>
+<li>A dictionary mapping filenames to <code>Counter</code> objects</li>
+<li>Or to <code>None</code> if the file couldn't be read</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-py">def lengths(args):
+    '''
+    Find files and count line lengths.
+    '''
+    counts = {}
+    for (curr_dir, sub_dirs, files) in os.walk(args.root):
+        for filename in [x for x in files if x.endswith(args.ext)]:
+            path = os.path.join(curr_dir, filename)
+            with open(path, 'r') as reader:
+                try:
+                    counts[path] = Counter()
+                    for x in reader.readlines():
+                        counts[path][len(x)] += 1
+                except Exception as e:
+                     print(f'Failed to read {path}: {e}',
+                           file=sys.stderr)
+                     counts[path] = None
+    return counts
+</code></pre>
+<p>{: title="bin/file-size.py"}</p>
+<ul>
+<li>Write the filenames or <code>NA</code><ul>
+<li>Uses <code>X if test else Y</code>, which is frequently confusing</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-py">def report_filenames(output_stem, counts):
+    '''
+    Report filename-to-ID as CSV with 'NA' for errored files.
+    '''
+    with open(f'{output_stem}-filenames.csv', 'w') as writer:
+        writer = csv.writer(writer, lineterminator='\n')
+        writer.writerow(['Filename', 'FileID'])
+        for (file_id, filename) in enumerate(sorted(counts.keys())):
+            writer.writerow([filename, file_id if counts[filename] else 'NA'])
+</code></pre>
+<p>{: title="bin/file-size.py"}</p>
+<ul>
+<li>And the counts where available</li>
+</ul>
+<pre><code class="language-py">def report_counts(output_stem, counts):
+    '''
+    Report file ID-to-count as CSV for non-errored files.
+    '''
+    with open(f'{output_stem}-counts.csv', 'w') as writer:
+        writer = csv.writer(writer, lineterminator='\n')
+        writer.writerow(['FileID', 'Length', 'Count'])
+        for (file_id, filename) in enumerate(sorted(counts.keys())):
+            if counts[filename]:
+                for (length, freq) in counts[filename].most_common():
+                    writer.writerow([file_id, length, freq])
+</code></pre>
+<p>{: title="bin/file-size.py"}</p>
+<ul>
+<li><code>python bin/file-size.py --root /anaconda3 --ext .py --output data/python</code></li>
+<li>Get some errors<ul>
+<li>Store in <code>log/file-size-python-errors.txt</code> for later reference</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-txt">Failed to read /anaconda3/pkgs/xlwt-1.3.0-py37_0/lib/python3.7/site-packages/xlwt/BIFFRecords.py: 'utf-8' codec can't decode byte 0x93 in position 68384: invalid start byte
+Failed to read /anaconda3/pkgs/xlwt-1.3.0-py37_0/lib/python3.7/site-packages/xlwt/UnicodeUtils.py: 'utf-8' codec can't decode byte 0xb7 in position 1950: invalid start byte
+Failed to read /anaconda3/pkgs/pylint-2.3.1-py37_0/lib/python3.7/site-packages/pylint/test/functional/implicit_str_concat_in_sequence_latin1.py: 'utf-8' codec can't decode byte 0xe9 in position 96: invalid continuation byte
+Failed to read /anaconda3/pkgs/joblib-0.13.2-py37_0/lib/python3.7/site-packages/joblib/test/test_func_inspect_special_encoding.py: 'utf-8' codec can't decode byte 0xa4 in position 64: invalid start byte
+...
+</code></pre>
+<p>{: title="log/file-size-python-errors.txt"}</p>
+<ul>
+<li>Also run <code>python bin/file-sizes.py ~/blocks/node_modules</code><ul>
+<li><code>blocks</code> is a JavaScript project we just have to have lying around</li>
+<li><code>node_modules</code> is where the project's JavaScript packages are stored</li>
+</ul>
+</li>
+<li>Create scatter plots of to show frequency of line lengths</li>
+<li>Add a <span g="pattern_rule">pattern rule</span> to <code>Snakefile</code><ul>
+<li>Assign the languages and kinds of figures to variables</li>
+<li>Fill in all combinations of those variables with <code>expand</code></li>
+<li>Create a target called <code>all</code> that depends on the expanded list of files</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-python">LANGS = ['javascript', 'python']
+KINDS = ['all', 'trimmed']
+
+rule all:
+    input:
+        expand('figures/{lang}-counts-{kind}.svg', lang=LANGS, kind=KINDS)
+
+rule count_all:
+    input:
+        'data/{lang}-counts.csv'
+    output:
+        'figures/{lang}-counts-all.svg'
+    shell:
+        'python bin/length-frequency-plot.py --data {input} --fig {output} --logx'
+
+rule count_trimmed:
+    input:
+        'data/{lang}-counts.csv'
+    output:
+        'figures/{lang}-counts-trimmed.svg'
+    shell:
+        'python bin/length-frequency-plot.py --data {input} --fig {output} --low 2 --high 200'
+</code></pre>
+<p>{: title="Snakefile"}</p>
+<ul>
+<li>Create log-log histograms for frequency of line lengths
+    in JavaScript <span f="javascript-counts-all"></span>
+    and Python <span f="python-counts-all"></span></li>
+</ul>
+<p>{% include figure
+   id="javascript-counts-all"
+   img="figures/javascript-counts-all.svg"
+   cap="Frequency of Line Lengths (JavaScript, All)"
+   alt="FIXME"
+   title="Log-log scatter plot with a point at Y equals 200,000 and X equals 1 and then a noticeable decline for X above 80." %}</p>
+<p>{% include figure
+   id="python-counts-all"
+   img="figures/python-counts-all.svg"
+   cap="Frequency of Line Lengths (Python, All)"
+   alt="FIXME"
+   title="Log-log scatter plot with a point at Y equals 2,000,000 at X equals 1 and then a sharp decline for X above 80." %}</p>
+<ul>
+<li>Exclude lines of length 1<ul>
+<li>These only contain the newline character, i.e., they're empty</li>
+</ul>
+</li>
+<li>Exclude lines longer than 200 characters<ul>
+<li>Possibly a character encoding issue</li>
+<li>Or <span g="minification">minification</span> of JavaScript</li>
+</ul>
+</li>
+</ul>
+<p>{% include figure
+   id="javascript-counts-trimmed"
+   img="figures/javascript-counts-trimmed.svg"
+   cap="Frequency of Line Lengths (JavaScript, Trimmed)"
+   alt="FIXME"
+   title="Log-linear plot showing Y approximately 20,000 for X up to 50 and steady decline thereafter." %}</p>
+<p>{% include figure
+   id="python-counts-trimmed"
+   img="figures/python-counts-trimmed.svg"
+   cap="Frequency of Line Lengths (Python, Trimmed)"
+   alt="FIXME"
+   title="Log-linear plot showing Y approximately 20,000 for X below 10, Y between 100,000 and 200,000 for X up to 80, and a very sharp decline thereafter." %}</p>
+<ul>
+<li>These curves look different, but are they?</li>
+</ul>
+<h2>How can we tell if two populations are different?</h2>
+<ul>
+<li><span g="null_hypothesis">Null hypothesis</span>: there is no significant difference between these curves</li>
+<li><span g="alternative_hypothesis">Alternative hypothesis</span>: there is a significant difference between these curves</li>
+<li>Reject the null hypothesis if the probability of getting this data <em>if the null hypothesis is true</em>
+    is less than a chosen probability called a <span g="p_value">$$p$$ value</span><ul>
+<li>Typically use $$p = 0.05$$, i.e., less than 1 chance in 20 of getting the data if there isn't actually a difference</li>
+<li>The lower the $$p$$ value, the higher our confidence</li>
+</ul>
+</li>
+</ul>
+<div class="callout">
+<h3>Kick the ball then move goal</h3>
+<p>$$p$$ values can be mis-used in several ways.
+The most obvious is to choose a $$p$$ value after the fact in order to get a significant result:
+if you ever see reports that mix several different $$p$$ values or use odd numbers like 0.073,
+this is probably what's going on.</p>
+<p>The second form of abuse, called <span g="p_hacking"><em>p</em> hacking</span>,
+is to re-analyze the data over and over until a "significant" result emerges.
+Consider: if the odds of getting a false positive for one analysis are 0.05,
+then the odds of getting a true negative are 0.95.
+The odds of getting two true negatives in a row are therefore $$0.95^2$$,
+which is 0.9025.
+If we keep going, the odds of none of our analyses meeting this threshold are 50/50
+when we do 14 analyses.
+One sign that people are <em>p</em> hacking is that they find niche results like,
+"This treatment was effective for left-handed non-smokers between the ages of 45 and 55."
+The best way to safeguard against <em>p</em> hacking is to <span g="pre_registration">pre-register</span> studies,
+i.e.,
+to declare before collecting data what analyses are going to be done and how.</p>
+</div>
+<ul>
+<li>But how do we measure the likelihood?</li>
+<li>One approach is to use simulation<ul>
+<li>Combine data sets</li>
+<li>Split into two pieces at random (where each piece is the same size as one of the originals)</li>
+<li>See how far apart the means are</li>
+<li>Repeat a few thousand times</li>
+<li>See how often we get the difference we actually see</li>
+<li>Decide if we believe the difference is likely</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-py">#!/usr/bin/env python
+
+import sys
+import argparse
+import numpy as np
+import pandas as pd
+
+
+def main():
+    '''
+    Sample two datasets to calculate odds of means being distant.
+    '''
+    # ...parse arguments...
+    # ...read data and calculate actual means and difference...
+    # ...repeatedly sample and calculate difference...
+    # ...report...
+</code></pre>
+<p>{: title="bin/simulate.py"}</p>
+<ul>
+<li>Arguments are pretty simple<ul>
+<li>Two files</li>
+<li>Cut the low and high values as we did for plotting</li>
+<li>Number of trials</li>
+<li><span g="rng_seed">Seed</span> for <span g="rng">random number generator</span> so we can reproduce results</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-py">    # parse arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--left', type=str, help='first dataset')
+    parser.add_argument('--right', type=str, help='second dataset')
+    parser.add_argument('--low', type=int, help='lower limit')
+    parser.add_argument('--high', type=int, help='upper limit')
+    parser.add_argument('--trials', type=int, help='number of trials (&gt;0)')
+    parser.add_argument('--seed', type=int, help='RNG seed')
+    args = parser.parse_args()
+    np.random.seed(args.seed)
+</code></pre>
+<p>{: title="bin/simulate.py"}</p>
+<ul>
+<li>Read the data and calculate actual statistics</li>
+</ul>
+<pre><code class="language-py">    # read data and calculate actual means and difference
+    data_left = read_data(args.left, args.low, args.high)
+    data_right = read_data(args.right, args.low, args.high)
+    mean_left = data_left.mean()
+    mean_right = data_right.mean()
+    actual_diff = mean_left - mean_right
+</code></pre>
+<p>{: title="bin/simulate.py"}</p>
+<ul>
+<li>And:</li>
+</ul>
+<pre><code class="language-py">def read_data(filename, low, high):
+    '''
+    Read data and remove lines of length 1 and very long lines.
+    '''
+    data = pd.read_csv(filename)
+    if (high != None):
+        data = data[data.Length &lt;= high]
+    if (low != None):
+        data = data[data.Length &gt;= low]
+    return data.Length.repeat(repeats=data.Count)
+</code></pre>
+<p>{: title="bin/simulate.py"}</p>
+<ul>
+<li>For each simulation:<ul>
+<li>Shuffle the index</li>
+<li>Cut the data in two</li>
+<li>Calculate means for the sections</li>
+<li>Record difference in the means</li>
+</ul>
+</li>
+<li>Afterward:<ul>
+<li>Calculate the fraction of differences that are less than or equal to the actual difference</li>
+<li>For comparison, also report the average difference in the means</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-py">    # repeatedly sample and calculate difference
+    combined = data_left.append(data_right).reset_index(drop=True)
+    split = len(data_left)
+    sample_diffs = []
+    for t in range(args.trials):
+        shuffle = np.random.permutation(len(combined))
+        sample_left = combined[shuffle[:split]]
+        sample_right = combined[shuffle[split:]]
+        sample_diffs.append(sample_left.mean() - sample_right.mean())
+
+    sample_diff_mean = sum(sample_diffs) / args.trials
+    success_frac = sum([x &lt;= actual_diff for x in sample_diffs]) / args.trials
+</code></pre>
+<p>{: title="bin/simulate.py"}</p>
+<ul>
+<li>Write results as <span g="yaml">YAML</span><ul>
+<li>A long two-column CSV with (title, value) pairs would work</li>
+<li>As would a wide CSV with one row of titles and one row of values</li>
+<li>Either way, must write parameter values to ensure reproducibility</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-py">    # report
+    print(f'parameters:')
+    print(f'- left: "{args.left}"')
+    print(f'- right: "{args.right}"')
+    print(f'- low: {"null" if (args.low is None) else args.low}')
+    print(f'- high: {"null" if (args.high is None) else args.high}')
+    print(f'- trials: {args.trials}')
+    print(f'- seed: {args.seed}')
+    print(f'results:')
+    print(f'- mean_left: {mean_left}')
+    print(f'- mean_right: {mean_right}')
+    print(f'- actual_diff: {actual_diff}')
+    print(f'- sample_diff: {sample_diff_mean}')
+    print(f'- successes: {success_frac}')
+</code></pre>
+<p>{: title="bin/simulate.py"}</p>
+<h2>How can we test our approach?</h2>
+<ul>
+<li>We're showing completed working code, but we didn't get it right the first time</li>
+<li>Create two "populations" and see if we get a plausible answer<ul>
+<li><code>[1, 1]</code> vs. <code>[10, 10]</code></li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-sh">python bin/simulate.py --left test/test-a.csv --right test/test-b.csv --trials 10000 --seed 1234567
+</code></pre>
+<pre><code class="language-txt">parameters:
+- left: "test/test-a.csv"
+- right: "test/test-b.csv"
+- low: null
+- high: null
+- trials: 10000
+- seed: 1234567
+results:
+- mean_left: 1.0
+- mean_right: 10.0
+- actual_diff: -9.0
+- sample_diff: -0.0126
+- successes: 0.1661
+</code></pre>
+<ul>
+<li>Is that right?<ul>
+<li>8/24 permutations of the four values are a "perfect split"</li>
+<li>But only half of those have the low values in the lower half</li>
+<li>So we expect 4/24 successes, which is 0.1666... and we actually got 0.1661</li>
+<li>Our simulation reports that the expected difference is 0.0 and the simulated difference is -0.0126</li>
+<li>Seems to be doing what we want</li>
+</ul>
+</li>
+<li>We should test with unequal counts and numbers of samples<ul>
+<li>Left as an exercise</li>
+</ul>
+</li>
+<li>And note that this doesn't test if the means are <em>different</em>, only if the first is less than the second<ul>
+<li>A <span g="one_sided_test">one-sided test</span></li>
+<li>If this says "yes" and we reverse the order of the datasets, the answer will be "no"</li>
+<li>Convert this into a <span g="two_sided_test">two-sided test</span> in the exercises</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-sh">python bin/simulate.py --left data/javascript-counts.csv --right data/python-counts.csv --trials 5000 --seed 57622
+</code></pre>
+<pre><code class="language-txt">parameters:
+- left: "data/javascript-counts.csv"
+- right: "data/python-counts.csv"
+- low: null
+- high: null
+- trials: 5000
+- seed: 57622
+results:
+- mean_left: 38.168300030969725
+- mean_right: 36.41329390723824
+- actual_diff: 1.7550061237314836
+- sample_diff: 0.00398256511711528
+- successes: 1.0
+</code></pre>
+<ul>
+<li>None of the 5000 random trials had a difference as big as what we actually see</li>
+<li>So it seems pretty certain that the difference is more than just chance</li>
+<li>But it takes about two hours to run 5000 simulations on our real data<ul>
+<li>We should add a <code>--verbose</code> flag to report progress</li>
+<li>Or print the stats every N iterations so we can check <span g="convergence">convergence</span> interactively
+    and decide when to cut things off</li>
+</ul>
+</li>
+<li>And we should find a better way to answer the question<ul>
+<li>Take less time</li>
+<li>Tell us how confident we can be in the answer</li>
+<li>Because right now 5000 is a <span g="magic_number">magic number</span></li>
+</ul>
+</li>
+</ul>
+</main>
+<footer>
+<a href="../">Organizational Change for Open Science</a>
+      copyright © 2025
+      <a href="../01_intro/#acknowledgments">the authors</a>
+</footer>
+</body>
+</html>

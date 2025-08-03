@@ -1,6 +1,4 @@
----
-draft: true
----
+# Theory
 
 A little theory can go a long way.
 

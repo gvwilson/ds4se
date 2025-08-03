@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Theory</title>
+<link href="../static/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="../static/mccole.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<nav>
+<a href="../">Home</a>
+      ·
+      <span class="dropdown">
+<a href="#">Lessons</a>
+<span class="dropdown-content">
+<a href="../01_intro/">Introduction</a>
+<a href="../02_meeting/">How to Run a Meeting</a>
+<a href="../03_gst/">Goals, Strategies, and Tactics</a>
+<a href="../04_power/">Power</a>
+<a href="../05_start/">Starting</a>
+<a href="../06_finish/">Finishing</a>
+</span>
+</span>
+      ·
+      <span class="dropdown">
+<a href="#">Extras</a>
+<span class="dropdown-content">
+<a href="../license/">License</a>
+<a href="../conduct/">Code of Conduct</a>
+<a href="../bibliography/">Bibliography</a>
+<a href="../glossary/">Glossary</a>
+</span>
+</span>
+</nav>
+<main>
+<h1>Theory</h1>
+<p>A little theory can go a long way.</p>
+<h2>Basic probability</h2>
+<ul>
+<li>Assume a set of <span g="event">events</span> $$E$$ and a probability function $$P$$ with $$0 \leq P(x) \leq 1$$</li>
+<li>If $$A$$ and $$B$$ are disjoint sets of events from $$E$$ then:<ul>
+<li>$$P(E) = 1$$ (i.e., something must happen)</li>
+<li>$$P(A \cup B) = P(A) + P(B)$$ (i.e., probability of the union of disjoint sets is the sum of their probabilities)</li>
+</ul>
+</li>
+<li>A few consequences:<ul>
+<li>If $$A$$ and $$B$$ are not disjoint, then $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$</li>
+<li>$$P(\neg A) = 1 - P(A)$$</li>
+<li>If $$A$$ and $$B$$ are disjoint, $$P(A \cup B) = P(A)P(B)$$</li>
+<li>The probability of $$n$$ equally likely disjoint events $$x_i$$ is $$nP(x_i)$$</li>
+</ul>
+</li>
+</ul>
+<h2>Combinatorics</h2>
+<ul>
+<li>There are $$n^{k}$$ ways to sample $$k$$ distinguishable items from $$n$$ <em>with</em> replacement</li>
+<li>There are $$P(n, k) = \frac{n!}{(n - k)!}$$ ways to sample $$k$$ distinguishable items from $$n$$ <em>without</em> replacement</li>
+<li>If the items are indistinguishable, the number of selections is
+    $$C(c, k) = \binom{c}{k} = \frac{P(n, k)}{k!} = \frac{n!}{k!(n - k)!}$$<ul>
+<li>Divide by $$k!$$ because the indistinguishable items can be rearranged that many ways</li>
+</ul>
+</li>
+</ul>
+<h2>Conditional probability</h2>
+<ul>
+<li>The <span g="conditional_probability">conditional probability</span> $$P(A \mid B)$$ of $$A$$ given $$B$$ is
+    the probability of $$A$$ occurring given that $$B$$ is known to occur</li>
+<li>$$P(A \mid B) = \frac{P(A \cap B)}{P(B)}$$</li>
+</ul>
+<h2>Bayes Rule</h2>
+<ul>
+<li>Since $$P(A \mid B) = P(B \mid A)$$, we have <span g="bayes_rule">Bayes' Rule</span>
+    $$P(B \mid A) = \frac{P(A \mid B)P(B)}{P(A)}$$</li>
+<li>Special case: since $$P(A) = P(A \mid B) + P(A \mid \neg B)$$,
+    $$P(B \mid A) = \frac{P(A \mid B)P(B)}{P(A \mid B)P(B) + P(A \mid \neg B)P(\neg B)}$$</li>
+</ul>
+<h2>Mean and variance</h2>
+<ul>
+<li>The <span g="mean">mean</span> $$\mu$$ or <span g="expected_value">expected value</span> $$E(X)$$ is the weighted sum of possible outcomes
+    $$\sum_{x} xP(x)$$</li>
+<li>Implies $$E(aX + bY + c) = aE(X) + bE(Y) + c$$</li>
+<li>The <span g="variance">variance</span> $$\sigma^2$$ is the expected value of the square of the difference between values and the mean
+    $$\sum_{x} (x - \mu)^2P(x)$$<ul>
+<li>Squaring guarantees that values are positive</li>
+<li>And gives extra weight to outliers</li>
+<li>But the units are weird: "bugs squared"</li>
+</ul>
+</li>
+<li>$$\sigma^{2}_{A + B} = \sigma^2_A + \sigma^2_B$$ if $$A$$ and $$B$$ are independent</li>
+<li>The <span g="standard_deviation">standard deviation</span> $$\sigma$$ is the square root of the variance<ul>
+<li>Same units as original variable</li>
+</ul>
+</li>
+</ul>
+<h2>Covariance and correlation</h2>
+<ul>
+<li><span g="covariance">Covariance</span> $$\sigma_{XY}$$ of $$X$$ and $$Y$$ is $$E((X - \mu_{X})(Y - \mu_{Y}))$$<ul>
+<li>If $$X$$ and $$Y$$ are both above or below their means at the same time, $$\sigma_{XY}$$ will be positive</li>
+<li>If $$X$$ is above when $$Y$$ is below and vice versa, $$\sigma_{XY}$$ will be negative</li>
+<li>If there is no relation, $$\sigma_{XY}$$ will be zero</li>
+</ul>
+</li>
+<li><span g="pearson_correlation_coefficient">Pearson's correlation coefficient</span> $$r_{XY}$$ is covariance normalized by standard deviations<ul>
+<li>$$r_{XY} = \frac{\sigma_{XY}}{\sigma_X \sigma_Y}$$</li>
+<li>Always lies in $$[-1 \ldots 1]$$</li>
+</ul>
+</li>
+<li><span g="chebyshev_inequality">Chebyshev's Inequality</span>: $$P(\mid X - \mu \mid \gt \epsilon) \leq (\frac{\sigma}{\epsilon})^2$$<ul>
+<li>I.e., the probability of a value being more than $$\epsilon$$ away from the mean is bounded by
+    the square of the ratio between the standard deviation and $$\epsilon$$</li>
+<li>See <a href="#chebyshev">proof</a></li>
+</ul>
+</li>
+</ul>
+<h2>Bernoulli distribution</h2>
+<ul>
+<li>A <span g="bernoulli_distribution">Bernoulli distribution</span> is
+    a random variable with just two values 1 and 0 (sometimes called success and failure)<ul>
+<li>Named after the mathematician who first described it</li>
+</ul>
+</li>
+<li>Probability of success is $$p$$</li>
+<li>$$\mu = 0(1 - p) + 1(p) = p$$</li>
+<li>$$\sigma^2 = \sum (x - p)^2 P(x) = (0 - p)^2 (1 - p) + (1 - p)^2 p = p(1 - p)$$</li>
+</ul>
+<h2>Binomial distribution</h2>
+<ul>
+<li>A <span g="binomial_distribution">binomial distribution</span> is
+    the number of successes in $$n$$ trials of a Bernoulli variable with probability $$p$$<ul>
+<li>Name means "two numbers" (referring to $$n$$ and $$k$$)</li>
+</ul>
+</li>
+<li>Probability of exactly $$x$$ successes in $$n$$ trials is $$\binom{n}{x} p^x (1-p)^{n-x}$$<ul>
+<li>Number of different arrangements of that many successes and that many failures</li>
+</ul>
+</li>
+<li>$$\mu = np$$ (because trials are independent)</li>
+<li>$$\sigma^2 = np(1-p)$$ (because $$\sigma^{2}_{A + B} = \sigma^2_A + \sigma^2_B$$ if $$A$$ and $$B$$ are independent)</li>
+<li>Probability of up to $$x$$ successes is complicated to calculate, but we can use approximations (FIXME)</li>
+</ul>
+<h2>Geometric distribution</h2>
+<ul>
+<li>A <span g="geometric_distribution">geometric distribution</span> is
+    the number of Bernoulli trials needed to get the first success<ul>
+<li>Potentially </li>
+</ul>
+</li>
+<li>$$P(x) = (1 - p)^{x - 1}p$$ (i.e., $$x-1$$ failures followed by 1 success)</li>
+<li>To find the mean, use the fact that $$\sum_{i=0}^{\infty} x^i = \frac{1}{1 - x}$$ for $$0 \lt x \lt 1$$<ul>
+<li>A geometric series, which gives the distribution its name</li>
+</ul>
+</li>
+<li>$$\mu = 1/p$$</li>
+<li>The variance takes a little more work, but is $$\sigma^2$$ is $$\frac{1-p}{p^2}$$</li>
+</ul>
+<h2>Negative binomial distribution</h2>
+<ul>
+<li>The binomial distribution describes the numbr of successes in a fixed number of trials</li>
+<li>The <span g="negative_binomial_distribution">negative binomial distribution</span> is
+    the number of trials required to achieve a certain number of successes<ul>
+<li>"Negative" in the sense of opposite: there is nothing negative in the values</li>
+</ul>
+</li>
+<li>$$P(x) = \binom{x - 1}{k - 1} (1 - p)^{x - k} p^k$$<ul>
+<li>Reading right to left, this is $$k$$ successes, $$x-k$$ failures,
+    and the number of possible rearrangements with the last being a success (which is why the -1)</li>
+</ul>
+</li>
+<li>$$\mu = \frac{k}{p}$$</li>
+<li>$$\sigma^2 = \frac{k(1-p)}{p^2}$$</li>
+<li>With $$k=1$$, the negative binomial is just the geometric distribution (number of trials to first success)</li>
+</ul>
+<h2>Poisson distribution</h2>
+<ul>
+<li>Number of events occurring within a fixed period has a <span g="poisson_distribution">Poisson distribution</span><ul>
+<li>Assuming events never occur simultaneously</li>
+</ul>
+</li>
+<li>$$P(x) = e^{- \lambda}\frac{\lambda^x}{x!}$$</li>
+<li>$$\mu = \lambda$$</li>
+<li>$$\sigma^2 = \lambda$$</li>
+<li>Poisson is a special case of binomial where the number of trials is very large
+    and the probability of success in any trial is small<ul>
+<li>See <a href="#binomial-poisson">proof</a></li>
+</ul>
+</li>
+<li>For $$n \geq 30$$ and $$p \leq 0.05$$, Poisson is a good approximation of binomial</li>
+</ul>
+<h2>Probability density and cumulative distribution</h2>
+<ul>
+<li>Function describing probabilities of discrete events is called the <span g="pmf">probability mass function</span></li>
+<li>When describing continuous events, use:<ul>
+<li><span g="cdf">Cumulative distribution function</span> $$F(x) = P(X \leq x)$$</li>
+<li><span g="pdf">Probability density function</span> $$f(x) = dF/dx$$</li>
+</ul>
+</li>
+<li>So $$P(a \lt X \lt B) = \int_{a}^{b} f(x) dx$$</li>
+<li>Require $$\int_{-\infty}^{\infty} f(x) dx = 1$$<ul>
+<li>And notice $$P(x) = P(x \leq X \leq x) = \int_{x}^{x} f(x) dx = 0$$</li>
+<li>I.e., probability of any specific exact value is 0</li>
+</ul>
+</li>
+<li>$$\mu = \int_{-\infty}^{\infty} x f(x) dx$$</li>
+<li>$$\sigma^2 = \int_{-\infty}^{\infty} (x - \mu)^2 f(x) dx =  \int_{-\infty}^{\infty} x^2 f(x) dx - \mu^2$$</li>
+</ul>
+<h2>Uniform distribution</h2>
+<ul>
+<li><span g="uniform_distribution">Uniform distribution</span> has equal probability over a finite range $$[a \ldots b]$$</li>
+<li>$$f(x) = \frac{1}{b - a}$$</li>
+<li>$$P(a \leq t \leq X \leq t+h \leq b) = \frac{h}{b - a}$$<ul>
+<li>I.e., probability is proportional to fraction of range</li>
+</ul>
+</li>
+<li><span g="standard_uniform">Standard uniform distribution</span> has range $$[0 \ldots 1]$$<ul>
+<li>$$\mu = \frac{1}{2}$$</li>
+<li>$$\sigma^2 = \int_{0}^1 x^2 dx - (\frac{1}{2})^2 = \frac{1}{12}$$</li>
+</ul>
+</li>
+</ul>
+<h2>Exponential distribution</h2>
+<ul>
+<li>Assume the waiting time for the next rare event is independent of the time waited so far<ul>
+<li>I.e., $$P(X \geq b+a \mid X \geq a) = P(X \geq b)$$</li>
+</ul>
+</li>
+<li>Can show that $$f(x) = \lambda e^{- \lambda x}$$ is the unique solution, so $$F(x) = 1 - e^{- \lambda x}$$</li>
+<li>$$\mu = \frac{1}{\lambda}$$</li>
+<li>$$\sigma^2 = \frac{1}{\lambda^2}$$</li>
+<li>The parameter $$\lambda$$ is the frequency<ul>
+<li>If $$\lambda = 2$$ then we expect 2 events per unit time and $$\mu = \frac{1}{\lambda} = 0.5$$ units of time between events</li>
+</ul>
+</li>
+<li>The Poisson distribution with parameter $$\lambda$$ is the number of events in time $$t$$ (discrete)<ul>
+<li>See <a href="#exponential-poisson">proof</a></li>
+</ul>
+</li>
+</ul>
+<h2>Gamma distribution</h2>
+<ul>
+<li>If there are $$\alpha$$ independent sequential steps,
+    each taking an exponentially-distributed time with rate $$\lambda$$,
+    then the total time has a <span g="gamma_distribution">Gamma distribution</span> Gamma($$\alpha$$, $$\lambda$$)<ul>
+<li>Name comes from the gamma function, which extends factorial to complex numbers</li>
+</ul>
+</li>
+<li>$$f(x) = \frac{\lambda^\alpha}{\Gamma (\alpha)} x^{\alpha - 1} e^{- \lambda x}$$<ul>
+<li>$$\alpha$$ is sometimes called the shape parameter</li>
+<li>Gamma(1, $$\lambda$$) is an exponential distribution with rate $$\lambda$$</li>
+</ul>
+</li>
+<li>$$\mu = \frac{\alpha}{\lambda}$$</li>
+<li>$$\sigma^2 = \frac{\alpha}{\lambda^2}$$</li>
+<li>For specific values, use library or lookup tables</li>
+<li>FIXME: relationship between Gamma and Poisson</li>
+</ul>
+<h2>Normal distribution</h2>
+<ul>
+<li>In its full glory, <span g="normal_distribution">normal distribution</span>
+    has $$f(x) = \frac{1}{\sigma \sqrt{2 \pi}} e^{- \frac{(x - \mu)^2}{2 \sigma^2}}$$<ul>
+<li>There is no closed form for the integral $$F(x)$$</li>
+</ul>
+</li>
+<li>But as the notation suggests, means is $$\mu$$ and variance is $$\sigma^2$$</li>
+<li>The <span g="standard_normal">standard normal distribution</span> $$Z$$ has mean $$\mu = 0$$ and standard deviation $$\sigma = 1$$<ul>
+<li>Reconstruct arbitrary distribution $$X = \mu + \sigma Z$$</li>
+</ul>
+</li>
+</ul>
+<h2>Central Limit Theorem</h2>
+<ul>
+<li>Let $$S_n = X_1 + X_2 + \ldots + X_n$$ be the sum of $$n$$ independent random variables,
+    all with mean $$\mu$$ and standard deviation $$\sigma$$</li>
+<li>As $$n \rightarrow \infty$$, $$\frac{S_n - n\mu}{\sigma \sqrt{n}}$$ converges on a standard normal random variable<ul>
+<li>Rate of convergence is $$\frac{1}{\sqrt{n}}$$</li>
+</ul>
+</li>
+<li>Heuristic: for $$n \gt 30$$, a normal distribution is an accurate approximation to $$S_n$$</li>
+<li>In particular, binomial($$n$$, $$p$$) $$\approx$$ normal($$\mu = np$$, $$\sigma = \sqrt{n p (1 - p)}$$ )<ul>
+<li>But use a <span g="continuity_correction">continuity correction</span>:
+    adjust interval by 0.5 units to allow for difference between discrete and continuous</li>
+<li>E.g., $$P(X = x) = P(x - 0.5 \lt X \lt x + 0.5)$$ (because the probability of a point in a continuous distribution is zero)</li>
+</ul>
+</li>
+</ul>
+<h2>Sampling</h2>
+<ul>
+<li>A <span g="population">population</span> has a parameter; a <span g="sample">sample</span> has a <span g="statistic">statistic</span></li>
+<li>Sample mean $$\bar{X}$$ estimates the population mean $$\mu = E(X)$$</li>
+<li>Variance of $$\bar{X}$$ is $$\frac{\sigma^2}{n}$$</li>
+<li>Distribution of sample means is normal, i.e. $$\frac{\bar{X} - \mu}{\sigma \sqrt{n}}$$ is standard normal as $$n \rightarrow \infty$$<ul>
+<li>Regardless of the underlying distribution of $$X$$</li>
+</ul>
+</li>
+<li>The <span g="median">median</span> is the central value such that $$P(X \lt M) \leq 0.5$$ and $$P(X \gt M) \leq 0.5$$<ul>
+<li>If the distribution is skewed to the right, $$M \lt \mu$$</li>
+<li>If the distribution is skewed to the left, $$M \gt \mu$$</li>
+</ul>
+</li>
+<li>A <span g="quartile">quartile</span> is a value that divides the sample into quarters<ul>
+<li>E.g., first quartile $$Q_1$$ splits values 25%/75%, third quartile $$Q_3$$ splits values 75%/25%</li>
+<li>Second quartile is the same as the median</li>
+<li>The <span g="iqr">interquartile range</span> IQR is $$Q_3 - Q_1$$</li>
+<li>Anything more than 1.5 IQR below $$Q_1$$ or above $$Q_3$$ is considered an outlier</li>
+<li>Because if the data is normal, only 0.7% of it should lie outside these bounds</li>
+</ul>
+</li>
+<li>The <span g="sample_variance">sample variance</span> is:</li>
+</ul>
+<p>$$
+\begin{align<em>}
+s^2 &amp; = &amp; \frac{1}{n-1} \sum_{i=1}^{n}(X_i - \bar{X})^2 \
+    &amp; = &amp; \frac{\sum X_i^2 - n\bar{X}^2}{n - 1}
+\end{align</em>}
+$$</p>
+<ul>
+<li>Using $$n-1$$ instead of $$n$$ ensures that $$s^2$$ is unbiased (the <span g="bessel_correction">Bessel correction</span>)<ul>
+<li>See <a href="#bessel-correction">proof</a></li>
+</ul>
+</li>
+</ul>
+<h2>Parameter estimation</h2>
+<ul>
+<li>The $$k^{th}$$ <span g="population_moment">population moment</span> is $$E(X^k)$$</li>
+<li>The $$k^{th}$$ <span g="sample_moment">sample moment</span> is $$\frac{1}{n}\sum_{i=1}^{n} X_i^k$$<ul>
+<li>The first sample moment is the sample mean</li>
+</ul>
+</li>
+<li>The population and sample <span g="central_moment">central moments</span> are $$E(X - \mu)^k$$ and $$\frac{1}{n}\sum(X_i - \bar{X})^k$$ respectively<ul>
+<li>I.e., the moments after shifting the data to a mean of zero</li>
+</ul>
+</li>
+<li>Parameter estimation via the <span g="method_of_moments">method of moments</span>:
+    find parameter values to match sample moments</li>
+<li>Parameter estimation via <span g="maximum_likelihood_estimation">maximum likelihood</span>:
+    choose parameter values to maximize the likelihood of the observed sample</li>
+<li>Example: estimation $$\lambda$$ for Poisson distribution<ul>
+<li>PMF is $$P(x) = e^{- \lambda} \frac{\lambda^x}{x!}$$</li>
+<li>Taking logarithms, $$\ln{P(x)} = -\lambda + x \ln{\lambda} - \ln{x!}$$</li>
+<li>So we need to maximize $$\ln{P(x)} = \sum{(\lambda + X_i \ln{\lambda})} + C = -n \lambda + \ln{\lambda}\sum{X_i} + C$$
+    where $$C = -\sum{\ln{x!}}$$ is a constant that does not depend on $$\lambda$$</li>
+<li>Differentiating with respect to $$\lambda$$ and setting equal to zero gives
+    $$\frac{\partial}{\partial{\lambda}}\ln{P(X)} = -n + \frac{1}{\lambda}\sum{X_i} = 0$$</li>
+<li>Only solution is $$\lambda = \frac{1}{n}\sum{X_i} = \bar{X}$$</li>
+</ul>
+</li>
+</ul>
+<h2>Student's <em>t</em>-distribution</h2>
+<ul>
+<li><span g="t_distribution">Student's <em>t</em>-distribution</span> is used to estimate the mean of a normally distributed population
+    when the sample size is small (e.g., less 30) and the variance is unknown<ul>
+<li>Named comes from a pseudonym used by the mathematician who first used it this way</li>
+</ul>
+</li>
+<li>If $$X$$ is normally distributed with mean $$\mu$$ and variance $$\sigma^2$$,
+    then $$\bar{X} = \frac{1}{n}\sum{X_i}$$ is the sample mean
+    and $$s^2 = \frac{1}{n-1}\sum{(X_i - X)^2}$$ is the Bessel-corrected sample variance</li>
+<li>The variable $$\frac{\bar{X} - \mu}{\sigma / \sqrt{n}}$$ has a standard normal distribution</li>
+<li>However, the variable $$\frac{\bar{X} - \mu}{s / \sqrt{n}}$$ has a <em>t</em>-distribution
+    with $$n-1$$ <span g="degrees_of_freedom">degrees of freedom</span><ul>
+<li>$$n-1$$ because there's a step in the calculation that normalizes the $$n$$ values to unit length</li>
+<li>Once $$n-1$$ are known, the value of the $$n^{th}$$ is fixed</li>
+</ul>
+</li>
+<li>The exact formula for the <em>t</em>-distribution is <a href="#student-t">a little bit scary</a>.<ul>
+<li>The PDF's shape resembles that of a normal distribution with mean 0 and variance 1,
+    but is slightly lower and wider.</li>
+<li>The two become closer as the degrees of freedom $$\nu$$ gets larger.</li>
+</ul>
+</li>
+</ul>
+<h2>Confidence intervals</h2>
+<ul>
+<li>A <span g="confidence_interval">confidence interval</span> is an interval $$[a \ldots b]$$
+    that has some probability $$p$$ of containing the actual value of a statistic<ul>
+<li>E.g., "There is a 90% probability that the actual mean of this population lies between 2.5 and 3.5"</li>
+<li>Larger intervals have a higher probability but are less precise</li>
+</ul>
+</li>
+<li>If there are more than 30 samples or the standard deviation $$\sigma$$ is known, use a <span g="z_test">z-test</span>:<ol>
+<li>Choose a confidence level $$C$$ (typically 95%)</li>
+<li>Find the value $$z^{\star}$$ such that $$P(x \leq z^{\star}) \leq \frac{1 - C}{2}$$
+    in a standard normal distribution<ul>
+<li>Divide by 2 because the normal curve has two symmetric tails</li>
+</ul>
+</li>
+<li>Calculate the sample mean $$\bar{X}$$</li>
+<li>Interval is $$\bar{X} \pm z^{\star}\frac{\sigma}{\sqrt{n}}$$</li>
+</ol>
+</li>
+<li>If there are fewer than 30 samples or the standard deviation isn't known, use a <span g="t_test">t-test</span>:<ol>
+<li>Choose a confidence level $$C$$</li>
+<li>Find a value $$t^{\star}$$ such that $$P(x \leq t^{\star}) \leq \frac{1 - C}{2}$$
+    in a Student's <em>t</em>-distribution with $$n-1$$ degrees of freedom</li>
+<li>Estimate the standard deviation $$s$$</li>
+<li>Interval is $$\bar{X} \pm t^{\star}\frac{s}{\sqrt{n}}$$</li>
+</ol>
+</li>
+</ul>
+<h2>Hypothesis testing</h2>
+<ul>
+<li>What is the probability of seeing this difference between two datasets?<ul>
+<li>The <span g="null_hypothesis">null hypothesis</span> $$H_0$$ is that the samples come from a single population
+    and the observed difference is purely due to chance</li>
+<li>The <span g="alternative_hypothesis">alternative hypothesis</span> $$H_A$$ is that
+    the samples come from two difference populations</li>
+<li><span g="false_positive">False positive</span>: decide that the difference is not purely random when it is</li>
+<li><span g="false_negative">False negative</span>: decide the difference is purely random when it isn't</li>
+</ul>
+</li>
+<li>Example: if a coin comes up heads 9 times out of 10, what are the odds it is actually fair?<ul>
+<li>Probability if the coin is fair is $$\binom{10}{9} \cdot 0.5^9 \cdot (1-0.5)^1 = 10 \cdot 0.00195 \cdot 0.5 = 0.00976$$</li>
+<li>I.e., less than 1% chance of seeing this result if the coin is far</li>
+</ul>
+</li>
+</ul>
+<h2>Prediction</h2>
+<ul>
+<li><span g="accuracy">Accuracy</span> is the fraction of correct predictions (true positive + true negative)<ul>
+<li>Not useful if there are only a few defective items, since "all good" will have high accuracy</li>
+</ul>
+</li>
+<li><span g="precision">Precision</span> is the fraction of positives that are actually positive,
+    i.e. true positive / (true positive + false positive)</li>
+<li><span g="recall">Recall</span> is the fraction of positives the method can actually identify,
+    i.e., true positive / (true positive + false negative)</li>
+<li>Perfect precision and perfect recall mean all items are classified correctly<ul>
+<li>But increasing precision often reduces recall and vice versa</li>
+</ul>
+</li>
+<li>The <span g="f_measure">F-measure</span> is the <span g="harmonic_mean">harmonic mean</span> of precision and recall</li>
+</ul>
+<h2>Spearman's rank correlation</h2>
+<ul>
+<li><span g="spearmans_rank_correlation">Spearman's rank correlation</span> measures the <span g="rank_correlation">rank correlation</span> between two variables<ul>
+<li>Rather than the values, measure how well the sorted order of items matches</li>
+</ul>
+</li>
+<li>Given two random variables $$X_i$$ and $$Y_i$$, sort items and assign ranks $$r_{X_i}$$ and $$r_{Y_i}$$
+    and calculate the correlation coefficient of the ranks</li>
+<li>If ranks are distinct integers, can use the simplified formula $$\rho = 1 - \frac{6 \sum{d_i^2}}{n (n^2 - 1)}$$
+    where $$d_i = r_{X_i} - r_{Y_i}$$ is the difference between the ranks of observation $$i$$</li>
+<li>Standard error is $$\sigma = \frac{0.6325}{\sqrt{n - 1}}$$</li>
+</ul>
+<h2>Proofs</h2>
+<p>These proofs are included primarily to help readers understand and remember
+a few key relationships.</p>
+<h3>Chebyshev's Inequality</h3>
+<p>$$P(\mid X - \mu \mid \gt \epsilon) \leq (\frac{\sigma}{\epsilon})^2$$</p>
+<p>$$
+\begin{align<em>}
+\sigma^2 &amp; =    &amp; \sum_x (x - \mu)^2 P(X) \
+         &amp; \geq &amp; \sum_{x : \mid x - \mu \mid \gt \epsilon} (x - \mu)^2 P(X) \
+         &amp; \geq &amp; \sum_{x : \mid x - \mu \mid \gt \epsilon} \epsilon^2 P(X) \
+         &amp; =    &amp; \epsilon^2 \sum_{x : \mid x - \mu \mid \gt \epsilon} P(X) \
+         &amp; =    &amp; \epsilon^2 P(\mid X - \mu \mid \gt \epsilon)
+\end{align</em>}
+$$</p>
+<h3>Poisson as the limit to the binomial distribution</h3>
+<ul>
+<li>For binomial:</li>
+</ul>
+<p>$$
+\begin{align<em>}
+P(X = k) &amp; = &amp; \binom{n}{k} p^k (1 - p)^{n - k}
+\end{align</em>}
+$$</p>
+<ul>
+<li>Let $$\lambda = np$$ be the success rate (number of trials times probability per trial)</li>
+<li>Then $$p = \frac{\lambda}{n}$$ and:</li>
+</ul>
+<p>$$
+\begin{align<em>}
+P(X = k) &amp; = &amp; \frac{n!}{k!(n - k)!} (\frac{\lambda}{n})^k (1 - \frac{\lambda}{n})^{n - k} \
+         &amp; = &amp; (\frac{\lambda^k}{k!}) \frac{n!}{(n - k)!} \frac{1}{n^k} (1 - \frac{\lambda}{n})^n (1 - \frac{\lambda}{n})^{- k}
+\end{align</em>}
+$$</p>
+<ul>
+<li>But:</li>
+</ul>
+<p>$$
+\begin{align<em>}
+\lim_{n \rightarrow \infty} \frac{n!}{(n - k)!} \frac{1}{n^k} &amp; = &amp; \lim_{n \rightarrow \infty} \frac{n(n - 1)(n - 2)\ldots(n - k + 1)}{n^k} \
+                                                              &amp; = &amp; \lim_{n \rightarrow \infty} \frac{n}{n} \frac{n - 1}{n} \ldots \frac{n - k + 1}{n} \
+                                                              &amp; = &amp; 1
+\end{align</em>}
+$$</p>
+<ul>
+<li>And since $$e = \lim_{x \rightarrow \infty} (1 + \frac{1}{x})^x$$, if $$\theta = -\frac{n}{\lambda}$$ then:</li>
+</ul>
+<p>$$
+\begin{align<em>}
+\lim_{n \rightarrow \infty} (1 - \frac{\lambda}{n})^n &amp; = &amp; \lim_{n \rightarrow \infty} (1 + \frac{1}{\theta})^{-\lambda\theta} \
+                                                      &amp; = &amp; e^{- \lambda} \
+\end{align</em>}
+$$</p>
+<ul>
+<li>Finally:</li>
+</ul>
+<p>$$
+\begin{align<em>}
+\lim_{n \rightarrow \infty} (1 - \frac{\lambda}{n})^{-k} &amp; = &amp; 1
+\end{align</em>}
+$$</p>
+<ul>
+<li>Multiplying these all together gives the formula for the Poisson distribution</li>
+</ul>
+<h3>Relationship between Poisson and exponential distributions</h3>
+<ul>
+<li>Let $$N_t$$ be the number of events in time $$t$$</li>
+<li>And $$X_t$$ be the time for one <em>additional</em> event if there was an event at time $$t$$</li>
+<li>If $$X_t \gt x$$ then $$N_t = N_{t+x}$$</li>
+<li>Since total probability is always 1, $$P(X_t \leq x) = 1 - P(X_t \gt x)$$</li>
+<li>So $$P(X_t \leq x) = 1 - P(N_{t+x} - N_t = 0) = P(N_x = 0)$$ (because the process is memoryless)</li>
+<li>But $$P(N_x = 0) = \frac{(\lambda x)^0}{0!}e^{- \lambda x} = e^{- \lambda x}$$</li>
+<li>So $$P(X_t \leq x) = 1 - e^{- \lambda x}$$</li>
+</ul>
+<h3>Bessel correction</h3>
+<ul>
+<li>For a sample $$a$$, $$X$$ deviates from sample mean $$\bar{X}$$ with variance $$\sigma_{a}^2$$</li>
+<li>But the sample mean $$\bar{X}$$ deviates from the population mean $$\mu$$ with variance $$\sigma^2 / n$$</li>
+<li>So the population variance $$\sigma^2 = \sigma_{a}^2 + \sigma^2 / n$$</li>
+<li>Rearranging gives $$\sigma^2 = \frac{n}{n-1} \sigma_{a}^2$$</li>
+<li>But $$\sigma_{a}^2 = \frac{\sum (X_i - \bar{X})^2}{n}$$, so $$\sigma^2 = \frac{\sum (X_i - \bar{X})^2}{n-1}$$</li>
+</ul>
+<h3>Student's t distribution</h3>
+<p>The PDF of Student's <em>t</em>-distribution with $$\nu$$ degrees of freedom is:</p>
+<p>$$
+\begin{align<em>}
+f(t)
+&amp; =
+&amp; \frac{\Gamma(\frac{\nu+1}{2})}{\sqrt{\nu\pi} \Gamma(\frac{\nu}{2})} (1+\frac{t^2}{\nu})^{-\frac{\nu+1}{2}}
+\end{align</em>}
+$$</p>
+<p>where $$\Gamma$$ is the <span g="gamma_function">gamma function</span>.
+For positive even integer values of $$\nu$$,
+the first term is:</p>
+<p>$$
+\begin{align<em>}
+\frac{\Gamma(\frac{\nu+1}{2})} {\sqrt{\nu\pi}\,\Gamma(\frac{\nu}{2})}
+&amp; =
+&amp; \frac{(\nu -1)(\nu -3)\cdots 5 \cdot 3}{2 \sqrt{\nu}(\nu -2)(\nu -4)\cdots 4 \cdot 2}
+\end{align</em>}
+$$</p>
+<p>For positive odd integer values of $$\nu$$,
+the first term is:</p>
+<p>$$
+\begin{align<em>}
+\frac{\Gamma(\frac{\nu+1}{2})} {\sqrt{\nu\pi}\,\Gamma(\frac{\nu}{2})}
+&amp; =
+&amp; \frac{(\nu -1)(\nu -3)\cdots 4 \cdot 2}{\pi \sqrt{\nu}(\nu -2)(\nu -4)\cdots 5 \cdot 3}
+\end{align</em>}
+$$</p>
+</main>
+<footer>
+<a href="../">Organizational Change for Open Science</a>
+      copyright © 2025
+      <a href="../01_intro/#acknowledgments">the authors</a>
+</footer>
+</body>
+</html>
