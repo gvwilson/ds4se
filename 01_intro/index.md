@@ -154,9 +154,7 @@ adjust their behavior so that it ceases to be a useful measure.
 {% include contents %}
 </div>
 
-All of our examples use Python or the Unix shell
-(except for the lesson on [curve fitting](./curve-fitting/),
-because 50 lines of JavaScript was easier to write than a JavaScript parser in Python).
+All of our examples use Python or the Unix shell.
 We display Python source code like this:
 
 {% include file file="loop.py" %}

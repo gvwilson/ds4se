@@ -61,7 +61,6 @@ A little theory can go a long way.
 -   [Chebyshev's Inequality](g:chebyshev_inequality): \\(P(\mid X - \mu \mid \gt \epsilon) \leq (\frac{\sigma}{\epsilon})^2\\)
     -   I.e., the probability of a value being more than \\(\epsilon\\) away from the mean is bounded by
         the square of the ratio between the standard deviation and \\(\epsilon\\)
-    -   See [proof](#chebyshev)
 
 ## Bernoulli distribution
 
@@ -116,7 +115,6 @@ A little theory can go a long way.
 -   \\(\sigma^2 = \lambda\\)
 -   Poisson is a special case of binomial where the number of trials is very large
     and the probability of success in any trial is small
-    -   See [proof](#binomial-poisson)
 -   For \\(n \geq 30\\) and \\(p \leq 0.05\\), Poisson is a good approximation of binomial
 
 ## Probability density and cumulative distribution
@@ -152,7 +150,6 @@ A little theory can go a long way.
 -   The parameter \\(\lambda\\) is the frequency
     -   If \\(\lambda = 2\\) then we expect 2 events per unit time and \\(\mu = \frac{1}{\lambda} = 0.5\\) units of time between events
 -   The Poisson distribution with parameter \\(\lambda\\) is the number of events in time \\(t\\) (discrete)
-    -   See [proof](#exponential-poisson)
 
 ## Gamma distribution
 
@@ -215,7 +212,6 @@ s^2 & = & \frac{1}{n-1} \sum_{i=1}^{n}(X_i - \bar{X})^2 \\
 \\)
 
 -   Using \\(n-1\\) instead of \\(n\\) ensures that \\(s^2\\) is unbiased (the [Bessel correction](g:bessel_correction))
-    -   See [proof](#bessel-correction)
 
 ## Parameter estimation
 
@@ -250,7 +246,7 @@ s^2 & = & \frac{1}{n-1} \sum_{i=1}^{n}(X_i - \bar{X})^2 \\
     with \\(n-1\\) [degrees of freedom](g:degrees_of_freedom)
     -   \\(n-1\\) because there's a step in the calculation that normalizes the \\(n\\) values to unit length
     -   Once \\(n-1\\) are known, the value of the \\(n^{th}\\) is fixed
--   The exact formula for the *t*-distribution is [a little bit scary](#student-t).
+-   The exact formula for the *t*-distribution is a little bit scary
     -   The PDF's shape resembles that of a normal distribution with mean 0 and variance 1,
         but is slightly lower and wider.
     -   The two become closer as the degrees of freedom \\(\nu\\) gets larger.
