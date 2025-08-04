@@ -7,6 +7,7 @@
 <title>Robust Analysis</title>
 <link href="../static/favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="../static/mccole.css" rel="stylesheet" type="text/css"/>
+<script async="" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 <nav>
@@ -185,12 +186,12 @@ for package in all_packages:
 <ul>
 <li><span g="descriptive_statistics">Descriptive statistics</span> are key facts about data</li>
 <li>The <span g="median">median</span> is the middle value<ul>
-<li>If $$N$$ is odd, sort and take the middle</li>
-<li>If $$N$$ is even, sort and average the two middle values</li>
+<li>If \(N\) is odd, sort and take the middle</li>
+<li>If \(N\) is even, sort and average the two middle values</li>
 </ul>
 </li>
 <li>The <span g="mean">mean</span> is the weighted center of the data<ul>
-<li>$$ \mu = \frac{1}{N} \sum x_i $$</li>
+<li>\( \mu = \frac{1}{N} \sum x_i \)</li>
 </ul>
 </li>
 <li>If there are a few outliers, the mean can be very different from the median<ul>
@@ -199,7 +200,7 @@ for package in all_packages:
 </ul>
 </li>
 <li><span g="variance">Variance</span> measures the spread of values<ul>
-<li>$$ \sigma^2 = \frac{1}{N} \sigma (x_i - \mu)^2 $$</li>
+<li>\( \sigma^2 = \frac{1}{N} \sigma (x_i - \mu)^2 \)</li>
 <li>Squaring the differences gives extra weight to outliers...</li>
 <li>...but makes variance hard to use directly, since its units are (for example) lines squared</li>
 </ul>
@@ -343,7 +344,7 @@ fig.write_image('figures/release-count-violin.svg')
 </ul>
 </li>
 <li>Distance from first quartile to third quartile is the <span g="iqr">inter-quartile range</span><ul>
-<li>Lower and upper lines cut off at 1.5$$\times$$IQR</li>
+<li>Lower and upper lines cut off at 1.5\(\times\)IQR</li>
 <li>Anything beyond that is considered an outlier and shown as a point</li>
 </ul>
 </li>

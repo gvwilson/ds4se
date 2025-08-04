@@ -7,6 +7,7 @@
 <title>The Law of Large Numbers</title>
 <link href="../static/favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="../static/mccole.css" rel="stylesheet" type="text/css"/>
+<script async="" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 <nav>
@@ -52,37 +53,37 @@
 <ul>
 <li>Function describing probabilities of discrete events is called the <span g="pmf">probability mass function</span></li>
 <li>When describing continuous events, use:<ul>
-<li><span g="cdf">Cumulative distribution function</span> $$F(x) = P(X \leq x)$$</li>
-<li><span g="pdf">Probability density function</span> $$f(x) = dF/dx$$</li>
+<li><span g="cdf">Cumulative distribution function</span> \(F(x) = P(X \leq x)\)</li>
+<li><span g="pdf">Probability density function</span> \(f(x) = dF/dx\)</li>
 </ul>
 </li>
-<li>So $$P(a \lt X \lt B) = \int_{a}^{b} f(x) dx$$</li>
-<li>Require $$\int_{-\infty}^{\infty} f(x) dx = 1$$<ul>
+<li>So \(P(a \lt X \lt B) = \int_{a}^{b} f(x) dx\)</li>
+<li>Require \(\int_{-\infty}^{\infty} f(x) dx = 1\)<ul>
 <li>I.e., <em>something</em> has to happen</li>
 </ul>
 </li>
-<li>And notice $$P(x) = P(x \leq X \leq x) = \int_{x}^{x} f(x) dx = 0$$<ul>
+<li>And notice \(P(x) = P(x \leq X \leq x) = \int_{x}^{x} f(x) dx = 0\)<ul>
 <li>I.e., probability of any specific exact value is 0</li>
 <li>So always talk about ranges</li>
 </ul>
 </li>
-<li><span g="mean">Mean</span> is $$\mu = \int_{-\infty}^{\infty} x f(x) dx$$</li>
-<li><span g="variance">Variance</span> is $$\sigma^2 = \int_{-\infty}^{\infty} (x - \mu)^2 f(x) dx =  \int_{-\infty}^{\infty} x^2 f(x) dx - \mu^2$$</li>
+<li><span g="mean">Mean</span> is \(\mu = \int_{-\infty}^{\infty} x f(x) dx\)</li>
+<li><span g="variance">Variance</span> is \(\sigma^2 = \int_{-\infty}^{\infty} (x - \mu)^2 f(x) dx =  \int_{-\infty}^{\infty} x^2 f(x) dx - \mu^2\)</li>
 <li>
-<p>Normally use <span g="standard_deviation">standard deviation</span> $$\sigma$$ because it has the same units as the data</p>
+<p>Normally use <span g="standard_deviation">standard deviation</span> \(\sigma\) because it has the same units as the data</p>
 <ul>
 <li>Saves us from trying to figure out what a squared price is...</li>
 </ul>
 </li>
 <li>
-<p>Example: <span g="uniform_distribution">uniform distribution</span> has equal probability over a finite range $$[a \ldots b]$$</p>
+<p>Example: <span g="uniform_distribution">uniform distribution</span> has equal probability over a finite range \([a \ldots b]\)</p>
 <ul>
-<li>$$f(x) = \frac{1}{b - a}$$</li>
-<li>$$P(a \leq t \leq X \leq t+h \leq b) = \frac{h}{b - a}$$</li>
+<li>\(f(x) = \frac{1}{b - a}\)</li>
+<li>\(P(a \leq t \leq X \leq t+h \leq b) = \frac{h}{b - a}\)</li>
 <li>I.e., probability is proportional to fraction of range</li>
-<li><span g="standard_uniform">Standard uniform distribution</span> has range $$[0 \ldots 1]$$<ul>
-<li>$$\mu = \frac{1}{2}$$</li>
-<li>$$\sigma^2 = \int_{0}^1 x^2 dx - (\frac{1}{2})^2 = \frac{1}{12}$$</li>
+<li><span g="standard_uniform">Standard uniform distribution</span> has range \([0 \ldots 1]\)<ul>
+<li>\(\mu = \frac{1}{2}\)</li>
+<li>\(\sigma^2 = \int_{0}^1 x^2 dx - (\frac{1}{2})^2 = \frac{1}{12}\)</li>
 </ul>
 </li>
 </ul>
@@ -92,68 +93,68 @@
 <ul>
 <li>In its full glory, <span g="normal_distribution">normal distribution</span> has</li>
 </ul>
-<p>$$
+<p>\(
 \begin{align<em>}
 f(x) &amp; = &amp; \frac{1}{\sigma \sqrt{2 \pi}} e^{- \frac{(x - \mu)^2}{2 \sigma^2}}
 \end{align</em>}
-$$</p>
+\)</p>
 <ul>
-<li>There is no closed formula for the integral $$F(x)$$<ul>
-<li>But as the notation suggests, mean is $$\mu$$ and variance is $$\sigma^2$$</li>
+<li>There is no closed formula for the integral \(F(x)\)<ul>
+<li>But as the notation suggests, mean is \(\mu\) and variance is \(\sigma^2\)</li>
 </ul>
 </li>
 <li>
-<p>The <span g="standard_normal">standard normal distribution</span> $$Z$$ has mean $$\mu = 0$$ and standard deviation $$\sigma = 1$$</p>
+<p>The <span g="standard_normal">standard normal distribution</span> \(Z\) has mean \(\mu = 0\) and standard deviation \(\sigma = 1\)</p>
 <ul>
-<li>Easy to move back and forth between this and arbitrary distribution $$X = \mu + \sigma Z$$</li>
+<li>Easy to move back and forth between this and arbitrary distribution \(X = \mu + \sigma Z\)</li>
 </ul>
 </li>
 <li>
 <p><span g="central_limit_theorem">Central Limit Theorem</span></p>
 <ul>
-<li>Let $$S_n = X_1 + X_2 + \ldots + X_n$$ be the sum of $$n$$ independent random variables,
-    all with mean $$\mu$$ and standard deviation $$\sigma$$</li>
+<li>Let \(S_n = X_1 + X_2 + \ldots + X_n\) be the sum of \(n\) independent random variables,
+    all with mean \(\mu\) and standard deviation \(\sigma\)</li>
 <li>Can be drawn from (almost) any distribution</li>
-<li>As $$n \rightarrow \infty$$, $$\frac{S_n - n\mu}{\sigma \sqrt{n}}$$ converges on a standard normal random variable<ul>
+<li>As \(n \rightarrow \infty\), \(\frac{S_n - n\mu}{\sigma \sqrt{n}}\) converges on a standard normal random variable<ul>
 <li>I.e., the distribution of our estimates of the mean is normal regardless of the underlying distribution</li>
 </ul>
 </li>
-<li>Rate of convergence is $$\frac{1}{\sqrt{n}}$$<ul>
+<li>Rate of convergence is \(\frac{1}{\sqrt{n}}\)<ul>
 <li>I.e., to double the precision, quadruple the sample size</li>
 </ul>
 </li>
 </ul>
 </li>
 <li>
-<p>Heuristic: for $$n \gt 30$$, $$S_n$$ is distributed normally</p>
+<p>Heuristic: for \(n \gt 30\), \(S_n\) is distributed normally</p>
 </li>
 <li>
-<p>Sample mean $$\bar{X}$$ estimates the population mean</p>
+<p>Sample mean \(\bar{X}\) estimates the population mean</p>
 </li>
-<li>Variance of $$\bar{X}$$ is $$\frac{\sigma^2}{n}$$</li>
-<li>Distribution of sample means is normal, i.e. $$\frac{\bar{X} - \mu}{\sigma / \sqrt{n}}$$ is standard normal as $$n \rightarrow \infty$$<ul>
-<li>Regardless of the underlying distribution of $$X$$</li>
+<li>Variance of \(\bar{X}\) is \(\frac{\sigma^2}{n}\)</li>
+<li>Distribution of sample means is normal, i.e. \(\frac{\bar{X} - \mu}{\sigma / \sqrt{n}}\) is standard normal as \(n \rightarrow \infty\)<ul>
+<li>Regardless of the underlying distribution of \(X\)</li>
 </ul>
 </li>
 <li>FIXME: add program to sample various uniform distributions and see how the sampling converges on a uniform distribution</li>
 </ul>
 <h2>How can we use this to quantify confidence?</h2>
 <ul>
-<li>A <span g="confidence_interval">confidence interval</span> is an interval $$[a \ldots b]$$
-    that has some probability $$p$$ of containing the actual value of a statistic<ul>
+<li>A <span g="confidence_interval">confidence interval</span> is an interval \([a \ldots b]\)
+    that has some probability \(p\) of containing the actual value of a statistic<ul>
 <li>E.g., "There is a 90% probability that the actual mean of this population lies between 2.5 and 3.5"</li>
 <li>Larger intervals are less precise but have a higher probability</li>
 </ul>
 </li>
-<li>If there are more than 30 samples or the standard deviation $$\sigma$$ is known, use a <span g="z_test">Z-test</span>:<ol>
-<li>Choose a confidence level $$C$$ (typically 95%)</li>
-<li>Find the value $$z^{\star}$$ such that $$P(x \leq z^{\star}) \leq \frac{1 - C}{2}$$
+<li>If there are more than 30 samples or the standard deviation \(\sigma\) is known, use a <span g="z_test">Z-test</span>:<ol>
+<li>Choose a confidence level \(C\) (typically 95%)</li>
+<li>Find the value \(z^{\star}\) such that \(P(x \leq z^{\star}) \leq \frac{1 - C}{2}\)
     in a standard normal distribution<ul>
 <li>Divide by 2 because the normal curve has two symmetric tails</li>
 </ul>
 </li>
-<li>Calculate the sample mean $$\bar{X}$$</li>
-<li>Interval is $$\bar{X} \pm z^{\star}\frac{\sigma}{\sqrt{n}}$$</li>
+<li>Calculate the sample mean \(\bar{X}\)</li>
+<li>Interval is \(\bar{X} \pm z^{\star}\frac{\sigma}{\sqrt{n}}\)</li>
 </ol>
 </li>
 </ul>
@@ -174,14 +175,14 @@ fixme=true ."
 <li>Usually don't know the distribution's variance</li>
 <li>The <span g="sample_variance">sample variance</span> is:</li>
 </ul>
-<p>$$
+<p>\(
 \begin{align<em>}
 s^2 &amp; = &amp; \frac{1}{n-1} \sum_{i=1}^{n}(X_i - \bar{X})^2 \
     &amp; = &amp; \frac{\sum X_i^2 - n\bar{X}^2}{n - 1}
 \end{align</em>}
-$$</p>
+\)</p>
 <ul>
-<li>Using $$n-1$$ instead of $$n$$ ensures that $$s^2$$ is unbiased (the <span g="bessel_correction">Bessel correction</span>)<ul>
+<li>Using \(n-1\) instead of \(n\) ensures that \(s^2\) is unbiased (the <span g="bessel_correction">Bessel correction</span>)<ul>
 <li>See <a href="../theory/#bessel-correction">proof</a></li>
 </ul>
 </li>
@@ -190,27 +191,27 @@ $$</p>
 <li>Named comes from a pseudonym used by the mathematician who first used it this way</li>
 </ul>
 </li>
-<li>The variable $$\frac{\bar{X} - \mu}{\sigma / \sqrt{n}}$$ has a standard normal distribution</li>
-<li>However, the variable $$\frac{\bar{X} - \mu}{s / \sqrt{n}}$$ has a <em>t</em>-distribution
-    with $$n-1$$ <span g="degrees_of_freedom">degrees of freedom</span><ul>
-<li>Called degrees of freedom because once $$n-1$$ values are known, the value of the $$n^{th}$$ is fixed</li>
-<li>$$n-1$$ because there's a step in the calculation that normalizes the $$n$$ values to unit length</li>
+<li>The variable \(\frac{\bar{X} - \mu}{\sigma / \sqrt{n}}\) has a standard normal distribution</li>
+<li>However, the variable \(\frac{\bar{X} - \mu}{s / \sqrt{n}}\) has a <em>t</em>-distribution
+    with \(n-1\) <span g="degrees_of_freedom">degrees of freedom</span><ul>
+<li>Called degrees of freedom because once \(n-1\) values are known, the value of the \(n^{th}\) is fixed</li>
+<li>\(n-1\) because there's a step in the calculation that normalizes the \(n\) values to unit length</li>
 </ul>
 </li>
 <li>The exact formula for the <em>t</em>-distribution is <a href="../theory/#student-t">a little bit scary</a>.<ul>
 <li>The PDF's shape resembles that of a normal distribution with mean 0 and variance 1,
     but is slightly lower and wider.</li>
-<li>The two become closer as the degrees of freedom $$\nu$$ gets larger.</li>
+<li>The two become closer as the degrees of freedom \(\nu\) gets larger.</li>
 </ul>
 </li>
 <li>
 <p>A <span g="t_test">t-test</span> follows the same steps as a Z-test:</p>
 <ol>
-<li>Choose a confidence level $$C$$</li>
-<li>Find a value $$t^{\star}$$ such that $$P(x \leq t^{\star}) \leq \frac{1 - C}{2}$$
-    in a Student's <em>t</em>-distribution with $$n-1$$ degrees of freedom</li>
-<li>Estimate the standard deviation $$s$$</li>
-<li>Interval is $$\bar{X} \pm t^{\star}\frac{s}{\sqrt{n}}$$</li>
+<li>Choose a confidence level \(C\)</li>
+<li>Find a value \(t^{\star}\) such that \(P(x \leq t^{\star}) \leq \frac{1 - C}{2}\)
+    in a Student's <em>t</em>-distribution with \(n-1\) degrees of freedom</li>
+<li>Estimate the standard deviation \(s\)</li>
+<li>Interval is \(\bar{X} \pm t^{\star}\frac{s}{\sqrt{n}}\)</li>
 </ol>
 </li>
 <li>
@@ -220,9 +221,9 @@ $$</p>
 <h2>How can we compare the means of two datasets?</h2>
 <ul>
 <li>What is the probability of seeing this difference between two datasets?<ul>
-<li>The <span g="null_hypothesis">null hypothesis</span> $$H_0$$ is that the samples come from a single population
+<li>The <span g="null_hypothesis">null hypothesis</span> \(H_0\) is that the samples come from a single population
     and the observed difference is purely due to chance</li>
-<li>The <span g="alternative_hypothesis">alternative hypothesis</span> $$H_A$$ is that
+<li>The <span g="alternative_hypothesis">alternative hypothesis</span> \(H_A\) is that
     the samples come from two difference populations</li>
 <li><span g="false_positive">False positive</span>: decide that the difference is not purely random when it is</li>
 <li><span g="false_negative">False negative</span>: decide the difference is purely random when it isn't</li>
@@ -249,7 +250,7 @@ def main():
 <pre><code class="language-txt">Ttest_indResult(statistic=-269.67014904687954, pvalue=0.0)
 </code></pre>
 <ul>
-<li>The $$p$$ value is so small that the computer can't distinguish it from zero</li>
+<li>The \(p\) value is so small that the computer can't distinguish it from zero</li>
 <li>
 <p>Which means the chances of getting this difference by randomly splitting a single population is vanishingly small</p>
 </li>
@@ -287,7 +288,7 @@ Ttest_indResult(statistic=12.815512046971827, pvalue=6.936182610195961e-31)
 <div class="callout">
 <h3>Higher standards</h3>
 <ul>
-<li>Recall discussion of $$p$$ hacking from <span x="hypothesis-testing"></span><ul>
+<li>Recall discussion of \(p\) hacking from <span x="hypothesis-testing"></span><ul>
 <li>If we analyze the data enough different ways, one of them will be "significant"</li>
 </ul>
 </li>

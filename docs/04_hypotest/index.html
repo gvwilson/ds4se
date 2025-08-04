@@ -7,6 +7,7 @@
 <title>Hypothesis Testing</title>
 <link href="../static/favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="../static/mccole.css" rel="stylesheet" type="text/css"/>
+<script async="" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 <nav>
@@ -274,23 +275,23 @@ rule count_trimmed:
 <li><span g="null_hypothesis">Null hypothesis</span>: there is no significant difference between these curves</li>
 <li><span g="alternative_hypothesis">Alternative hypothesis</span>: there is a significant difference between these curves</li>
 <li>Reject the null hypothesis if the probability of getting this data <em>if the null hypothesis is true</em>
-    is less than a chosen probability called a <span g="p_value">$$p$$ value</span><ul>
-<li>Typically use $$p = 0.05$$, i.e., less than 1 chance in 20 of getting the data if there isn't actually a difference</li>
-<li>The lower the $$p$$ value, the higher our confidence</li>
+    is less than a chosen probability called a <span g="p_value">\(p\) value</span><ul>
+<li>Typically use \(p = 0.05\), i.e., less than 1 chance in 20 of getting the data if there isn't actually a difference</li>
+<li>The lower the \(p\) value, the higher our confidence</li>
 </ul>
 </li>
 </ul>
 <div class="callout">
 <h3>Kick the ball then move goal</h3>
-<p>$$p$$ values can be mis-used in several ways.
-The most obvious is to choose a $$p$$ value after the fact in order to get a significant result:
-if you ever see reports that mix several different $$p$$ values or use odd numbers like 0.073,
+<p>\(p\) values can be mis-used in several ways.
+The most obvious is to choose a \(p\) value after the fact in order to get a significant result:
+if you ever see reports that mix several different \(p\) values or use odd numbers like 0.073,
 this is probably what's going on.</p>
 <p>The second form of abuse, called <span g="p_hacking"><em>p</em> hacking</span>,
 is to re-analyze the data over and over until a "significant" result emerges.
 Consider: if the odds of getting a false positive for one analysis are 0.05,
 then the odds of getting a true negative are 0.95.
-The odds of getting two true negatives in a row are therefore $$0.95^2$$,
+The odds of getting two true negatives in a row are therefore \(0.95^2\),
 which is 0.9025.
 If we keep going, the odds of none of our analyses meeting this threshold are 50/50
 when we do 14 analyses.

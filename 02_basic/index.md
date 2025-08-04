@@ -377,7 +377,7 @@ Name: left, dtype: int64
     -   `max`: largest value
     -   `mean`: average value
     -   `min`: least value
-    -   `nth` : $$ n^{th} $$ value
+    -   `nth` : \\( n^{th} \\) value
     -   `sem`: standard error of the mean
     -   `size`: group size (including `NaN`)
     -   `std`: standard deviation

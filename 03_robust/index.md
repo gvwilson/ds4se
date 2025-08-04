@@ -139,15 +139,15 @@ for package in all_packages:
 
 -   <span g="descriptive_statistics">Descriptive statistics</span> are key facts about data
 -   The <span g="median">median</span> is the middle value
-    -   If $$N$$ is odd, sort and take the middle
-    -   If $$N$$ is even, sort and average the two middle values
+    -   If \\(N\\) is odd, sort and take the middle
+    -   If \\(N\\) is even, sort and average the two middle values
 -   The <span g="mean">mean</span> is the weighted center of the data
-    -   $$ \mu = \frac{1}{N} \sum x_i $$
+    -   \\( \mu = \frac{1}{N} \sum x_i \\)
 -   If there are a few outliers, the mean can be very different from the median
     -   Mean of `[1, 2, 3, 4, 100]` is 22, but median is 3
     -   Which is why those who have like to quote means rather than medians
 -   <span g="variance">Variance</span> measures the spread of values
-    -   $$ \sigma^2 = \frac{1}{N} \sigma (x_i - \mu)^2 $$
+    -   \\( \sigma^2 = \frac{1}{N} \sigma (x_i - \mu)^2 \\)
     -   Squaring the differences gives extra weight to outliers...
     -   ...but makes variance hard to use directly, since its units are (for example) lines squared
 -   Instead, use the <span g="standard_deviation">standard deviation</span>
@@ -283,7 +283,7 @@ fig.write_image('figures/release-count-violin.svg')
     -   Lines show minimum, first <span g="quartile">quartile</span>, median, third quartile, and maximum
     -   Box shows first quartile to third quartile (so half the data lies inside the box)
 -   Distance from first quartile to third quartile is the <span g="iqr">inter-quartile range</span>
-    -   Lower and upper lines cut off at 1.5$$\times$$IQR
+    -   Lower and upper lines cut off at 1.5\\(\times\\)IQR
     -   Anything beyond that is considered an outlier and shown as a point
 
 ```py

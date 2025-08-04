@@ -217,24 +217,24 @@ rule count_trimmed:
 -   <span g="null_hypothesis">Null hypothesis</span>: there is no significant difference between these curves
 -   <span g="alternative_hypothesis">Alternative hypothesis</span>: there is a significant difference between these curves
 -   Reject the null hypothesis if the probability of getting this data *if the null hypothesis is true*
-    is less than a chosen probability called a <span g="p_value">$$p$$ value</span>
-    -   Typically use $$p = 0.05$$, i.e., less than 1 chance in 20 of getting the data if there isn't actually a difference
-    -   The lower the $$p$$ value, the higher our confidence
+    is less than a chosen probability called a <span g="p_value">\\(p\\) value</span>
+    -   Typically use \\(p = 0.05\\), i.e., less than 1 chance in 20 of getting the data if there isn't actually a difference
+    -   The lower the \\(p\\) value, the higher our confidence
 
 <div class="callout" markdown="1">
 
 ### Kick the ball then move goal
 
-$$p$$ values can be mis-used in several ways.
-The most obvious is to choose a $$p$$ value after the fact in order to get a significant result:
-if you ever see reports that mix several different $$p$$ values or use odd numbers like 0.073,
+\\(p\\) values can be mis-used in several ways.
+The most obvious is to choose a \\(p\\) value after the fact in order to get a significant result:
+if you ever see reports that mix several different \\(p\\) values or use odd numbers like 0.073,
 this is probably what's going on.
 
 The second form of abuse, called <span g="p_hacking">*p* hacking</span>,
 is to re-analyze the data over and over until a "significant" result emerges.
 Consider: if the odds of getting a false positive for one analysis are 0.05,
 then the odds of getting a true negative are 0.95.
-The odds of getting two true negatives in a row are therefore $$0.95^2$$,
+The odds of getting two true negatives in a row are therefore \\(0.95^2\\),
 which is 0.9025.
 If we keep going, the odds of none of our analyses meeting this threshold are 50/50
 when we do 14 analyses.
