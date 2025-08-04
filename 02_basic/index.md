@@ -388,16 +388,19 @@ Name: left, dtype: int64
 
 ### Not a Number, Not Available, Null, and None
 
-`NaN` stands for "Not a Number", a special value used to represent things like
-0/0 <cite>Kahan1997</cite>.  Despite the similarity in their names, it is *not*
-the same thing as <span g="na">`NA`</span> (Not Available), which is a
-placeholder for missing values.  To make things more confusing, <span
-g="sql">SQL</span> (the standard language for querying <span
-g="relational_database">relational databases</span>) uses <span
-g="null">`null`</span> instead of `NA` to signal missing data, while many
-programming languages use `null` to mean "a reference that doesn't refer to
-anything".  Python uses `None` instead of `null`, but we must be careful when
-reading and writing data to distinguish between empty strings, missing values,
+`NaN` stands for "Not a Number",
+a special value used to represent things like 0/0 [[Kahan1997](b:Kahan1997)].
+Despite the similarity in their names,
+it is *not* the same thing as <span g="na">`NA`</span> (Not Available),
+which is a placeholder for missing values.
+To make things more confusing,
+<span g="sql">SQL</span> (the standard language for querying <span g="relational_database">relational databases</span>)
+uses <span g="null">`null`</span> instead of `NA` to signal missing data,
+while many programming languages use `null` to mean
+"a reference that doesn't refer to anything".
+Python uses `None` instead of `null`,
+but we must be careful when reading and writing data to distinguish between empty strings,
+missing values,
 and the country code for Namibia.
 
 </div>

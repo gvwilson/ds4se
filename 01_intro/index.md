@@ -4,7 +4,7 @@
 
 Are some programmers really ten times more productive than average?
 To find out,
-<cite>Prechelt2000</cite> had N programmers solve the same problem
+[[Prechelt2000](b:Prechelt2000)] had N programmers solve the same problem
 in the language of their choice,
 then looked at how long it took them,
 how good their solutions were,
@@ -58,7 +58,7 @@ and the mark in the middle shows the <span g="median">median</span>
    title="Box-and-whisker plot show that most developers spent between zero and 20 hours but a handful took as long as 63 hours." %}
 
 So what does this data tell us about productivity?
-As <cite>Prechelt2019</cite> explains,
+As [[Prechelt2019](b:Prechelt2019)] explains,
 that depends on exactly what we mean.
 The shortest and longest development times were 0.6 and 63 hours respectively,
 giving a ratio of 105X.
@@ -78,7 +78,7 @@ and other comparisons give us other values.
 
 ## Who are these lessons for?
 
-Every lesson should aim to meet the needs of specific people <cite>Wilson2019</cite>.
+Every lesson should aim to meet the needs of specific people [[Wilson2019](b:Wilson2019)].
 As these <span g="learner_persona">learner personas</span> suggest,
 these lessons assume readers can write short Python programs and remember some college-level mathematics:
 
@@ -112,7 +112,7 @@ We chose our topics to teach people
 how to analyze messy real-world data correctly,
 what we already know about software and software development,
 and why we believe it's true.
-Our choice of examples was guided by <cite>Begel2014</cite>,
+Our choice of examples was guided by [[Begel2014](b:Begel2014)],
 which asked several hundred professional software engineers
 what questions they most most wanted researchers to answer.
 The most highly-ranked questions include:
@@ -142,7 +142,7 @@ most of them don't *have* answers—but we hope we can help people get started.
 
 ### Moving Targets
 
-<cite>Begel2014</cite> also asked what topics would be unwise for researchers to
+[[Begel2014](b:Begel2014)] also asked what topics would be unwise for researchers to
 examine; all of the top responses were variations on, "Anything that measures
 individual employees' productivity."  This belief reflects [Goodhart's
 Law][goodharts-law]: as soon as a measure is used to evaluate people, they
@@ -184,9 +184,9 @@ Package,Releases
 We are grateful to:
 
 -   Steve McConnell and Robert Glass,
-    whose books sent us down this road years ago <cite>McConnell2004,Glass2002</cite>.
--   Derek Jones for <cite>Jones2019</cite>,
-    the many contributors to <cite>Oram2010</cite>,
+    whose books sent us down this road years ago [[McConnell2004](b:McConnell2004)].
+-   Derek Jones for [[Jones2019](b:Jones2019)],
+    the many contributors to [[Oram2010](b:Oram2010)],
     and everyone else who is trying to make software engineering an evidence-based discipline.
 -   [RStudio][rstudio] for supporting [Yim Register][register-yim]'s work in 2019.
 -   [Raniere Silva][silva-raniere] and Shashi Kumar for technical assistance.

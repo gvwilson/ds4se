@@ -551,7 +551,7 @@ Python's [`glob`][glob] module will take a pattern and return a list of matching
 
 The last point is often the hardest for people to implement,
 since many researchers have never seen a well-documented dataset.
-The <span g="data_manifest">data manifest</span> for <cite>Diehm2018</cite> is a good example;
+The <span g="data_manifest">data manifest</span> for [[Diehm2018](b:Diehm2018)] is a good example;
 each dataset is described by an entry like this:
 
 <div class="callout" markdown="1">
@@ -582,7 +582,7 @@ each dataset is described by an entry like this:
 
 ### FAIR play
 
-The [FAIR Principles][fair-principles] <cite>Brock2019</cite>
+The [FAIR Principles][fair-principles] [[Brock2019](b:Brock2019)]
 state that data should be *findable*, *accessible*, *interoperable*, and *reusable*.
 They are still aspirational for most researchers,
 but they tell us what to aim for.

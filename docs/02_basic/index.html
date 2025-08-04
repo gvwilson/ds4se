@@ -432,13 +432,19 @@ Name: left, dtype: int64
 </ul>
 <div class="callout">
 <h3>Not a Number, Not Available, Null, and None</h3>
-<p><code>NaN</code> stands for "Not a Number", a special value used to represent things like
-0/0 <cite>Kahan1997</cite>.  Despite the similarity in their names, it is <em>not</em>
-the same thing as <span g="na"><code>NA</code></span> (Not Available), which is a
-placeholder for missing values.  To make things more confusing, <span g="sql">SQL</span> (the standard language for querying <span g="relational_database">relational databases</span>) uses <span g="null"><code>null</code></span> instead of <code>NA</code> to signal missing data, while many
-programming languages use <code>null</code> to mean "a reference that doesn't refer to
-anything".  Python uses <code>None</code> instead of <code>null</code>, but we must be careful when
-reading and writing data to distinguish between empty strings, missing values,
+<p><code>NaN</code> stands for "Not a Number",
+a special value used to represent things like 0/0 [<a href="../bibliography/#Kahan1997">Kahan1997</a>].
+Despite the similarity in their names,
+it is <em>not</em> the same thing as <span g="na"><code>NA</code></span> (Not Available),
+which is a placeholder for missing values.
+To make things more confusing,
+<span g="sql">SQL</span> (the standard language for querying <span g="relational_database">relational databases</span>)
+uses <span g="null"><code>null</code></span> instead of <code>NA</code> to signal missing data,
+while many programming languages use <code>null</code> to mean
+"a reference that doesn't refer to anything".
+Python uses <code>None</code> instead of <code>null</code>,
+but we must be careful when reading and writing data to distinguish between empty strings,
+missing values,
 and the country code for Namibia.</p>
 </div>
 <ul>

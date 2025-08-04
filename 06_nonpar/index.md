@@ -6,7 +6,7 @@ which immediately begs the question "why?"
 Is there a "geek gene",
 i.e.,
 are some people just naturally better at programming?
-<cite>Patitsas2016</cite> showed that
+[[Patitsas2016](b:Patitsas2016)] showed that
 there is little evidence for that theory in students' grades
 and that confirmation bias probably explains why some instructors believe it.
 
@@ -25,7 +25,7 @@ The idea is that writing tests first:
 
 TDD has many passionate advocates, but does it actually work?
 
--   Discussion based on <cite>Fucci2016</cite>
+-   Discussion based on [[Fucci2016](b:Fucci2016)]
     -   Use non-parametric tests when data isn't normal (and most data isn't in software engineering)
     -   Introduce <span g="mann_whitney_u">Mann-Whitney U test</span>
         (also called <span g="wilcoxon_rank_sum">Wilcoxon rank sum test</span>)
@@ -45,7 +45,7 @@ software external quality (QLTY),
 and developers’ productivity (PROD).
 Note that,
 following from the research questions,
-the hypotheses were formulated as directional for consistency with <cite>Erdogmus2005</cite>,
+the hypotheses were formulated as directional for consistency with [[Erdogmus2005](b:Erdogmus2005)],
 but analyzed as non-directional
 since the existing body of knowledge regarding the postulated impact of TDD
 does not suggest a specific direction of the effect.
