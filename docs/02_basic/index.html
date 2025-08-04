@@ -77,7 +77,7 @@ print('\n'.join(sys.path))
 ...
 </code></pre>
 <ul>
-<li>We could convert this output to <span g="csv">comma-separated values</span> (CSV) with command-line tools like [awk][awk] or [sed][sed]<ul>
+<li>We could convert this output to <a href="../glossary/#csv">comma-separated values</a> (CSV) with command-line tools like [awk][awk] or [sed][sed]<ul>
 <li>But since we're using Python anyway...</li>
 </ul>
 </li>
@@ -110,13 +110,13 @@ cat python-local-package-size.csv
 ...
 </code></pre>
 <ul>
-<li>This is <span g="tidy_data">tidy data</span><ol>
+<li>This is <a href="../glossary/#tidy_data">tidy data</a><ol>
 <li>Each column contains one statistical variable
     (i.e., one property that was measured or observed)</li>
 <li>Each different observation is in a different row</li>
 <li>There is one table for each set of observations</li>
 <li>If there are multiple tables,
-    each table has a column containing a unique <span g="key">key</span>
+    each table has a column containing a unique <a href="../glossary/#key">key</a>
     so that related data can be linked</li>
 </ol>
 </li>
@@ -127,7 +127,7 @@ cat python-local-package-size.csv
 <li>People want to do a lot of complex things with it, so Python's tools can be bewildering at first<ol>
 <li>Built-in lists and the <code>array</code> module</li>
 <li>[NumPy][numpy] provides multidimensional arrays</li>
-<li>[Pandas][pandas] provides <span g="dataframe">dataframes</span> with named columns for tidy data</li>
+<li>[Pandas][pandas] provides <a href="../glossary/#dataframe">dataframes</a> with named columns for tidy data</li>
 </ol>
 </li>
 <li>We will use a small subset of Pandas<ul>
@@ -156,8 +156,8 @@ print(data)
 [33246 rows x 3 columns]
 </code></pre>
 <ul>
-<li>The <span g="header_row">header row</span> tells us the names of the columns</li>
-<li>We can get these names using the dataframe's <code>columns</code> <span g="property">property</span><ul>
+<li>The <a href="../glossary/#header_row">header row</a> tells us the names of the columns</li>
+<li>We can get these names using the dataframe's <code>columns</code> <a href="../glossary/#property">property</a><ul>
 <li>Not a method call</li>
 </ul>
 </li>
@@ -177,7 +177,7 @@ print(data)
 <pre><code class="language-txt">['Lines' 'Characters' 'Path']
 </code></pre>
 <ul>
-<li>We normally import Pandas using an <span g="alias">alias</span> called <code>pd</code>
+<li>We normally import Pandas using an <a href="../glossary/#alias">alias</a> called <code>pd</code>
     to save a few characters of typing and (more importantly) make code a little easier to read</li>
 <li>Re-load our data that way<ul>
 <li>And use a more meaningful name than <code>data</code></li>
@@ -282,7 +282,7 @@ Name: 0, dtype: object
 </ul>
 </li>
 <li>
-<p>We can use a <span g="slice">slice</span> to select multiple rows</p>
+<p>We can use a <a href="../glossary/#slice">slice</a> to select multiple rows</p>
 <ul>
 <li><span class="rule">If you're writing a loop to process a table, you're doing something wrong</span></li>
 </ul>
@@ -340,7 +340,7 @@ Name: Characters, dtype: int64
 <li>The figure object's <code>show</code> method runs a local server and opens the image in the browser for viewing</li>
 <li>Its <code>write_image</code> method saves it as a file</li>
 <li>We put the generated figure in a <code>figures</code> sub-directory to avoid clutter</li>
-<li>And use <span g="svg">SVG</span> because <span g="vector_graphics">vector graphics</span> resizes better than <span g="raster_graphics">raster graphics</span></li>
+<li>And use <a href="../glossary/#svg">SVG</a> because <a href="../glossary/#vector_graphics">vector graphics</a> resizes better than <a href="../glossary/#raster_graphics">raster graphics</a></li>
 </ul>
 </li>
 </ul>
@@ -402,7 +402,7 @@ print(example)
 dtype: int64
 </code></pre>
 <ul>
-<li>If we use a plain old number it is automatically <span g="broadcast">broadcast</span> to the size of the column</li>
+<li>If we use a plain old number it is automatically <a href="../glossary/#broadcast">broadcast</a> to the size of the column</li>
 </ul>
 <pre><code class="language-py">print(7 * example['left'])
 </code></pre>
@@ -413,8 +413,8 @@ dtype: int64
 Name: left, dtype: int64
 </code></pre>
 <ul>
-<li>Sums, averages, and other functions that turn many values into one are called <span g="aggregation">aggregations</span><ul>
-<li><code>count</code>: number of elements (excluding <span g="nan"><code>NaN</code></span>)</li>
+<li>Sums, averages, and other functions that turn many values into one are called <a href="../glossary/#aggregation">aggregations</a><ul>
+<li><code>count</code>: number of elements (excluding <a href="../glossary/#nan"><code>NaN</code></a>)</li>
 <li><code>describe</code>: descriptive statistics</li>
 <li><code>first</code>: first value</li>
 <li><code>last</code>: last value</li>
@@ -435,11 +435,11 @@ Name: left, dtype: int64
 <p><code>NaN</code> stands for "Not a Number",
 a special value used to represent things like 0/0 [<a href="../bibliography/#Kahan1997">Kahan1997</a>].
 Despite the similarity in their names,
-it is <em>not</em> the same thing as <span g="na"><code>NA</code></span> (Not Available),
+it is <em>not</em> the same thing as <a href="../glossary/#na"><code>NA</code></a> (Not Available),
 which is a placeholder for missing values.
 To make things more confusing,
-<span g="sql">SQL</span> (the standard language for querying <span g="relational_database">relational databases</span>)
-uses <span g="null"><code>null</code></span> instead of <code>NA</code> to signal missing data,
+<a href="../glossary/#sql">SQL</a> (the standard language for querying <a href="../glossary/#relational_database">relational databases</a>)
+uses <a href="../glossary/#null"><code>null</code></a> instead of <code>NA</code> to signal missing data,
 while many programming languages use <code>null</code> to mean
 "a reference that doesn't refer to anything".
 Python uses <code>None</code> instead of <code>null</code>,
@@ -481,7 +481,7 @@ mean   37.0    74.0  111.0
 <h2>How can we select subsets of data?</h2>
 <ul>
 <li>Suppose we want to look at the low values in the data</li>
-<li>Do this by <span g="filter">filtering</span> data and calculating values for the rows we have kept<ul>
+<li>Do this by <a href="../glossary/#filter">filtering</a> data and calculating values for the rows we have kept<ul>
 <li>"Keep" would have been a better name than "filter", but we're stuck with it</li>
 </ul>
 </li>
@@ -526,7 +526,7 @@ print(has_red)
 Name: red, dtype: bool
 </code></pre>
 <ul>
-<li>The expression <code>(red == 1.0)</code> is no different from <code>(red + 3)</code>, except the result is <span g="boolean">Boolean</span> instead of numeric</li>
+<li>The expression <code>(red == 1.0)</code> is no different from <code>(red + 3)</code>, except the result is <a href="../glossary/#boolean">Boolean</a> instead of numeric</li>
 <li>If we use a Boolean vector as an index, the result is a smaller table containing only the rows where the index was <code>True</code><ul>
 <li>But just as we had to use <code>.iloc[...]</code>, we have to use <code>.loc[...]</code> (for "location")</li>
 </ul>
@@ -577,7 +577,7 @@ blue     0.5
 dtype: float64
 </code></pre>
 <ul>
-<li>This style of programming is called <span g="method_chaining">method chaining</span><ul>
+<li>This style of programming is called <a href="../glossary/#method_chaining">method chaining</a><ul>
 <li>Each operation like <code>loc</code> and <code>agg</code> creates a new object</li>
 <li>We immediately call a method of that new object</li>
 <li>Then call a method of the object that method returns, and so on</li>
@@ -588,7 +588,7 @@ dtype: float64
 <h2>How are lines and characters in Python files related?</h2>
 <ul>
 <li>Created a scatter plot earlier</li>
-<li>Construct a <span g="histogram">histogram</span> to see how many <span g="outlier">outliers</span> there are<ul>
+<li>Construct a <a href="../glossary/#histogram">histogram</a> to see how many <a href="../glossary/#outlier">outliers</a> there are<ul>
 <li>Add width and height for the print version</li>
 </ul>
 </li>
@@ -673,7 +673,7 @@ fig.write_image('hist-ratio-most.svg')
 <li>"Play with the threshold" is a danger sign</li>
 </ul>
 </li>
-<li>In short, this is not <span g="reproducible_research">reproducible research</span></li>
+<li>In short, this is not <a href="../glossary/#reproducible_research">reproducible research</a></li>
 <li>The next few lessons fix these shortcomings</li>
 </ul>
 </main>

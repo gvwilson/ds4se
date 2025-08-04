@@ -42,13 +42,13 @@ The columns hold the following information:
 The `z1000rel` and `m1000rel` columns tell us that
 all of these implementations are correct 98% of the time or better,
 which is considered acceptable.
-The rest of the data is much easier to understand as a <span g="box_and_whisker_plot">box-and-whisker plot</span>
+The rest of the data is much easier to understand as a [box-and-whisker plot](g:box_and_whisker_plot)
 of the working time in hours (the `whours` column from the table).
 Each dot is a single data point
-(<span g="jitter">jittered</span> up or down a bit to be easier to see).
-The left and right boundaries of the box show the 25th and 75th <span g="percentile">percentiles</span> respectively,
+([jittered](g:jitter) up or down a bit to be easier to see).
+The left and right boundaries of the box show the 25th and 75th [percentiles](g:percentile) respectively,
 i.e., 25% of the points lie below the box and 25% lie above it,
-and the mark in the middle shows the <span g="median">median</span>
+and the mark in the middle shows the [median](g:median)
 (<span f="boxplot"/>).
 
 {% include figure
@@ -79,7 +79,7 @@ and other comparisons give us other values.
 ## Who are these lessons for?
 
 Every lesson should aim to meet the needs of specific people [[Wilson2019](b:Wilson2019)].
-As these <span g="learner_persona">learner personas</span> suggest,
+As these [learner personas](g:learner_persona) suggest,
 these lessons assume readers can write short Python programs and remember some college-level mathematics:
 
 -   Florian is a third-year undergraduate in computer science.

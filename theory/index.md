@@ -4,7 +4,7 @@ A little theory can go a long way.
 
 ## Basic probability
 
--   Assume a set of <span g="event">events</span> \\(E\\) and a probability function \\(P\\) with \\(0 \leq P(x) \leq 1\\)
+-   Assume a set of [events](g:event) \\(E\\) and a probability function \\(P\\) with \\(0 \leq P(x) \leq 1\\)
 -   If \\(A\\) and \\(B\\) are disjoint sets of events from \\(E\\) then:
     -   \\(P(E) = 1\\) (i.e., something must happen)
     -   \\(P(A \cup B) = P(A) + P(B)\\) (i.e., probability of the union of disjoint sets is the sum of their probabilities)
@@ -24,48 +24,48 @@ A little theory can go a long way.
 
 ## Conditional probability
 
--   The <span g="conditional_probability">conditional probability</span> \\(P(A \mid B)\\) of \\(A\\) given \\(B\\) is
+-   The [conditional probability](g:conditional_probability) \\(P(A \mid B)\\) of \\(A\\) given \\(B\\) is
     the probability of \\(A\\) occurring given that \\(B\\) is known to occur
 -   \\(P(A \mid B) = \frac{P(A \cap B)}{P(B)}\\)
 
 ## Bayes Rule
 
--   Since \\(P(A \mid B) = P(B \mid A)\\), we have <span g="bayes_rule">Bayes' Rule</span>
+-   Since \\(P(A \mid B) = P(B \mid A)\\), we have [Bayes' Rule](g:bayes_rule)
     \\(P(B \mid A) = \frac{P(A \mid B)P(B)}{P(A)}\\)
 -   Special case: since \\(P(A) = P(A \mid B) + P(A \mid \neg B)\\),
     \\(P(B \mid A) = \frac{P(A \mid B)P(B)}{P(A \mid B)P(B) + P(A \mid \neg B)P(\neg B)}\\)
 
 ## Mean and variance
 
--   The <span g="mean">mean</span> \\(\mu\\) or <span g="expected_value">expected value</span> \\(E(X)\\) is the weighted sum of possible outcomes
+-   The [mean](g:mean) \\(\mu\\) or [expected value](g:expected_value) \\(E(X)\\) is the weighted sum of possible outcomes
     \\(\sum_{x} xP(x)\\)
 -   Implies \\(E(aX + bY + c) = aE(X) + bE(Y) + c\\)
--   The <span g="variance">variance</span> \\(\sigma^2\\) is the expected value of the square of the difference between values and the mean
+-   The [variance](g:variance) \\(\sigma^2\\) is the expected value of the square of the difference between values and the mean
     \\(\sum_{x} (x - \mu)^2P(x)\\)
     -   Squaring guarantees that values are positive
     -   And gives extra weight to outliers
     -   But the units are weird: "bugs squared"
 -   \\(\sigma^{2}_{A + B} = \sigma^2_A + \sigma^2_B\\) if \\(A\\) and \\(B\\) are independent
--   The <span g="standard_deviation">standard deviation</span> \\(\sigma\\) is the square root of the variance
+-   The [standard deviation](g:standard_deviation) \\(\sigma\\) is the square root of the variance
     -   Same units as original variable
 
 ## Covariance and correlation
 
--   <span g="covariance">Covariance</span> \\(\sigma_{XY}\\) of \\(X\\) and \\(Y\\) is \\(E((X - \mu_{X})(Y - \mu_{Y}))\\)
+-   [Covariance](g:covariance) \\(\sigma_{XY}\\) of \\(X\\) and \\(Y\\) is \\(E((X - \mu_{X})(Y - \mu_{Y}))\\)
     -   If \\(X\\) and \\(Y\\) are both above or below their means at the same time, \\(\sigma_{XY}\\) will be positive
     -   If \\(X\\) is above when \\(Y\\) is below and vice versa, \\(\sigma_{XY}\\) will be negative
     -   If there is no relation, \\(\sigma_{XY}\\) will be zero
--   <span g="pearson_correlation_coefficient">Pearson's correlation coefficient</span> \\(r_{XY}\\) is covariance normalized by standard deviations
+-   [Pearson's correlation coefficient](g:pearson_correlation_coefficient) \\(r_{XY}\\) is covariance normalized by standard deviations
     -   \\(r_{XY} = \frac{\sigma_{XY}}{\sigma_X \sigma_Y}\\)
     -   Always lies in \\([-1 \ldots 1]\\)
--   <span g="chebyshev_inequality">Chebyshev's Inequality</span>: \\(P(\mid X - \mu \mid \gt \epsilon) \leq (\frac{\sigma}{\epsilon})^2\\)
+-   [Chebyshev's Inequality](g:chebyshev_inequality): \\(P(\mid X - \mu \mid \gt \epsilon) \leq (\frac{\sigma}{\epsilon})^2\\)
     -   I.e., the probability of a value being more than \\(\epsilon\\) away from the mean is bounded by
         the square of the ratio between the standard deviation and \\(\epsilon\\)
     -   See [proof](#chebyshev)
 
 ## Bernoulli distribution
 
--   A <span g="bernoulli_distribution">Bernoulli distribution</span> is
+-   A [Bernoulli distribution](g:bernoulli_distribution) is
     a random variable with just two values 1 and 0 (sometimes called success and failure)
     -   Named after the mathematician who first described it
 -   Probability of success is \\(p\\)
@@ -74,7 +74,7 @@ A little theory can go a long way.
 
 ## Binomial distribution
 
--   A <span g="binomial_distribution">binomial distribution</span> is
+-   A [binomial distribution](g:binomial_distribution) is
     the number of successes in \\(n\\) trials of a Bernoulli variable with probability \\(p\\)
     -   Name means "two numbers" (referring to \\(n\\) and \\(k\\))
 -   Probability of exactly \\(x\\) successes in \\(n\\) trials is \\(\binom{n}{x} p^x (1-p)^{n-x}\\)
@@ -85,7 +85,7 @@ A little theory can go a long way.
 
 ## Geometric distribution
 
--   A <span g="geometric_distribution">geometric distribution</span> is
+-   A [geometric distribution](g:geometric_distribution) is
     the number of Bernoulli trials needed to get the first success
     -   Potentially 
 -   \\(P(x) = (1 - p)^{x - 1}p\\) (i.e., \\(x-1\\) failures followed by 1 success)
@@ -97,7 +97,7 @@ A little theory can go a long way.
 ## Negative binomial distribution
 
 -   The binomial distribution describes the numbr of successes in a fixed number of trials
--   The <span g="negative_binomial_distribution">negative binomial distribution</span> is
+-   The [negative binomial distribution](g:negative_binomial_distribution) is
     the number of trials required to achieve a certain number of successes
     -  "Negative" in the sense of opposite: there is nothing negative in the values
 -   \\(P(x) = \binom{x - 1}{k - 1} (1 - p)^{x - k} p^k\\)
@@ -109,7 +109,7 @@ A little theory can go a long way.
 
 ## Poisson distribution
 
--   Number of events occurring within a fixed period has a <span g="poisson_distribution">Poisson distribution</span>
+-   Number of events occurring within a fixed period has a [Poisson distribution](g:poisson_distribution)
     -   Assuming events never occur simultaneously
 -   \\(P(x) = e^{- \lambda}\frac{\lambda^x}{x!}\\)
 -   \\(\mu = \lambda\\)
@@ -121,10 +121,10 @@ A little theory can go a long way.
 
 ## Probability density and cumulative distribution
 
--   Function describing probabilities of discrete events is called the <span g="pmf">probability mass function</span>
+-   Function describing probabilities of discrete events is called the [probability mass function](g:pmf)
 -   When describing continuous events, use:
-    -   <span g="cdf">Cumulative distribution function</span> \\(F(x) = P(X \leq x)\\)
-    -   <span g="pdf">Probability density function</span> \\(f(x) = dF/dx\\)
+    -   [Cumulative distribution function](g:cdf) \\(F(x) = P(X \leq x)\\)
+    -   [Probability density function](g:pdf) \\(f(x) = dF/dx\\)
 -   So \\(P(a \lt X \lt B) = \int_{a}^{b} f(x) dx\\)
 -   Require \\(\int_{-\infty}^{\infty} f(x) dx = 1\\)
     -   And notice \\(P(x) = P(x \leq X \leq x) = \int_{x}^{x} f(x) dx = 0\\)
@@ -134,11 +134,11 @@ A little theory can go a long way.
 
 ## Uniform distribution
 
--   <span g="uniform_distribution">Uniform distribution</span> has equal probability over a finite range \\([a \ldots b]\\)
+-   [Uniform distribution](g:uniform_distribution) has equal probability over a finite range \\([a \ldots b]\\)
 -   \\(f(x) = \frac{1}{b - a}\\)
 -   \\(P(a \leq t \leq X \leq t+h \leq b) = \frac{h}{b - a}\\)
     -   I.e., probability is proportional to fraction of range
--   <span g="standard_uniform">Standard uniform distribution</span> has range \\([0 \ldots 1]\\)
+-   [Standard uniform distribution](g:standard_uniform) has range \\([0 \ldots 1]\\)
     -   \\(\mu = \frac{1}{2}\\)
     -   \\(\sigma^2 = \int_{0}^1 x^2 dx - (\frac{1}{2})^2 = \frac{1}{12}\\)
 
@@ -158,7 +158,7 @@ A little theory can go a long way.
 
 -   If there are \\(\alpha\\) independent sequential steps,
     each taking an exponentially-distributed time with rate \\(\lambda\\),
-    then the total time has a <span g="gamma_distribution">Gamma distribution</span> Gamma(\\(\alpha\\), \\(\lambda\\))
+    then the total time has a [Gamma distribution](g:gamma_distribution) Gamma(\\(\alpha\\), \\(\lambda\\))
     -   Name comes from the gamma function, which extends factorial to complex numbers
 -   \\(f(x) = \frac{\lambda^\alpha}{\Gamma (\alpha)} x^{\alpha - 1} e^{- \lambda x}\\)
     -   \\(\alpha\\) is sometimes called the shape parameter
@@ -170,11 +170,11 @@ A little theory can go a long way.
 
 ## Normal distribution
 
--   In its full glory, <span g="normal_distribution">normal distribution</span>
+-   In its full glory, [normal distribution](g:normal_distribution)
     has \\(f(x) = \frac{1}{\sigma \sqrt{2 \pi}} e^{- \frac{(x - \mu)^2}{2 \sigma^2}}\\)
     -   There is no closed form for the integral \\(F(x)\\)
 -   But as the notation suggests, means is \\(\mu\\) and variance is \\(\sigma^2\\)
--   The <span g="standard_normal">standard normal distribution</span> \\(Z\\) has mean \\(\mu = 0\\) and standard deviation \\(\sigma = 1\\)
+-   The [standard normal distribution](g:standard_normal) \\(Z\\) has mean \\(\mu = 0\\) and standard deviation \\(\sigma = 1\\)
     -   Reconstruct arbitrary distribution \\(X = \mu + \sigma Z\\)
 
 ## Central Limit Theorem
@@ -185,27 +185,27 @@ A little theory can go a long way.
     -   Rate of convergence is \\(\frac{1}{\sqrt{n}}\\)
 -   Heuristic: for \\(n \gt 30\\), a normal distribution is an accurate approximation to \\(S_n\\)
 -   In particular, binomial(\\(n\\), \\(p\\)) \\(\approx\\) normal(\\(\mu = np\\), \\(\sigma = \sqrt{n p (1 - p)}\\) )
-    -   But use a <span g="continuity_correction">continuity correction</span>:
+    -   But use a [continuity correction](g:continuity_correction):
         adjust interval by 0.5 units to allow for difference between discrete and continuous
     -   E.g., \\(P(X = x) = P(x - 0.5 \lt X \lt x + 0.5)\\) (because the probability of a point in a continuous distribution is zero)
 
 ## Sampling
 
--   A <span g="population">population</span> has a parameter; a <span g="sample">sample</span> has a <span g="statistic">statistic</span>
+-   A [population](g:population) has a parameter; a [sample](g:sample) has a [statistic](g:statistic)
 -   Sample mean \\(\bar{X}\\) estimates the population mean \\(\mu = E(X)\\)
 -   Variance of \\(\bar{X}\\) is \\(\frac{\sigma^2}{n}\\)
 -   Distribution of sample means is normal, i.e. \\(\frac{\bar{X} - \mu}{\sigma \sqrt{n}}\\) is standard normal as \\(n \rightarrow \infty\\)
     -   Regardless of the underlying distribution of \\(X\\)
--   The <span g="median">median</span> is the central value such that \\(P(X \lt M) \leq 0.5\\) and \\(P(X \gt M) \leq 0.5\\)
+-   The [median](g:median) is the central value such that \\(P(X \lt M) \leq 0.5\\) and \\(P(X \gt M) \leq 0.5\\)
     -   If the distribution is skewed to the right, \\(M \lt \mu\\)
     -   If the distribution is skewed to the left, \\(M \gt \mu\\)
--   A <span g="quartile">quartile</span> is a value that divides the sample into quarters
+-   A [quartile](g:quartile) is a value that divides the sample into quarters
     -   E.g., first quartile \\(Q_1\\) splits values 25%/75%, third quartile \\(Q_3\\) splits values 75%/25%
     -   Second quartile is the same as the median
-    -   The <span g="iqr">interquartile range</span> IQR is \\(Q_3 - Q_1\\)
+    -   The [interquartile range](g:iqr) IQR is \\(Q_3 - Q_1\\)
     -   Anything more than 1.5 IQR below \\(Q_1\\) or above \\(Q_3\\) is considered an outlier
     -   Because if the data is normal, only 0.7% of it should lie outside these bounds
--   The <span g="sample_variance">sample variance</span> is:
+-   The [sample variance](g:sample_variance) is:
 
 \\(
 \begin{align*}
@@ -214,19 +214,19 @@ s^2 & = & \frac{1}{n-1} \sum_{i=1}^{n}(X_i - \bar{X})^2 \\
 \end{align*}
 \\)
 
--   Using \\(n-1\\) instead of \\(n\\) ensures that \\(s^2\\) is unbiased (the <span g="bessel_correction">Bessel correction</span>)
+-   Using \\(n-1\\) instead of \\(n\\) ensures that \\(s^2\\) is unbiased (the [Bessel correction](g:bessel_correction))
     -   See [proof](#bessel-correction)
 
 ## Parameter estimation
 
--   The \\(k^{th}\\) <span g="population_moment">population moment</span> is \\(E(X^k)\\)
--   The \\(k^{th}\\) <span g="sample_moment">sample moment</span> is \\(\frac{1}{n}\sum_{i=1}^{n} X_i^k\\)
+-   The \\(k^{th}\\) [population moment](g:population_moment) is \\(E(X^k)\\)
+-   The \\(k^{th}\\) [sample moment](g:sample_moment) is \\(\frac{1}{n}\sum_{i=1}^{n} X_i^k\\)
     -   The first sample moment is the sample mean
--   The population and sample <span g="central_moment">central moments</span> are \\(E(X - \mu)^k\\) and \\(\frac{1}{n}\sum(X_i - \bar{X})^k\\) respectively
+-   The population and sample [central moments](g:central_moment) are \\(E(X - \mu)^k\\) and \\(\frac{1}{n}\sum(X_i - \bar{X})^k\\) respectively
     -   I.e., the moments after shifting the data to a mean of zero
--   Parameter estimation via the <span g="method_of_moments">method of moments</span>:
+-   Parameter estimation via the [method of moments](g:method_of_moments):
     find parameter values to match sample moments
--   Parameter estimation via <span g="maximum_likelihood_estimation">maximum likelihood</span>:
+-   Parameter estimation via [maximum likelihood](g:maximum_likelihood_estimation):
     choose parameter values to maximize the likelihood of the observed sample
 -   Example: estimation \\(\lambda\\) for Poisson distribution
     -   PMF is \\(P(x) = e^{- \lambda} \frac{\lambda^x}{x!}\\)
@@ -239,7 +239,7 @@ s^2 & = & \frac{1}{n-1} \sum_{i=1}^{n}(X_i - \bar{X})^2 \\
 
 ## Student's *t*-distribution
 
--   <span g="t_distribution">Student's *t*-distribution</span> is used to estimate the mean of a normally distributed population
+-   [Student's *t*-distribution](g:t_distribution) is used to estimate the mean of a normally distributed population
     when the sample size is small (e.g., less 30) and the variance is unknown
     -   Named comes from a pseudonym used by the mathematician who first used it this way
 -   If \\(X\\) is normally distributed with mean \\(\mu\\) and variance \\(\sigma^2\\),
@@ -247,7 +247,7 @@ s^2 & = & \frac{1}{n-1} \sum_{i=1}^{n}(X_i - \bar{X})^2 \\
     and \\(s^2 = \frac{1}{n-1}\sum{(X_i - X)^2}\\) is the Bessel-corrected sample variance
 -   The variable \\(\frac{\bar{X} - \mu}{\sigma / \sqrt{n}}\\) has a standard normal distribution
 -   However, the variable \\(\frac{\bar{X} - \mu}{s / \sqrt{n}}\\) has a *t*-distribution
-    with \\(n-1\\) <span g="degrees_of_freedom">degrees of freedom</span>
+    with \\(n-1\\) [degrees of freedom](g:degrees_of_freedom)
     -   \\(n-1\\) because there's a step in the calculation that normalizes the \\(n\\) values to unit length
     -   Once \\(n-1\\) are known, the value of the \\(n^{th}\\) is fixed
 -   The exact formula for the *t*-distribution is [a little bit scary](#student-t).
@@ -257,18 +257,18 @@ s^2 & = & \frac{1}{n-1} \sum_{i=1}^{n}(X_i - \bar{X})^2 \\
 
 ## Confidence intervals
 
--   A <span g="confidence_interval">confidence interval</span> is an interval \\([a \ldots b]\\)
+-   A [confidence interval](g:confidence_interval) is an interval \\([a \ldots b]\\)
     that has some probability \\(p\\) of containing the actual value of a statistic
     -   E.g., "There is a 90% probability that the actual mean of this population lies between 2.5 and 3.5"
     -   Larger intervals have a higher probability but are less precise
--   If there are more than 30 samples or the standard deviation \\(\sigma\\) is known, use a <span g="z_test">z-test</span>:
+-   If there are more than 30 samples or the standard deviation \\(\sigma\\) is known, use a [z-test](g:z_test):
     1.  Choose a confidence level \\(C\\) (typically 95%)
     2.  Find the value \\(z^{\star}\\) such that \\(P(x \leq z^{\star}) \leq \frac{1 - C}{2}\\)
         in a standard normal distribution
         -   Divide by 2 because the normal curve has two symmetric tails
     3.  Calculate the sample mean \\(\bar{X}\\)
     4.  Interval is \\(\bar{X} \pm z^{\star}\frac{\sigma}{\sqrt{n}}\\)
--   If there are fewer than 30 samples or the standard deviation isn't known, use a <span g="t_test">t-test</span>:
+-   If there are fewer than 30 samples or the standard deviation isn't known, use a [t-test](g:t_test):
     1.  Choose a confidence level \\(C\\)
     2.  Find a value \\(t^{\star}\\) such that \\(P(x \leq t^{\star}) \leq \frac{1 - C}{2}\\)
         in a Student's *t*-distribution with \\(n-1\\) degrees of freedom
@@ -278,31 +278,31 @@ s^2 & = & \frac{1}{n-1} \sum_{i=1}^{n}(X_i - \bar{X})^2 \\
 ## Hypothesis testing
 
 -   What is the probability of seeing this difference between two datasets?
-    -   The <span g="null_hypothesis">null hypothesis</span> \\(H_0\\) is that the samples come from a single population
+    -   The [null hypothesis](g:null_hypothesis) \\(H_0\\) is that the samples come from a single population
         and the observed difference is purely due to chance
-    -   The <span g="alternative_hypothesis">alternative hypothesis</span> \\(H_A\\) is that
+    -   The [alternative hypothesis](g:alternative_hypothesis) \\(H_A\\) is that
         the samples come from two difference populations
-    -   <span g="false_positive">False positive</span>: decide that the difference is not purely random when it is
-    -   <span g="false_negative">False negative</span>: decide the difference is purely random when it isn't
+    -   [False positive](g:false_positive): decide that the difference is not purely random when it is
+    -   [False negative](g:false_negative): decide the difference is purely random when it isn't
 -   Example: if a coin comes up heads 9 times out of 10, what are the odds it is actually fair?
     -   Probability if the coin is fair is \\(\binom{10}{9} \cdot 0.5^9 \cdot (1-0.5)^1 = 10 \cdot 0.00195 \cdot 0.5 = 0.00976\\)
     -   I.e., less than 1% chance of seeing this result if the coin is far
 
 ## Prediction
 
--   <span g="accuracy">Accuracy</span> is the fraction of correct predictions (true positive + true negative)
+-   [Accuracy](g:accuracy) is the fraction of correct predictions (true positive + true negative)
     -   Not useful if there are only a few defective items, since "all good" will have high accuracy
--   <span g="precision">Precision</span> is the fraction of positives that are actually positive,
+-   [Precision](g:precision) is the fraction of positives that are actually positive,
     i.e. true positive / (true positive + false positive)
--   <span g="recall">Recall</span> is the fraction of positives the method can actually identify,
+-   [Recall](g:recall) is the fraction of positives the method can actually identify,
     i.e., true positive / (true positive + false negative)
 -   Perfect precision and perfect recall mean all items are classified correctly
     -   But increasing precision often reduces recall and vice versa
--   The <span g="f_measure">F-measure</span> is the <span g="harmonic_mean">harmonic mean</span> of precision and recall
+-   The [F-measure](g:f_measure) is the [harmonic mean](g:harmonic_mean) of precision and recall
 
 ## Spearman's rank correlation
 
--   <span g="spearmans_rank_correlation">Spearman's rank correlation</span> measures the <span g="rank_correlation">rank correlation</span> between two variables
+-   [Spearman's rank correlation](g:spearmans_rank_correlation) measures the [rank correlation](g:rank_correlation) between two variables
     -   Rather than the values, measure how well the sorted order of items matches
 -   Given two random variables \\(X_i\\) and \\(Y_i\\), sort items and assign ranks \\(r_{X_i}\\) and \\(r_{Y_i}\\)
     and calculate the correlation coefficient of the ranks
@@ -408,7 +408,7 @@ f(t)
 \end{align*}
 \\)
 
-where \\(\Gamma\\) is the <span g="gamma_function">gamma function</span>.
+where \\(\Gamma\\) is the [gamma function](g:gamma_function).
 For positive even integer values of \\(\nu\\),
 the first term is:
 

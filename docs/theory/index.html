@@ -40,7 +40,7 @@
 <p>A little theory can go a long way.</p>
 <h2>Basic probability</h2>
 <ul>
-<li>Assume a set of <span g="event">events</span> \(E\) and a probability function \(P\) with \(0 \leq P(x) \leq 1\)</li>
+<li>Assume a set of <a href="../glossary/#event">events</a> \(E\) and a probability function \(P\) with \(0 \leq P(x) \leq 1\)</li>
 <li>If \(A\) and \(B\) are disjoint sets of events from \(E\) then:<ul>
 <li>\(P(E) = 1\) (i.e., something must happen)</li>
 <li>\(P(A \cup B) = P(A) + P(B)\) (i.e., probability of the union of disjoint sets is the sum of their probabilities)</li>
@@ -66,23 +66,23 @@
 </ul>
 <h2>Conditional probability</h2>
 <ul>
-<li>The <span g="conditional_probability">conditional probability</span> \(P(A \mid B)\) of \(A\) given \(B\) is
+<li>The <a href="../glossary/#conditional_probability">conditional probability</a> \(P(A \mid B)\) of \(A\) given \(B\) is
     the probability of \(A\) occurring given that \(B\) is known to occur</li>
 <li>\(P(A \mid B) = \frac{P(A \cap B)}{P(B)}\)</li>
 </ul>
 <h2>Bayes Rule</h2>
 <ul>
-<li>Since \(P(A \mid B) = P(B \mid A)\), we have <span g="bayes_rule">Bayes' Rule</span>
+<li>Since \(P(A \mid B) = P(B \mid A)\), we have <a href="../glossary/#bayes_rule">Bayes' Rule</a>
     \(P(B \mid A) = \frac{P(A \mid B)P(B)}{P(A)}\)</li>
 <li>Special case: since \(P(A) = P(A \mid B) + P(A \mid \neg B)\),
     \(P(B \mid A) = \frac{P(A \mid B)P(B)}{P(A \mid B)P(B) + P(A \mid \neg B)P(\neg B)}\)</li>
 </ul>
 <h2>Mean and variance</h2>
 <ul>
-<li>The <span g="mean">mean</span> \(\mu\) or <span g="expected_value">expected value</span> \(E(X)\) is the weighted sum of possible outcomes
+<li>The <a href="../glossary/#mean">mean</a> \(\mu\) or <a href="../glossary/#expected_value">expected value</a> \(E(X)\) is the weighted sum of possible outcomes
     \(\sum_{x} xP(x)\)</li>
 <li>Implies \(E(aX + bY + c) = aE(X) + bE(Y) + c\)</li>
-<li>The <span g="variance">variance</span> \(\sigma^2\) is the expected value of the square of the difference between values and the mean
+<li>The <a href="../glossary/#variance">variance</a> \(\sigma^2\) is the expected value of the square of the difference between values and the mean
     \(\sum_{x} (x - \mu)^2P(x)\)<ul>
 <li>Squaring guarantees that values are positive</li>
 <li>And gives extra weight to outliers</li>
@@ -90,25 +90,25 @@
 </ul>
 </li>
 <li>\(\sigma^{2}_{A + B} = \sigma^2_A + \sigma^2_B\) if \(A\) and \(B\) are independent</li>
-<li>The <span g="standard_deviation">standard deviation</span> \(\sigma\) is the square root of the variance<ul>
+<li>The <a href="../glossary/#standard_deviation">standard deviation</a> \(\sigma\) is the square root of the variance<ul>
 <li>Same units as original variable</li>
 </ul>
 </li>
 </ul>
 <h2>Covariance and correlation</h2>
 <ul>
-<li><span g="covariance">Covariance</span> \(\sigma_{XY}\) of \(X\) and \(Y\) is \(E((X - \mu_{X})(Y - \mu_{Y}))\)<ul>
+<li><a href="../glossary/#covariance">Covariance</a> \(\sigma_{XY}\) of \(X\) and \(Y\) is \(E((X - \mu_{X})(Y - \mu_{Y}))\)<ul>
 <li>If \(X\) and \(Y\) are both above or below their means at the same time, \(\sigma_{XY}\) will be positive</li>
 <li>If \(X\) is above when \(Y\) is below and vice versa, \(\sigma_{XY}\) will be negative</li>
 <li>If there is no relation, \(\sigma_{XY}\) will be zero</li>
 </ul>
 </li>
-<li><span g="pearson_correlation_coefficient">Pearson's correlation coefficient</span> \(r_{XY}\) is covariance normalized by standard deviations<ul>
+<li><a href="../glossary/#pearson_correlation_coefficient">Pearson's correlation coefficient</a> \(r_{XY}\) is covariance normalized by standard deviations<ul>
 <li>\(r_{XY} = \frac{\sigma_{XY}}{\sigma_X \sigma_Y}\)</li>
 <li>Always lies in \([-1 \ldots 1]\)</li>
 </ul>
 </li>
-<li><span g="chebyshev_inequality">Chebyshev's Inequality</span>: \(P(\mid X - \mu \mid \gt \epsilon) \leq (\frac{\sigma}{\epsilon})^2\)<ul>
+<li><a href="../glossary/#chebyshev_inequality">Chebyshev's Inequality</a>: \(P(\mid X - \mu \mid \gt \epsilon) \leq (\frac{\sigma}{\epsilon})^2\)<ul>
 <li>I.e., the probability of a value being more than \(\epsilon\) away from the mean is bounded by
     the square of the ratio between the standard deviation and \(\epsilon\)</li>
 <li>See <a href="#chebyshev">proof</a></li>
@@ -117,7 +117,7 @@
 </ul>
 <h2>Bernoulli distribution</h2>
 <ul>
-<li>A <span g="bernoulli_distribution">Bernoulli distribution</span> is
+<li>A <a href="../glossary/#bernoulli_distribution">Bernoulli distribution</a> is
     a random variable with just two values 1 and 0 (sometimes called success and failure)<ul>
 <li>Named after the mathematician who first described it</li>
 </ul>
@@ -128,7 +128,7 @@
 </ul>
 <h2>Binomial distribution</h2>
 <ul>
-<li>A <span g="binomial_distribution">binomial distribution</span> is
+<li>A <a href="../glossary/#binomial_distribution">binomial distribution</a> is
     the number of successes in \(n\) trials of a Bernoulli variable with probability \(p\)<ul>
 <li>Name means "two numbers" (referring to \(n\) and \(k\))</li>
 </ul>
@@ -143,7 +143,7 @@
 </ul>
 <h2>Geometric distribution</h2>
 <ul>
-<li>A <span g="geometric_distribution">geometric distribution</span> is
+<li>A <a href="../glossary/#geometric_distribution">geometric distribution</a> is
     the number of Bernoulli trials needed to get the first success<ul>
 <li>Potentially </li>
 </ul>
@@ -159,7 +159,7 @@
 <h2>Negative binomial distribution</h2>
 <ul>
 <li>The binomial distribution describes the numbr of successes in a fixed number of trials</li>
-<li>The <span g="negative_binomial_distribution">negative binomial distribution</span> is
+<li>The <a href="../glossary/#negative_binomial_distribution">negative binomial distribution</a> is
     the number of trials required to achieve a certain number of successes<ul>
 <li>"Negative" in the sense of opposite: there is nothing negative in the values</li>
 </ul>
@@ -175,7 +175,7 @@
 </ul>
 <h2>Poisson distribution</h2>
 <ul>
-<li>Number of events occurring within a fixed period has a <span g="poisson_distribution">Poisson distribution</span><ul>
+<li>Number of events occurring within a fixed period has a <a href="../glossary/#poisson_distribution">Poisson distribution</a><ul>
 <li>Assuming events never occur simultaneously</li>
 </ul>
 </li>
@@ -191,10 +191,10 @@
 </ul>
 <h2>Probability density and cumulative distribution</h2>
 <ul>
-<li>Function describing probabilities of discrete events is called the <span g="pmf">probability mass function</span></li>
+<li>Function describing probabilities of discrete events is called the <a href="../glossary/#pmf">probability mass function</a></li>
 <li>When describing continuous events, use:<ul>
-<li><span g="cdf">Cumulative distribution function</span> \(F(x) = P(X \leq x)\)</li>
-<li><span g="pdf">Probability density function</span> \(f(x) = dF/dx\)</li>
+<li><a href="../glossary/#cdf">Cumulative distribution function</a> \(F(x) = P(X \leq x)\)</li>
+<li><a href="../glossary/#pdf">Probability density function</a> \(f(x) = dF/dx\)</li>
 </ul>
 </li>
 <li>So \(P(a \lt X \lt B) = \int_{a}^{b} f(x) dx\)</li>
@@ -208,13 +208,13 @@
 </ul>
 <h2>Uniform distribution</h2>
 <ul>
-<li><span g="uniform_distribution">Uniform distribution</span> has equal probability over a finite range \([a \ldots b]\)</li>
+<li><a href="../glossary/#uniform_distribution">Uniform distribution</a> has equal probability over a finite range \([a \ldots b]\)</li>
 <li>\(f(x) = \frac{1}{b - a}\)</li>
 <li>\(P(a \leq t \leq X \leq t+h \leq b) = \frac{h}{b - a}\)<ul>
 <li>I.e., probability is proportional to fraction of range</li>
 </ul>
 </li>
-<li><span g="standard_uniform">Standard uniform distribution</span> has range \([0 \ldots 1]\)<ul>
+<li><a href="../glossary/#standard_uniform">Standard uniform distribution</a> has range \([0 \ldots 1]\)<ul>
 <li>\(\mu = \frac{1}{2}\)</li>
 <li>\(\sigma^2 = \int_{0}^1 x^2 dx - (\frac{1}{2})^2 = \frac{1}{12}\)</li>
 </ul>
@@ -242,7 +242,7 @@
 <ul>
 <li>If there are \(\alpha\) independent sequential steps,
     each taking an exponentially-distributed time with rate \(\lambda\),
-    then the total time has a <span g="gamma_distribution">Gamma distribution</span> Gamma(\(\alpha\), \(\lambda\))<ul>
+    then the total time has a <a href="../glossary/#gamma_distribution">Gamma distribution</a> Gamma(\(\alpha\), \(\lambda\))<ul>
 <li>Name comes from the gamma function, which extends factorial to complex numbers</li>
 </ul>
 </li>
@@ -258,13 +258,13 @@
 </ul>
 <h2>Normal distribution</h2>
 <ul>
-<li>In its full glory, <span g="normal_distribution">normal distribution</span>
+<li>In its full glory, <a href="../glossary/#normal_distribution">normal distribution</a>
     has \(f(x) = \frac{1}{\sigma \sqrt{2 \pi}} e^{- \frac{(x - \mu)^2}{2 \sigma^2}}\)<ul>
 <li>There is no closed form for the integral \(F(x)\)</li>
 </ul>
 </li>
 <li>But as the notation suggests, means is \(\mu\) and variance is \(\sigma^2\)</li>
-<li>The <span g="standard_normal">standard normal distribution</span> \(Z\) has mean \(\mu = 0\) and standard deviation \(\sigma = 1\)<ul>
+<li>The <a href="../glossary/#standard_normal">standard normal distribution</a> \(Z\) has mean \(\mu = 0\) and standard deviation \(\sigma = 1\)<ul>
 <li>Reconstruct arbitrary distribution \(X = \mu + \sigma Z\)</li>
 </ul>
 </li>
@@ -279,7 +279,7 @@
 </li>
 <li>Heuristic: for \(n \gt 30\), a normal distribution is an accurate approximation to \(S_n\)</li>
 <li>In particular, binomial(\(n\), \(p\)) \(\approx\) normal(\(\mu = np\), \(\sigma = \sqrt{n p (1 - p)}\) )<ul>
-<li>But use a <span g="continuity_correction">continuity correction</span>:
+<li>But use a <a href="../glossary/#continuity_correction">continuity correction</a>:
     adjust interval by 0.5 units to allow for difference between discrete and continuous</li>
 <li>E.g., \(P(X = x) = P(x - 0.5 \lt X \lt x + 0.5)\) (because the probability of a point in a continuous distribution is zero)</li>
 </ul>
@@ -287,27 +287,27 @@
 </ul>
 <h2>Sampling</h2>
 <ul>
-<li>A <span g="population">population</span> has a parameter; a <span g="sample">sample</span> has a <span g="statistic">statistic</span></li>
+<li>A <a href="../glossary/#population">population</a> has a parameter; a <a href="../glossary/#sample">sample</a> has a <a href="../glossary/#statistic">statistic</a></li>
 <li>Sample mean \(\bar{X}\) estimates the population mean \(\mu = E(X)\)</li>
 <li>Variance of \(\bar{X}\) is \(\frac{\sigma^2}{n}\)</li>
 <li>Distribution of sample means is normal, i.e. \(\frac{\bar{X} - \mu}{\sigma \sqrt{n}}\) is standard normal as \(n \rightarrow \infty\)<ul>
 <li>Regardless of the underlying distribution of \(X\)</li>
 </ul>
 </li>
-<li>The <span g="median">median</span> is the central value such that \(P(X \lt M) \leq 0.5\) and \(P(X \gt M) \leq 0.5\)<ul>
+<li>The <a href="../glossary/#median">median</a> is the central value such that \(P(X \lt M) \leq 0.5\) and \(P(X \gt M) \leq 0.5\)<ul>
 <li>If the distribution is skewed to the right, \(M \lt \mu\)</li>
 <li>If the distribution is skewed to the left, \(M \gt \mu\)</li>
 </ul>
 </li>
-<li>A <span g="quartile">quartile</span> is a value that divides the sample into quarters<ul>
+<li>A <a href="../glossary/#quartile">quartile</a> is a value that divides the sample into quarters<ul>
 <li>E.g., first quartile \(Q_1\) splits values 25%/75%, third quartile \(Q_3\) splits values 75%/25%</li>
 <li>Second quartile is the same as the median</li>
-<li>The <span g="iqr">interquartile range</span> IQR is \(Q_3 - Q_1\)</li>
+<li>The <a href="../glossary/#iqr">interquartile range</a> IQR is \(Q_3 - Q_1\)</li>
 <li>Anything more than 1.5 IQR below \(Q_1\) or above \(Q_3\) is considered an outlier</li>
 <li>Because if the data is normal, only 0.7% of it should lie outside these bounds</li>
 </ul>
 </li>
-<li>The <span g="sample_variance">sample variance</span> is:</li>
+<li>The <a href="../glossary/#sample_variance">sample variance</a> is:</li>
 </ul>
 <p>\(
 \begin{align<em>}
@@ -316,25 +316,25 @@ s^2 &amp; = &amp; \frac{1}{n-1} \sum_{i=1}^{n}(X_i - \bar{X})^2 \
 \end{align</em>}
 \)</p>
 <ul>
-<li>Using \(n-1\) instead of \(n\) ensures that \(s^2\) is unbiased (the <span g="bessel_correction">Bessel correction</span>)<ul>
+<li>Using \(n-1\) instead of \(n\) ensures that \(s^2\) is unbiased (the <a href="../glossary/#bessel_correction">Bessel correction</a>)<ul>
 <li>See <a href="#bessel-correction">proof</a></li>
 </ul>
 </li>
 </ul>
 <h2>Parameter estimation</h2>
 <ul>
-<li>The \(k^{th}\) <span g="population_moment">population moment</span> is \(E(X^k)\)</li>
-<li>The \(k^{th}\) <span g="sample_moment">sample moment</span> is \(\frac{1}{n}\sum_{i=1}^{n} X_i^k\)<ul>
+<li>The \(k^{th}\) <a href="../glossary/#population_moment">population moment</a> is \(E(X^k)\)</li>
+<li>The \(k^{th}\) <a href="../glossary/#sample_moment">sample moment</a> is \(\frac{1}{n}\sum_{i=1}^{n} X_i^k\)<ul>
 <li>The first sample moment is the sample mean</li>
 </ul>
 </li>
-<li>The population and sample <span g="central_moment">central moments</span> are \(E(X - \mu)^k\) and \(\frac{1}{n}\sum(X_i - \bar{X})^k\) respectively<ul>
+<li>The population and sample <a href="../glossary/#central_moment">central moments</a> are \(E(X - \mu)^k\) and \(\frac{1}{n}\sum(X_i - \bar{X})^k\) respectively<ul>
 <li>I.e., the moments after shifting the data to a mean of zero</li>
 </ul>
 </li>
-<li>Parameter estimation via the <span g="method_of_moments">method of moments</span>:
+<li>Parameter estimation via the <a href="../glossary/#method_of_moments">method of moments</a>:
     find parameter values to match sample moments</li>
-<li>Parameter estimation via <span g="maximum_likelihood_estimation">maximum likelihood</span>:
+<li>Parameter estimation via <a href="../glossary/#maximum_likelihood_estimation">maximum likelihood</a>:
     choose parameter values to maximize the likelihood of the observed sample</li>
 <li>Example: estimation \(\lambda\) for Poisson distribution<ul>
 <li>PMF is \(P(x) = e^{- \lambda} \frac{\lambda^x}{x!}\)</li>
@@ -349,7 +349,7 @@ s^2 &amp; = &amp; \frac{1}{n-1} \sum_{i=1}^{n}(X_i - \bar{X})^2 \
 </ul>
 <h2>Student's <em>t</em>-distribution</h2>
 <ul>
-<li><span g="t_distribution">Student's <em>t</em>-distribution</span> is used to estimate the mean of a normally distributed population
+<li><a href="../glossary/#t_distribution">Student's <em>t</em>-distribution</a> is used to estimate the mean of a normally distributed population
     when the sample size is small (e.g., less 30) and the variance is unknown<ul>
 <li>Named comes from a pseudonym used by the mathematician who first used it this way</li>
 </ul>
@@ -359,7 +359,7 @@ s^2 &amp; = &amp; \frac{1}{n-1} \sum_{i=1}^{n}(X_i - \bar{X})^2 \
     and \(s^2 = \frac{1}{n-1}\sum{(X_i - X)^2}\) is the Bessel-corrected sample variance</li>
 <li>The variable \(\frac{\bar{X} - \mu}{\sigma / \sqrt{n}}\) has a standard normal distribution</li>
 <li>However, the variable \(\frac{\bar{X} - \mu}{s / \sqrt{n}}\) has a <em>t</em>-distribution
-    with \(n-1\) <span g="degrees_of_freedom">degrees of freedom</span><ul>
+    with \(n-1\) <a href="../glossary/#degrees_of_freedom">degrees of freedom</a><ul>
 <li>\(n-1\) because there's a step in the calculation that normalizes the \(n\) values to unit length</li>
 <li>Once \(n-1\) are known, the value of the \(n^{th}\) is fixed</li>
 </ul>
@@ -373,13 +373,13 @@ s^2 &amp; = &amp; \frac{1}{n-1} \sum_{i=1}^{n}(X_i - \bar{X})^2 \
 </ul>
 <h2>Confidence intervals</h2>
 <ul>
-<li>A <span g="confidence_interval">confidence interval</span> is an interval \([a \ldots b]\)
+<li>A <a href="../glossary/#confidence_interval">confidence interval</a> is an interval \([a \ldots b]\)
     that has some probability \(p\) of containing the actual value of a statistic<ul>
 <li>E.g., "There is a 90% probability that the actual mean of this population lies between 2.5 and 3.5"</li>
 <li>Larger intervals have a higher probability but are less precise</li>
 </ul>
 </li>
-<li>If there are more than 30 samples or the standard deviation \(\sigma\) is known, use a <span g="z_test">z-test</span>:<ol>
+<li>If there are more than 30 samples or the standard deviation \(\sigma\) is known, use a <a href="../glossary/#z_test">z-test</a>:<ol>
 <li>Choose a confidence level \(C\) (typically 95%)</li>
 <li>Find the value \(z^{\star}\) such that \(P(x \leq z^{\star}) \leq \frac{1 - C}{2}\)
     in a standard normal distribution<ul>
@@ -390,7 +390,7 @@ s^2 &amp; = &amp; \frac{1}{n-1} \sum_{i=1}^{n}(X_i - \bar{X})^2 \
 <li>Interval is \(\bar{X} \pm z^{\star}\frac{\sigma}{\sqrt{n}}\)</li>
 </ol>
 </li>
-<li>If there are fewer than 30 samples or the standard deviation isn't known, use a <span g="t_test">t-test</span>:<ol>
+<li>If there are fewer than 30 samples or the standard deviation isn't known, use a <a href="../glossary/#t_test">t-test</a>:<ol>
 <li>Choose a confidence level \(C\)</li>
 <li>Find a value \(t^{\star}\) such that \(P(x \leq t^{\star}) \leq \frac{1 - C}{2}\)
     in a Student's <em>t</em>-distribution with \(n-1\) degrees of freedom</li>
@@ -402,12 +402,12 @@ s^2 &amp; = &amp; \frac{1}{n-1} \sum_{i=1}^{n}(X_i - \bar{X})^2 \
 <h2>Hypothesis testing</h2>
 <ul>
 <li>What is the probability of seeing this difference between two datasets?<ul>
-<li>The <span g="null_hypothesis">null hypothesis</span> \(H_0\) is that the samples come from a single population
+<li>The <a href="../glossary/#null_hypothesis">null hypothesis</a> \(H_0\) is that the samples come from a single population
     and the observed difference is purely due to chance</li>
-<li>The <span g="alternative_hypothesis">alternative hypothesis</span> \(H_A\) is that
+<li>The <a href="../glossary/#alternative_hypothesis">alternative hypothesis</a> \(H_A\) is that
     the samples come from two difference populations</li>
-<li><span g="false_positive">False positive</span>: decide that the difference is not purely random when it is</li>
-<li><span g="false_negative">False negative</span>: decide the difference is purely random when it isn't</li>
+<li><a href="../glossary/#false_positive">False positive</a>: decide that the difference is not purely random when it is</li>
+<li><a href="../glossary/#false_negative">False negative</a>: decide the difference is purely random when it isn't</li>
 </ul>
 </li>
 <li>Example: if a coin comes up heads 9 times out of 10, what are the odds it is actually fair?<ul>
@@ -418,23 +418,23 @@ s^2 &amp; = &amp; \frac{1}{n-1} \sum_{i=1}^{n}(X_i - \bar{X})^2 \
 </ul>
 <h2>Prediction</h2>
 <ul>
-<li><span g="accuracy">Accuracy</span> is the fraction of correct predictions (true positive + true negative)<ul>
+<li><a href="../glossary/#accuracy">Accuracy</a> is the fraction of correct predictions (true positive + true negative)<ul>
 <li>Not useful if there are only a few defective items, since "all good" will have high accuracy</li>
 </ul>
 </li>
-<li><span g="precision">Precision</span> is the fraction of positives that are actually positive,
+<li><a href="../glossary/#precision">Precision</a> is the fraction of positives that are actually positive,
     i.e. true positive / (true positive + false positive)</li>
-<li><span g="recall">Recall</span> is the fraction of positives the method can actually identify,
+<li><a href="../glossary/#recall">Recall</a> is the fraction of positives the method can actually identify,
     i.e., true positive / (true positive + false negative)</li>
 <li>Perfect precision and perfect recall mean all items are classified correctly<ul>
 <li>But increasing precision often reduces recall and vice versa</li>
 </ul>
 </li>
-<li>The <span g="f_measure">F-measure</span> is the <span g="harmonic_mean">harmonic mean</span> of precision and recall</li>
+<li>The <a href="../glossary/#f_measure">F-measure</a> is the <a href="../glossary/#harmonic_mean">harmonic mean</a> of precision and recall</li>
 </ul>
 <h2>Spearman's rank correlation</h2>
 <ul>
-<li><span g="spearmans_rank_correlation">Spearman's rank correlation</span> measures the <span g="rank_correlation">rank correlation</span> between two variables<ul>
+<li><a href="../glossary/#spearmans_rank_correlation">Spearman's rank correlation</a> measures the <a href="../glossary/#rank_correlation">rank correlation</a> between two variables<ul>
 <li>Rather than the values, measure how well the sorted order of items matches</li>
 </ul>
 </li>
@@ -534,7 +534,7 @@ f(t)
 &amp; \frac{\Gamma(\frac{\nu+1}{2})}{\sqrt{\nu\pi} \Gamma(\frac{\nu}{2})} (1+\frac{t^2}{\nu})^{-\frac{\nu+1}{2}}
 \end{align</em>}
 \)</p>
-<p>where \(\Gamma\) is the <span g="gamma_function">gamma function</span>.
+<p>where \(\Gamma\) is the <a href="../glossary/#gamma_function">gamma function</a>.
 For positive even integer values of \(\nu\),
 the first term is:</p>
 <p>\(

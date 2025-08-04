@@ -15,7 +15,7 @@
     -   Has HTML links to one page per package
 -   Each package's page has links to released versions in various formats
     -   205K entries in total
--   Some redundancy, e.g., <span g="wheel">wheels</span> and <span g="gzip">gzip'd</span> <span g="tar">tar</span> files
+-   Some redundancy, e.g., [wheels](g:wheel) and [gzip'd](g:gzip) [tar](g:tar) files
     -   We have to decide whether to count these separately or fold them together
     -   Every statistical result is the product of many decisions
     -   Different decisions produce different results
@@ -24,7 +24,7 @@
 
 -   Use the [`requests`][requests] library to get page
 -   HTML is very highly structured,
-    so we can get away with using <span g="regular_expression">regular expressions</span> to extract fields
+    so we can get away with using [regular expressions](g:regular_expression) to extract fields
     -   [This is a sin][regular-expressions-html]
     -   Look at better ways in an exercise
 
@@ -59,7 +59,7 @@ for package in all_packages:
 
 -   First run crashed after a few minutes because of a missing sub-page
 -   So add a check on the HTTP status codes from queries
-    -   Record <span g="na">`NA`</span> for those pages
+    -   Record [`NA`](g:na) for those pages
     -   And hope that analysis software interprets this as "not available"
         rather than Namibia or the element sodium
 -   Add some logging so that we can tell how long the program is going to take to run
@@ -133,24 +133,24 @@ for package in all_packages:
     but a school could easily wind up being blacklisted
     if a hundred students are grabbing data at the same time
 -   Popular data sources have to manage floods of requests
--   Programs should <span g="throttle">throttle</span> their own activity
+-   Programs should [throttle](g:throttle) their own activity
 
 ## How can we report results?
 
--   <span g="descriptive_statistics">Descriptive statistics</span> are key facts about data
--   The <span g="median">median</span> is the middle value
+-   [Descriptive statistics](g:descriptive_statistics) are key facts about data
+-   The [median](g:median) is the middle value
     -   If \\(N\\) is odd, sort and take the middle
     -   If \\(N\\) is even, sort and average the two middle values
--   The <span g="mean">mean</span> is the weighted center of the data
+-   The [mean](g:mean) is the weighted center of the data
     -   \\( \mu = \frac{1}{N} \sum x_i \\)
 -   If there are a few outliers, the mean can be very different from the median
     -   Mean of `[1, 2, 3, 4, 100]` is 22, but median is 3
     -   Which is why those who have like to quote means rather than medians
--   <span g="variance">Variance</span> measures the spread of values
+-   [Variance](g:variance) measures the spread of values
     -   \\( \sigma^2 = \frac{1}{N} \sigma (x_i - \mu)^2 \\)
     -   Squaring the differences gives extra weight to outliers...
     -   ...but makes variance hard to use directly, since its units are (for example) lines squared
--   Instead, use the <span g="standard_deviation">standard deviation</span>
+-   Instead, use the [standard deviation](g:standard_deviation)
     -   Square root of the variance, so it has the same units as the data
 
 ```py
@@ -183,7 +183,7 @@ max     10797.000000
 ## How can we display the results
 
 -   Again, a histogram shows the distribution of values
-    -   Its shape (and hence our interpretation) depends on how we <span g="bin">bin</span> the data
+    -   Its shape (and hence our interpretation) depends on how we [bin](g:bin) the data
 -   Given how long data collection takes,
     most sensible thing is to collect the data once and write separate plotting programs to view it
     -   Provide name of data file on the command line
@@ -260,7 +260,7 @@ fig.write_image('figures/release-count-low.svg')
 -   Is it a plotting artifact or a result of double-counting packages that are released in multiple formats?
     -   For that, we need better data
 
--   Use a <span g="violin_plot">violin plot</span> to get a feel for the shape of the data
+-   Use a [violin plot](g:violin_plot) to get a feel for the shape of the data
 
 ```py
 datafile = sys.argv[1]
@@ -279,10 +279,10 @@ fig.write_image('figures/release-count-violin.svg')
    alt="FIXME"
    title="Symmetric vertical violin plot with almost all values in bulge at bottom end." %}
 
--   Can also use a <span g="box_and_whisker_plot">box-and-whisker plot</span>
-    -   Lines show minimum, first <span g="quartile">quartile</span>, median, third quartile, and maximum
+-   Can also use a [box-and-whisker plot](g:box_and_whisker_plot)
+    -   Lines show minimum, first [quartile](g:quartile), median, third quartile, and maximum
     -   Box shows first quartile to third quartile (so half the data lies inside the box)
--   Distance from first quartile to third quartile is the <span g="iqr">inter-quartile range</span>
+-   Distance from first quartile to third quartile is the [inter-quartile range](g:iqr)
     -   Lower and upper lines cut off at 1.5\\(\times\\)IQR
     -   Anything beyond that is considered an outlier and shown as a point
 
@@ -304,7 +304,7 @@ fig.write_image('figures/release-count-box.svg')
 
 -   Data analysis projects include programs and programming,
     but are not the same as software development projects
--   Starting point is <span g="taschuks_rules">Taschuk's Rules</span>:
+-   Starting point is [Taschuk's Rules](g:taschuks_rules):
     1.  Use version control.
     1.  Document your code and usage
     1.  Make common operations easy to control.
@@ -321,12 +321,12 @@ fig.write_image('figures/release-count-box.svg')
 
 ### Main driver
 
--   The <span g="main_driver">main driver</span> lays out the overall flow of the program
+-   The [main driver](g:main_driver) lays out the overall flow of the program
     -   Parse command-line options
     -   Set up
     -   Produce output incrementally while processing data
         (rather than read-process-write)
--   Include a <span g="docstring">docstring</span> for help
+-   Include a [docstring](g:docstring) for help
 
 ```py
 def main():
@@ -350,7 +350,7 @@ if __name__ == '__main__':
 {: title="bin/get-all-versions.py"}
 
 -   Uses the [`csv`][csv-py] package to format output instead of printing strings ourselves
-    -   Takes care of <span g="escape_character">escaping</span> special characters
+    -   Takes care of [escaping](g:escape_character) special characters
 
 ### Parse command-line arguments
 
@@ -479,7 +479,7 @@ def report_progress(progress):
 
 ## What should go where?
 
-<span g="nobles_rules">Noble's Rules</span> are a way to organize small data analysis projects.
+[Noble's Rules](g:nobles_rules) are a way to organize small data analysis projects.
 Each one lives in a separate Git repository
 whose subdirectories are organized by purpose:
 
@@ -516,7 +516,7 @@ rather than putting them in `results`.
 The directories in the top level of each project are organized by purpose,
 but the directories within `data` and `results` are organized chronologically
 so that it's easy to see when data was gathered and when results were generated.
-These directories all have names in <span g="iso_date_format">ISO date format</span> like `YYYY-MM-DD`
+These directories all have names in [ISO date format](g:iso_date_format) like `YYYY-MM-DD`
 to make it easy to sort them chronologically.
 This naming is particularly helpful when data and results are used in several reports.
 
@@ -541,7 +541,7 @@ Python's [`glob`][glob] module will take a pattern and return a list of matching
     don't need to be stored
     -   Just include a link, a method for downloading, and a date
 -   If a report involves a new dataset:
-    -   Always use <span g="tidy_data">tidy data</span>.
+    -   Always use [tidy data](g:tidy_data).
     -   Include keywords describing the data in the project's `README.md`
         so that they appear on its home page and can easily be found by search engines.
     -   Give every dataset and every report a unique identifier.
@@ -551,7 +551,7 @@ Python's [`glob`][glob] module will take a pattern and return a list of matching
 
 The last point is often the hardest for people to implement,
 since many researchers have never seen a well-documented dataset.
-The <span g="data_manifest">data manifest</span> for [[Diehm2018](b:Diehm2018)] is a good example;
+The [data manifest](g:data_manifest) for [[Diehm2018](b:Diehm2018)] is a good example;
 each dataset is described by an entry like this:
 
 <div class="callout" markdown="1">
@@ -601,7 +601,7 @@ If we try to keep track of this ourselves,
 we will inevitably forget some crucial steps,
 and it will be hard for other people to pick up our work.
 Instead,
-we should use a <span g="build_tool">build tool</span>
+we should use a [build tool](g:build_tool)
 to keep track of what depends on what
 and run our analysis programs automatically.
 These tools were invented to help programmers rebuild complex software,
@@ -618,10 +618,10 @@ that none have attracted enough users to displace it entirely.
 </div>
 
 When Snakemake runs,
-it reads <span g="build_rule">build rules</span> from a file called `Snakefile`.
+it reads [build rules](g:build_rule) from a file called `Snakefile`.
 (It can be called other things, but that's the convention.)
-Each rule explains how to update a <span g="build_target">target</span>
-if it is out of date compared to any of its <span g="build_prerequisite">prerequisites</span>.
+Each rule explains how to update a [target](g:build_target)
+if it is out of date compared to any of its [prerequisites](g:build_prerequisite).
 Here's a rule to regenerate a compressed data file `data/all-versions.csv.gz`
 if the file is older than the script used to create it:
 

@@ -9,32 +9,32 @@
 
 ## What is the law of large numbers?
 
--   Function describing probabilities of discrete events is called the <span g="pmf">probability mass function</span>
+-   Function describing probabilities of discrete events is called the [probability mass function](g:pmf)
 -   When describing continuous events, use:
-    -   <span g="cdf">Cumulative distribution function</span> \\(F(x) = P(X \leq x)\\)
-    -   <span g="pdf">Probability density function</span> \\(f(x) = dF/dx\\)
+    -   [Cumulative distribution function](g:cdf) \\(F(x) = P(X \leq x)\\)
+    -   [Probability density function](g:pdf) \\(f(x) = dF/dx\\)
 -   So \\(P(a \lt X \lt B) = \int_{a}^{b} f(x) dx\\)
 -   Require \\(\int_{-\infty}^{\infty} f(x) dx = 1\\)
     -   I.e., *something* has to happen
 -   And notice \\(P(x) = P(x \leq X \leq x) = \int_{x}^{x} f(x) dx = 0\\)
     -   I.e., probability of any specific exact value is 0
     -   So always talk about ranges
--   <span g="mean">Mean</span> is \\(\mu = \int_{-\infty}^{\infty} x f(x) dx\\)
--   <span g="variance">Variance</span> is \\(\sigma^2 = \int_{-\infty}^{\infty} (x - \mu)^2 f(x) dx =  \int_{-\infty}^{\infty} x^2 f(x) dx - \mu^2\\)
--   Normally use <span g="standard_deviation">standard deviation</span> \\(\sigma\\) because it has the same units as the data
+-   [Mean](g:mean) is \\(\mu = \int_{-\infty}^{\infty} x f(x) dx\\)
+-   [Variance](g:variance) is \\(\sigma^2 = \int_{-\infty}^{\infty} (x - \mu)^2 f(x) dx =  \int_{-\infty}^{\infty} x^2 f(x) dx - \mu^2\\)
+-   Normally use [standard deviation](g:standard_deviation) \\(\sigma\\) because it has the same units as the data
     -   Saves us from trying to figure out what a squared price is...
 
--   Example: <span g="uniform_distribution">uniform distribution</span> has equal probability over a finite range \\([a \ldots b]\\)
+-   Example: [uniform distribution](g:uniform_distribution) has equal probability over a finite range \\([a \ldots b]\\)
     -   \\(f(x) = \frac{1}{b - a}\\)
     -   \\(P(a \leq t \leq X \leq t+h \leq b) = \frac{h}{b - a}\\)
     -   I.e., probability is proportional to fraction of range
-    -   <span g="standard_uniform">Standard uniform distribution</span> has range \\([0 \ldots 1]\\)
+    -   [Standard uniform distribution](g:standard_uniform) has range \\([0 \ldots 1]\\)
         -   \\(\mu = \frac{1}{2}\\)
         -   \\(\sigma^2 = \int_{0}^1 x^2 dx - (\frac{1}{2})^2 = \frac{1}{12}\\)
 
 ## What is the normal distribution and why do we care?
 
--   In its full glory, <span g="normal_distribution">normal distribution</span> has
+-   In its full glory, [normal distribution](g:normal_distribution) has
 
 \\(
 \begin{align*}
@@ -44,10 +44,10 @@ f(x) & = & \frac{1}{\sigma \sqrt{2 \pi}} e^{- \frac{(x - \mu)^2}{2 \sigma^2}}
 
 -   There is no closed formula for the integral \\(F(x)\\)
     -   But as the notation suggests, mean is \\(\mu\\) and variance is \\(\sigma^2\\)
--   The <span g="standard_normal">standard normal distribution</span> \\(Z\\) has mean \\(\mu = 0\\) and standard deviation \\(\sigma = 1\\)
+-   The [standard normal distribution](g:standard_normal) \\(Z\\) has mean \\(\mu = 0\\) and standard deviation \\(\sigma = 1\\)
     -   Easy to move back and forth between this and arbitrary distribution \\(X = \mu + \sigma Z\\)
 
--   <span g="central_limit_theorem">Central Limit Theorem</span>
+-   [Central Limit Theorem](g:central_limit_theorem)
     -   Let \\(S_n = X_1 + X_2 + \ldots + X_n\\) be the sum of \\(n\\) independent random variables,
         all with mean \\(\mu\\) and standard deviation \\(\sigma\\)
     -   Can be drawn from (almost) any distribution
@@ -65,11 +65,11 @@ f(x) & = & \frac{1}{\sigma \sqrt{2 \pi}} e^{- \frac{(x - \mu)^2}{2 \sigma^2}}
 
 ## How can we use this to quantify confidence?
 
--   A <span g="confidence_interval">confidence interval</span> is an interval \\([a \ldots b]\\)
+-   A [confidence interval](g:confidence_interval) is an interval \\([a \ldots b]\\)
     that has some probability \\(p\\) of containing the actual value of a statistic
     -   E.g., "There is a 90% probability that the actual mean of this population lies between 2.5 and 3.5"
     -   Larger intervals are less precise but have a higher probability
--   If there are more than 30 samples or the standard deviation \\(\sigma\\) is known, use a <span g="z_test">Z-test</span>:
+-   If there are more than 30 samples or the standard deviation \\(\sigma\\) is known, use a [Z-test](g:z_test):
     1.  Choose a confidence level \\(C\\) (typically 95%)
     2.  Find the value \\(z^{\star}\\) such that \\(P(x \leq z^{\star}) \leq \frac{1 - C}{2}\\)
         in a standard normal distribution
@@ -92,7 +92,7 @@ fixme=true ."
 ## Student's *t*-distribution
 
 -   Usually don't know the distribution's variance
--   The <span g="sample_variance">sample variance</span> is:
+-   The [sample variance](g:sample_variance) is:
 
 \\(
 \begin{align*}
@@ -101,21 +101,21 @@ s^2 & = & \frac{1}{n-1} \sum_{i=1}^{n}(X_i - \bar{X})^2 \\
 \end{align*}
 \\)
 
--   Using \\(n-1\\) instead of \\(n\\) ensures that \\(s^2\\) is unbiased (the <span g="bessel_correction">Bessel correction</span>)
+-   Using \\(n-1\\) instead of \\(n\\) ensures that \\(s^2\\) is unbiased (the [Bessel correction](g:bessel_correction))
     -   See [proof](../theory/#bessel-correction)
--   <span g="t_distribution">Student's *t*-distribution</span> is used to estimate the mean of a normally distributed population
+-   [Student's *t*-distribution](g:t_distribution) is used to estimate the mean of a normally distributed population
     when the sample size is small (e.g., less 30) and the variance is unknown
     -   Named comes from a pseudonym used by the mathematician who first used it this way
 -   The variable \\(\frac{\bar{X} - \mu}{\sigma / \sqrt{n}}\\) has a standard normal distribution
 -   However, the variable \\(\frac{\bar{X} - \mu}{s / \sqrt{n}}\\) has a *t*-distribution
-    with \\(n-1\\) <span g="degrees_of_freedom">degrees of freedom</span>
+    with \\(n-1\\) [degrees of freedom](g:degrees_of_freedom)
     -   Called degrees of freedom because once \\(n-1\\) values are known, the value of the \\(n^{th}\\) is fixed
     -   \\(n-1\\) because there's a step in the calculation that normalizes the \\(n\\) values to unit length
 -   The exact formula for the *t*-distribution is [a little bit scary](../theory/#student-t).
     -   The PDF's shape resembles that of a normal distribution with mean 0 and variance 1,
         but is slightly lower and wider.
     -   The two become closer as the degrees of freedom \\(\nu\\) gets larger.
--   A <span g="t_test">t-test</span> follows the same steps as a Z-test:
+-   A [t-test](g:t_test) follows the same steps as a Z-test:
     1.  Choose a confidence level \\(C\\)
     2.  Find a value \\(t^{\star}\\) such that \\(P(x \leq t^{\star}) \leq \frac{1 - C}{2}\\)
         in a Student's *t*-distribution with \\(n-1\\) degrees of freedom
@@ -127,12 +127,12 @@ s^2 & = & \frac{1}{n-1} \sum_{i=1}^{n}(X_i - \bar{X})^2 \\
 ## How can we compare the means of two datasets?
 
 -   What is the probability of seeing this difference between two datasets?
-    -   The <span g="null_hypothesis">null hypothesis</span> \\(H_0\\) is that the samples come from a single population
+    -   The [null hypothesis](g:null_hypothesis) \\(H_0\\) is that the samples come from a single population
         and the observed difference is purely due to chance
-    -   The <span g="alternative_hypothesis">alternative hypothesis</span> \\(H_A\\) is that
+    -   The [alternative hypothesis](g:alternative_hypothesis) \\(H_A\\) is that
         the samples come from two difference populations
-    -   <span g="false_positive">False positive</span>: decide that the difference is not purely random when it is
-    -   <span g="false_negative">False negative</span>: decide the difference is purely random when it isn't
+    -   [False positive](g:false_positive): decide that the difference is not purely random when it is
+    -   [False negative](g:false_negative): decide the difference is purely random when it isn't
     -   Also called Type I and Type II errors (but see <https://twitter.com/neilccbrown/status/1202595479890124801>)
 -   Adapt the simulation program (keep a subset of the command-line parameters)
 
@@ -192,7 +192,7 @@ Ttest_indResult(statistic=12.815512046971827, pvalue=6.936182610195961e-31)
 
 -   Recall discussion of \\(p\\) hacking from <span x="hypothesis-testing"/>
     -   If we analyze the data enough different ways, one of them will be "significant"
--   Use the <span g="bonferroni_correction">Bonferroni correction</span>
+-   Use the [Bonferroni correction](g:bonferroni_correction)
     -   The more tests we do, the more stringest our significance criteria must be
 
 </div>

@@ -12,7 +12,7 @@ and that confirmation bias probably explains why some instructors believe it.
 
 Another possibility is that some programmers discovered or been taught
 more productive working practices.
-One practice that is frequently mentioned is <span g="tdd">test-driven development</span> (TDD):
+One practice that is frequently mentioned is [test-driven development](g:tdd) (TDD):
 instead of writing code and then writing tests,
 programmers write tests and then write just enough code to make them pass.
 The idea is that writing tests first:
@@ -27,9 +27,9 @@ TDD has many passionate advocates, but does it actually work?
 
 -   Discussion based on [[Fucci2016](b:Fucci2016)]
     -   Use non-parametric tests when data isn't normal (and most data isn't in software engineering)
-    -   Introduce <span g="mann_whitney_u">Mann-Whitney U test</span>
-        (also called <span g="wilcoxon_rank_sum">Wilcoxon rank sum test</span>)
-    -   Also introduce <span g="effect_size">effect size</span>
+    -   Introduce [Mann-Whitney U test](g:mann_whitney_u)
+        (also called [Wilcoxon rank sum test](g:wilcoxon_rank_sum))
+    -   Also introduce [effect size](g:effect_size)
         (in particular, the common-language effect size)
 
 <blockquote>

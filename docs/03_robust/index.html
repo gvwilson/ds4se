@@ -59,7 +59,7 @@
 <li>205K entries in total</li>
 </ul>
 </li>
-<li>Some redundancy, e.g., <span g="wheel">wheels</span> and <span g="gzip">gzip'd</span> <span g="tar">tar</span> files<ul>
+<li>Some redundancy, e.g., <a href="../glossary/#wheel">wheels</a> and <a href="../glossary/#gzip">gzip'd</a> <a href="../glossary/#tar">tar</a> files<ul>
 <li>We have to decide whether to count these separately or fold them together</li>
 <li>Every statistical result is the product of many decisions</li>
 <li>Different decisions produce different results</li>
@@ -70,7 +70,7 @@
 <ul>
 <li>Use the [<code>requests</code>][requests] library to get page</li>
 <li>HTML is very highly structured,
-    so we can get away with using <span g="regular_expression">regular expressions</span> to extract fields<ul>
+    so we can get away with using <a href="../glossary/#regular_expression">regular expressions</a> to extract fields<ul>
 <li>[This is a sin][regular-expressions-html]</li>
 <li>Look at better ways in an exercise</li>
 </ul>
@@ -106,7 +106,7 @@ for package in all_packages:
 <ul>
 <li>First run crashed after a few minutes because of a missing sub-page</li>
 <li>So add a check on the HTTP status codes from queries<ul>
-<li>Record <span g="na"><code>NA</code></span> for those pages</li>
+<li>Record <a href="../glossary/#na"><code>NA</code></a> for those pages</li>
 <li>And hope that analysis software interprets this as "not available"
     rather than Namibia or the element sodium</li>
 </ul>
@@ -180,17 +180,17 @@ for package in all_packages:
     but a school could easily wind up being blacklisted
     if a hundred students are grabbing data at the same time</li>
 <li>Popular data sources have to manage floods of requests</li>
-<li>Programs should <span g="throttle">throttle</span> their own activity</li>
+<li>Programs should <a href="../glossary/#throttle">throttle</a> their own activity</li>
 </ul>
 <h2>How can we report results?</h2>
 <ul>
-<li><span g="descriptive_statistics">Descriptive statistics</span> are key facts about data</li>
-<li>The <span g="median">median</span> is the middle value<ul>
+<li><a href="../glossary/#descriptive_statistics">Descriptive statistics</a> are key facts about data</li>
+<li>The <a href="../glossary/#median">median</a> is the middle value<ul>
 <li>If \(N\) is odd, sort and take the middle</li>
 <li>If \(N\) is even, sort and average the two middle values</li>
 </ul>
 </li>
-<li>The <span g="mean">mean</span> is the weighted center of the data<ul>
+<li>The <a href="../glossary/#mean">mean</a> is the weighted center of the data<ul>
 <li>\( \mu = \frac{1}{N} \sum x_i \)</li>
 </ul>
 </li>
@@ -199,13 +199,13 @@ for package in all_packages:
 <li>Which is why those who have like to quote means rather than medians</li>
 </ul>
 </li>
-<li><span g="variance">Variance</span> measures the spread of values<ul>
+<li><a href="../glossary/#variance">Variance</a> measures the spread of values<ul>
 <li>\( \sigma^2 = \frac{1}{N} \sigma (x_i - \mu)^2 \)</li>
 <li>Squaring the differences gives extra weight to outliers...</li>
 <li>...but makes variance hard to use directly, since its units are (for example) lines squared</li>
 </ul>
 </li>
-<li>Instead, use the <span g="standard_deviation">standard deviation</span><ul>
+<li>Instead, use the <a href="../glossary/#standard_deviation">standard deviation</a><ul>
 <li>Square root of the variance, so it has the same units as the data</li>
 </ul>
 </li>
@@ -239,7 +239,7 @@ max     10797.000000
 <h2>How can we display the results</h2>
 <ul>
 <li>Again, a histogram shows the distribution of values<ul>
-<li>Its shape (and hence our interpretation) depends on how we <span g="bin">bin</span> the data</li>
+<li>Its shape (and hence our interpretation) depends on how we <a href="../glossary/#bin">bin</a> the data</li>
 </ul>
 </li>
 <li>Given how long data collection takes,
@@ -320,7 +320,7 @@ fig.write_image('figures/release-count-low.svg')
 </ul>
 </li>
 <li>
-<p>Use a <span g="violin_plot">violin plot</span> to get a feel for the shape of the data</p>
+<p>Use a <a href="../glossary/#violin_plot">violin plot</a> to get a feel for the shape of the data</p>
 </li>
 </ul>
 <pre><code class="language-py">datafile = sys.argv[1]
@@ -338,12 +338,12 @@ fig.write_image('figures/release-count-violin.svg')
    alt="FIXME"
    title="Symmetric vertical violin plot with almost all values in bulge at bottom end." %}</p>
 <ul>
-<li>Can also use a <span g="box_and_whisker_plot">box-and-whisker plot</span><ul>
-<li>Lines show minimum, first <span g="quartile">quartile</span>, median, third quartile, and maximum</li>
+<li>Can also use a <a href="../glossary/#box_and_whisker_plot">box-and-whisker plot</a><ul>
+<li>Lines show minimum, first <a href="../glossary/#quartile">quartile</a>, median, third quartile, and maximum</li>
 <li>Box shows first quartile to third quartile (so half the data lies inside the box)</li>
 </ul>
 </li>
-<li>Distance from first quartile to third quartile is the <span g="iqr">inter-quartile range</span><ul>
+<li>Distance from first quartile to third quartile is the <a href="../glossary/#iqr">inter-quartile range</a><ul>
 <li>Lower and upper lines cut off at 1.5\(\times\)IQR</li>
 <li>Anything beyond that is considered an outlier and shown as a point</li>
 </ul>
@@ -364,7 +364,7 @@ fig.write_image('figures/release-count-box.svg')
 <ul>
 <li>Data analysis projects include programs and programming,
     but are not the same as software development projects</li>
-<li>Starting point is <span g="taschuks_rules">Taschuk's Rules</span>:<ol>
+<li>Starting point is <a href="../glossary/#taschuks_rules">Taschuk's Rules</a>:<ol>
 <li>Use version control.</li>
 <li>Document your code and usage</li>
 <li>Make common operations easy to control.</li>
@@ -385,14 +385,14 @@ fig.write_image('figures/release-count-box.svg')
 </ul>
 <h3>Main driver</h3>
 <ul>
-<li>The <span g="main_driver">main driver</span> lays out the overall flow of the program<ul>
+<li>The <a href="../glossary/#main_driver">main driver</a> lays out the overall flow of the program<ul>
 <li>Parse command-line options</li>
 <li>Set up</li>
 <li>Produce output incrementally while processing data
     (rather than read-process-write)</li>
 </ul>
 </li>
-<li>Include a <span g="docstring">docstring</span> for help</li>
+<li>Include a <a href="../glossary/#docstring">docstring</a> for help</li>
 </ul>
 <pre><code class="language-py">def main():
     '''
@@ -415,7 +415,7 @@ if __name__ == '__main__':
 <p>{: title="bin/get-all-versions.py"}</p>
 <ul>
 <li>Uses the [<code>csv</code>][csv-py] package to format output instead of printing strings ourselves<ul>
-<li>Takes care of <span g="escape_character">escaping</span> special characters</li>
+<li>Takes care of <a href="../glossary/#escape_character">escaping</a> special characters</li>
 </ul>
 </li>
 </ul>
@@ -553,7 +553,7 @@ def report_progress(progress):
 <li>Should probably also have an option to stop trying if enough pages fail</li>
 </ul>
 <h2>What should go where?</h2>
-<p><span g="nobles_rules">Noble's Rules</span> are a way to organize small data analysis projects.
+<p><a href="../glossary/#nobles_rules">Noble's Rules</a> are a way to organize small data analysis projects.
 Each one lives in a separate Git repository
 whose subdirectories are organized by purpose:</p>
 <ul>
@@ -595,7 +595,7 @@ rather than putting them in <code>results</code>.</p>
 <p>The directories in the top level of each project are organized by purpose,
 but the directories within <code>data</code> and <code>results</code> are organized chronologically
 so that it's easy to see when data was gathered and when results were generated.
-These directories all have names in <span g="iso_date_format">ISO date format</span> like <code>YYYY-MM-DD</code>
+These directories all have names in <a href="../glossary/#iso_date_format">ISO date format</a> like <code>YYYY-MM-DD</code>
 to make it easy to sort them chronologically.
 This naming is particularly helpful when data and results are used in several reports.</p>
 <p>At all levels,
@@ -622,7 +622,7 @@ Python's [<code>glob</code>][glob] module will take a pattern and return a list 
 </ul>
 </li>
 <li>If a report involves a new dataset:<ul>
-<li>Always use <span g="tidy_data">tidy data</span>.</li>
+<li>Always use <a href="../glossary/#tidy_data">tidy data</a>.</li>
 <li>Include keywords describing the data in the project's <code>README.md</code>
     so that they appear on its home page and can easily be found by search engines.</li>
 <li>Give every dataset and every report a unique identifier.</li>
@@ -634,7 +634,7 @@ Python's [<code>glob</code>][glob] module will take a pattern and return a list 
 </ul>
 <p>The last point is often the hardest for people to implement,
 since many researchers have never seen a well-documented dataset.
-The <span g="data_manifest">data manifest</span> for [<a href="../bibliography/#Diehm2018">Diehm2018</a>] is a good example;
+The <a href="../glossary/#data_manifest">data manifest</a> for [<a href="../bibliography/#Diehm2018">Diehm2018</a>] is a good example;
 each dataset is described by an entry like this:</p>
 <div class="callout">
 <ul>
@@ -712,7 +712,7 @@ that we have to do in a particular order?</p>
 we will inevitably forget some crucial steps,
 and it will be hard for other people to pick up our work.
 Instead,
-we should use a <span g="build_tool">build tool</span>
+we should use a <a href="../glossary/#build_tool">build tool</a>
 to keep track of what depends on what
 and run our analysis programs automatically.
 These tools were invented to help programmers rebuild complex software,
@@ -724,10 +724,10 @@ created many replacements for it in the decades since then—so many, in fact,
 that none have attracted enough users to displace it entirely.</p>
 </div>
 <p>When Snakemake runs,
-it reads <span g="build_rule">build rules</span> from a file called <code>Snakefile</code>.
+it reads <a href="../glossary/#build_rule">build rules</a> from a file called <code>Snakefile</code>.
 (It can be called other things, but that's the convention.)
-Each rule explains how to update a <span g="build_target">target</span>
-if it is out of date compared to any of its <span g="build_prerequisite">prerequisites</span>.
+Each rule explains how to update a <a href="../glossary/#build_target">target</a>
+if it is out of date compared to any of its <a href="../glossary/#build_prerequisite">prerequisites</a>.
 Here's a rule to regenerate a compressed data file <code>data/all-versions.csv.gz</code>
 if the file is older than the script used to create it:</p>
 <pre><code class="language-python">rule all_versions:

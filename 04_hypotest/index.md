@@ -17,7 +17,7 @@
     i.e., how our measurements depend on source language
 -   Parsing arguments and writing CSV is normal by now
 -   Use `os.walk` to recurse through directories
--   After the first failure because of bad <span g="character_encoding">character encoding</span>, add error handling
+-   After the first failure because of bad [character encoding](g:character_encoding), add error handling
 -   Then capture `stderr` to a log file for later inspection
 -   Then realize that storing (filename, length, count):
     1.  Is too big for GitHub unless we compress it
@@ -27,10 +27,10 @@
     -   The other stores (unique ID, length, count)
     -   So the largest field (filename) only appears once
     -   And gives us a natural way to record files we couldn't read because of character encoding issues (`NA` for file ID)
--   This technique is also useful when storing <span g="pid">personal identifying information</span> (PID)
+-   This technique is also useful when storing [personal identifying information](g:pid) (PID)
     -   Shareable data is keyed
     -   Personal data is not shared
-    -   Beware of <span g="de_anonymization">de-anonymization</span>
+    -   Beware of [de-anonymization](g:de_anonymization)
 
 -   Main driver is straightforward
 
@@ -141,7 +141,7 @@ Failed to read /anaconda3/pkgs/joblib-0.13.2-py37_0/lib/python3.7/site-packages/
     -   `blocks` is a JavaScript project we just have to have lying around
     -   `node_modules` is where the project's JavaScript packages are stored
 -   Create scatter plots of to show frequency of line lengths
--   Add a <span g="pattern_rule">pattern rule</span> to `Snakefile`
+-   Add a [pattern rule](g:pattern_rule) to `Snakefile`
     -   Assign the languages and kinds of figures to variables
     -   Fill in all combinations of those variables with `expand`
     -   Create a target called `all` that depends on the expanded list of files
@@ -194,7 +194,7 @@ rule count_trimmed:
     -   These only contain the newline character, i.e., they're empty
 -   Exclude lines longer than 200 characters
     -   Possibly a character encoding issue
-    -   Or <span g="minification">minification</span> of JavaScript
+    -   Or [minification](g:minification) of JavaScript
 
 {% include figure
    id="javascript-counts-trimmed"
@@ -214,10 +214,10 @@ rule count_trimmed:
 
 ## How can we tell if two populations are different?
 
--   <span g="null_hypothesis">Null hypothesis</span>: there is no significant difference between these curves
--   <span g="alternative_hypothesis">Alternative hypothesis</span>: there is a significant difference between these curves
+-   [Null hypothesis](g:null_hypothesis): there is no significant difference between these curves
+-   [Alternative hypothesis](g:alternative_hypothesis): there is a significant difference between these curves
 -   Reject the null hypothesis if the probability of getting this data *if the null hypothesis is true*
-    is less than a chosen probability called a <span g="p_value">\\(p\\) value</span>
+    is less than a chosen probability called a [\\(p\\) value](g:p_value)
     -   Typically use \\(p = 0.05\\), i.e., less than 1 chance in 20 of getting the data if there isn't actually a difference
     -   The lower the \\(p\\) value, the higher our confidence
 
@@ -230,7 +230,7 @@ The most obvious is to choose a \\(p\\) value after the fact in order to get a s
 if you ever see reports that mix several different \\(p\\) values or use odd numbers like 0.073,
 this is probably what's going on.
 
-The second form of abuse, called <span g="p_hacking">*p* hacking</span>,
+The second form of abuse, called [*p* hacking](g:p_hacking),
 is to re-analyze the data over and over until a "significant" result emerges.
 Consider: if the odds of getting a false positive for one analysis are 0.05,
 then the odds of getting a true negative are 0.95.
@@ -240,7 +240,7 @@ If we keep going, the odds of none of our analyses meeting this threshold are 50
 when we do 14 analyses.
 One sign that people are *p* hacking is that they find niche results like,
 "This treatment was effective for left-handed non-smokers between the ages of 45 and 55."
-The best way to safeguard against *p* hacking is to <span g="pre_registration">pre-register</span> studies,
+The best way to safeguard against *p* hacking is to [pre-register](g:pre_registration) studies,
 i.e.,
 to declare before collecting data what analyses are going to be done and how.
 
@@ -279,7 +279,7 @@ def main():
     -   Two files
     -   Cut the low and high values as we did for plotting
     -   Number of trials
-    -   <span g="rng_seed">Seed</span> for <span g="rng">random number generator</span> so we can reproduce results
+    -   [Seed](g:rng_seed) for [random number generator](g:rng) so we can reproduce results
 
 ```py
     # parse arguments
@@ -348,7 +348,7 @@ def read_data(filename, low, high):
 ```
 {: title="bin/simulate.py"}
 
--   Write results as <span g="yaml">YAML</span>
+-   Write results as [YAML](g:yaml)
     -   A long two-column CSV with (title, value) pairs would work
     -   As would a wide CSV with one row of titles and one row of values
     -   Either way, must write parameter values to ensure reproducibility
@@ -405,9 +405,9 @@ results:
 -   We should test with unequal counts and numbers of samples
     -   Left as an exercise
 -   And note that this doesn't test if the means are *different*, only if the first is less than the second
-    -   A <span g="one_sided_test">one-sided test</span>
+    -   A [one-sided test](g:one_sided_test)
     -   If this says "yes" and we reverse the order of the datasets, the answer will be "no"
-    -   Convert this into a <span g="two_sided_test">two-sided test</span> in the exercises
+    -   Convert this into a [two-sided test](g:two_sided_test) in the exercises
 
 ```sh
 python bin/simulate.py --left data/javascript-counts.csv --right data/python-counts.csv --trials 5000 --seed 57622
@@ -432,9 +432,9 @@ results:
 -   So it seems pretty certain that the difference is more than just chance
 -   But it takes about two hours to run 5000 simulations on our real data
     -   We should add a `--verbose` flag to report progress
-    -   Or print the stats every N iterations so we can check <span g="convergence">convergence</span> interactively
+    -   Or print the stats every N iterations so we can check [convergence](g:convergence) interactively
         and decide when to cut things off
 -   And we should find a better way to answer the question
     -   Take less time
     -   Tell us how confident we can be in the answer
-    -   Because right now 5000 is a <span g="magic_number">magic number</span>
+    -   Because right now 5000 is a [magic number](g:magic_number)

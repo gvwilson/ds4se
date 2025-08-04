@@ -51,10 +51,10 @@
 </ul>
 <h2>What is the law of large numbers?</h2>
 <ul>
-<li>Function describing probabilities of discrete events is called the <span g="pmf">probability mass function</span></li>
+<li>Function describing probabilities of discrete events is called the <a href="../glossary/#pmf">probability mass function</a></li>
 <li>When describing continuous events, use:<ul>
-<li><span g="cdf">Cumulative distribution function</span> \(F(x) = P(X \leq x)\)</li>
-<li><span g="pdf">Probability density function</span> \(f(x) = dF/dx\)</li>
+<li><a href="../glossary/#cdf">Cumulative distribution function</a> \(F(x) = P(X \leq x)\)</li>
+<li><a href="../glossary/#pdf">Probability density function</a> \(f(x) = dF/dx\)</li>
 </ul>
 </li>
 <li>So \(P(a \lt X \lt B) = \int_{a}^{b} f(x) dx\)</li>
@@ -67,21 +67,21 @@
 <li>So always talk about ranges</li>
 </ul>
 </li>
-<li><span g="mean">Mean</span> is \(\mu = \int_{-\infty}^{\infty} x f(x) dx\)</li>
-<li><span g="variance">Variance</span> is \(\sigma^2 = \int_{-\infty}^{\infty} (x - \mu)^2 f(x) dx =  \int_{-\infty}^{\infty} x^2 f(x) dx - \mu^2\)</li>
+<li><a href="../glossary/#mean">Mean</a> is \(\mu = \int_{-\infty}^{\infty} x f(x) dx\)</li>
+<li><a href="../glossary/#variance">Variance</a> is \(\sigma^2 = \int_{-\infty}^{\infty} (x - \mu)^2 f(x) dx =  \int_{-\infty}^{\infty} x^2 f(x) dx - \mu^2\)</li>
 <li>
-<p>Normally use <span g="standard_deviation">standard deviation</span> \(\sigma\) because it has the same units as the data</p>
+<p>Normally use <a href="../glossary/#standard_deviation">standard deviation</a> \(\sigma\) because it has the same units as the data</p>
 <ul>
 <li>Saves us from trying to figure out what a squared price is...</li>
 </ul>
 </li>
 <li>
-<p>Example: <span g="uniform_distribution">uniform distribution</span> has equal probability over a finite range \([a \ldots b]\)</p>
+<p>Example: <a href="../glossary/#uniform_distribution">uniform distribution</a> has equal probability over a finite range \([a \ldots b]\)</p>
 <ul>
 <li>\(f(x) = \frac{1}{b - a}\)</li>
 <li>\(P(a \leq t \leq X \leq t+h \leq b) = \frac{h}{b - a}\)</li>
 <li>I.e., probability is proportional to fraction of range</li>
-<li><span g="standard_uniform">Standard uniform distribution</span> has range \([0 \ldots 1]\)<ul>
+<li><a href="../glossary/#standard_uniform">Standard uniform distribution</a> has range \([0 \ldots 1]\)<ul>
 <li>\(\mu = \frac{1}{2}\)</li>
 <li>\(\sigma^2 = \int_{0}^1 x^2 dx - (\frac{1}{2})^2 = \frac{1}{12}\)</li>
 </ul>
@@ -91,7 +91,7 @@
 </ul>
 <h2>What is the normal distribution and why do we care?</h2>
 <ul>
-<li>In its full glory, <span g="normal_distribution">normal distribution</span> has</li>
+<li>In its full glory, <a href="../glossary/#normal_distribution">normal distribution</a> has</li>
 </ul>
 <p>\(
 \begin{align<em>}
@@ -104,13 +104,13 @@ f(x) &amp; = &amp; \frac{1}{\sigma \sqrt{2 \pi}} e^{- \frac{(x - \mu)^2}{2 \sigm
 </ul>
 </li>
 <li>
-<p>The <span g="standard_normal">standard normal distribution</span> \(Z\) has mean \(\mu = 0\) and standard deviation \(\sigma = 1\)</p>
+<p>The <a href="../glossary/#standard_normal">standard normal distribution</a> \(Z\) has mean \(\mu = 0\) and standard deviation \(\sigma = 1\)</p>
 <ul>
 <li>Easy to move back and forth between this and arbitrary distribution \(X = \mu + \sigma Z\)</li>
 </ul>
 </li>
 <li>
-<p><span g="central_limit_theorem">Central Limit Theorem</span></p>
+<p><a href="../glossary/#central_limit_theorem">Central Limit Theorem</a></p>
 <ul>
 <li>Let \(S_n = X_1 + X_2 + \ldots + X_n\) be the sum of \(n\) independent random variables,
     all with mean \(\mu\) and standard deviation \(\sigma\)</li>
@@ -140,13 +140,13 @@ f(x) &amp; = &amp; \frac{1}{\sigma \sqrt{2 \pi}} e^{- \frac{(x - \mu)^2}{2 \sigm
 </ul>
 <h2>How can we use this to quantify confidence?</h2>
 <ul>
-<li>A <span g="confidence_interval">confidence interval</span> is an interval \([a \ldots b]\)
+<li>A <a href="../glossary/#confidence_interval">confidence interval</a> is an interval \([a \ldots b]\)
     that has some probability \(p\) of containing the actual value of a statistic<ul>
 <li>E.g., "There is a 90% probability that the actual mean of this population lies between 2.5 and 3.5"</li>
 <li>Larger intervals are less precise but have a higher probability</li>
 </ul>
 </li>
-<li>If there are more than 30 samples or the standard deviation \(\sigma\) is known, use a <span g="z_test">Z-test</span>:<ol>
+<li>If there are more than 30 samples or the standard deviation \(\sigma\) is known, use a <a href="../glossary/#z_test">Z-test</a>:<ol>
 <li>Choose a confidence level \(C\) (typically 95%)</li>
 <li>Find the value \(z^{\star}\) such that \(P(x \leq z^{\star}) \leq \frac{1 - C}{2}\)
     in a standard normal distribution<ul>
@@ -173,7 +173,7 @@ fixme=true ."
 <h2>Student's <em>t</em>-distribution</h2>
 <ul>
 <li>Usually don't know the distribution's variance</li>
-<li>The <span g="sample_variance">sample variance</span> is:</li>
+<li>The <a href="../glossary/#sample_variance">sample variance</a> is:</li>
 </ul>
 <p>\(
 \begin{align<em>}
@@ -182,18 +182,18 @@ s^2 &amp; = &amp; \frac{1}{n-1} \sum_{i=1}^{n}(X_i - \bar{X})^2 \
 \end{align</em>}
 \)</p>
 <ul>
-<li>Using \(n-1\) instead of \(n\) ensures that \(s^2\) is unbiased (the <span g="bessel_correction">Bessel correction</span>)<ul>
+<li>Using \(n-1\) instead of \(n\) ensures that \(s^2\) is unbiased (the <a href="../glossary/#bessel_correction">Bessel correction</a>)<ul>
 <li>See <a href="../theory/#bessel-correction">proof</a></li>
 </ul>
 </li>
-<li><span g="t_distribution">Student's <em>t</em>-distribution</span> is used to estimate the mean of a normally distributed population
+<li><a href="../glossary/#t_distribution">Student's <em>t</em>-distribution</a> is used to estimate the mean of a normally distributed population
     when the sample size is small (e.g., less 30) and the variance is unknown<ul>
 <li>Named comes from a pseudonym used by the mathematician who first used it this way</li>
 </ul>
 </li>
 <li>The variable \(\frac{\bar{X} - \mu}{\sigma / \sqrt{n}}\) has a standard normal distribution</li>
 <li>However, the variable \(\frac{\bar{X} - \mu}{s / \sqrt{n}}\) has a <em>t</em>-distribution
-    with \(n-1\) <span g="degrees_of_freedom">degrees of freedom</span><ul>
+    with \(n-1\) <a href="../glossary/#degrees_of_freedom">degrees of freedom</a><ul>
 <li>Called degrees of freedom because once \(n-1\) values are known, the value of the \(n^{th}\) is fixed</li>
 <li>\(n-1\) because there's a step in the calculation that normalizes the \(n\) values to unit length</li>
 </ul>
@@ -205,7 +205,7 @@ s^2 &amp; = &amp; \frac{1}{n-1} \sum_{i=1}^{n}(X_i - \bar{X})^2 \
 </ul>
 </li>
 <li>
-<p>A <span g="t_test">t-test</span> follows the same steps as a Z-test:</p>
+<p>A <a href="../glossary/#t_test">t-test</a> follows the same steps as a Z-test:</p>
 <ol>
 <li>Choose a confidence level \(C\)</li>
 <li>Find a value \(t^{\star}\) such that \(P(x \leq t^{\star}) \leq \frac{1 - C}{2}\)
@@ -221,12 +221,12 @@ s^2 &amp; = &amp; \frac{1}{n-1} \sum_{i=1}^{n}(X_i - \bar{X})^2 \
 <h2>How can we compare the means of two datasets?</h2>
 <ul>
 <li>What is the probability of seeing this difference between two datasets?<ul>
-<li>The <span g="null_hypothesis">null hypothesis</span> \(H_0\) is that the samples come from a single population
+<li>The <a href="../glossary/#null_hypothesis">null hypothesis</a> \(H_0\) is that the samples come from a single population
     and the observed difference is purely due to chance</li>
-<li>The <span g="alternative_hypothesis">alternative hypothesis</span> \(H_A\) is that
+<li>The <a href="../glossary/#alternative_hypothesis">alternative hypothesis</a> \(H_A\) is that
     the samples come from two difference populations</li>
-<li><span g="false_positive">False positive</span>: decide that the difference is not purely random when it is</li>
-<li><span g="false_negative">False negative</span>: decide the difference is purely random when it isn't</li>
+<li><a href="../glossary/#false_positive">False positive</a>: decide that the difference is not purely random when it is</li>
+<li><a href="../glossary/#false_negative">False negative</a>: decide the difference is purely random when it isn't</li>
 <li>Also called Type I and Type II errors (but see <a href="https://twitter.com/neilccbrown/status/1202595479890124801">https://twitter.com/neilccbrown/status/1202595479890124801</a>)</li>
 </ul>
 </li>
@@ -292,7 +292,7 @@ Ttest_indResult(statistic=12.815512046971827, pvalue=6.936182610195961e-31)
 <li>If we analyze the data enough different ways, one of them will be "significant"</li>
 </ul>
 </li>
-<li>Use the <span g="bonferroni_correction">Bonferroni correction</span><ul>
+<li>Use the <a href="../glossary/#bonferroni_correction">Bonferroni correction</a><ul>
 <li>The more tests we do, the more stringest our significance criteria must be</li>
 </ul>
 </li>

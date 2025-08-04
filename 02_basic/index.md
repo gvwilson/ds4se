@@ -37,7 +37,7 @@ find /anaconda3 -name '*.py' -exec wc -l -c {} \;
 ...
 ```
 
--   We could convert this output to <span g="csv">comma-separated values</span> (CSV) with command-line tools like [awk][awk] or [sed][sed]
+-   We could convert this output to [comma-separated values](g:csv) (CSV) with command-line tools like [awk][awk] or [sed][sed]
     -   But since we're using Python anyway...
 
 ```py
@@ -69,13 +69,13 @@ Lines,Characters,Path
 ...
 ```
 
--   This is <span g="tidy_data">tidy data</span>
+-   This is [tidy data](g:tidy_data)
     1.  Each column contains one statistical variable
         (i.e., one property that was measured or observed)
     2.  Each different observation is in a different row
     3.  There is one table for each set of observations
     4.  If there are multiple tables,
-        each table has a column containing a unique <span g="key">key</span>
+        each table has a column containing a unique [key](g:key)
         so that related data can be linked
 
 ## How can we analyze tabular data?
@@ -84,7 +84,7 @@ Lines,Characters,Path
 -   People want to do a lot of complex things with it, so Python's tools can be bewildering at first
     1.  Built-in lists and the `array` module
     2.  [NumPy][numpy] provides multidimensional arrays
-    3.  [Pandas][pandas] provides <span g="dataframe">dataframes</span> with named columns for tidy data
+    3.  [Pandas][pandas] provides [dataframes](g:dataframe) with named columns for tidy data
 -   We will use a small subset of Pandas
     -   Gives us tables whose columns can have different datatypes
     -   Access columns by name
@@ -111,8 +111,8 @@ print(data)
 [33246 rows x 3 columns]
 ```
 
--   The <span g="header_row">header row</span> tells us the names of the columns
--   We can get these names using the dataframe's `columns` <span g="property">property</span>
+-   The [header row](g:header_row) tells us the names of the columns
+-   We can get these names using the dataframe's `columns` [property](g:property)
     -   Not a method call
 
 ```py
@@ -134,7 +134,7 @@ print(data.columns.values)
 ['Lines' 'Characters' 'Path']
 ```
 
--   We normally import Pandas using an <span g="alias">alias</span> called `pd`
+-   We normally import Pandas using an [alias](g:alias) called `pd`
     to save a few characters of typing and (more importantly) make code a little easier to read
 -   Re-load our data that way
     -   And use a more meaningful name than `data`
@@ -235,7 +235,7 @@ Name: 0, dtype: object
 -   Displays a two-column table with keys and values
     -   Count from zero (for [surprising reasons][hoye-count-from-zero])
 
--   We can use a <span g="slice">slice</span> to select multiple rows
+-   We can use a [slice](g:slice) to select multiple rows
     -   <span class="rule">If you're writing a loop to process a table, you're doing something wrong</span>
 
 ```py
@@ -291,7 +291,7 @@ Name: Characters, dtype: int64
     -   The figure object's `show` method runs a local server and opens the image in the browser for viewing
     -   Its `write_image` method saves it as a file
     -   We put the generated figure in a `figures` sub-directory to avoid clutter
-    -   And use <span g="svg">SVG</span> because <span g="vector_graphics">vector graphics</span> resizes better than <span g="raster_graphics">raster graphics</span>
+    -   And use [SVG](g:svg) because [vector graphics](g:vector_graphics) resizes better than [raster graphics](g:raster_graphics)
 
 ```py
 import pandas as pd
@@ -356,7 +356,7 @@ print(example['middle'] + example['right'])
 dtype: int64
 ```
 
--   If we use a plain old number it is automatically <span g="broadcast">broadcast</span> to the size of the column
+-   If we use a plain old number it is automatically [broadcast](g:broadcast) to the size of the column
 
 ```py
 print(7 * example['left'])
@@ -369,8 +369,8 @@ print(7 * example['left'])
 Name: left, dtype: int64
 ```
 
--   Sums, averages, and other functions that turn many values into one are called <span g="aggregation">aggregations</span>
-    -   `count`: number of elements (excluding <span g="nan">`NaN`</span>)
+-   Sums, averages, and other functions that turn many values into one are called [aggregations](g:aggregation)
+    -   `count`: number of elements (excluding [`NaN`](g:nan))
     -   `describe`: descriptive statistics
     -   `first`: first value
     -   `last`: last value
@@ -391,11 +391,11 @@ Name: left, dtype: int64
 `NaN` stands for "Not a Number",
 a special value used to represent things like 0/0 [[Kahan1997](b:Kahan1997)].
 Despite the similarity in their names,
-it is *not* the same thing as <span g="na">`NA`</span> (Not Available),
+it is *not* the same thing as [`NA`](g:na) (Not Available),
 which is a placeholder for missing values.
 To make things more confusing,
-<span g="sql">SQL</span> (the standard language for querying <span g="relational_database">relational databases</span>)
-uses <span g="null">`null`</span> instead of `NA` to signal missing data,
+[SQL](g:sql) (the standard language for querying [relational databases](g:relational_database))
+uses [`null`](g:null) instead of `NA` to signal missing data,
 while many programming languages use `null` to mean
 "a reference that doesn't refer to anything".
 Python uses `None` instead of `null`,
@@ -437,7 +437,7 @@ mean   37.0    74.0  111.0
 ## How can we select subsets of data?
 
 -   Suppose we want to look at the low values in the data
--   Do this by <span g="filter">filtering</span> data and calculating values for the rows we have kept
+-   Do this by [filtering](g:filter) data and calculating values for the rows we have kept
     -   "Keep" would have been a better name than "filter", but we're stuck with it
 -   Create another small dataframe to demonstrate
 
@@ -486,7 +486,7 @@ print(has_red)
 Name: red, dtype: bool
 ```
 
--   The expression `(red == 1.0)` is no different from `(red + 3)`, except the result is <span g="boolean">Boolean</span> instead of numeric
+-   The expression `(red == 1.0)` is no different from `(red + 3)`, except the result is [Boolean](g:boolean) instead of numeric
 -   If we use a Boolean vector as an index, the result is a smaller table containing only the rows where the index was `True`
     -   But just as we had to use `.iloc[...]`, we have to use `.loc[...]` (for "location")
 
@@ -541,7 +541,7 @@ blue     0.5
 dtype: float64
 ```
 
--   This style of programming is called <span g="method_chaining">method chaining</span>
+-   This style of programming is called [method chaining](g:method_chaining)
     -   Each operation like `loc` and `agg` creates a new object
     -   We immediately call a method of that new object
     -   Then call a method of the object that method returns, and so on
@@ -550,7 +550,7 @@ dtype: float64
 ## How are lines and characters in Python files related?
 
 -   Created a scatter plot earlier
--   Construct a <span g="histogram">histogram</span> to see how many <span g="outlier">outliers</span> there are
+-   Construct a [histogram](g:histogram) to see how many [outliers](g:outlier) there are
     -   Add width and height for the print version
 
 ```py
@@ -630,5 +630,5 @@ Excluding 92 data points
     -   What does it mean? When and where was it collected?
 -   And our statistics could use some work too
     -   "Play with the threshold" is a danger sign
--   In short, this is not <span g="reproducible_research">reproducible research</span>
+-   In short, this is not [reproducible research](g:reproducible_research)
 -   The next few lessons fix these shortcomings

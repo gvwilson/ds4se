@@ -59,7 +59,7 @@
     i.e., how our measurements depend on source language</li>
 <li>Parsing arguments and writing CSV is normal by now</li>
 <li>Use <code>os.walk</code> to recurse through directories</li>
-<li>After the first failure because of bad <span g="character_encoding">character encoding</span>, add error handling</li>
+<li>After the first failure because of bad <a href="../glossary/#character_encoding">character encoding</a>, add error handling</li>
 <li>Then capture <code>stderr</code> to a log file for later inspection</li>
 <li>Then realize that storing (filename, length, count):<ol>
 <li>Is too big for GitHub unless we compress it</li>
@@ -74,11 +74,11 @@
 </ul>
 </li>
 <li>
-<p>This technique is also useful when storing <span g="pid">personal identifying information</span> (PID)</p>
+<p>This technique is also useful when storing <a href="../glossary/#pid">personal identifying information</a> (PID)</p>
 <ul>
 <li>Shareable data is keyed</li>
 <li>Personal data is not shared</li>
-<li>Beware of <span g="de_anonymization">de-anonymization</span></li>
+<li>Beware of <a href="../glossary/#de_anonymization">de-anonymization</a></li>
 </ul>
 </li>
 <li>
@@ -196,7 +196,7 @@ Failed to read /anaconda3/pkgs/joblib-0.13.2-py37_0/lib/python3.7/site-packages/
 </ul>
 </li>
 <li>Create scatter plots of to show frequency of line lengths</li>
-<li>Add a <span g="pattern_rule">pattern rule</span> to <code>Snakefile</code><ul>
+<li>Add a <a href="../glossary/#pattern_rule">pattern rule</a> to <code>Snakefile</code><ul>
 <li>Assign the languages and kinds of figures to variables</li>
 <li>Fill in all combinations of those variables with <code>expand</code></li>
 <li>Create a target called <code>all</code> that depends on the expanded list of files</li>
@@ -251,7 +251,7 @@ rule count_trimmed:
 </li>
 <li>Exclude lines longer than 200 characters<ul>
 <li>Possibly a character encoding issue</li>
-<li>Or <span g="minification">minification</span> of JavaScript</li>
+<li>Or <a href="../glossary/#minification">minification</a> of JavaScript</li>
 </ul>
 </li>
 </ul>
@@ -272,10 +272,10 @@ rule count_trimmed:
 </ul>
 <h2>How can we tell if two populations are different?</h2>
 <ul>
-<li><span g="null_hypothesis">Null hypothesis</span>: there is no significant difference between these curves</li>
-<li><span g="alternative_hypothesis">Alternative hypothesis</span>: there is a significant difference between these curves</li>
+<li><a href="../glossary/#null_hypothesis">Null hypothesis</a>: there is no significant difference between these curves</li>
+<li><a href="../glossary/#alternative_hypothesis">Alternative hypothesis</a>: there is a significant difference between these curves</li>
 <li>Reject the null hypothesis if the probability of getting this data <em>if the null hypothesis is true</em>
-    is less than a chosen probability called a <span g="p_value">\(p\) value</span><ul>
+    is less than a chosen probability called a <a href="../glossary/#p_value">\(p\) value</a><ul>
 <li>Typically use \(p = 0.05\), i.e., less than 1 chance in 20 of getting the data if there isn't actually a difference</li>
 <li>The lower the \(p\) value, the higher our confidence</li>
 </ul>
@@ -287,7 +287,7 @@ rule count_trimmed:
 The most obvious is to choose a \(p\) value after the fact in order to get a significant result:
 if you ever see reports that mix several different \(p\) values or use odd numbers like 0.073,
 this is probably what's going on.</p>
-<p>The second form of abuse, called <span g="p_hacking"><em>p</em> hacking</span>,
+<p>The second form of abuse, called <a href="../glossary/#p_hacking"><em>p</em> hacking</a>,
 is to re-analyze the data over and over until a "significant" result emerges.
 Consider: if the odds of getting a false positive for one analysis are 0.05,
 then the odds of getting a true negative are 0.95.
@@ -297,7 +297,7 @@ If we keep going, the odds of none of our analyses meeting this threshold are 50
 when we do 14 analyses.
 One sign that people are <em>p</em> hacking is that they find niche results like,
 "This treatment was effective for left-handed non-smokers between the ages of 45 and 55."
-The best way to safeguard against <em>p</em> hacking is to <span g="pre_registration">pre-register</span> studies,
+The best way to safeguard against <em>p</em> hacking is to <a href="../glossary/#pre_registration">pre-register</a> studies,
 i.e.,
 to declare before collecting data what analyses are going to be done and how.</p>
 </div>
@@ -336,7 +336,7 @@ def main():
 <li>Two files</li>
 <li>Cut the low and high values as we did for plotting</li>
 <li>Number of trials</li>
-<li><span g="rng_seed">Seed</span> for <span g="rng">random number generator</span> so we can reproduce results</li>
+<li><a href="../glossary/#rng_seed">Seed</a> for <a href="../glossary/#rng">random number generator</a> so we can reproduce results</li>
 </ul>
 </li>
 </ul>
@@ -407,7 +407,7 @@ def main():
 </code></pre>
 <p>{: title="bin/simulate.py"}</p>
 <ul>
-<li>Write results as <span g="yaml">YAML</span><ul>
+<li>Write results as <a href="../glossary/#yaml">YAML</a><ul>
 <li>A long two-column CSV with (title, value) pairs would work</li>
 <li>As would a wide CSV with one row of titles and one row of values</li>
 <li>Either way, must write parameter values to ensure reproducibility</li>
@@ -468,9 +468,9 @@ results:
 </ul>
 </li>
 <li>And note that this doesn't test if the means are <em>different</em>, only if the first is less than the second<ul>
-<li>A <span g="one_sided_test">one-sided test</span></li>
+<li>A <a href="../glossary/#one_sided_test">one-sided test</a></li>
 <li>If this says "yes" and we reverse the order of the datasets, the answer will be "no"</li>
-<li>Convert this into a <span g="two_sided_test">two-sided test</span> in the exercises</li>
+<li>Convert this into a <a href="../glossary/#two_sided_test">two-sided test</a> in the exercises</li>
 </ul>
 </li>
 </ul>
@@ -495,14 +495,14 @@ results:
 <li>So it seems pretty certain that the difference is more than just chance</li>
 <li>But it takes about two hours to run 5000 simulations on our real data<ul>
 <li>We should add a <code>--verbose</code> flag to report progress</li>
-<li>Or print the stats every N iterations so we can check <span g="convergence">convergence</span> interactively
+<li>Or print the stats every N iterations so we can check <a href="../glossary/#convergence">convergence</a> interactively
     and decide when to cut things off</li>
 </ul>
 </li>
 <li>And we should find a better way to answer the question<ul>
 <li>Take less time</li>
 <li>Tell us how confident we can be in the answer</li>
-<li>Because right now 5000 is a <span g="magic_number">magic number</span></li>
+<li>Because right now 5000 is a <a href="../glossary/#magic_number">magic number</a></li>
 </ul>
 </li>
 </ul>
