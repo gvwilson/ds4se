@@ -30,6 +30,7 @@
 <span class="dropdown-content">
 <a href="../license/">License</a>
 <a href="../conduct/">Code of Conduct</a>
+<a href="../contrib/">Contributing</a>
 <a href="../bibliography/">Bibliography</a>
 <a href="../glossary/">Glossary</a>
 </span>
@@ -54,10 +55,10 @@
 <ul>
 <li>Where is Python installed?</li>
 </ul>
-<pre><code class="language-py">import sys
+<pre class="language-py"><code class="language-py">import sys
 print('\n'.join(sys.path))
 </code></pre>
-<pre><code class="language-txt">
+<pre class="language-txt"><code class="language-txt">
 /anaconda3/lib/python37.zip
 /anaconda3/lib/python3.7
 /anaconda3/lib/python3.7/lib-dynload
@@ -67,9 +68,9 @@ print('\n'.join(sys.path))
 <li>The blank at the start is the empty string, which means "current directory"</li>
 <li>Use the shell to find and display Python file sizes</li>
 </ul>
-<pre><code class="language-sh">find /anaconda3 -name '*.py' -exec wc -l -c {} \;
+<pre class="language-sh"><code class="language-sh">find /anaconda3 -name '*.py' -exec wc -l -c {} \;
 </code></pre>
-<pre><code class="language-txt">      27     877 /anaconda3/bin/rst2xetex.py
+<pre class="language-txt"><code class="language-txt">      27     877 /anaconda3/bin/rst2xetex.py
       26     797 /anaconda3/bin/rst2latex.py
       67    1704 /anaconda3/bin/rst2odt_prepstyles.py
       26     720 /anaconda3/bin/rst2html4.py
@@ -82,7 +83,7 @@ print('\n'.join(sys.path))
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">import sys
+<pre class="language-py"><code class="language-py">import sys
 
 print('Lines,Characters,Path')
 for line in sys.stdin:
@@ -96,12 +97,12 @@ for line in sys.stdin:
 </ul>
 </li>
 </ul>
-<pre><code class="language-sh">find /anaconda3 -name '*.py' -exec wc -l -c {} \; \
+<pre class="language-sh"><code class="language-sh">find /anaconda3 -name '*.py' -exec wc -l -c {} \; \
   | python wc2csv.py \
   &gt; python-local-package-size.csv
 cat python-local-package-size.csv
 </code></pre>
-<pre><code class="language-txt">Lines,Characters,Path
+<pre class="language-txt"><code class="language-txt">Lines,Characters,Path
 27,877,/anaconda3/bin/rst2xetex.py
 26,797,/anaconda3/bin/rst2latex.py
 67,1704,/anaconda3/bin/rst2odt_prepstyles.py
@@ -138,13 +139,13 @@ cat python-local-package-size.csv
 </li>
 <li>Load our CSV data into memory and have a look</li>
 </ul>
-<pre><code class="language-py">import pandas
+<pre class="language-py"><code class="language-py">import pandas
 
 data = pandas.read_csv('python-local-package-size.csv')
 print(data)
 </code></pre>
 <p>{: title="pandas-read-display.py"}</p>
-<pre><code class="language-txt">       Lines  Characters                                               Path
+<pre class="language-txt"><code class="language-txt">       Lines  Characters                                               Path
 0         27         877                        /anaconda3/bin/rst2xetex.py
 1         26         797                        /anaconda3/bin/rst2latex.py
 2         67        1704               /anaconda3/bin/rst2odt_prepstyles.py
@@ -162,19 +163,19 @@ print(data)
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">print(data.columns)
+<pre class="language-py"><code class="language-py">print(data.columns)
 </code></pre>
 <p>{: title="pandas-read-display.py"}</p>
-<pre><code class="language-txt">Index(['Lines', 'Characters', 'Path'], dtype='object')
+<pre class="language-txt"><code class="language-txt">Index(['Lines', 'Characters', 'Path'], dtype='object')
 </code></pre>
 <ul>
 <li>Result is an <code>Index</code> object containing the columns' names and other information</li>
 <li>Its <code>values</code> property contains just the names</li>
 </ul>
-<pre><code class="language-py">print(data.columns.values)
+<pre class="language-py"><code class="language-py">print(data.columns.values)
 </code></pre>
 <p>{: title="pandas-read-display.py"}</p>
-<pre><code class="language-txt">['Lines' 'Characters' 'Path']
+<pre class="language-txt"><code class="language-txt">['Lines' 'Characters' 'Path']
 </code></pre>
 <ul>
 <li>We normally import Pandas using an <a href="../glossary/#alias">alias</a> called <code>pd</code>
@@ -185,13 +186,13 @@ print(data)
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">import pandas as pd
+<pre class="language-py"><code class="language-py">import pandas as pd
 
 packages = pd.read_csv('python-local-package-size.csv')
 print(packages['Path'])
 </code></pre>
 <p>{: title="pandas-select-col.py"}</p>
-<pre><code class="language-txt">0                              /anaconda3/bin/rst2xetex.py
+<pre class="language-txt"><code class="language-txt">0                              /anaconda3/bin/rst2xetex.py
 1                              /anaconda3/bin/rst2latex.py
 2                     /anaconda3/bin/rst2odt_prepstyles.py
 ...
@@ -214,10 +215,10 @@ Name: Path, Length: 33246, dtype: object
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">print(packages[['Lines', 'Characters']])
+<pre class="language-py"><code class="language-py">print(packages[['Lines', 'Characters']])
 </code></pre>
 <p>{: title="pandas-select-col.py"}</p>
-<pre><code class="language-txt">       Lines  Characters
+<pre class="language-txt"><code class="language-txt">       Lines  Characters
 0         27         877
 1         26         797
 2         67        1704
@@ -231,10 +232,10 @@ Name: Path, Length: 33246, dtype: object
 <ul>
 <li>What if we want to select a row?</li>
 </ul>
-<pre><code class="language-py">print(packages[0])
+<pre class="language-py"><code class="language-py">print(packages[0])
 </code></pre>
 <p>{: title="pandas-select-row-fail.py"}</p>
-<pre><code class="language-txt">Traceback (most recent call last):
+<pre class="language-txt"><code class="language-txt">Traceback (most recent call last):
   File "/anaconda3/lib/python3.7/site-packages/pandas/core/indexes/base.py", line 2657, in get_loc
     return self._engine.get_loc(key)
   File "pandas/_libs/index.pyx", line 108, in pandas._libs.index.IndexEngine.get_loc
@@ -266,10 +267,10 @@ KeyError: 0
 </li>
 <li>Instead, use a property of the dataframe called <code>iloc</code> (for "indexed location")</li>
 </ul>
-<pre><code class="language-py">print(packages.iloc[0])
+<pre class="language-py"><code class="language-py">print(packages.iloc[0])
 </code></pre>
 <p>{: title="pandas-select-row-iloc.py"}</p>
-<pre><code class="language-txt">Lines                                  27
+<pre class="language-txt"><code class="language-txt">Lines                                  27
 Characters                            877
 Path          /anaconda3/bin/rst2xetex.py
 Name: 0, dtype: object
@@ -288,10 +289,10 @@ Name: 0, dtype: object
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">print(packages.iloc[0:5])
+<pre class="language-py"><code class="language-py">print(packages.iloc[0:5])
 </code></pre>
 <p>{: title="pandas-select-row-iloc.py"}</p>
-<pre><code class="language-txt">   Lines  Characters                                  Path
+<pre class="language-txt"><code class="language-txt">   Lines  Characters                                  Path
 0     27         877           /anaconda3/bin/rst2xetex.py
 1     26         797           /anaconda3/bin/rst2latex.py
 2     67        1704  /anaconda3/bin/rst2odt_prepstyles.py
@@ -306,10 +307,10 @@ Name: 0, dtype: object
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">print(packages['Characters'][0:3])
+<pre class="language-py"><code class="language-py">print(packages['Characters'][0:3])
 </code></pre>
 <p>{: title="pandas-select-row-iloc.py"}</p>
-<pre><code class="language-txt">0     877
+<pre class="language-txt"><code class="language-txt">0     877
 1     797
 2    1704
 Name: Characters, dtype: int64
@@ -320,10 +321,10 @@ Name: Characters, dtype: int64
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">print(packages.iloc[0:3]['Characters'])
+<pre class="language-py"><code class="language-py">print(packages.iloc[0:3]['Characters'])
 </code></pre>
 <p>{: title="pandas-select-row-iloc.py"}</p>
-<pre><code class="language-txt">0     877
+<pre class="language-txt"><code class="language-txt">0     877
 1     797
 2    1704
 Name: Characters, dtype: int64
@@ -344,7 +345,7 @@ Name: Characters, dtype: int64
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">import pandas as pd
+<pre class="language-py"><code class="language-py">import pandas as pd
 import plotly.express as px
 
 packages = pd.read_csv('python-local-package-size.csv')
@@ -365,7 +366,7 @@ fig.write_image('scatter-lines-characters.svg')
 <li>Since we don't know what answers to expect from calculations using the package data,
     construct a small example that we can check while we explore</li>
 </ul>
-<pre><code class="language-py">import pandas as pd
+<pre class="language-py"><code class="language-py">import pandas as pd
 
 example = pd.DataFrame(data=[[  1,   2,   3],
                              [ 10,  20,  30],
@@ -374,7 +375,7 @@ example = pd.DataFrame(data=[[  1,   2,   3],
 print(example)
 </code></pre>
 <p>{: title="aggregation.py"}</p>
-<pre><code class="language-txt">   left  middle  right
+<pre class="language-txt"><code class="language-txt">   left  middle  right
 0     1       2      3
 1    10      20     30
 2   100     200    300
@@ -393,10 +394,10 @@ print(example)
 </li>
 <li>We can do arithmetic on entire columns</li>
 </ul>
-<pre><code class="language-py">print(example['middle'] + example['right'])
+<pre class="language-py"><code class="language-py">print(example['middle'] + example['right'])
 </code></pre>
 <p>{: title="aggregation.py"}</p>
-<pre><code class="language-txt">0      5
+<pre class="language-txt"><code class="language-txt">0      5
 1     50
 2    500
 dtype: int64
@@ -404,10 +405,10 @@ dtype: int64
 <ul>
 <li>If we use a plain old number it is automatically <a href="../glossary/#broadcast">broadcast</a> to the size of the column</li>
 </ul>
-<pre><code class="language-py">print(7 * example['left'])
+<pre class="language-py"><code class="language-py">print(7 * example['left'])
 </code></pre>
 <p>{: title="aggregation.py"}</p>
-<pre><code class="language-txt">0      7
+<pre class="language-txt"><code class="language-txt">0      7
 1     70
 2    700
 Name: left, dtype: int64
@@ -453,10 +454,10 @@ and the country code for Namibia.</p>
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">print(example.agg('sum'))
+<pre class="language-py"><code class="language-py">print(example.agg('sum'))
 </code></pre>
 <p>{: title="aggregation.py"}</p>
-<pre><code class="language-txt">left      111
+<pre class="language-txt"><code class="language-txt">left      111
 middle    222
 right     333
 dtype: int64
@@ -471,10 +472,10 @@ dtype: int64
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">print(example.agg(['sum', 'mean']))
+<pre class="language-py"><code class="language-py">print(example.agg(['sum', 'mean']))
 </code></pre>
 <p>{: title="aggregation.py"}</p>
-<pre><code class="language-txt">       left  middle  right
+<pre class="language-txt"><code class="language-txt">       left  middle  right
 sum   111.0   222.0  333.0
 mean   37.0    74.0  111.0
 </code></pre>
@@ -487,7 +488,7 @@ mean   37.0    74.0  111.0
 </li>
 <li>Create another small dataframe to demonstrate</li>
 </ul>
-<pre><code class="language-py">import pandas as pd
+<pre class="language-py"><code class="language-py">import pandas as pd
 
 colors = pd.DataFrame(columns=['name', 'red', 'green', 'blue'],
                       data=[['yellow',  1.0, 1.0, 0.0],
@@ -496,7 +497,7 @@ colors = pd.DataFrame(columns=['name', 'red', 'green', 'blue'],
 print(colors)
 </code></pre>
 <p>{: title="filter.py"}</p>
-<pre><code class="language-txt">      name  red  green  blue
+<pre class="language-txt"><code class="language-txt">      name  red  green  blue
 0   yellow  1.0    1.0   0.0
 1     aqua  0.0    1.0   1.0
 2  fuchsia  1.0    0.0   1.0
@@ -504,11 +505,11 @@ print(colors)
 <ul>
 <li>We know how to select the <code>red</code> column</li>
 </ul>
-<pre><code class="language-py">red = colors['red']
+<pre class="language-py"><code class="language-py">red = colors['red']
 print(red)
 </code></pre>
 <p>{: title="filter.py"}</p>
-<pre><code class="language-txt">0    1.0
+<pre class="language-txt"><code class="language-txt">0    1.0
 1    0.0
 2    1.0
 Name: red, dtype: float64
@@ -516,11 +517,11 @@ Name: red, dtype: float64
 <ul>
 <li>Now let's see where values are 1.0 and where they aren't</li>
 </ul>
-<pre><code class="language-py">has_red = (red == 1.0)
+<pre class="language-py"><code class="language-py">has_red = (red == 1.0)
 print(has_red)
 </code></pre>
 <p>{: title="filter.py"}</p>
-<pre><code class="language-txt">0     True
+<pre class="language-txt"><code class="language-txt">0     True
 1    False
 2     True
 Name: red, dtype: bool
@@ -532,21 +533,21 @@ Name: red, dtype: bool
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">rows_with_red = colors.loc[has_red]
+<pre class="language-py"><code class="language-py">rows_with_red = colors.loc[has_red]
 print(rows_with_red)
 </code></pre>
 <p>{: title="filter.py"}</p>
-<pre><code class="language-txt">      name  red  green  blue
+<pre class="language-txt"><code class="language-txt">      name  red  green  blue
 0   yellow  1.0    1.0   0.0
 2  fuchsia  1.0    0.0   1.0
 </code></pre>
 <ul>
 <li>So we can calculate the average red, green, and blue for all colors for the whole table:</li>
 </ul>
-<pre><code class="language-py">print(colors.agg('mean'))
+<pre class="language-py"><code class="language-py">print(colors.agg('mean'))
 </code></pre>
 <p>{: title="filter.py"}</p>
-<pre><code class="language-txt">red      0.666667
+<pre class="language-txt"><code class="language-txt">red      0.666667
 green    0.666667
 blue     0.666667
 dtype: float64
@@ -554,10 +555,10 @@ dtype: float64
 <ul>
 <li>Or select only those colors that contain some red and calculate the average for them:</li>
 </ul>
-<pre><code class="language-py">print(rows_with_red.agg('mean'))
+<pre class="language-py"><code class="language-py">print(rows_with_red.agg('mean'))
 </code></pre>
 <p>{: title="filter.py"}</p>
-<pre><code class="language-txt">red      1.0
+<pre class="language-txt"><code class="language-txt">red      1.0
 green    0.5
 blue     0.5
 dtype: float64
@@ -568,10 +569,10 @@ dtype: float64
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">print(colors.loc[colors['red'] == 1.0].agg('mean'))
+<pre class="language-py"><code class="language-py">print(colors.loc[colors['red'] == 1.0].agg('mean'))
 </code></pre>
 <p>{: title="filter.py"}</p>
-<pre><code class="language-txt">red      1.0
+<pre class="language-txt"><code class="language-txt">red      1.0
 green    0.5
 blue     0.5
 dtype: float64
@@ -593,7 +594,7 @@ dtype: float64
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">import pandas as pd
+<pre class="language-py"><code class="language-py">import pandas as pd
 import plotly.express as px
 
 packages = pd.read_csv('python-local-package-size.csv')
@@ -619,7 +620,7 @@ fig.write_image('hist-ratio-unscaled.svg', width=600, height=400)
 </li>
 <li>Plot the logarithm of the ratio to show things more clearly <span f="hist-ratio-scaled"></span></li>
 </ul>
-<pre><code class="language-py">fig = px.histogram(packages, x='ratio', nbins=100, log_y=True)
+<pre class="language-py"><code class="language-py">fig = px.histogram(packages, x='ratio', nbins=100, log_y=True)
 fig.show()
 fig.write_image('hist-ratio-scaled.svg')
 </code></pre>
@@ -637,13 +638,13 @@ fig.write_image('hist-ratio-scaled.svg')
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">print(f"Excluding {len(packages[packages['ratio'] &gt; 100])}/{len(packages)} data points")
+<pre class="language-py"><code class="language-py">print(f"Excluding {len(packages[packages['ratio'] &gt; 100])}/{len(packages)} data points")
 fig = px.histogram(packages[packages['ratio'] &lt;= 100], x='ratio', nbins=100)
 fig.show()
 fig.write_image('hist-ratio-most.svg')
 </code></pre>
 <p>{: title="ratio.py"}</p>
-<pre><code class="language-txt">Excluding 92 data points
+<pre class="language-txt"><code class="language-txt">Excluding 92 data points
 </code></pre>
 <p>{% include figure
    id="hist-ratio-most"
@@ -678,7 +679,7 @@ fig.write_image('hist-ratio-most.svg')
 </ul>
 </main>
 <footer>
-<a href="../">Organizational Change for Open Science</a>
+<a href="../">Data Science for Software Engineers</a>
       copyright © 2025
       <a href="../01_intro/#acknowledgments">the authors</a>
 </footer>

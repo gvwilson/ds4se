@@ -30,6 +30,7 @@
 <span class="dropdown-content">
 <a href="../license/">License</a>
 <a href="../conduct/">Code of Conduct</a>
+<a href="../contrib/">Contributing</a>
 <a href="../bibliography/">Bibliography</a>
 <a href="../glossary/">Glossary</a>
 </span>
@@ -76,7 +77,7 @@
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">import sys
+<pre class="language-py"><code class="language-py">import sys
 import requests
 import re
 import time
@@ -124,7 +125,7 @@ A second-best solution would be an easy way to highlight modified lines,
 with an emphasis on "easy".
 One day...</p>
 </div>
-<pre><code class="language-py">#!/usr/bin/env python
+<pre class="language-py"><code class="language-py">#!/usr/bin/env python
 
 import sys
 import requests
@@ -210,7 +211,7 @@ for package in all_packages:
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">import sys
+<pre class="language-py"><code class="language-py">import sys
 import pandas as pd
 
 datafile = sys.argv[1]
@@ -218,9 +219,9 @@ packages = pd.read_csv(datafile)
 print(packages.agg(['mean', 'median', 'var', 'std']))
 </code></pre>
 <p>{: title="version-statistics.py"}</p>
-<pre><code class="language-sh">python version-statistics.py release-count.csv
+<pre class="language-sh"><code class="language-sh">python version-statistics.py release-count.csv
 </code></pre>
-<pre><code class="language-txt">            Releases
+<pre class="language-txt"><code class="language-txt">            Releases
 mean       11.236351
 median      4.000000
 var      2501.398099
@@ -248,7 +249,7 @@ max     10797.000000
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">import sys
+<pre class="language-py"><code class="language-py">import sys
 import pandas as pd
 import plotly.express as px
 
@@ -264,9 +265,9 @@ fig.show()
 fig.write_image('figures/release-count.svg')
 </code></pre>
 <p>{: title="version-histogram.py"}</p>
-<pre><code class="language-sh">python version-histogram.py release-count.csv
+<pre class="language-sh"><code class="language-sh">python version-histogram.py release-count.csv
 </code></pre>
-<pre><code class="language-txt">Distribution of Releases
+<pre class="language-txt"><code class="language-txt">Distribution of Releases
           Package
 Releases         
 0.0         11721
@@ -298,7 +299,7 @@ Releases
 </li>
 <li>Let's try:</li>
 </ul>
-<pre><code class="language-py">slice = packages[packages['Releases'] &lt; 100]
+<pre class="language-py"><code class="language-py">slice = packages[packages['Releases'] &lt; 100]
 fig = px.histogram(slice, x='Releases', nbins=100, log_y=True, width=600, height=400)
 fig.show()
 fig.write_image('figures/release-count-low.svg')
@@ -323,7 +324,7 @@ fig.write_image('figures/release-count-low.svg')
 <p>Use a <a href="../glossary/#violin_plot">violin plot</a> to get a feel for the shape of the data</p>
 </li>
 </ul>
-<pre><code class="language-py">datafile = sys.argv[1]
+<pre class="language-py"><code class="language-py">datafile = sys.argv[1]
 packages = pd.read_csv(datafile)
 slice = packages[packages['Releases'] &lt; 100]
 fig = px.violin(slice, y='Releases', width=600, height=400)
@@ -349,7 +350,7 @@ fig.write_image('figures/release-count-violin.svg')
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">fig = px.box(slice, y='Releases', width=600, height=400)
+<pre class="language-py"><code class="language-py">fig = px.box(slice, y='Releases', width=600, height=400)
 fig.show()
 fig.write_image('figures/release-count-box.svg')
 </code></pre>
@@ -394,7 +395,7 @@ fig.write_image('figures/release-count-box.svg')
 </li>
 <li>Include a <a href="../glossary/#docstring">docstring</a> for help</li>
 </ul>
-<pre><code class="language-py">def main():
+<pre class="language-py"><code class="language-py">def main():
     '''
     Main driver.
     '''
@@ -420,7 +421,7 @@ if __name__ == '__main__':
 </li>
 </ul>
 <h3>Parse command-line arguments</h3>
-<pre><code class="language-py">def parse_args():
+<pre class="language-py"><code class="language-py">def parse_args():
     '''
     Parse command-line arguments.
     '''
@@ -443,7 +444,7 @@ if __name__ == '__main__':
 </li>
 </ul>
 <h3>Get the main package list</h3>
-<pre><code class="language-py"># Match package URL in main index page.
+<pre class="language-py"><code class="language-py"># Match package URL in main index page.
 RE_PACKAGE = re.compile(r'&lt;a href="(.+?)"&gt;')
 
 # ...
@@ -485,7 +486,7 @@ def get_package_list(args):
 </li>
 </ul>
 <h3>Get information about a single package</h3>
-<pre><code class="language-py">def get_package_info(name, writer):
+<pre class="language-py"><code class="language-py">def get_package_info(name, writer):
     '''
     Get and print information about a specific package.
     '''
@@ -518,7 +519,7 @@ def get_package_list(args):
     but that function reads more cleanly if this low-level detail is hidden away</li>
 <li>Goes to <code>sys.stderr</code> so that regular output can be redirected to file</li>
 </ul>
-<pre><code class="language-py">def initialize_progress(args, packages):
+<pre class="language-py"><code class="language-py">def initialize_progress(args, packages):
     '''
     Initialize record keeping for progress monitoring.
     '''
@@ -730,7 +731,7 @@ Each rule explains how to update a <a href="../glossary/#build_target">target</a
 if it is out of date compared to any of its <a href="../glossary/#build_prerequisite">prerequisites</a>.
 Here's a rule to regenerate a compressed data file <code>data/all-versions.csv.gz</code>
 if the file is older than the script used to create it:</p>
-<pre><code class="language-python">rule all_versions:
+<pre class="language-python"><code class="language-python">rule all_versions:
     '''Download all version info from PyPI - takes several hours.'''
     output:
         protected('data/all-versions.csv.gz')
@@ -768,11 +769,11 @@ anyway...</p>
 <ul>
 <li>Execute these commands with</li>
 </ul>
-<pre><code class="language-sh">snakemake -j 1 all_versions
+<pre class="language-sh"><code class="language-sh">snakemake -j 1 all_versions
 </code></pre>
 <p>Since that will take several hours to complete,
 let's add another rule to the same file:</p>
-<pre><code class="language-python">rule releases_per_package:
+<pre class="language-python"><code class="language-python">rule releases_per_package:
     '''How many releases are there for each package?'''
     input:
         'data/all-versions.csv.gz'
@@ -795,7 +796,7 @@ a string instead of a stream
 it assumes that parameter is a filename,
 and that it can read directly from compressed files
 (which it identifies by looking for common endings like <code>.zip</code> or <code>.gz</code>).</p>
-<pre><code class="language-py">#!/usr/bin/env python
+<pre class="language-py"><code class="language-py">#!/usr/bin/env python
 
 '''
 Count how many releases there are per package.
@@ -818,11 +819,11 @@ if __name__ == '__main__':
 </code></pre>
 <p>{: title="bin/count-releases.py"}</p>
 <p>If we run:</p>
-<pre><code class="language-sh">snakemake -j1 releases_per_package
+<pre class="language-sh"><code class="language-sh">snakemake -j1 releases_per_package
 </code></pre>
 <p>and wait a few seconds,
 we have a file with the following:</p>
-<pre><code class="language-txt">Package,Release
+<pre class="language-txt"><code class="language-txt">Package,Release
 0,1
 0-0-1,1
 0-core-client,9
@@ -857,7 +858,7 @@ and watching an entire multi-step analysis run itself:</p>
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">#!/usr/bin/env python
+<pre class="language-py"><code class="language-py">#!/usr/bin/env python
 
 import sys
 import pandas as pd
@@ -915,7 +916,7 @@ if __name__ == '__main__':
 <p>Add a rule to <code>Snakefile</code></p>
 </li>
 </ul>
-<pre><code class="language-make">rule count_name_components:
+<pre class="language-make"><code class="language-make">rule count_name_components:
     '''How often does each component of a dotted name occur?'''
     input:
         'data/all-versions.csv.gz'
@@ -927,7 +928,7 @@ if __name__ == '__main__':
 <ul>
 <li>Run</li>
 </ul>
-<pre><code class="language-txt">Component,Count
+<pre class="language-txt"><code class="language-txt">Component,Count
 tar,1298365
 gz,1294773
 whl,833181
@@ -967,7 +968,7 @@ exe,17161
 </ul>
 </li>
 </ul>
-<pre><code class="language-python">rule all:
+<pre class="language-python"><code class="language-python">rule all:
     '''Dummy rule to rebuild everything.'''
     input:
         ['results/releases.csv', 'results/name-component-count.csv']
@@ -975,7 +976,7 @@ exe,17161
 <ul>
 <li>Next, calculate how many releases there are per package once we remove duplicates</li>
 </ul>
-<pre><code class="language-py">def main():
+<pre class="language-py"><code class="language-py">def main():
     '''
     Count releases before and after de-duplication.
     '''
@@ -994,7 +995,7 @@ exe,17161
 </ul>
 </li>
 </ul>
-<pre><code class="language-python">rule count_redundant_releases:
+<pre class="language-python"><code class="language-python">rule count_redundant_releases:
     '''How many duplicated (redundant) releases are there?'''
     input:
         'data/all-versions.csv.gz'
@@ -1004,7 +1005,7 @@ exe,17161
 <ul>
 <li>Output</li>
 </ul>
-<pre><code class="language-txt">2255 / 2312545 ( 0.098%) shorter
+<pre class="language-txt"><code class="language-txt">2255 / 2312545 ( 0.098%) shorter
 </code></pre>
 <ul>
 <li>So this <em>isn't</em> a big enough issue to explain the even-numbered jagginess of our earlier figure</li>
@@ -1017,7 +1018,7 @@ exe,17161
 </ul>
 </main>
 <footer>
-<a href="../">Organizational Change for Open Science</a>
+<a href="../">Data Science for Software Engineers</a>
       copyright © 2025
       <a href="../01_intro/#acknowledgments">the authors</a>
 </footer>

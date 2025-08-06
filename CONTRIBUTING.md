@@ -1,6 +1,4 @@
----
-permalink: /contributing/
----
+# Contributing
 
 All contributors must abide by our <span i="Code of Conduct">Code of Conduct</span>.
 

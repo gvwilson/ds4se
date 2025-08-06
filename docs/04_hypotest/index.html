@@ -30,6 +30,7 @@
 <span class="dropdown-content">
 <a href="../license/">License</a>
 <a href="../conduct/">Code of Conduct</a>
+<a href="../contrib/">Contributing</a>
 <a href="../bibliography/">Bibliography</a>
 <a href="../glossary/">Glossary</a>
 </span>
@@ -85,7 +86,7 @@
 <p>Main driver is straightforward</p>
 </li>
 </ul>
-<pre><code class="language-py">def main():
+<pre class="language-py"><code class="language-py">def main():
     '''
     Main driver.
     '''
@@ -104,7 +105,7 @@
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">def parse_args():
+<pre class="language-py"><code class="language-py">def parse_args():
     '''
     Handle command-line arguments.
     '''
@@ -122,7 +123,7 @@
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">def lengths(args):
+<pre class="language-py"><code class="language-py">def lengths(args):
     '''
     Find files and count line lengths.
     '''
@@ -148,7 +149,7 @@
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">def report_filenames(output_stem, counts):
+<pre class="language-py"><code class="language-py">def report_filenames(output_stem, counts):
     '''
     Report filename-to-ID as CSV with 'NA' for errored files.
     '''
@@ -162,7 +163,7 @@
 <ul>
 <li>And the counts where available</li>
 </ul>
-<pre><code class="language-py">def report_counts(output_stem, counts):
+<pre class="language-py"><code class="language-py">def report_counts(output_stem, counts):
     '''
     Report file ID-to-count as CSV for non-errored files.
     '''
@@ -182,7 +183,7 @@
 </ul>
 </li>
 </ul>
-<pre><code class="language-txt">Failed to read /anaconda3/pkgs/xlwt-1.3.0-py37_0/lib/python3.7/site-packages/xlwt/BIFFRecords.py: 'utf-8' codec can't decode byte 0x93 in position 68384: invalid start byte
+<pre class="language-txt"><code class="language-txt">Failed to read /anaconda3/pkgs/xlwt-1.3.0-py37_0/lib/python3.7/site-packages/xlwt/BIFFRecords.py: 'utf-8' codec can't decode byte 0x93 in position 68384: invalid start byte
 Failed to read /anaconda3/pkgs/xlwt-1.3.0-py37_0/lib/python3.7/site-packages/xlwt/UnicodeUtils.py: 'utf-8' codec can't decode byte 0xb7 in position 1950: invalid start byte
 Failed to read /anaconda3/pkgs/pylint-2.3.1-py37_0/lib/python3.7/site-packages/pylint/test/functional/implicit_str_concat_in_sequence_latin1.py: 'utf-8' codec can't decode byte 0xe9 in position 96: invalid continuation byte
 Failed to read /anaconda3/pkgs/joblib-0.13.2-py37_0/lib/python3.7/site-packages/joblib/test/test_func_inspect_special_encoding.py: 'utf-8' codec can't decode byte 0xa4 in position 64: invalid start byte
@@ -203,7 +204,7 @@ Failed to read /anaconda3/pkgs/joblib-0.13.2-py37_0/lib/python3.7/site-packages/
 </ul>
 </li>
 </ul>
-<pre><code class="language-python">LANGS = ['javascript', 'python']
+<pre class="language-python"><code class="language-python">LANGS = ['javascript', 'python']
 KINDS = ['all', 'trimmed']
 
 rule all:
@@ -313,7 +314,7 @@ to declare before collecting data what analyses are going to be done and how.</p
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">#!/usr/bin/env python
+<pre class="language-py"><code class="language-py">#!/usr/bin/env python
 
 import sys
 import argparse
@@ -340,7 +341,7 @@ def main():
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">    # parse arguments
+<pre class="language-py"><code class="language-py">    # parse arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('--left', type=str, help='first dataset')
     parser.add_argument('--right', type=str, help='second dataset')
@@ -355,7 +356,7 @@ def main():
 <ul>
 <li>Read the data and calculate actual statistics</li>
 </ul>
-<pre><code class="language-py">    # read data and calculate actual means and difference
+<pre class="language-py"><code class="language-py">    # read data and calculate actual means and difference
     data_left = read_data(args.left, args.low, args.high)
     data_right = read_data(args.right, args.low, args.high)
     mean_left = data_left.mean()
@@ -366,7 +367,7 @@ def main():
 <ul>
 <li>And:</li>
 </ul>
-<pre><code class="language-py">def read_data(filename, low, high):
+<pre class="language-py"><code class="language-py">def read_data(filename, low, high):
     '''
     Read data and remove lines of length 1 and very long lines.
     '''
@@ -392,7 +393,7 @@ def main():
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">    # repeatedly sample and calculate difference
+<pre class="language-py"><code class="language-py">    # repeatedly sample and calculate difference
     combined = data_left.append(data_right).reset_index(drop=True)
     split = len(data_left)
     sample_diffs = []
@@ -414,7 +415,7 @@ def main():
 </ul>
 </li>
 </ul>
-<pre><code class="language-py">    # report
+<pre class="language-py"><code class="language-py">    # report
     print(f'parameters:')
     print(f'- left: "{args.left}"')
     print(f'- right: "{args.right}"')
@@ -438,9 +439,9 @@ def main():
 </ul>
 </li>
 </ul>
-<pre><code class="language-sh">python bin/simulate.py --left test/test-a.csv --right test/test-b.csv --trials 10000 --seed 1234567
+<pre class="language-sh"><code class="language-sh">python bin/simulate.py --left test/test-a.csv --right test/test-b.csv --trials 10000 --seed 1234567
 </code></pre>
-<pre><code class="language-txt">parameters:
+<pre class="language-txt"><code class="language-txt">parameters:
 - left: "test/test-a.csv"
 - right: "test/test-b.csv"
 - low: null
@@ -474,9 +475,9 @@ results:
 </ul>
 </li>
 </ul>
-<pre><code class="language-sh">python bin/simulate.py --left data/javascript-counts.csv --right data/python-counts.csv --trials 5000 --seed 57622
+<pre class="language-sh"><code class="language-sh">python bin/simulate.py --left data/javascript-counts.csv --right data/python-counts.csv --trials 5000 --seed 57622
 </code></pre>
-<pre><code class="language-txt">parameters:
+<pre class="language-txt"><code class="language-txt">parameters:
 - left: "data/javascript-counts.csv"
 - right: "data/python-counts.csv"
 - low: null
@@ -508,7 +509,7 @@ results:
 </ul>
 </main>
 <footer>
-<a href="../">Organizational Change for Open Science</a>
+<a href="../">Data Science for Software Engineers</a>
       copyright © 2025
       <a href="../01_intro/#acknowledgments">the authors</a>
 </footer>

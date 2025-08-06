@@ -31,8 +31,8 @@ FIXME
 
 1.  [License](./LICENSE.md)
 1.  [Code of Conduct](./CODE_OF_CONDUCT.md)
-1.  [Bibliography](./bibliography.md)
-1.  [Glossary](./glossary.md)
+1.  [Bibliography](./bibliography/)
+1.  [Glossary](./glossary/)
 1.  [Theory](./theory/)
 
 </div>
