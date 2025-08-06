@@ -15,5 +15,3 @@ skips = ["*.csv", "extras", "templates", "unused", "uv.lock"]
 "CODE_OF_CONDUCT.md" = "conduct"
 "CONTRIBUTING.md" = "contrib"
 "LICENSE.md" = "license"
-"bibliography.md" = "bibliography"
-"glossary.md" = "glossary"
