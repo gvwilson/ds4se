@@ -8,7 +8,19 @@ dependencies = [
 ]
 
 [tool.mccole]
-skips = ["*.csv", "extras", "templates", "unused", "uv.lock"]
+skips = [
+    "*/data/*",
+    "*.csv",
+    "*.js",
+    "*.py",
+    "*.sh",
+    "*.tbl",
+    "*.txt",
+    "*.xlsx",
+    "extras/**",
+    "unused/**",
+    "uv.lock"
+]
 
 [tool.mccole.renames]
 "README.md" = ""
