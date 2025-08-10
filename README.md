@@ -10,8 +10,6 @@ but please note that all contributors must abide by our [Code of Conduct](./CODE
 
 FIXME
 
-> FIXME
-
 ## Syllabus
 
 <div id="syllabus" markdown="1">
