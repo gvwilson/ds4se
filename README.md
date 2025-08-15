@@ -65,6 +65,4 @@ We are grateful to:
   </em>
 </p>
 
-[email]: mailto:gvwilson@third-bit.com
-[repo]: https://github.com/gvwilson/ds4se
 [wilson-greg]: https://third-bit.com/
