@@ -176,18 +176,3 @@ Package,Releases
 00smalinux,0
 01changer,0
 ```
-
-## Acknowledgments
-
-We are grateful to:
-
--   Steve McConnell and Robert Glass,
-    whose books sent us down this road years ago [[McConnell2004](b:McConnell2004)].
--   Derek Jones for [[Jones2019](b:Jones2019)],
-    the many contributors to [[Oram2010](b:Oram2010)],
-    and everyone else who is trying to make software engineering an evidence-based discipline.
--   [RStudio][rstudio] for supporting [Yim Register][register-yim]'s work in 2019.
--   [Raniere Silva][silva-raniere] and Shashi Kumar for technical assistance.
--   [David Graf][graf-david] for [doi2bib][doi2bib]
-    and [Alexandra Elbakyan][elbakyan-alexandra] for [Sci-Hub][scihub],
-    without whom this work would not have been possible.
