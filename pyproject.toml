@@ -1,5 +1,6 @@
 [project]
 name = "ds4se"
+description = "data science for software engineers"
 version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = [
