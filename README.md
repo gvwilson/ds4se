@@ -10,9 +10,9 @@ but please note that all contributors must abide by our [Code of Conduct](./CODE
 
 FIXME
 
-## Syllabus
+## Lessons
 
-<div id="syllabus" markdown="1">
+<div id="lessons" markdown="1">
 
 1.  [Introduction](./01_intro/)
 1.  [Basic Tools](./02_basic/)
