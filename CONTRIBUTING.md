@@ -1,139 +1,71 @@
 # Contributing
 
-All contributors must abide by our <span i="Code of Conduct">Code of Conduct</span>.
+Contributions are very welcome;
+please contact us [by email][email] or by filing an issue in [our repository][repo].
+All contributors must abide by our Code of Conduct.
 
-## Making Decisions
+## Setup and Operation
 
-This project uses [Martha's Rules][marthas-rules] <cite>Minahan1986</cite> for consensus decision making:
+-   Install [uv][uv].
+-   Create a virtual environment: `uv venv`.
+-   Activate it: `source .venv/bin/activate`.
+-   Install dependencies: `uv sync`.
+-   Run `make` on its own to see a list of common commands.
 
-1.  Before each meeting, anyone who wishes may sponsor a proposal by filing an
-    issue in the GitHub repository tagged "proposal".  Proposals must be filed
-    at least 24 hours before a meeting in order to be considered at that
-    meeting, and must include:
-    -   a one-line summary (the subject line of the issue)
-    -   the full text of the proposal
-    -   any required background information
-    -   pros and cons
-    -   possible alternatives
+| make task | effect                            |
+| --------- | ----------------------------------|
+| build     | render HTML pages                 |
+| clean     | clean up                          |
+| commands  | show available commands (default) |
+| links     | check links in published site     |
+| lint      | check structure and content       |
+| serve     | serve generated HTML              |
+| spelling  | check for unknown words           |
+| untab     | remove tabs in Markdown files     |
 
-2.  A quorum is established in a meeting if half or more of voting members are
-    present.
+## Structure
 
-3.  Once a person has sponsored a proposal, they are responsible for it.  The
-    group may not discuss or vote on the issue unless the sponsor or their
-    delegate is present.  The sponsor is also responsible for presenting the
-    item to the group.
+-   Lessons are in `slug` directories
+    -   `slug` is short mnemonic
+    -   Each lesson must have an `index.md` file containing its content
+    -   And may also have a `slides.md` file with [Shower][shower] slides
+-   Use `@/some/path/` for internal links
+    -   The leading `@` is translated into a relative reference to the project root
+-   The Markdown link definitions in `extras/links.md` are appended to all Markdown files
+    -   This helps ensure consistent link URLs across pages
+-   The home page for the site is generated from `README.md`
+    -   The navigation menus for lessons and appendices are generated from
+        the `lessons` and `appendices` `div` elements in `README.md`
+-   Diagrams should be SVG files created with [draw.io][draw-io]
+-   `bibliography/index.md` has the bibliography as a definition list
+    -   Citation keys have IDs for linking
+    -   Use an inline HTML link `b:key` in files to create links
+-   `glossary/index.md` has the glossary as definition list
+    -   Reference keys have IDs for linking
+    -   Use an inline HTML link `g:key` in files to create links
+-   The `static` directory contains CSS and JavaScript files
+-   The `templates` directory contains [Jinja][jinja] templates used to generate HTML
+    -   `page.html` is used for website pages
+    -   `slides.html` is used for slideshows
 
-4.  After the sponsor presents the proposal, a "sense" vote is cast for the
-    proposal prior to any discussion:
-    -   Who likes the proposal?
-    -   Who can live with the proposal?
-    -   Who is uncomfortable with the proposal?
+## FAQ
 
-5.  If all of the group likes or can live with the proposal, it passes
-    immediately.
+Do you need help?
+:   Yes—please see the issues in [our repository][repo].
 
-6.  If most of the group is uncomfortable with the proposal, it is postponed for
-    further rework by the sponsor.
+What sort of feedback would be useful?
+:   Everything is welcome,
+    from pointing out mistakes to suggestions for better explanations.
 
-7.  Otherwise, members who are uncomfortable can briefly state their objections.
-    A timer is then set for a brief discussion moderated by the facilitator.
-    After 10 minutes or when no one has anything further to add (whichever comes
-    first), the facilitator calls for a yes-or-no vote on the question: "Should
-    we implement this decision over the stated objections?"  If a majority votes
-    "yes" the proposal is implemented.  Otherwise, the proposal is returned to
-    the sponsor for further work.
+Can I add a new section?
+:   Possibly, but please [reach out][email] before doing so.
 
-## Formatting
-
-1.  The commands to rebuild the site, run a server, produce the PDF version, and
-    check internal consistency are stored in `Makefile` and use the tools in
-    `bin/`. Run `make` on its own to get a list of available actions.
-
-1.  Each chapter or appendix is identified by a slug such as `some-topic`.  Its
-    text lives in <code><em>slug</em>/index.md</code>, and there is an entry
-    under the `chapters` key in `_config.yml` with its slug and its title. This
-    list controls ordering.
-
-1.  Use only level-2 headings within chapters and appendices and use "Title
-    Case" the titles.
-
-1.  To create cross-references:
-    -   Use `{% raw %}<span g="key">some text</span>{% endraw %}` for glossary
-        entries. The key must appear in `_data/glossary.yml`.
-    -   Use `{% raw %}<span x="slug"/>{% endraw %}` to cross-reference a chapter or
-        appendix. The slugs must appear in `_config.yml`.
-    -   Use `{% raw %}<span f="key"/>{% endraw %}` to cross-reference a figure
-        and `{% raw %}<span t="key"/>{% endraw %}` to cross-reference a table.
-    -    Use `{% raw %}<cite>key,key</cite>{% endraw %}` for bibliography
-        citations.  The keys must appear in `bibliography/index.md`.
-
-1.  Use `{% raw %}<span i="term">text</span>{% endraw %}` to add an index entry.
-    This can be combined with a glossary reference, as in
-    `{% raw %}<span i="term" g="key">text</span>{% endraw %}`.
-
-1.  To include a code sample use
-    `{% raw %}{% include code file="name.ext" %}{% endraw %}`.
-    The path to the file must be relative to the including file. in most cases
-    it will be in the same directory as the chapter or appendix.
-
-1.  To continue a paragraph that has been interrupted by a code sample or
-    something else, use:
-
-    ```
-    {: .continue}
-    text of paragraph
-    ```
-
-    This has no effect on the appearance of the HTML, but prevents an unwanted
-    paragraph indent in the PDF version.
-
-1.  To create a callout box, use:
-
-    ```
-    <div class="callout" markdown="1">
-
-    ### Title of callout
-
-    text of callout
-
-    </div>
-    ```
-
-    Use "Sentence case" for the callout's title, and please put blank lines
-    before and after the opening and closing `<div>` markers.
-
-1.  To insert an external link, use `{% raw %}[text][tag]{% endraw %}` in the
-    body, then add the link to the Kramdown `link_defs` section in
-    `_config.yml`.  The clumsy syntax is necessary to get around [this
-    bug][jekyll-bug].
-
-1.  To create a figure, put the image file in the same directory as the chapter
-    or appendix and use this to include it:
-
-    ```
-    {% raw %}{% include figure id="label" img="file.svg" alt="short text" cap="full caption" %}{% endraw %}
-    ```
-
-    where `label` is <code><em>chapter-slug</em>-<em>image-slug</em></code>,
-    `alt` is just a few words long (plain text), and `cap` is the full caption
-    that will appear inline (Markdown).
-
-1.  Use [draw.io][draw-io] to create SVG diagrams.  Avoid screenshots when
-    possible, since getting them to display correctly in print is a pain.
-
-Note: you will need LaTeX in order to build the PDF version of this book.  After
-installing it, you will need these packages:
-
--   `babel-english`
--   `babel-greek`
--   `cbfonts`
--   `enumitem`
--   `greek-fontenc`
--   `keystroke`
--   `listings`
--   `textgreek`
--   `tocbibind`
+Why is this material free?
+:   Because if we all give a little, we all get a lot.
 
 [draw-io]: https://www.drawio.com/
-[marthas-rules]: https://journals.sagepub.com/doi/10.1177/088610998600100206
+[email]: mailto:gvwilson@third-bit.com
+[jinja]: https://jinja.palletsprojects.com/
+[repo]: https://github.com/gvwilson/change
+[shower]: https://shwr.me/
+[uv]: https://github.com/astral-sh/uv

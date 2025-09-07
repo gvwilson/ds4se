@@ -7,7 +7,6 @@
 <title>Contributing</title>
 <link href="../static/favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="../static/page.css" rel="stylesheet" type="text/css"/>
-<script async="" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 <nav>
@@ -16,175 +15,128 @@
       <span class="dropdown">
 <a href="#">Lessons</a>
 <span class="dropdown-content" id="nav-lessons">
-<a href="../01_intro/">Introduction</a>
-<a href="../02_basic/">Basic Tools</a>
-<a href="../03_robust/">Robust Analysis</a>
-<a href="../04_hypotest/">Hypothesis Testing</a>
-<a href="../05_largenum/">The Law of Large Numbers</a>
-<a href="../06_nonpar/">Non-Parametric Statistics</a>
+<a href="../intro/">Introduction</a>
+<a href="../finale/">Conclusion</a>
 </span>
 </span>
       ·
       <span class="dropdown">
-<a href="#">Extras</a>
-<span class="dropdown-content" id="nav-extras">
+<a href="#">Appendices</a>
+<span class="dropdown-content" id="nav-appendices">
 <a href="../license/">License</a>
 <a href="../conduct/">Code of Conduct</a>
 <a href="../contrib/">Contributing</a>
 <a href="../bibliography/">Bibliography</a>
 <a href="../glossary/">Glossary</a>
-<a href="../theory/">Theory</a>
 </span>
 </span>
 </nav>
 <main>
 <h1>Contributing</h1>
-<p>All contributors must abide by our <span i="Code of Conduct">Code of Conduct</span>.</p>
-<h2>Making Decisions</h2>
-<p>This project uses <a href="https://journals.sagepub.com/doi/10.1177/088610998600100206">Martha's Rules</a> <cite>Minahan1986</cite> for consensus decision making:</p>
-<ol>
-<li>
-<p>Before each meeting, anyone who wishes may sponsor a proposal by filing an
-    issue in the GitHub repository tagged "proposal".  Proposals must be filed
-    at least 24 hours before a meeting in order to be considered at that
-    meeting, and must include:</p>
+<p>Contributions are very welcome;
+please contact us <a href="mailto:gvwilson@third-bit.com">by email</a> or by filing an issue in <a href="https://github.com/gvwilson/change">our repository</a>.
+All contributors must abide by our Code of Conduct.</p>
+<h2>Setup and Operation</h2>
 <ul>
-<li>a one-line summary (the subject line of the issue)</li>
-<li>the full text of the proposal</li>
-<li>any required background information</li>
-<li>pros and cons</li>
-<li>possible alternatives</li>
+<li>Install <a href="https://github.com/astral-sh/uv">uv</a>.</li>
+<li>Create a virtual environment: <code>uv venv</code>.</li>
+<li>Activate it: <code>source .venv/bin/activate</code>.</li>
+<li>Install dependencies: <code>uv sync</code>.</li>
+<li>Run <code>make</code> on its own to see a list of common commands.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>make task</th>
+<th>effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>build</td>
+<td>render HTML pages</td>
+</tr>
+<tr>
+<td>clean</td>
+<td>clean up</td>
+</tr>
+<tr>
+<td>commands</td>
+<td>show available commands (default)</td>
+</tr>
+<tr>
+<td>links</td>
+<td>check links in published site</td>
+</tr>
+<tr>
+<td>lint</td>
+<td>check structure and content</td>
+</tr>
+<tr>
+<td>serve</td>
+<td>serve generated HTML</td>
+</tr>
+<tr>
+<td>spelling</td>
+<td>check for unknown words</td>
+</tr>
+<tr>
+<td>untab</td>
+<td>remove tabs in Markdown files</td>
+</tr>
+</tbody>
+</table>
+<h2>Structure</h2>
+<ul>
+<li>Lessons are in <code>slug</code> directories<ul>
+<li><code>slug</code> is short mnemonic</li>
+<li>Each lesson must have an <code>index.md</code> file containing its content</li>
+<li>And may also have a <code>slides.md</code> file with <a href="https://shwr.me/">Shower</a> slides</li>
 </ul>
 </li>
-<li>
-<p>A quorum is established in a meeting if half or more of voting members are
-    present.</p>
-</li>
-<li>
-<p>Once a person has sponsored a proposal, they are responsible for it.  The
-    group may not discuss or vote on the issue unless the sponsor or their
-    delegate is present.  The sponsor is also responsible for presenting the
-    item to the group.</p>
-</li>
-<li>
-<p>After the sponsor presents the proposal, a "sense" vote is cast for the
-    proposal prior to any discussion:</p>
-<ul>
-<li>Who likes the proposal?</li>
-<li>Who can live with the proposal?</li>
-<li>Who is uncomfortable with the proposal?</li>
+<li>Use <code>@/some/path/</code> for internal links<ul>
+<li>The leading <code>@</code> is translated into a relative reference to the project root</li>
 </ul>
 </li>
-<li>
-<p>If all of the group likes or can live with the proposal, it passes
-    immediately.</p>
-</li>
-<li>
-<p>If most of the group is uncomfortable with the proposal, it is postponed for
-    further rework by the sponsor.</p>
-</li>
-<li>
-<p>Otherwise, members who are uncomfortable can briefly state their objections.
-    A timer is then set for a brief discussion moderated by the facilitator.
-    After 10 minutes or when no one has anything further to add (whichever comes
-    first), the facilitator calls for a yes-or-no vote on the question: "Should
-    we implement this decision over the stated objections?"  If a majority votes
-    "yes" the proposal is implemented.  Otherwise, the proposal is returned to
-    the sponsor for further work.</p>
-</li>
-</ol>
-<h2>Formatting</h2>
-<ol>
-<li>
-<p>The commands to rebuild the site, run a server, produce the PDF version, and
-    check internal consistency are stored in <code>Makefile</code> and use the tools in
-    <code>bin/</code>. Run <code>make</code> on its own to get a list of available actions.</p>
-</li>
-<li>
-<p>Each chapter or appendix is identified by a slug such as <code>some-topic</code>.  Its
-    text lives in <code><em>slug</em>/index.md</code>, and there is an entry
-    under the <code>chapters</code> key in <code>_config.yml</code> with its slug and its title. This
-    list controls ordering.</p>
-</li>
-<li>
-<p>Use only level-2 headings within chapters and appendices and use "Title
-    Case" the titles.</p>
-</li>
-<li>
-<p>To create cross-references:</p>
-<ul>
-<li>Use <code>{% raw %}&lt;span g="key"&gt;some text&lt;/span&gt;{% endraw %}</code> for glossary
-    entries. The key must appear in <code>_data/glossary.yml</code>.</li>
-<li>Use <code>{% raw %}&lt;span x="slug"/&gt;{% endraw %}</code> to cross-reference a chapter or
-    appendix. The slugs must appear in <code>_config.yml</code>.</li>
-<li>Use <code>{% raw %}&lt;span f="key"/&gt;{% endraw %}</code> to cross-reference a figure
-    and <code>{% raw %}&lt;span t="key"/&gt;{% endraw %}</code> to cross-reference a table.</li>
-<li>Use <code>{% raw %}&lt;cite&gt;key,key&lt;/cite&gt;{% endraw %}</code> for bibliography
-    citations.  The keys must appear in <code>bibliography/index.md</code>.</li>
+<li>The Markdown link definitions in <code>extras/links.md</code> are appended to all Markdown files<ul>
+<li>This helps ensure consistent link URLs across pages</li>
 </ul>
 </li>
-<li>
-<p>Use <code>{% raw %}&lt;span i="term"&gt;text&lt;/span&gt;{% endraw %}</code> to add an index entry.
-    This can be combined with a glossary reference, as in
-    <code>{% raw %}&lt;span i="term" g="key"&gt;text&lt;/span&gt;{% endraw %}</code>.</p>
-</li>
-<li>
-<p>To include a code sample use
-    <code>{% raw %}{% include code file="name.ext" %}{% endraw %}</code>.
-    The path to the file must be relative to the including file. in most cases
-    it will be in the same directory as the chapter or appendix.</p>
-</li>
-<li>
-<p>To continue a paragraph that has been interrupted by a code sample or
-    something else, use:</p>
-<p><code>{: .continue}
-text of paragraph</code></p>
-<p>This has no effect on the appearance of the HTML, but prevents an unwanted
-paragraph indent in the PDF version.</p>
-</li>
-<li>
-<p>To create a callout box, use:</p>
-<p>```
-<div class="callout" markdown="1"></div></p>
-<h3>Title of callout</h3>
-<p>text of callout</p>
-<p>
-```</p>
-<p>Use "Sentence case" for the callout's title, and please put blank lines
-before and after the opening and closing <code>&lt;div&gt;</code> markers.</p>
-</li>
-<li>
-<p>To insert an external link, use <code>{% raw %}[text][tag]{% endraw %}</code> in the
-    body, then add the link to the Kramdown <code>link_defs</code> section in
-    <code>_config.yml</code>.  The clumsy syntax is necessary to get around [this
-    bug][jekyll-bug].</p>
-</li>
-<li>
-<p>To create a figure, put the image file in the same directory as the chapter
-    or appendix and use this to include it:</p>
-<p><code>{% raw %}{% include figure id="label" img="file.svg" alt="short text" cap="full caption" %}{% endraw %}</code></p>
-<p>where <code>label</code> is <code><em>chapter-slug</em>-<em>image-slug</em></code>,
-<code>alt</code> is just a few words long (plain text), and <code>cap</code> is the full caption
-that will appear inline (Markdown).</p>
-</li>
-<li>
-<p>Use <a href="https://www.drawio.com/">draw.io</a> to create SVG diagrams.  Avoid screenshots when
-    possible, since getting them to display correctly in print is a pain.</p>
-</li>
-</ol>
-<p>Note: you will need LaTeX in order to build the PDF version of this book.  After
-installing it, you will need these packages:</p>
-<ul>
-<li><code>babel-english</code></li>
-<li><code>babel-greek</code></li>
-<li><code>cbfonts</code></li>
-<li><code>enumitem</code></li>
-<li><code>greek-fontenc</code></li>
-<li><code>keystroke</code></li>
-<li><code>listings</code></li>
-<li><code>textgreek</code></li>
-<li><code>tocbibind</code></li>
+<li>The home page for the site is generated from <code>README.md</code><ul>
+<li>The navigation menus for lessons and appendices are generated from
+    the <code>lessons</code> and <code>appendices</code> <code>div</code> elements in <code>README.md</code></li>
 </ul>
+</li>
+<li>Diagrams should be SVG files created with <a href="https://www.drawio.com/">draw.io</a></li>
+<li><code>bibliography/index.md</code> has the bibliography as a definition list<ul>
+<li>Citation keys have IDs for linking</li>
+<li>Use an inline HTML link <code>b:key</code> in files to create links</li>
+</ul>
+</li>
+<li><code>glossary/index.md</code> has the glossary as definition list<ul>
+<li>Reference keys have IDs for linking</li>
+<li>Use an inline HTML link <code>g:key</code> in files to create links</li>
+</ul>
+</li>
+<li>The <code>static</code> directory contains CSS and JavaScript files</li>
+<li>The <code>templates</code> directory contains <a href="https://jinja.palletsprojects.com/">Jinja</a> templates used to generate HTML<ul>
+<li><code>page.html</code> is used for website pages</li>
+<li><code>slides.html</code> is used for slideshows</li>
+</ul>
+</li>
+</ul>
+<h2>FAQ</h2>
+<dl>
+<dt>Do you need help?</dt>
+<dd>Yes—please see the issues in <a href="https://github.com/gvwilson/change">our repository</a>.</dd>
+<dt>What sort of feedback would be useful?</dt>
+<dd>Everything is welcome,
+from pointing out mistakes to suggestions for better explanations.</dd>
+<dt>Can I add a new section?</dt>
+<dd>Possibly, but please <a href="mailto:gvwilson@third-bit.com">reach out</a> before doing so.</dd>
+<dt>Why is this material free?</dt>
+<dd>Because if we all give a little, we all get a lot.</dd>
+</dl>
 </main>
 <footer>
 <a href="../">Data Science for Software Engineers</a>
