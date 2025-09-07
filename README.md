@@ -15,6 +15,9 @@ FIXME
 <div id="lessons" markdown="1">
 
 1.  [Introduction](./intro/)
+1.  [Working with Dataframes](./dataframes/)
+1.  [The Size of Software](./size/)
+1.  [Hypothesis Testing](./hypotest/)
 1.  [Conclusion](./finale/)
 
 </div>
