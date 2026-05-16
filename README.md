@@ -6,10 +6,6 @@ to introduce common statistical tools and methods.
 Help is welcome,
 but please note that all contributors must abide by our [Code of Conduct](./CODE_OF_CONDUCT.md).
 
-## Learner Persona
-
-FIXME
-
 ## Lessons
 
 <div id="lessons" markdown="1">

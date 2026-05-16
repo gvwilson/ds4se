@@ -1,0 +1,786 @@
+# Workshop Plan: Data Science for Software Engineers
+
+Three days, 18 one-hour sessions.
+Target audience: second-year undergraduates in computer science or software engineering.
+They can write Python, use Git, and remember a little high-school statistics.
+They use LLM tools regularly.
+They have never used Polars or Altair.
+
+Everything is hands-on. Each session includes either a live coding exercise or
+a dataset to explore. Lectures run no more than 20 minutes before participants
+touch a keyboard.
+
+Every session includes a replication of a specific claim from a published study
+that participants reproduce (or attempt to reproduce) with the session's tools
+on the session's data. The replication is often simplified (a subset of the
+data, one of several reported results) but it is always tied to an actual
+paper. Participants should leave every session having produced at least one
+number that appears (in some form) in the published literature.
+
+## Day 1: Working with Real Data
+
+Goal: give participants the tools they need to load, tidy, describe, and
+visualize data. Every example comes from an actual SE study.
+
+### Lesson 1: Why Should You Care What Researchers Found?
+
+Motivating question: Are some programmers really ten times more productive than
+average?
+
+Replication target: Prechelt [Prechelt2000] - reproduce the box plot of
+development time in hours across all languages, and compute the ratio of the
+90th to 10th percentile working times.
+
+-   Open with Prechelt's study [Prechelt2000, Prechelt2019]: N programmers, same
+    problem, languages of their choice.
+    -   Show the raw CSV: what's in it, why it looks the way it does.
+    -   Show the box plot of hours worked by hand (draw it on the board first).
+    -   Point: "10X" depends entirely on how you measure and who you compare.
+    -   Prechelt reports a 105X ratio (best vs. worst); the 90th/10th percentile
+        ratio is much smaller. Participants compute both.
+-   Begel & Zimmermann [Begel2014] asked hundreds of Microsoft engineers what
+    questions they most wanted researchers to answer.
+    -   Walk through the top ten: code quality, team productivity, tool effectiveness.
+    -   Point: researchers study things practitioners actually care about.
+    -   Counter-point: Goodhart's Law - as soon as a measure is used to evaluate
+        people, it stops being a useful measure.
+-   Devanbu, Zimmermann & Bird [Devanbu2016] found that developers hold strong
+    beliefs about what works, but those beliefs often don't match the evidence in
+    their own projects.
+    -   Point: personal experience misleads. Data helps.
+-   Workshop map: what we will do over three days and why.
+
+Live coding: Load the Prechelt CSV with Polars. Compute the 10th, 50th, and 90th
+percentile of `whours`. Compare the 90th/10th ratio to the 105X claim in the
+paper. How do the numbers change if you restrict to Java only?
+
+Exercise: Look at the Prechelt CSV. The paper claims the Java range is 3.8–63
+hours (ratio 17X). Reproduce that claim: filter to Java rows, find the min and
+max of `whours`. Does your result match? If not, explain the discrepancy.
+
+### Lesson 2: Tidy Data and the Polars Basics
+
+Motivating question: What fraction of Python code on Stack Overflow violates PEP
+8's line-length limit?
+
+Replication target: Bafatakis et al. [Bafatakis2019] - reproduce their finding
+that a substantial fraction of Python code snippets exceed the 79-character PEP
+8 limit, using line-length data from a local Python installation as a proxy.
+
+-   What is tidy data [Wickham2014]?
+    -   Each column is one variable; each row is one observation; one table per
+        set of observations.
+    -   Most real data is not tidy. That is your problem now.
+-   Load a CSV with Polars (`pl.read_csv`).
+-   Inspect: `shape`, `columns`, `dtypes`, `head`, `describe`.
+-   Select columns with `select`; filter rows with `filter`.
+-   Handle missing values: what `null` means in Polars; `drop_nulls` vs.
+    `fill_null`.
+-   Write results back to CSV.
+
+Live coding: Load the Python file line-length dataset (collected from a local
+Python installation, same format as `unused/04_hypotest`). Each row is a file
+ID, a line length, and a count of how many lines in that file have that
+length. Compute the total number of lines and the number that exceed 79
+characters. What fraction of all lines are non-compliant?
+
+Exercise: Bafatakis et al. found that compliance varies by file purpose (library
+code vs. scripts). Does your data show the same pattern if you split by
+directory (e.g., `site-packages` vs. `bin`)? Write the Polars query and report
+your finding in one sentence. If your result differs from the paper's, suggest
+one reason why.
+
+### Lesson 3: Grouping, Aggregating, and Joining
+
+Motivating question: How much longer are Python functions than JavaScript
+functions, on average?
+
+Replication target: Determine whether the median lines-per-function is higher
+for Python than for JavaScript, and that the two distributions have different
+shapes.
+
+-   Group by one or more columns with `group_by` and `agg`.
+-   Common aggregations: `mean`, `median`, `std`, `min`, `max`, `count`,
+    `n_unique`.
+-   Join two dataframes on a key column (`join`).
+-   The danger of joining without checking: row counts that explode or collapse.
+-   Reshape: `pivot` and `unpivot` (when you need to go from wide to long or
+    back).
+
+Live coding: Load the Python and JavaScript function-count datasets from
+`unused/correlation`. Each row is a file with its line count and function count.
+Compute lines-per-function for each file. Group by language and compute median,
+mean, and standard deviation. Combine both datasets into one dataframe with a
+`language` column for easier comparison.
+
+Exercise: The original study found that Python has a notch in the
+lines-per-function histogram at x = 0 and JavaScript has a notch at a different
+place. Reproduce that finding: make a histogram for each language (using 20-line
+bins up to 200 lines). Do your histograms match the description in the lesson?
+If not, what might account for the difference?
+
+### Lesson 4: Visualization with Altair
+
+Motivating question: What does the distribution of Python package sizes actually
+look like, and does a log scale change the story?
+
+Replication target: The basic tools lesson in `unused/02_basic` - reproduce the
+histogram of lines-per-file from a local Python installation, then compare a
+linear-scale plot to a log-scale plot and explain which reveals more structure.
+
+-   Why visualize before calculating?
+    -   Anscombe's quartet: four datasets with identical summary statistics but
+        completely different distributions.
+-   Altair's grammar: `mark`, `encoding`, `Chart`.
+-   Histogram: `mark_bar` with `alt.X(bin=True)`.
+    -   Bin width matters; always try more than one.
+-   Scatter plot: `mark_point` with `x` and `y`.
+-   Box plot: `mark_boxplot`.
+-   Log scale: when and why (heavy-tailed distributions).
+-   Jitter: when points overlap, move them a little.
+-   Color and faceting: one variable extra for free.
+
+Live coding: Reproduce the box plot from Session 1 using Altair (compare your
+result to the figure in Prechelt's paper - same shape?). Then make a log-scale
+histogram of Python file sizes from the Session 2 dataset.  Add a faceted
+comparison of Python vs. JavaScript function lengths.
+
+Exercise: The original study shows that the histogram of lines-per-file has a
+spike at very small values. Is the spike more visible on a linear or a log Y
+axis? Make both plots. Write two sentences comparing what each one reveals.
+Then check: are the very small files empty, or do they contain only comments or
+docstrings? Write a Polars filter that lets you investigate.
+
+### Lesson 5: Descriptive Statistics - What the Numbers Actually Mean
+
+Motivating question: How many versions does the average Python package have, and
+does that summary statistic hide more than it reveals?
+
+Replication target: Reproduce reported descriptive statistics for PyPI release
+counts (mean ≈ 11, median = 4, max ≈ 10,797) and explain why the mean and median
+are so different.
+
+-   Mean vs. median: when they agree and when they don't.
+    -   `ccxt` has nearly 11,000 releases. That pulls the mean up.
+    -   Median is 4. That tells a different story.
+-   Variance and standard deviation: spread vs. individual data points.
+    -   Units: standard deviation has the same units as the data; variance does not.
+-   Percentiles: the 10th, 25th, 75th, 90th percentile are more informative
+    than min/max.
+-   Skewness: when the tail goes right (most SE data does).
+-   When to use a log scale: size distributions, response times, bug counts,
+    anything that can't go below zero and has a long right tail.
+
+Live coding: Load the PyPI release-count dataset from `unused/03_robust`.
+Compute mean, median, standard deviation, and the 10th, 25th, 75th, and 90th
+percentiles. Do these numbers match the values reported in the lesson? Plot a
+histogram at four different bin sizes and discuss which one is most honest.
+
+Exercise: The dataset contains packages with zero releases. Should you keep them
+or drop them? Compute the mean and median both ways and report the results.
+Then write one sentence explaining which is more appropriate for answering "how
+often do active packages get updated?" and why the choice matters.
+
+### Lesson 6: Lab - Reproducing the Prechelt Study
+
+Goal: Spend a full hour with real data from a real study.
+
+FIXME: we have already used Prechelt. Only use each example once.
+
+Replication target: Prechelt [Prechelt2000, Prechelt2019] - reproduce
+the three main claims: (1) the 105X best-vs-worst ratio, (2) the 17X Java-only
+ratio, (3) the 2.55X 75th/25th percentile ratio.
+
+-   Participants load the Prechelt dataset and reproduce the key figures:
+    box plot of working hours, scatter of lines vs. time, comparison by language.
+-   Target numbers from the paper: best-vs-worst = 105X, Java only = 17X,
+    90th/50th = 3.7X, 75th/25th = 2.55X. Every participant should land on
+    (or very close to) these values.
+-   Discussion: what decisions did you have to make (which outliers to keep,
+    which columns to trust, how to define "language group")? How do those
+    decisions change the answer? Which reported ratio is most sensitive to
+    your choices?
+-   Wrap-up: every statistical result is the product of dozens of small choices.
+    Document them. The fact that you can reproduce the paper's numbers is not
+    a coincidence - it is the whole point of sharing data and methods.
+
+## Day 2: Testing Claims
+
+Day 2 is about statistical inference: moving from "what does this sample look
+like" to "what can we say about the population, and how confident are we?"
+
+### Lesson 7: The Logic of Hypothesis Testing
+
+Motivating question: Are Python files and JavaScript files actually different
+sizes, or could the difference just be noise?
+
+Replication target: The hypothesis testing lesson in `unused/04_hypotest` -
+reproduce the finding that line-length distributions differ significantly
+between Python and JavaScript (the reported t-statistic is -269.67, p ≈ 0.0).
+
+-   The null hypothesis: "there is no effect; any difference we see is random."
+-   The p-value: the probability of seeing a difference at least this large if
+    the null hypothesis were true.
+    -   It is NOT the probability that the null hypothesis is true.
+    -   It is NOT the probability that your result is a fluke.
+-   Significance threshold: why 0.05 and why that number is mostly arbitrary.
+-   Type I error (false positive) and Type II error (false negative).
+    -   Dyba et al. [Dyba2006] reviewed 103 controlled experiments in SE journals
+        and found most were dramatically underpowered.
+    -   If your study can't detect an effect of realistic size, a "non-significant"
+        result tells you almost nothing.
+-   p-hacking: if you run enough tests, something will come up "significant."
+    -   Bonferroni correction: if you run K tests, require p < 0.05/K.
+-   Confidence intervals: a range that contains the true value with probability C.
+    -   Usually more useful than a bare p-value.
+
+Live coding: Load the Python and JavaScript line-length datasets from
+`unused/04_hypotest`. Run a two-sample t-test on median line lengths per file.
+Compare your t-statistic and p-value to the values in the lesson. They should
+match (or be close, depending on how you aggregate). If they don't, find out
+why.
+
+Exercise: The lesson reports that the t-test gives t = -269.67 on the raw
+counts. Reproduce that result. Then: the lesson uses all lines, including very
+short and very long ones. What happens to the t-statistic if you restrict to
+lines between 2 and 200 characters? Is the finding still significant? Should you
+apply a Bonferroni correction here? Write a two-sentence justification.
+
+### Lesson 8: Comparing Two Groups
+
+Motivating question: Do programmers work different hours on weekdays versus
+weekends?
+
+Replication target: The large numbers lesson in `unused/05_largenum` - reproduce
+the reported means (weekday ≈ 6.8 hours, weekend ≈ 3.2 hours) and the t-test
+result (t ≈ 12.8, p ≈ 6.9 × 10⁻³¹).
+
+-   Student's t-test: assumes the data in each group is approximately normal.
+    -   `scipy.stats.ttest_ind`
+    -   When the p-value is essentially zero, the computer rounds it to 0.0 -
+        that's a sign to report it in scientific notation.
+-   Mann-Whitney U test (Wilcoxon rank-sum): does not assume normality.
+    -   Better default for SE data, which is rarely normal.
+    -   `scipy.stats.mannwhitneyu`
+-   How to choose: plot your data first. If it looks approximately bell-shaped,
+    either works. If it's skewed, use Mann-Whitney.
+-   Checking normality: QQ plots and the Shapiro-Wilk test.
+    -   For large samples, almost everything will fail the normality test because
+        the test becomes very sensitive.
+
+Live coding: Load the programmer-hours dataset from `unused/05_largenum`.  Split
+into weekday/weekend. Compute means for each group and check them against the
+reported values. Run both t-test and Mann-Whitney U. Compare the p-values.  Look
+at a violin plot of each group and decide which test is more appropriate.
+
+Exercise: You reproduce the t-test result (t ≈ 12.8). Now run the Shapiro-Wilk
+normality test on each group. Does the weekend group pass? Does the weekday
+group? Given your findings, should you have used the t-test or Mann-Whitney?
+Write three sentences justifying your choice, then report what changes (if
+anything) in your conclusion.
+
+### Lesson 9: Effect Size and Practical Significance
+
+Motivating question: Does a statistically significant difference mean the
+difference matters?
+
+Replication target: Fucci et al. [Fucci2016] - compute Cohen's d and Cliff's
+delta for the productivity outcome in the TDD study. The paper reports a small
+effect size for most outcomes; participants should verify that claim and report
+whether it changes their interpretation of the p-value.
+
+-   Statistical significance ≠ practical significance.
+    -   With N = 100,000, even a difference of 0.001 can be "significant."
+    -   With N = 10, even a large difference may not reach significance.
+-   Cohen's d: standardized difference between means.
+    -   Small ≈ 0.2, medium ≈ 0.5, large ≈ 0.8 (these are rough heuristics).
+-   Common-language effect size (CLES): the probability that a randomly chosen
+    value from group A is larger than a randomly chosen value from group B.
+    -   More interpretable than Cohen's d for non-statisticians.
+-   Cliff's delta: non-parametric effect size for ordinal data.
+-   DeOliveiraNeto et al. [DeOliveiraNeto2019] reviewed 5,000+ SE papers and
+    found that very few report effect sizes - a major gap in the field.
+
+Live coding: Load the Fucci TDD dataset. Compute Cohen's d and Cliff's delta for
+the `PROD` (productivity) column comparing TDD and TLD groups. Do the effect
+size values match the paper's description of a "small" effect? Now do the same
+for `QLTY` (quality) and `TESTS` (test count). Which outcome has the largest
+practical effect?
+
+Exercise: Compute Cohen's d for the weekday/weekend programmer-hours data from
+Session 8. The t-test found p ≈ 10⁻³¹. What is d? Is the effect "small,"
+"medium," or "large" by Cohen's rough heuristic? Does that change your advice to
+a manager who is considering banning weekend work? Write two sentences.
+
+### Lesson 10: Correlation and Prediction
+
+Motivating question: Can we predict the number of functions in a file just by
+counting lines?
+
+Replication target: The correlation study in `unused/correlation` - reproduce
+the reported Pearson correlation coefficients (Python r ≈ 0.806, JavaScript r ≈
+0.728) between lines per file and functions per file.
+
+-   Pearson correlation coefficient r: always between -1 and 1.
+    -   r = 0.8 for Python (lines vs. functions); r = 0.73 for JavaScript.
+    -   Does NOT imply causation.
+    -   Can be misleading if the relationship is non-linear.
+-   Spearman rank correlation: use when data is ordinal or heavily skewed.
+-   Always plot before computing: `mark_point` scatter, then add a trend line.
+-   Simple linear regression: `y = a + bx`.
+    -   How to interpret the slope and intercept.
+    -   `scipy.stats.linregress` or `numpy.polyfit`.
+    -   R² (coefficient of determination): fraction of variance "explained."
+-   Residual plots: if the residuals have a pattern, the model is wrong.
+
+Live coding: Load the Python and JavaScript function-count data. Compute
+Pearson r for lines vs. functions in each language. Your numbers should land
+near r ≈ 0.806 (Python) and r ≈ 0.728 (JavaScript). Fit a linear model to the
+Python data and plot the residuals. Is there systematic structure in the residuals?
+
+Exercise: The study uses Pearson correlation. Now compute Spearman rank
+correlation on the same data. How different are the two values? For what kind
+of file would Spearman give a more reliable answer than Pearson? Identify one
+type of file in the dataset where you'd trust Spearman more, and explain why.
+
+### Lesson 11: Confounds, Bias, and Threats to Validity
+
+Motivating question: Does code ownership improve software quality, and how would
+we know?
+
+Replication target: Kalliamvakou et al. [Kalliamvakou2014] - reproduce (on a
+small random sample) the finding that a large fraction of GitHub repositories
+are not active software projects: personal experiments, mirrors, homework, or
+abandoned stubs.
+
+-   Bird et al. [Bird2011] found that files with many contributors have more bugs.
+    -   But: larger files have more bugs too. Is ownership the cause, or file size?
+    -   Confound: a third variable that affects both the cause and the effect.
+-   Selection bias: GitHub data over-represents successful projects.
+    -   Kalliamvakou et al. [Kalliamvakou2014] found that most "projects" are
+        personal experiments, mirrors, or abandoned repos - far from representative.
+-   Survivorship bias: we study software that still exists.
+    -   Ait et al. [Ait2022] found that ~80% of GitHub projects are inactive within
+        a few years - but we rarely study the failures.
+-   Observer effect: when programmers know they're being studied, they behave
+    differently.
+-   Self-reported data: surveys about hours worked, productivity, satisfaction
+    are systematically biased.
+-   External validity: does a study of university students generalize to industry?
+    Does a study of open-source projects generalize to commercial software?
+
+Live coding: A curated sample of 200 GitHub repository metadata records is
+provided (pre-downloaded to avoid API rate limits). For each repo, you have:
+number of commits, number of contributors, date of last commit, number of stars,
+and language. Apply the Kalliamvakou criteria for "not a real project" (fewer
+than 5 commits, 1 contributor, last commit more than 2 years ago). What fraction
+fails? Does it match the paper's finding of roughly 70%?
+
+Exercise (group): You are reviewing a paper that claims "teams that use daily
+standups ship 30% faster." The data comes from a survey of teams that
+volunteered to participate. Using the bias types introduced today, list three
+specific threats to validity. For each one, describe a study design change that
+would reduce it - and estimate how hard that change would be in practice.
+
+### Lesson 12: Lab - Does Test-Driven Development Work?
+
+Goal: Replicate the analysis from Fucci et al. [Fucci2016] on TDD vs.  test-last
+development.
+
+Replication target: Fucci et al. [Fucci2016] - reproduce the Mann-Whitney U
+tests on all three outcome variables (TESTS, QLTY, PROD) and the Cliff's delta
+effect sizes. Published results show no significant difference on QLTY or PROD
+and a small difference on TESTS.
+
+-   Fucci's study is a multi-site blind analysis: five academic sites, controlled
+    experiment, professional developers, measures of quality and productivity.
+-   Participants load the dataset, run Mann-Whitney U tests on the three
+    outcome variables, compute Cliff's delta for each, and draw their own
+    conclusions.
+-   Target: reproduce the p-values and effect sizes from Table 3 of the paper.
+    If your numbers differ, diagnose why (different exclusion criteria? different
+    handling of missing values?).
+-   Then read the abstract of [Fucci2017] (the follow-up): it turns out TDD
+    and TLD produce similar outcomes, but the rhythm of test-code interleaving
+    matters more than which comes first.
+-   Discussion: does this match what you believed going in? If you had to advise
+    a team today, what would you tell them?
+-   Wrap-up: replicate, then extend. "We believe X" is not evidence. "We measured
+    X" is the beginning of evidence. And even "We measured X" needs replication.
+
+## Day 3: Mining Repositories and the Impact of AI
+
+Day 3 covers data collection from version control systems, more advanced
+methods, and the rapidly growing empirical literature on AI-assisted
+development.
+
+### Lesson 13: Mining Software Repositories
+
+Motivating question: How evenly do different contributors share work on a
+project, and does unequal contribution predict bugs?
+
+Replication target: Calculate Lorenz curves and Gini coefficients for three OSS
+projects, and check whether the projects described as "hero developer" dominated
+in the lesson match the description in Majumder et al.'s hero-developer study.
+
+-   Git objects: blobs, trees, commits.
+-   Using GitPython to walk commit history.
+    -   `repo.iter_commits`, `commit.author`, `commit.stats`.
+-   Measuring contribution: lines added, lines deleted, number of commits.
+    -   These correlate strongly [Bird2011], but not perfectly.
+-   Gini coefficient: a single number measuring inequality of distribution.
+    -   0 = perfect equality; 1 = one person does everything.
+    -   Giger et al. [Giger2011] used it to predict bug-prone files in Eclipse.
+    -   Hero developers [Majumder2019]: most projects have one person who does
+        the majority of the work.
+-   Dirty data in version control:
+    -   Flint et al. [Flint2021] found that at least 35% of MSR papers use
+        time-based data without cleaning it, leading to bogus results from
+        wrong commit timestamps.
+    -   Gold & Krinke [Gold2020] on ethical issues in mining public repositories.
+
+Live coding: Use the pre-collected commit data from
+`unused/measuring-contributions`.  Compute the Gini coefficient for three
+different projects (numpy, scikit-learn, the Software Carpentry shell-novice
+lesson). Plot the Lorenz curve for each.  Which project has the most
+concentrated contribution history? Compare your Gini values to the scatter plots
+already in the lesson directory.
+
+Exercise: The hero-developer literature typically defines a hero as the single
+contributor responsible for more than 80% of all commits. Compute this fraction
+for each of your three projects. Do any qualify? For the one with the highest
+concentration, write two sentences about what a team should consider before
+relying on that person's availability.
+
+### Lesson 14: Non-Parametric Methods and Rank-Based Tests
+
+Motivating question: Do educators correctly predict which programming mistakes
+novice students make most often?
+
+Replication target: Brown & Altadmri [Brown2017] - reproduce the finding that
+educators' rankings of common novice mistakes correlate poorly with actual
+Blackbox data, and that educators systematically over-predict certain error
+types.
+
+-   Brown & Altadmri [Brown2017] asked teachers to rank common novice mistakes
+    and compared those rankings to actual data from the Blackbox system
+    (millions of student submissions). Teachers were wrong in systematic ways.
+-   Kruskal-Wallis test: non-parametric one-way ANOVA for comparing more than
+    two groups.
+-   Spearman rank correlation: comparing ranked lists without assuming that the
+    distances between ranks are uniform.
+-   Bootstrap resampling: the modern alternative to assuming a distribution.
+    -   Sample with replacement N times; compute statistic each time; take the
+        2.5th and 97.5th percentiles of the resulting distribution.
+    -   Works for almost any statistic, no distributional assumptions required.
+-   When to bootstrap vs. when to use a parametric test.
+
+Live coding: Load the educator rankings dataset from `unused/06_nonpar`.
+Compute Spearman correlation between each educator's predicted ranking and the
+actual Blackbox ranking. Compute a bootstrap 95% confidence interval for the
+median Spearman r across all educators. Does your CI include the value that
+would indicate "educators are basically right"?
+
+Exercise: The paper reports that educators agree with each other more than they
+agree with reality. Test this: compute the average Spearman r between all pairs
+of educators, and compare it to the average r between educators and the Blackbox
+data. Write three sentences interpreting what that comparison means for how
+programming courses are designed.
+
+### Lesson 15: Study Design and Replication
+
+Motivating question: How do we know whether a study's conclusions are
+trustworthy, and can we tell by trying to reproduce them?
+
+Replication target: Participants compare their own Session 12 results (Fucci
+TDD) to the numbers in the published paper. Any discrepancy becomes the entry
+point for a discussion of what replication means, what "close enough" means, and
+why published numbers sometimes can't be reproduced exactly.
+
+-   Types of studies in SE research:
+    -   Controlled experiments (lab and field).
+    -   Case studies (one project, one company).
+    -   Surveys and questionnaires.
+    -   Mining studies (repositories, bug trackers, Stack Overflow).
+    -   Systematic literature reviews.
+-   What replication means and why it matters.
+    -   Pizard et al. [Pizard2021] trained students to read and replicate
+        empirical SE studies; students who did this were better at critiquing
+        new claims.
+-   Pre-registration: committing to your hypotheses and methods before
+    collecting data.
+    -   Prevents p-hacking and hypothesis-after-results-known (HARKing).
+-   The replication crisis in software engineering:
+    -   Many "findings" in SE have not been replicated.
+    -   Nagappan et al. [Nagappan2008a] found TDD reduced defects by 40-90%
+        in industrial case studies; Fucci et al. [Fucci2016] found little effect
+        in a controlled experiment. Both are valid. The settings differed.
+-   Reading a paper critically:
+    -   What is the research question?
+    -   What are the independent and dependent variables?
+    -   What is the sample? How was it selected?
+    -   What threats to validity do the authors acknowledge?
+    -   What do they not acknowledge?
+
+Live coding: Pull up the Fucci numbers from Session 12. Compare them to Table 3
+in the paper. Where do they match? Where do they differ? For each discrepancy,
+write a hypothesis about why it exists (different data version, different
+exclusion rule, different test implementation).
+
+Exercise (group): Read the abstract and results section of one short SE paper (a
+different paper is provided for each group). Write a half-page critique: what do
+you trust, what do you doubt, and what one follow-up study would you run?
+Include: "We would know our replication had succeeded if we reproduced the
+number ___."
+
+### Lesson 16: AI Tools and Software Engineering - What Do We Actually Know?
+
+Motivating question: Does using GitHub Copilot make developers more productive,
+and does it make their code less secure?
+
+Replication target: Fu et al. [Fu2024] - examine a provided sample of 20
+Copilot-generated code snippets and classify each one using Fu's taxonomy of
+security weaknesses (injection, memory management, error handling, etc.).
+Compare your classification counts to the distributions reported in the paper.
+
+This session covers the emerging empirical literature on AI-assisted
+development.  The field is moving fast; treat everything here as preliminary.
+
+-   Productivity claims:
+    -   Noda et al. [Noda2023] on DevEx: productivity is multidimensional
+        (flow, feedback, cognitive load). Simple metrics (lines per day) miss most of it.
+    -   GitHub's own studies report 55% faster task completion for isolated
+        coding tasks; the control conditions and external validity are contested.
+-   Code quality and security:
+    -   Fu et al. [Fu2024] analyzed Copilot-generated code on GitHub and found
+        widespread security weaknesses, particularly in memory management and
+        injection vulnerabilities. They classified 435 vulnerable snippets.
+    -   El Haji et al. [ElHaji2024] studied Copilot for test generation: it
+        produces syntactically correct tests, but they often lack meaningful
+        assertions and miss edge cases.
+    -   Furia et al. [Furia2022, Furia2023] demonstrated that standard
+        frequentist analyses of code quality often lead to conflicting conclusions
+        depending on how confounds are handled.
+-   What we do not yet know:
+    -   Long-term effects on code maintainability.
+    -   Whether AI tools help or harm junior developers' skill development.
+    -   How productivity gains distribute across team roles.
+
+Live coding: Open the 20 provided Copilot-generated Python snippets. For each
+one, decide: (1) does it compile? (2) does it have an obvious security issue?
+(3) if so, which of Fu's categories does it fall into? Tally your
+results. Compare to Fu et al.'s reported distribution across categories. Your
+sample is tiny; how wide would the confidence interval be around your fraction?
+
+Exercise: You are asked to run a study at your company to determine whether
+Copilot increases developer productivity. You have six months and can recruit 20
+developers. Sketch a study design: what you'll measure, what you'll control,
+what your comparison condition is, and what three threats to validity you're
+most worried about. Then: which of Fucci's methodological choices (multi-site,
+blind analysis, pre-specified outcomes) would you borrow, and why?
+
+### Lesson 17: Reading and Critiquing the Literature
+
+Motivating question: How do you extract a claim, evaluate its evidence, and
+check one number yourself in the time it takes to read a paper?
+
+Replication target: Each pair of participants reproduces one specific statistic
+from a provided short paper - a correlation coefficient, a sample mean, or a
+percentage - using only the numbers reported in the paper's text and tables. The
+goal is to detect whether the reported statistic is consistent with the reported
+inputs.
+
+-   Finding papers: IEEE Xplore, ACM Digital Library, arXiv, Google Scholar.
+    -   Conference proceedings (ICSE, FSE, MSR, ESEM) vs. journal articles
+        (TSE, EMSE, IST).
+    -   Preprints are not peer-reviewed; be appropriately skeptical.
+-   Reading order: abstract, conclusion, figures, then methods.
+    -   Most papers bury the important caveats in the threats-to-validity section.
+-   Identifying statistical red flags:
+    -   p-value reported without effect size.
+    -   No confidence intervals.
+    -   N < 30 with parametric tests and no normality check.
+    -   Comparison groups that differ on more than one variable.
+    -   Self-selected samples presented as representative.
+-   Lo et al. [Lo2015] surveyed practitioners on which SE research topics they
+    find relevant. Many practitioners don't read research at all. That is a
+    two-way problem.
+
+Exercise (pairs): Each pair receives a different short paper.
+    -   Identify the research question, independent variable, dependent variable,
+        sample size, and statistical method.
+    -   Find one thing the authors did well methodologically.
+    -   Find one threat to validity the authors did not discuss.
+    -   Pick one reported statistic and check whether it is consistent with
+        other numbers in the paper (e.g., if they report means and standard
+        deviations, compute Cohen's d yourself; if they report a correlation
+        and sample size, confirm the degrees of freedom).
+    -   Present in two minutes to the group. Report: "We reproduced / could not
+        reproduce the claim that ___."
+
+### Lesson 18: Capstone - Design Your Own Study
+
+Goal: Apply everything from the workshop to a study you care about.  Before
+designing a new study, identify an existing result you intend to replicate as a
+baseline.
+
+#### Part 1 (individual)
+
+Pick one published result from the studies covered in this workshop. Write
+one sentence stating:
+
+-   The claim: "X et al. found that ___."
+-   The key number: "The specific value we will try to reproduce is ___."
+-   The dataset: "We will use the same / analogous data because ___."
+
+This is your replication baseline. Any new finding is only interesting if it
+differs from this baseline in a way you can explain.
+
+#### Part 2 (20 minutes, individual)
+
+Pick one question from this list - or propose your own:
+
+-   Does code review comment length predict whether the comment is accepted?
+-   Do projects that adopt linters have fewer bugs in later commits?
+-   Is there a relationship between the number of dependencies a package has
+    and how long it stays active?
+-   Does the time between a bug report and its fix vary by programming language?
+-   Do commit messages written at night differ in quality from those written
+    during the day?
+
+Write a one-page study design:
+
+-   Research question (one sentence).
+-   Connection to your replication baseline: how does your question extend,
+    contradict, or refine the existing result you identified?
+-   Data source (what repository, dataset, or collection would you use?).
+-   Variables: what you will measure and how.
+-   Analysis: which statistical methods from this workshop apply and why.
+-   Threats: at least three, with proposed mitigations.
+-   What would a positive result look like? What would a null result mean?
+
+#### Part 3 (30 minutes, group)
+
+-   Share designs in groups of three.
+-   Give each other specific feedback using the critique framework from
+    Session 17.
+-   Identify the single biggest methodological risk in each design.
+-   For each design: could the replication baseline actually be reproduced
+    with the proposed data? If not, what needs to change?
+
+No new code required. This is about thinking clearly about evidence.
+
+## Datasets Used in This Workshop
+
+All datasets are included in the repository or available at the URLs below.  No
+dataset requires a login.
+
+| Session | Dataset | Study replicated |
+|---------|---------|-----------------|
+| 1, 6 | Prechelt programmer study | Prechelt (2000) |
+| 2 | Python file line-length counts | Bafatakis et al. (2019) |
+| 3, 10 | Python and JavaScript function counts | Correlation lesson (unpublished) |
+| 4 | Python package sizes (histogram reproduction) | Basic tools lesson (unpublished) |
+| 5 | PyPI release counts | Robust analysis lesson (unpublished) |
+| 7 | Python and JavaScript line-length distributions | Hypothesis testing lesson |
+| 8, 9 | Programmer working hours | Large numbers lesson |
+| 9, 12 | Fucci TDD study | Fucci et al. (2016) |
+| 11 | GitHub repository metadata sample | Kalliamvakou et al. (2014) |
+| 13 | Git commit histories (numpy, scikit-learn, shell-novice) | Hero developer literature |
+| 14 | Educator rankings vs. Blackbox | Brown & Altadmri (2017) |
+| 16 | Copilot-generated code snippets | Fu et al. (2024) |
+
+## Key References
+
+Ait et al. (2022). An empirical study on the survival rate of GitHub projects.
+MSR 2022.
+
+Bafatakis et al. (2019). Python coding style compliance on Stack Overflow.  MSR
+2019.
+
+Begel & Zimmermann (2014). Mining questions asked by software engineers at
+Microsoft. MSR 2014.
+
+Binkley et al. (2012). The impact of identifier style on effort and
+comprehension. *EMSE*.
+
+Bird et al. (2011). Don't touch my code! Examining the effects of ownership on
+software quality. FSE 2011.
+
+Brown & Altadmri (2017). Novice Java programming mistakes: large-scale data
+vs. educator beliefs. *TOCE*.
+
+DeOliveiraNeto et al. (2019). Evolution of statistical analysis in empirical
+software engineering research. *JSS*.
+
+Devanbu, Zimmermann & Bird (2016). Belief & evidence in empirical software
+engineering. ICSE 2016.
+
+Dyba, Kampenes & Sjoberg (2006). A systematic review of statistical power in
+software engineering experiments. *IST*.
+
+El Haji et al. (2024). Using GitHub Copilot for test generation in Python.
+
+Flint, Chauhan & Dyer (2021). Escaping the time pit: pitfalls and guidelines for
+using time-based Git data. MSR 2021.
+
+Fu et al. (2024). Security weaknesses of Copilot generated code in GitHub.
+
+Fucci et al. (2016). An external replication on the effects of test-driven
+development using a multi-site blind analysis approach. *TOSEM*.
+
+Fucci et al. (2017). A dissection of the test-driven development process: does
+it really matter to test-first or to test-last? *IEEE TSE*.
+
+Furia et al. (2022). Applying Bayesian analysis guidelines to empirical software
+engineering data.
+
+Giger, Pinzger & Gall (2011). Using the Gini coefficient for bug prediction in
+Eclipse. *IWPSE-EVOL*.
+
+Gold & Krinke (2020). Ethical mining. MSR 2020.
+
+Kalliamvakou et al. (2014). The promises and perils of mining GitHub. MSR 2014.
+
+Lo et al. (2015). How practitioners perceive the relevance of software
+engineering research. FSE 2015.
+
+Nagappan et al. (2008). Realizing quality improvement through test-driven
+development. *EMSE*.
+
+Noda et al. (2023). DevEx: what actually drives productivity. *CACM*.
+
+Patitsas et al. (2016). Evidence that computer science grades are not bimodal.
+ICER 2016.
+
+Pizard et al. (2021). Training students in evidence-based software engineering
+and systematic reviews. *EMSE*.
+
+Prechelt (2000). An empirical comparison of seven programming languages.  *IEEE
+Computer*.
+
+Prechelt (2019). The 10X productivity claims. *IEEE Software*.
+
+Wickham (2014). Tidy data. *Journal of Statistical Software*.
+
+## Pacing Notes
+
+-   Day 1 is deliberately slower than Days 2 and 3. Participants who have never
+    used Polars need time to build confidence before the statistics get harder.
+
+-   Session 6, 12, and 18 are full labs with no new content. Do not compress them
+    to fit in extra material.
+
+-   The replication targets in Sessions 2, 4, and 5 use data from the `unused/`
+    lessons rather than the original papers' exact datasets. Participants should
+    be told this explicitly: "we are doing an analogous analysis, not a direct
+    replication." That distinction is itself a learning goal.
+
+-   If the group is ahead of schedule, add: survival analysis of open-source
+    project lifetimes (see `unused/survival-analysis`), curve fitting to email
+    inter-arrival times (`unused/curve-fitting`), or the language popularity
+    analysis from Stack Overflow data (`unused/language-popularity`).
+
+-   If the group is behind schedule, drop Session 14 (non-parametric methods) or
+    compress Sessions 13 and 14 into one session that covers only the Gini
+    coefficient and the bootstrap.
