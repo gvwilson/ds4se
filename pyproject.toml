@@ -4,29 +4,37 @@ description = "data science for software engineers"
 version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = [
-    "linkchecker",
+    "altair>=6.1.0",
     "mccole",
-    "polars"
+    "polars>=1.33.0",
+    "ruff>=0.15.13",
+    "taskipy>=1.14.1",
 ]
+
+[tool.taskipy.tasks]
+bib = {cmd = "mccole bib", help = "Check bibliography entries."}
+clean = {cmd = "find . -type f -name '*~' -exec rm {} \\; && find . -type d -name __pycache__ | xargs rm -rf && find . -type d -name .ruff_cache | xargs rm -rf", help = "Clean up generated and cache files."}
+check = {cmd = "mccole check --src . --dst docs && typos *.md */*.md && ruff check .", help = "Check code and project."}
+serve = {cmd = "python -m http.server -d docs", help = "Serve generated HTML."}
+site = {cmd = "mccole build --src . --dst docs && touch docs/.nojekyll", help = "Build HTML."}
 
 [tool.mccole]
+brand = "DS4SE"
+repo = "https://github.com/gvwilson/ds4se"
 skips = [
-    "*~",
-    "*/data/*",
-    "*.csv",
-    "*.js",
-    "*.py",
-    "*.sh",
-    "*.tbl",
-    "*.txt",
-    "*.xlsx",
-    "extras/**",
-    "unused/**",
-    "uv.lock"
+  "**/*~",
+  "**/__pycache__/**",
+  "*.csv",
+  "*.js",
+  "*.py",
+  "*.sh",
+  "*.tbl",
+  "*.txt",
+  "*.xlsx",
+  "*/data/*",
+  "docs/**",
+  "_extras/**",
+  "log/**",
+  "unused/**",
+  "uv.lock"
 ]
-
-[tool.mccole.renames]
-"README.md" = ""
-"CODE_OF_CONDUCT.md" = "conduct"
-"CONTRIBUTING.md" = "contrib"
-"LICENSE.md" = "license"

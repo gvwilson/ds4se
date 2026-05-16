@@ -15,8 +15,8 @@
       <span class="dropdown">
 	<a href="#">Lessons</a>
 	<span id="nav-lessons" class="dropdown-content">
-{% for key in lessons %}
-          <a href="{{key}}">{{lessons[key]}}</a>
+{% for slug, title in lessons %}
+          <a href="@/{{slug}}/">{{title}}</a>
 {% endfor %}
 	</span>
       </span>
@@ -24,8 +24,8 @@
       <span class="dropdown">
         <a href="#">Appendices</a>
         <span id="nav-appendices" class="dropdown-content">
-{% for key in appendices %}
-          <a href="{{key}}">{{appendices[key]}}</a>
+{% for slug, title in appendices %}
+          <a href="@/{{slug}}/">{{title}}</a>
 {% endfor %}
         </span>
       </span>
