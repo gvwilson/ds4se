@@ -7,56 +7,48 @@
 -   Use the Noda DevEx framework to identify dimensions of developer experience
 -   Recognize how Goodhart's Law undermines productivity metrics
 
----
+## Lesson
 
 -   In 2000, Lutz Prechelt asked dozens of programmers to solve the same phone-book problem
     in the language of their choice [%b Prechelt2000 Prechelt2019 %]
     -   The data file `jccpprtTR.csv` has one row per programmer with columns like
         `person`, `lang`, `whours` (work hours), `stmtL` (statement lines), and `whours`
     -   Every participant produced a working solution; the question is how long it took
-
 -   The famous "10X programmer" claim lives in this dataset, but the number you get depends
     entirely on what you measure
     -   Comparing the single fastest to the single slowest gives a 105X ratio
     -   Restricting to Java alone gives 17X
     -   Comparing the 90th [%g percentile "percentile" %] to the 10th gives a much smaller number
     -   Comparing the [%g median "median" %] across language groups gives a different story again
-
 -   A [%g box_and_whisker_plot "box-and-whisker plot" %] shows these differences clearly
     -   The box spans the 25th to 75th percentile; the center line is the median
     -   Points outside the whiskers are not necessarily errors; they are just far from typical
-
 -   Begel and Zimmermann asked hundreds of Microsoft engineers what questions they most
     wanted researchers to answer [%b Begel2014 %]
     -   Top concerns span code quality, team productivity, and tool effectiveness
     -   None of the top-ten questions ask about individual programmer speed
     -   Engineers care about systems, not about ranking colleagues
-
 -   [%g goodharts_law "Goodhart's Law" %] explains why individual productivity metrics fail:
     once you use a measure to evaluate people, they optimize the measure instead of the
     underlying goal
     -   If you reward lines of code per day, people write more lines per day
     -   If you reward closed tickets, people close tickets without fixing the underlying problem
     -   The measure stops tracking what you actually care about
-
 -   Devanbu, Zimmermann, and Bird surveyed developers about their beliefs regarding software
     engineering practice [%b Devanbu2016 %]
     -   Developers held strong opinions that often contradicted evidence in their own project data
     -   Experience in one context does not automatically transfer to another context
     -   Personal intuition is data, but it is one data point with a very small sample size
-
 -   Noda et al. argue that developer experience (DevEx) has three distinct dimensions
     [%b Noda2023 %]
     -   Feedback loops: how quickly do developers get signals about whether their work is correct?
     -   Flow state: how often can developers work without interruption?
     -   Cognitive load: how much mental effort does the environment impose beyond the actual problem?
     -   Simple metrics like lines of code per day collapse all three dimensions into noise
-
 -   Before measuring productivity, you have to decide what productivity means
     -   A developer who writes 50 lines of clean, tested, documented code may deliver more value
         than one who writes 200 lines of tangled code that breaks the next sprint
     -   This is not a philosophical point; it changes which data you collect and how you analyze it
-
 -   This tutorial covers 18 sessions organized into four days
     -   Day 1: loading, cleaning, grouping, and visualizing real data
     -   Day 2: hypothesis testing, effect size, correlation, and threats to validity

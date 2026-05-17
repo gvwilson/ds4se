@@ -7,33 +7,28 @@
 -   Apply the DeSouza Santos et al. example to explain what interviews added that a survey alone could not
 -   Evaluate a study's claim to be "mixed methods" using appropriate criteria
 
----
+## Lesson
 
 -   [%g mixed_methods "Mixed methods" %]: combining quantitative and qualitative data in a single study
     -   The quantitative part answers "how much" and "how often"
     -   The qualitative part answers "why" and "in what context"
     -   Neither is subordinate; each compensates for the other's weaknesses
     -   Combining two quantitative instruments does not make a study mixed methods
-
 -   Sequential designs:
     -   Quantitative then qualitative (QUAN → qual): mine repositories to identify anomalies, then interview developers at those projects to explain them
     -   Qualitative then quantitative (QUAL → quan): interview developers to identify hypotheses, then test those hypotheses on a large dataset
     -   The order reflects which question comes first: discovery or confirmation
-
 -   Concurrent (convergent) design: collect both types of data at the same time and compare results
     -   Use when you want [%g triangulation "triangulation" %]: if the numbers and the interviews point in the same direction, confidence in the finding increases
     -   If quantitative and qualitative results conflict, that conflict is itself a finding — investigate rather than discard one result
     -   Concurrent designs require more coordination but avoid the problem of one phase contaminating the other
-
 -   DeSouza Santos et al. [%b DeSouzaSantos2022 %] studied coordination in remote-first and hybrid software teams
     -   Survey data (quantitative) identified broad patterns in how teams communicated and coordinated
     -   Interviews (qualitative) explained why those patterns emerged and what mechanisms produced them
     -   Neither component alone would have established both the pattern and the explanation for it
-
 -   Furia et al. [%b Furia2023 %] argue that observational SE data supports only predictive claims, not causal ones
     -   Mixed methods can help bridge that gap: the qualitative component can reveal plausible causal mechanisms that the quantitative data identifies but cannot explain
     -   This is not the same as proof of causation, and researchers should say so
-
 -   Common pitfall: running the qualitative part as an afterthought to explain away inconvenient quantitative results
     -   If the qualitative component is designed after you see the numbers, it will confirm your preferred interpretation rather than test it
     -   Design both components together, before either is collected

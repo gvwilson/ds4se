@@ -68,83 +68,65 @@
 <li>Use the Noda DevEx framework to identify dimensions of developer experience</li>
 <li>Recognize how Goodhart's Law undermines productivity metrics</li>
 </ul>
-<hr/>
+<h2>Lesson</h2>
 <ul>
-<li>
-<p>In 2000, Lutz Prechelt asked dozens of programmers to solve the same phone-book problem
-    in the language of their choice [<a class="bib-ref" href="../bibliography/#Prechelt2000">Prechelt2000</a>, <a class="bib-ref" href="../bibliography/#Prechelt2019">Prechelt2019</a>]</p>
-<ul>
+<li>In 2000, Lutz Prechelt asked dozens of programmers to solve the same phone-book problem
+    in the language of their choice [<a class="bib-ref" href="../bibliography/#Prechelt2000">Prechelt2000</a>, <a class="bib-ref" href="../bibliography/#Prechelt2019">Prechelt2019</a>]<ul>
 <li>The data file <code>jccpprtTR.csv</code> has one row per programmer with columns like
     <code>person</code>, <code>lang</code>, <code>whours</code> (work hours), <code>stmtL</code> (statement lines), and <code>whours</code></li>
 <li>Every participant produced a working solution; the question is how long it took</li>
 </ul>
 </li>
-<li>
-<p>The famous "10X programmer" claim lives in this dataset, but the number you get depends
-    entirely on what you measure</p>
-<ul>
+<li>The famous "10X programmer" claim lives in this dataset, but the number you get depends
+    entirely on what you measure<ul>
 <li>Comparing the single fastest to the single slowest gives a 105X ratio</li>
 <li>Restricting to Java alone gives 17X</li>
 <li>Comparing the 90th <a class="gl-ref" href="../glossary/#percentile">percentile</a> to the 10th gives a much smaller number</li>
 <li>Comparing the <a class="gl-ref" href="../glossary/#median">median</a> across language groups gives a different story again</li>
 </ul>
 </li>
-<li>
-<p>A <a class="gl-ref" href="../glossary/#box_and_whisker_plot">box-and-whisker plot</a> shows these differences clearly</p>
-<ul>
+<li>A <a class="gl-ref" href="../glossary/#box_and_whisker_plot">box-and-whisker plot</a> shows these differences clearly<ul>
 <li>The box spans the 25th to 75th percentile; the center line is the median</li>
 <li>Points outside the whiskers are not necessarily errors; they are just far from typical</li>
 </ul>
 </li>
-<li>
-<p>Begel and Zimmermann asked hundreds of Microsoft engineers what questions they most
-    wanted researchers to answer [<a class="bib-ref" href="../bibliography/#Begel2014">Begel2014</a>]</p>
-<ul>
+<li>Begel and Zimmermann asked hundreds of Microsoft engineers what questions they most
+    wanted researchers to answer [<a class="bib-ref" href="../bibliography/#Begel2014">Begel2014</a>]<ul>
 <li>Top concerns span code quality, team productivity, and tool effectiveness</li>
 <li>None of the top-ten questions ask about individual programmer speed</li>
 <li>Engineers care about systems, not about ranking colleagues</li>
 </ul>
 </li>
-<li>
-<p><a class="gl-ref" href="../glossary/#goodharts_law">Goodhart's Law</a> explains why individual productivity metrics fail:
+<li><a class="gl-ref" href="../glossary/#goodharts_law">Goodhart's Law</a> explains why individual productivity metrics fail:
     once you use a measure to evaluate people, they optimize the measure instead of the
-    underlying goal</p>
-<ul>
+    underlying goal<ul>
 <li>If you reward lines of code per day, people write more lines per day</li>
 <li>If you reward closed tickets, people close tickets without fixing the underlying problem</li>
 <li>The measure stops tracking what you actually care about</li>
 </ul>
 </li>
-<li>
-<p>Devanbu, Zimmermann, and Bird surveyed developers about their beliefs regarding software
-    engineering practice [<a class="bib-ref" href="../bibliography/#Devanbu2016">Devanbu2016</a>]</p>
-<ul>
+<li>Devanbu, Zimmermann, and Bird surveyed developers about their beliefs regarding software
+    engineering practice [<a class="bib-ref" href="../bibliography/#Devanbu2016">Devanbu2016</a>]<ul>
 <li>Developers held strong opinions that often contradicted evidence in their own project data</li>
 <li>Experience in one context does not automatically transfer to another context</li>
 <li>Personal intuition is data, but it is one data point with a very small sample size</li>
 </ul>
 </li>
-<li>
-<p>Noda et al. argue that developer experience (DevEx) has three distinct dimensions
-    [<a class="bib-ref" href="../bibliography/#Noda2023">Noda2023</a>]</p>
-<ul>
+<li>Noda et al. argue that developer experience (DevEx) has three distinct dimensions
+    [<a class="bib-ref" href="../bibliography/#Noda2023">Noda2023</a>]<ul>
 <li>Feedback loops: how quickly do developers get signals about whether their work is correct?</li>
 <li>Flow state: how often can developers work without interruption?</li>
 <li>Cognitive load: how much mental effort does the environment impose beyond the actual problem?</li>
 <li>Simple metrics like lines of code per day collapse all three dimensions into noise</li>
 </ul>
 </li>
-<li>
-<p>Before measuring productivity, you have to decide what productivity means</p>
-<ul>
+<li>Before measuring productivity, you have to decide what productivity means<ul>
 <li>A developer who writes 50 lines of clean, tested, documented code may deliver more value
     than one who writes 200 lines of tangled code that breaks the next sprint</li>
 <li>This is not a philosophical point; it changes which data you collect and how you analyze it</li>
 </ul>
 </li>
-<li>
-<p>This tutorial covers 18 sessions organized into four days</p>
-<ul>
+<li>This tutorial covers 18 sessions organized into four days<ul>
 <li>Day 1: loading, cleaning, grouping, and visualizing real data</li>
 <li>Day 2: hypothesis testing, effect size, correlation, and threats to validity</li>
 <li>Day 3: mining repositories and understanding the impact of AI tools</li>

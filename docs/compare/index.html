@@ -68,67 +68,51 @@
 <li>Interpret and report both test statistics appropriately</li>
 <li>Recognize when a QQ plot reveals departure from normality</li>
 </ul>
-<hr/>
+<h2>Lesson</h2>
 <ul>
-<li>
-<p>The previous lesson introduced hypothesis testing; this one asks which test to use</p>
-<ul>
+<li>The previous lesson introduced hypothesis testing; this one asks which test to use<ul>
 <li>The answer depends on the shape of your data, not on what answer you want to get</li>
 </ul>
 </li>
-<li>
-<p><a class="gl-ref" href="../glossary/#t_test">Student's t-test</a> compares the means of two groups and assumes each group is approximately normally distributed</p>
-<ul>
+<li><a class="gl-ref" href="../glossary/#t_test">Student's t-test</a> compares the means of two groups and assumes each group is approximately normally distributed<ul>
 <li>Use <code>scipy.stats.ttest_ind</code> for independent groups</li>
 <li>When p rounds to 0.0, report it in scientific notation (e.g., p = 6.9 × 10⁻³¹); never write "p = 0"</li>
 <li>The t-statistic measures how many standard errors separate the two means</li>
 </ul>
 </li>
-<li>
-<p><a class="gl-ref" href="../glossary/#mann_whitney_u">Mann-Whitney U</a> (also called the Wilcoxon rank-sum test) compares two groups without assuming normality</p>
-<ul>
+<li><a class="gl-ref" href="../glossary/#mann_whitney_u">Mann-Whitney U</a> (also called the Wilcoxon rank-sum test) compares two groups without assuming normality<ul>
 <li>It tests whether values from one group tend to be larger than values from the other</li>
 <li>Use <code>scipy.stats.mannwhitneyu</code> with <code>alternative="two-sided"</code> unless you have a strong directional prediction</li>
 <li>SE data is rarely normally distributed, so Mann-Whitney is usually the safer default</li>
 </ul>
 </li>
-<li>
-<p>How to choose between the two: look at your data first</p>
-<ul>
+<li>How to choose between the two: look at your data first<ul>
 <li>If the distribution is roughly bell-shaped in each group, either test works</li>
 <li>If the distribution is skewed, has heavy tails, or is bounded (like hours worked or bug counts), use Mann-Whitney</li>
 <li>Never choose the test after looking at the p-values from both</li>
 </ul>
 </li>
-<li>
-<p>Checking <a class="gl-ref" href="../glossary/#normality">normality</a> with a <a class="gl-ref" href="../glossary/#qq_plot">QQ plot</a></p>
-<ul>
+<li>Checking <a class="gl-ref" href="../glossary/#normality">normality</a> with a <a class="gl-ref" href="../glossary/#qq_plot">QQ plot</a><ul>
 <li>A QQ plot plots each quantile of your data against the corresponding quantile of a normal distribution</li>
 <li>Points that fall on a straight diagonal line indicate the data is approximately normal</li>
 <li>Points that curve away from the diagonal in the tails indicate heavier or lighter tails than normal</li>
 <li>An S-shaped curve indicates skewness</li>
 </ul>
 </li>
-<li>
-<p>The Shapiro-Wilk test is a formal normality test, but use it with caution</p>
-<ul>
+<li>The Shapiro-Wilk test is a formal normality test, but use it with caution<ul>
 <li>For small samples (N &lt; 50), it has low power and may miss non-normality</li>
 <li>For large samples (N &gt; 5,000), it almost always rejects normality because it detects tiny departures</li>
 <li>At large N, a "failed" Shapiro-Wilk test does not mean you must use Mann-Whitney; check the QQ plot too</li>
 </ul>
 </li>
-<li>
-<p>Fucci et al. ran a quasi-experiment with 45 undergraduate students [<a class="bib-ref" href="../bibliography/#Fucci2018">Fucci2018</a>]</p>
-<ul>
+<li>Fucci et al. ran a quasi-experiment with 45 undergraduate students [<a class="bib-ref" href="../bibliography/#Fucci2018">Fucci2018</a>]<ul>
 <li>23 students stayed awake all night before a programming task; 22 slept normally</li>
 <li>The sleep-deprived group produced lower-quality implementations</li>
 <li>This design controls for exactly one variable (sleep), which makes causal interpretation much more defensible</li>
 <li>Small N makes the choice of test consequential: with 22 or 23 per group, normality is hard to verify</li>
 </ul>
 </li>
-<li>
-<p>The code below loads programmer-hours data, splits it by day type, and runs both tests</p>
-</li>
+<li>The code below loads programmer-hours data, splits it by day type, and runs both tests</li>
 </ul>
 <div data-inc="weekday_weekend.py"><span aria-label="Source: compare/weekday_weekend.py" class="inc-path" role="img" tabindex="0" title="compare/weekday_weekend.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="sd">"""Compare weekday vs. weekend programmer working hours."""</span>
 

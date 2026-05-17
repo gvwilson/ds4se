@@ -7,14 +7,13 @@
 -   Explain how Ait et al. used quantitative data to raise a question that qualitative methods then began to answer
 -   Read Silva et al.'s refactoring study as an example of qualitative coding applied to a quantitative data source
 
----
+## Lesson
 
 -   Quantitative data is counts and measurements: number of commits, lines of code, defect rate, star count
     -   Qualitative data is language: interview transcripts, open survey responses, code review comments,
         issue tracker text, commit messages, Stack Overflow posts
     -   The goal of quantitative analysis is to measure frequency and magnitude
     -   The goal of qualitative analysis is to understand meaning, context, and motivation
-
 -   SE research produces qualitative data in many forms
     -   Interview transcripts: asking developers why they made a decision or stopped contributing
     -   Open survey responses: free-text answers to questions like "what slows you down most?"
@@ -22,24 +21,20 @@
     -   Issue tracker text: bug reports describing what happened and what was expected
     -   Commit messages: developers describing what they changed and, occasionally, why
     -   Stack Overflow posts: questions and answers about programming problems
-
 -   Hoda [%b Hoda2024 %] provides a practitioner-focused introduction to qualitative methods in SE
     -   Qualitative work is not easier than quantitative work
     -   It is harder to do rigorously and harder to convince readers to trust
     -   The difficulty is not in collecting the data but in interpreting it consistently
-
 -   Qualitative methods are the right choice in three situations
     -   You do not yet know what the important variables are
     -   The phenomenon involves judgment, motivation, or social context that numbers cannot capture
     -   Numbers exist but do not explain the pattern you found
-
 -   Ait et al. studied survival rates of GitHub projects [%b Ait2022 %]
     -   Their quantitative finding: most GitHub projects go inactive within a few years of creation
     -   Survival curves tell you when projects die; they do not explain why
     -   Interviews with maintainers reveal the reasons: burnout, loss of interest, employer pressure,
         feeling underappreciated by users
     -   The quantitative result raises the question; the qualitative result begins to answer it
-
 -   Silva et al. studied why developers refactor [%b Silva2016 %]
     -   They read 548 commit messages from GitHub and classified each one into a motivational theme
     -   The data source is quantitative (GitHub commits); the analysis is qualitative (reading and

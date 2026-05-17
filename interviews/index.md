@@ -7,37 +7,31 @@
 -   Choose between purposive sampling and snowball sampling and explain the trade-offs
 -   Apply ethical principles from [%b Gold2020 %] to interview research design
 
----
+## Lesson
 
 -   Semi-structured interviews: a prepared list of topics, but the interviewer follows the conversation rather than reading a script
     -   The most common qualitative method in SE research
     -   Preparation matters: pilot your questions with someone not in your sample before you interview anyone who counts
     -   Record and transcribe with consent; field notes are a poor substitute for verbatim transcripts
-
 -   Question types to use:
     -   Grand tour: "Walk me through the last time you reviewed someone's code" — opens a complete episode without specifying what you expect to hear
     -   Experience: "Tell me about a time a tool surprised you" — anchors the conversation in a specific memory rather than a general opinion
     -   Probing: "Can you say more about that?" and "What happened next?" — lets the participant lead while keeping the conversation moving
-
 -   Question types to avoid:
     -   Leading: "Don't you think pull requests improve quality?" — the answer is already embedded in the question
     -   Binary: "Do you use code reviews? Yes or no" — a yes/no answer tells you nothing about how, when, or why
     -   Double-barreled: "How do you feel about pair programming and mob programming?" — you cannot tell which practice the participant is commenting on
-
 -   Ameller et al. [%b Ameller2012 %] interviewed 18 developers at different companies about how they handle non-functional requirements in practice
     -   The findings contradicted several textbook recommendations about how NFRs should be documented and tracked
     -   Semi-structured interviews were necessary because textbook prescriptions had not predicted what developers actually did
-
 -   Survey open-ends: shorter responses, larger N, but less depth than interviews
     -   Useful for validating or extending qualitative findings at scale once you know what categories exist
     -   Begel & Zimmermann [%b Begel2014 %] combined structured ratings with open-ended responses to understand what questions practitioners most wanted researchers to answer
     -   The open-ended responses revealed priorities that a fixed-response survey would not have captured
-
 -   Sampling in qualitative work:
     -   [%g purposive_sampling "Purposive sampling" %]: select participants who have relevant experience — you want developers who have actually done code review, not random employees
     -   [%g snowball_sampling "Snowball sampling" %]: ask participants to refer others with relevant experience, used when the target population is hard to identify directly
     -   Random sampling is rarely used and rarely appropriate in qualitative work, because randomness makes no sense when you are looking for people with specific knowledge
-
 -   Ethical considerations: consent, anonymization, right to withdraw, data retention
     -   Participants must know what the data will be used for before they agree to be recorded
     -   Gold & Krinke [%b Gold2020 %] extend these concerns to mined data where participants never consented to being studied: public does not mean consented to research use

@@ -7,14 +7,13 @@
 -   Explain how Aghajani et al. and Fan et al. used thematic analysis in SE research
 -   Recognize what automatic sentiment analysis misses that thematic analysis captures
 
----
+## Lesson
 
 -   Thematic analysis identifies, analyzes, and reports patterns (themes) in textual data
     -   A theme is not a keyword; it is a pattern of meaning that recurs across the data
     -   Counting how often the word "frustration" appears is not thematic analysis
     -   The researcher is the instrument: two researchers reading the same data might identify
         different themes, which is why transparency about choices matters
-
 -   Braun & Clarke describe a six-step process
     -   Step 1 — Familiarize yourself with the data: read everything before you code anything;
         take notes about what strikes you, but do not commit to categories yet
@@ -29,30 +28,25 @@
         captures and what distinguishes it from neighboring themes
     -   Step 6 — Write up: illustrate each theme with direct quotes from the data; the quotes
         do the work of convincing readers that the theme is real
-
 -   Aghajani et al. analyzed 878 documentation artifacts from mailing lists, Stack Overflow,
     issue trackers, and pull requests [%b Aghajani2019 %]
     -   They identified themes such as "incorrect documentation," "incomplete examples," and
         "missing rationale" through open reading, not keyword search
     -   A keyword search for "incorrect" would have missed every comment that described
         inaccurate documentation without using that word
-
 -   Fan et al. used thematic analysis on community discussions about protestware [%b Fan2024b %]
     -   Protestware is open-source software modified to protest a political or social cause
     -   Themes they identified included "normative disagreement" (is this acceptable behavior?)
         and "platform responsibility" (should npm or GitHub have intervened?)
     -   Neither theme would appear in a word-frequency list; they require reading for argument
-
 -   Inductive coding lets themes emerge from the data without a prior framework
     -   You start with an open mind and build the category system from what you see
     -   Appropriate when a phenomenon is poorly understood or when you suspect existing frameworks
         will miss something important
-
 -   Deductive coding applies a predefined framework or set of categories
     -   You start with a list of codes derived from theory or prior work and apply them to the data
     -   Appropriate when replicating a previous study or testing whether an established framework
         applies to a new context
-
 -   Most SE qualitative work is inductive on first pass, then deductive on replication
     -   A first study might inductively identify five themes in how developers describe technical debt
     -   A replication study then applies those five themes deductively to a new dataset and checks

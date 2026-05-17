@@ -7,43 +7,36 @@
 -   Interpret and report both test statistics appropriately
 -   Recognize when a QQ plot reveals departure from normality
 
----
+## Lesson
 
 -   The previous lesson introduced hypothesis testing; this one asks which test to use
     -   The answer depends on the shape of your data, not on what answer you want to get
-
 -   [%g t_test "Student's t-test" %] compares the means of two groups and assumes each group is approximately normally distributed
     -   Use `scipy.stats.ttest_ind` for independent groups
     -   When p rounds to 0.0, report it in scientific notation (e.g., p = 6.9 × 10⁻³¹); never write "p = 0"
     -   The t-statistic measures how many standard errors separate the two means
-
 -   [%g mann_whitney_u "Mann-Whitney U" %] (also called the Wilcoxon rank-sum test) compares two groups without assuming normality
     -   It tests whether values from one group tend to be larger than values from the other
     -   Use `scipy.stats.mannwhitneyu` with `alternative="two-sided"` unless you have a strong directional prediction
     -   SE data is rarely normally distributed, so Mann-Whitney is usually the safer default
-
 -   How to choose between the two: look at your data first
     -   If the distribution is roughly bell-shaped in each group, either test works
     -   If the distribution is skewed, has heavy tails, or is bounded (like hours worked or bug counts), use Mann-Whitney
     -   Never choose the test after looking at the p-values from both
-
 -   Checking [%g normality "normality" %] with a [%g qq_plot "QQ plot" %]
     -   A QQ plot plots each quantile of your data against the corresponding quantile of a normal distribution
     -   Points that fall on a straight diagonal line indicate the data is approximately normal
     -   Points that curve away from the diagonal in the tails indicate heavier or lighter tails than normal
     -   An S-shaped curve indicates skewness
-
 -   The Shapiro-Wilk test is a formal normality test, but use it with caution
     -   For small samples (N < 50), it has low power and may miss non-normality
     -   For large samples (N > 5,000), it almost always rejects normality because it detects tiny departures
     -   At large N, a "failed" Shapiro-Wilk test does not mean you must use Mann-Whitney; check the QQ plot too
-
 -   Fucci et al. ran a quasi-experiment with 45 undergraduate students [%b Fucci2018 %]
     -   23 students stayed awake all night before a programming task; 22 slept normally
     -   The sleep-deprived group produced lower-quality implementations
     -   This design controls for exactly one variable (sleep), which makes causal interpretation much more defensible
     -   Small N makes the choice of test consequential: with 22 or 23 per group, normality is hard to verify
-
 -   The code below loads programmer-hours data, splits it by day type, and runs both tests
 
 [%inc weekday_weekend.py %]

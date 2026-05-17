@@ -7,57 +7,49 @@
 -   Apply the Bonferroni correction when running multiple tests
 -   Run a two-sample t-test and interpret the result
 
----
+## Lesson
 
 -   Every statistical test starts with a [%g null_hypothesis "null hypothesis" %]: the assumption that there is no effect
     and any difference you see is random noise
     -   For a line-length comparison: "Python and JavaScript files have the same median line length;
         any observed difference is due to chance"
     -   You do not try to prove your hypothesis; you try to reject the null
-
 -   The [%g p_value "p-value" %] is the probability of seeing a difference at least as large as the one you observed,
     if the null hypothesis were true
     -   A small p-value means your data would be surprising in a world where nothing is going on
     -   It is not the probability that the null hypothesis is true
     -   It is not the probability that your result is a fluke
     -   Misreading the p-value is the single most common error in empirical SE papers
-
 -   The conventional significance threshold is 0.05, meaning a 1-in-20 chance of a false alarm
     -   This number is arbitrary: Fisher proposed it as a rough guideline in 1925 and it stuck
     -   Some fields use 0.01; particle physicists use 0.0000003; the choice depends on how bad a false alarm is
     -   A result just below 0.05 is not meaningfully different from one just above it
-
 -   A [%g type_i_error "Type I error" %] (false positive) occurs when you reject a null hypothesis that is actually true
     -   With a threshold of 0.05, you will make this mistake 5% of the time even when doing everything right
     -   A [%g type_ii_error "Type II error" %] (false negative) occurs when you fail to reject a null hypothesis that is false
     -   The probability of avoiding a Type II error is [%g statistical_power "statistical power" %]
-
 -   Most SE studies are dramatically underpowered
     -   Dyba et al. reviewed 103 controlled experiments published in SE journals [%b Dyba2006 %]
     -   The majority did not have enough participants to reliably detect a realistic effect
     -   If your study cannot detect an effect of realistic size, a non-significant result tells you almost nothing
     -   "We found no significant difference" may mean there is no difference, or it may mean your study was too small to see it
-
 -   [%g p_hacking "P-hacking" %] is what happens when researchers run many tests and report only the significant ones
     -   If you run 20 independent tests, you expect one to come up significant by chance alone
     -   The [%g bonferroni_correction "Bonferroni correction" %] controls for this: if you run K tests,
         require p < 0.05 / K for any single result to count as significant
     -   Running 20 tests and requiring p < 0.0025 keeps the family-wise error rate at 5%
     -   The correction is conservative but simple; more sophisticated alternatives exist
-
 -   A [%g confidence_interval "confidence interval" %] gives you a range of plausible values for the true effect,
     not just a yes/no verdict
     -   A 95% confidence interval means: if you repeated this study many times,
         95% of the intervals you constructed would contain the true value
     -   A CI that includes zero is consistent with no effect; a CI far from zero is more informative
     -   Confidence intervals convey more information than bare p-values and should be reported alongside them
-
 -   Furia et al. catalogued a long list of analytic pitfalls in SE research [%b Furia2022 %]
     -   Using the wrong test for the data type (e.g., a t-test on ordinal data)
     -   Ignoring violations of test assumptions without checking them
     -   Reporting p-values without verifying that the model fits the data
     -   These problems are common enough that reviewers should ask for them explicitly
-
 -   The code below loads Python and JavaScript line-length data, computes median line length
     per file, and runs a two-sample t-test
 

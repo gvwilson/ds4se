@@ -7,7 +7,7 @@
 -   Handle missing values appropriately
 -   Write cleaned data back to CSV
 
----
+## Lesson
 
 -   Most data you find in the wild is not structured for analysis; cleaning it takes time
     -   [%g tidy_data "Tidy data" %] has a simple definition from Wickham [%b Wickham2014 %]:
@@ -17,31 +17,26 @@
     -   Examples of untidy data: a column called `jan_sales` alongside `feb_sales`
         (the month is a variable, not a column name); a row that mixes individual and
         aggregate data; two different kinds of observation packed into the same table
-
 -   Load a CSV with `pl.read_csv`
     -   Polars infers column types from the first batch of rows; check that inference is correct
     -   Common surprises: dates read as strings, integers read as floats because one cell is empty,
         numeric columns that contain notes like "n/a" read as strings
-
 -   Inspect a dataframe before doing anything else
     -   `df.shape` returns `(rows, columns)` as a tuple
     -   `df.columns` lists column names; `df.dtypes` lists the inferred type of each column
     -   `df.head()` shows the first five rows; `df.describe()` gives count, mean, std, min, and
         percentiles for every numeric column
-
 -   Select columns with `select` and filter rows with `filter`
     -   `df.select(["col_a", "col_b"])` keeps only those two columns
     -   `df.filter(pl.col("value") > 0)` keeps only rows where the condition is true
     -   Polars expressions are lazy by default when using the lazy API; `select` and `filter`
         on a plain dataframe execute immediately
-
 -   [%g null_value "Null values" %] in Polars represent missing or unknown data
     -   A null is not the same as zero; treating it as zero changes the meaning of the data
     -   A null is not the same as an empty string; an empty string is present but blank
     -   `df.drop_nulls("column_name")` removes every row where that column is null
     -   `df.fill_null(value)` replaces every null with the given value; use this only when
         you have a defensible reason for the replacement
-
 -   Write a cleaned dataframe back to CSV with `df.write_csv("output.csv")`
     -   Always write to a new file name rather than overwriting the original data
     -   If you overwrite the original, you cannot tell whether a problem appeared before or

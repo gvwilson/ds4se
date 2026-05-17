@@ -7,37 +7,31 @@
 -   Explain why iterative data collection is a defining feature of grounded theory
 -   Recognize when a paper claims GT but actually did thematic analysis
 
----
+## Lesson
 
 -   [%g grounded_theory "Grounded theory" %] builds theory from data rather than testing a pre-specified hypothesis
     -   Appropriate when the phenomenon is not well understood and no existing theory fits
     -   Produces a conceptual model, not a p-value
     -   The name comes from the idea that the theory is grounded in the data itself, not imposed from outside
-
 -   The three coding stages (Strauss & Corbin):
     -   Open coding: read the data and label concepts freely, without constraint
     -   Axial coding: connect concepts by identifying causes, conditions, and consequences
     -   Selective coding: identify the core category that integrates everything else
-
 -   [%g constant_comparison "Constant comparison" %]: as you code new data, compare it to everything coded so far
     -   This comparison drives changes to your codes and categories while data collection is still ongoing
     -   This is what makes GT iterative, not just a fancy name for thematic analysis
     -   If you finish collecting data before you start comparing, you have not done constant comparison
-
 -   [%g theoretical_saturation "Theoretical saturation" %]: stop collecting data when new interviews stop producing new concepts
     -   Saturation is a judgment call, not a formula — report the evidence for it
     -   Evidence might include: the last three interviews added zero new open codes; no new categories emerged after interview eight
     -   Claiming saturation without evidence is one of the most common weaknesses reviewers flag
-
 -   Zieris & Prechelt [%b Zieris2021 %] used GT to study pair programming skill
     -   They interviewed and observed professional developers and derived a model of what distinguishes productive from unproductive pairing
     -   Crucially, they did not start from an existing taxonomy of pair programming behaviors
     -   Each session of observation informed who to recruit and what to look for next
-
 -   Barke & Prechelt [%b Barke2019 %] used GT to study role conflict in self-organizing agile teams
     -   Interviews revealed that role ambiguity was both a source of conflict and, paradoxically, a source of flexibility
     -   That finding would be hard to design into a survey instrument, because you would not know to ask about flexibility until you had seen it emerge in the data
-
 -   GT is frequently misused in SE research
     -   Claiming GT when you actually did thematic analysis is common in published papers
     -   The distinguishing mark is iterative data collection driven by emerging theory, not sequential collection followed by coding

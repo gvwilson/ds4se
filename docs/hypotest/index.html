@@ -68,55 +68,43 @@
 <li>Apply the Bonferroni correction when running multiple tests</li>
 <li>Run a two-sample t-test and interpret the result</li>
 </ul>
-<hr/>
+<h2>Lesson</h2>
 <ul>
-<li>
-<p>Every statistical test starts with a <a class="gl-ref" href="../glossary/#null_hypothesis">null hypothesis</a>: the assumption that there is no effect
-    and any difference you see is random noise</p>
-<ul>
+<li>Every statistical test starts with a <a class="gl-ref" href="../glossary/#null_hypothesis">null hypothesis</a>: the assumption that there is no effect
+    and any difference you see is random noise<ul>
 <li>For a line-length comparison: "Python and JavaScript files have the same median line length;
     any observed difference is due to chance"</li>
 <li>You do not try to prove your hypothesis; you try to reject the null</li>
 </ul>
 </li>
-<li>
-<p>The <a class="gl-ref" href="../glossary/#p_value">p-value</a> is the probability of seeing a difference at least as large as the one you observed,
-    if the null hypothesis were true</p>
-<ul>
+<li>The <a class="gl-ref" href="../glossary/#p_value">p-value</a> is the probability of seeing a difference at least as large as the one you observed,
+    if the null hypothesis were true<ul>
 <li>A small p-value means your data would be surprising in a world where nothing is going on</li>
 <li>It is not the probability that the null hypothesis is true</li>
 <li>It is not the probability that your result is a fluke</li>
 <li>Misreading the p-value is the single most common error in empirical SE papers</li>
 </ul>
 </li>
-<li>
-<p>The conventional significance threshold is 0.05, meaning a 1-in-20 chance of a false alarm</p>
-<ul>
+<li>The conventional significance threshold is 0.05, meaning a 1-in-20 chance of a false alarm<ul>
 <li>This number is arbitrary: Fisher proposed it as a rough guideline in 1925 and it stuck</li>
 <li>Some fields use 0.01; particle physicists use 0.0000003; the choice depends on how bad a false alarm is</li>
 <li>A result just below 0.05 is not meaningfully different from one just above it</li>
 </ul>
 </li>
-<li>
-<p>A <a class="gl-ref" href="../glossary/#type_i_error">Type I error</a> (false positive) occurs when you reject a null hypothesis that is actually true</p>
-<ul>
+<li>A <a class="gl-ref" href="../glossary/#type_i_error">Type I error</a> (false positive) occurs when you reject a null hypothesis that is actually true<ul>
 <li>With a threshold of 0.05, you will make this mistake 5% of the time even when doing everything right</li>
 <li>A <a class="gl-ref" href="../glossary/#type_ii_error">Type II error</a> (false negative) occurs when you fail to reject a null hypothesis that is false</li>
 <li>The probability of avoiding a Type II error is <a class="gl-ref" href="../glossary/#statistical_power">statistical power</a></li>
 </ul>
 </li>
-<li>
-<p>Most SE studies are dramatically underpowered</p>
-<ul>
+<li>Most SE studies are dramatically underpowered<ul>
 <li>Dyba et al. reviewed 103 controlled experiments published in SE journals [<a class="bib-ref" href="../bibliography/#Dyba2006">Dyba2006</a>]</li>
 <li>The majority did not have enough participants to reliably detect a realistic effect</li>
 <li>If your study cannot detect an effect of realistic size, a non-significant result tells you almost nothing</li>
 <li>"We found no significant difference" may mean there is no difference, or it may mean your study was too small to see it</li>
 </ul>
 </li>
-<li>
-<p><a class="gl-ref" href="../glossary/#p_hacking">P-hacking</a> is what happens when researchers run many tests and report only the significant ones</p>
-<ul>
+<li><a class="gl-ref" href="../glossary/#p_hacking">P-hacking</a> is what happens when researchers run many tests and report only the significant ones<ul>
 <li>If you run 20 independent tests, you expect one to come up significant by chance alone</li>
 <li>The <a class="gl-ref" href="../glossary/#bonferroni_correction">Bonferroni correction</a> controls for this: if you run K tests,
     require p &lt; 0.05 / K for any single result to count as significant</li>
@@ -124,29 +112,23 @@
 <li>The correction is conservative but simple; more sophisticated alternatives exist</li>
 </ul>
 </li>
-<li>
-<p>A <a class="gl-ref" href="../glossary/#confidence_interval">confidence interval</a> gives you a range of plausible values for the true effect,
-    not just a yes/no verdict</p>
-<ul>
+<li>A <a class="gl-ref" href="../glossary/#confidence_interval">confidence interval</a> gives you a range of plausible values for the true effect,
+    not just a yes/no verdict<ul>
 <li>A 95% confidence interval means: if you repeated this study many times,
     95% of the intervals you constructed would contain the true value</li>
 <li>A CI that includes zero is consistent with no effect; a CI far from zero is more informative</li>
 <li>Confidence intervals convey more information than bare p-values and should be reported alongside them</li>
 </ul>
 </li>
-<li>
-<p>Furia et al. catalogued a long list of analytic pitfalls in SE research [<a class="bib-ref" href="../bibliography/#Furia2022">Furia2022</a>]</p>
-<ul>
+<li>Furia et al. catalogued a long list of analytic pitfalls in SE research [<a class="bib-ref" href="../bibliography/#Furia2022">Furia2022</a>]<ul>
 <li>Using the wrong test for the data type (e.g., a t-test on ordinal data)</li>
 <li>Ignoring violations of test assumptions without checking them</li>
 <li>Reporting p-values without verifying that the model fits the data</li>
 <li>These problems are common enough that reviewers should ask for them explicitly</li>
 </ul>
 </li>
-<li>
-<p>The code below loads Python and JavaScript line-length data, computes median line length
-    per file, and runs a two-sample t-test</p>
-</li>
+<li>The code below loads Python and JavaScript line-length data, computes median line length
+    per file, and runs a two-sample t-test</li>
 </ul>
 <div data-inc="ttest.py"><span aria-label="Source: hypotest/ttest.py" class="inc-path" role="img" tabindex="0" title="hypotest/ttest.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="sd">"""Two-sample t-test comparing Python and JavaScript line lengths."""</span>
 

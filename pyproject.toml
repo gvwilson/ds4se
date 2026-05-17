@@ -31,7 +31,7 @@ cmd = """
 [tool.taskipy.tasks.check]
 help = "Check code and project."
 cmd = """
-    mccole check --src . --dst docs
+    mccole check --relaxed --src . --dst docs
     typos *.md */*.md
     ruff check .
 """

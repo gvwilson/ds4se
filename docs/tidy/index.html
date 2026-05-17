@@ -68,11 +68,9 @@
 <li>Handle missing values appropriately</li>
 <li>Write cleaned data back to CSV</li>
 </ul>
-<hr/>
+<h2>Lesson</h2>
 <ul>
-<li>
-<p>Most data you find in the wild is not structured for analysis; cleaning it takes time</p>
-<ul>
+<li>Most data you find in the wild is not structured for analysis; cleaning it takes time<ul>
 <li><a class="gl-ref" href="../glossary/#tidy_data">Tidy data</a> has a simple definition from Wickham [<a class="bib-ref" href="../bibliography/#Wickham2014">Wickham2014</a>]:
     each column is one variable, each row is one observation, and one table holds one
     set of related observations</li>
@@ -82,35 +80,27 @@
     aggregate data; two different kinds of observation packed into the same table</li>
 </ul>
 </li>
-<li>
-<p>Load a CSV with <code>pl.read_csv</code></p>
-<ul>
+<li>Load a CSV with <code>pl.read_csv</code><ul>
 <li>Polars infers column types from the first batch of rows; check that inference is correct</li>
 <li>Common surprises: dates read as strings, integers read as floats because one cell is empty,
     numeric columns that contain notes like "n/a" read as strings</li>
 </ul>
 </li>
-<li>
-<p>Inspect a dataframe before doing anything else</p>
-<ul>
+<li>Inspect a dataframe before doing anything else<ul>
 <li><code>df.shape</code> returns <code>(rows, columns)</code> as a tuple</li>
 <li><code>df.columns</code> lists column names; <code>df.dtypes</code> lists the inferred type of each column</li>
 <li><code>df.head()</code> shows the first five rows; <code>df.describe()</code> gives count, mean, std, min, and
     percentiles for every numeric column</li>
 </ul>
 </li>
-<li>
-<p>Select columns with <code>select</code> and filter rows with <code>filter</code></p>
-<ul>
+<li>Select columns with <code>select</code> and filter rows with <code>filter</code><ul>
 <li><code>df.select(["col_a", "col_b"])</code> keeps only those two columns</li>
 <li><code>df.filter(pl.col("value") &gt; 0)</code> keeps only rows where the condition is true</li>
 <li>Polars expressions are lazy by default when using the lazy API; <code>select</code> and <code>filter</code>
     on a plain dataframe execute immediately</li>
 </ul>
 </li>
-<li>
-<p><a class="gl-ref" href="../glossary/#null_value">Null values</a> in Polars represent missing or unknown data</p>
-<ul>
+<li><a class="gl-ref" href="../glossary/#null_value">Null values</a> in Polars represent missing or unknown data<ul>
 <li>A null is not the same as zero; treating it as zero changes the meaning of the data</li>
 <li>A null is not the same as an empty string; an empty string is present but blank</li>
 <li><code>df.drop_nulls("column_name")</code> removes every row where that column is null</li>

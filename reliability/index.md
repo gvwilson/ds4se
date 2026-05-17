@@ -7,53 +7,45 @@
 -   Write a [%g codebook "codebook" %] that enables independent replication
 -   Identify common mistakes in reporting inter-rater reliability
 
----
+## Lesson
 
 -   If only one person codes the data, the results reflect that person's interpretation
     -   A second independent coder is the most common check against this
     -   "Independent" means the two coders do not discuss items before recording their codes
     -   After coding independently, you measure how often they agreed
-
 -   Percent agreement is not enough
     -   If two coders classify everything as "bug fix" they agree 100% of the time
     -   But they would also agree 100% of the time by random chance if the only category were "bug fix"
     -   You need a measure that corrects for how much agreement chance alone would produce
-
 -   Cohen's kappa corrects for chance agreement
     -   kappa = (observed agreement - expected agreement) / (1 - expected agreement)
     -   Expected agreement is what two coders would achieve if each coded items independently at random,
         according to the frequency with which each uses each category
     -   kappa < 0.4: poor agreement; 0.4 to 0.6: moderate; 0.6 to 0.8: substantial; above 0.8: near-perfect
     -   These thresholds are conventions, not laws — report the number and let readers judge
-
 -   Krippendorff's alpha generalizes kappa to more than two raters and to ordinal or continuous codes
     -   Use it when you have three or more coders or when your codes have a natural order
-
 -   Wang et al. used card sorting to classify reasons why bugs go unfixed in Mozilla, Eclipse, and
     Apache OpenOffice [%b Wang2020a %]
     -   Two researchers sorted the same cards independently
     -   Disagreements were discussed until consensus; unresolvable cases were noted as limitations
     -   They report kappa for each classification pass, showing improvement across passes
-
 -   A codebook makes your coding scheme replicable
     -   Each code gets a name, a one or two sentence definition, at least one example of text that
         fits, and at least one example of text that does not fit
     -   A good codebook lets a researcher who was not involved in the original study reach the same
         conclusions on the same data
     -   Writing a codebook forces you to articulate distinctions you might otherwise leave implicit
-
 -   Handling disagreements between coders
     -   Discuss until consensus: the most common approach; produces a single agreed coding
     -   Add a "borderline" category for cases where no consensus is possible
     -   Bring in a third coder as a tiebreaker
     -   Report unresolved disagreements as a limitation; this is underused and underappreciated
-
 -   The most common mistake: coding together, not independently
     -   Two coders discuss each item before recording their labels
     -   They then report high agreement as evidence of reliability
     -   This is circular: they agreed because they talked, not because the codebook is clear
     -   Independent coding must happen before any discussion
-
 -   The code below computes percent agreement and Cohen's kappa for two lists of labels
 
 [%inc kappa.py %]

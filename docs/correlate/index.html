@@ -68,63 +68,49 @@
 <li>Evaluate model fit using R² and residual plots</li>
 <li>Explain when Spearman correlation is more appropriate than Pearson</li>
 </ul>
-<hr/>
+<h2>Lesson</h2>
 <ul>
-<li>
-<p>The <a class="gl-ref" href="../glossary/#pearson_correlation">Pearson correlation coefficient</a> r measures the strength of a linear relationship
-    between two numerical variables</p>
-<ul>
+<li>The <a class="gl-ref" href="../glossary/#pearson_correlation">Pearson correlation coefficient</a> r measures the strength of a linear relationship
+    between two numerical variables<ul>
 <li>r always falls between -1 (perfect negative) and 1 (perfect positive); r = 0 means no linear relationship</li>
 <li>For Python files, lines vs. functions gives r ≈ 0.806; for JavaScript, r ≈ 0.728</li>
 <li>A high r does not imply causation — something else could be driving both variables</li>
 <li>r can be misleading when the relationship is non-linear or when a handful of outliers dominate</li>
 </ul>
 </li>
-<li>
-<p>Always plot before computing</p>
-<ul>
+<li>Always plot before computing<ul>
 <li>Draw a scatter plot of the two variables; add a trend line</li>
 <li>Anscombe's quartet showed that four very different datasets can produce the same r</li>
 <li>If your scatter plot shows a curve or a cluster of extreme points pulling the line, r is the wrong summary</li>
 </ul>
 </li>
-<li>
-<p><a class="gl-ref" href="../glossary/#spearman_correlation">Spearman rank correlation</a> replaces raw values with their ranks before computing r</p>
-<ul>
+<li><a class="gl-ref" href="../glossary/#spearman_correlation">Spearman rank correlation</a> replaces raw values with their ranks before computing r<ul>
 <li>Use Spearman when data is ordinal, heavily skewed, or contains outliers that you cannot remove</li>
 <li>Spearman measures monotonic relationships; Pearson measures only linear ones</li>
 <li>If a scatter plot shows a consistent upward trend but not a straight line, Spearman is more reliable</li>
 </ul>
 </li>
-<li>
-<p>Simple <a class="gl-ref" href="../glossary/#linear_regression">linear regression</a> fits the equation y = a + bx to minimize the sum of squared errors</p>
-<ul>
+<li>Simple <a class="gl-ref" href="../glossary/#linear_regression">linear regression</a> fits the equation y = a + bx to minimize the sum of squared errors<ul>
 <li>The slope b tells you how much y changes for each unit increase in x</li>
 <li>The intercept a is the predicted value of y when x = 0 — interpret carefully, since x = 0 may not be realistic</li>
 <li><code>scipy.stats.linregress</code> returns slope, intercept, r, p-value, and standard error of the slope</li>
 </ul>
 </li>
-<li>
-<p>The <a class="gl-ref" href="../glossary/#r_squared">coefficient of determination (R²)</a> is the fraction of variance in y explained by x</p>
-<ul>
+<li>The <a class="gl-ref" href="../glossary/#r_squared">coefficient of determination (R²)</a> is the fraction of variance in y explained by x<ul>
 <li>R² = r² for simple linear regression with one predictor</li>
 <li>R² = 0.65 means the model accounts for 65% of the variation; 35% is unexplained</li>
 <li>A high R² does not mean the model is well-specified; it only measures linear fit</li>
 </ul>
 </li>
-<li>
-<p><a class="gl-ref" href="../glossary/#residual">Residuals</a> are the differences between observed values and model predictions</p>
-<ul>
+<li><a class="gl-ref" href="../glossary/#residual">Residuals</a> are the differences between observed values and model predictions<ul>
 <li>Plot residuals on the y-axis against predicted values on the x-axis</li>
 <li>If the plot shows a random scatter with no pattern, the linear model is plausible</li>
 <li>A fan shape (wider spread for larger predictions) indicates that prediction error grows with the outcome</li>
 <li>A curve indicates the relationship is non-linear and a straight line is the wrong model</li>
 </ul>
 </li>
-<li>
-<p>The code below loads Python and JavaScript function-count data, computes Pearson r,
-    fits a linear model to the Python data, and reports residual statistics</p>
-</li>
+<li>The code below loads Python and JavaScript function-count data, computes Pearson r,
+    fits a linear model to the Python data, and reports residual statistics</li>
 </ul>
 <div data-inc="correlation.py"><span aria-label="Source: correlate/correlation.py" class="inc-path" role="img" tabindex="0" title="correlate/correlation.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="sd">"""Correlation and regression for lines vs. functions per file."""</span>
 

@@ -126,7 +126,7 @@ and shows which lessons use it.
 The entries below cover datasets that tutorials reference
 but have not yet been collected.
 The first two entries are specific files with known structures;
-the remainder are open-ende.
+the remainder are open-ended.
 
 ### Specific missing files
 

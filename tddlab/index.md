@@ -7,19 +7,17 @@
 -   Explain why TDD and TLD produce similar outcomes in controlled experiments
 -   Interpret null results in terms of statistical power
 
----
+## Lesson
 
 -   Test-driven development (TDD) is one of the most debated practices in software engineering
     -   The premise: write a failing test before writing the code that makes it pass
     -   Many developers swear by it; many others ignore it; few have looked at the evidence carefully
     -   Today you will look at the evidence yourself and decide what to believe
-
 -   Fucci et al. ran a multi-site blind analysis with five academic sites [%b Fucci2016 %]
     -   Participants were professional developers, not students, across multiple countries
     -   Each participant implemented a feature either test-first (TDD) or test-last (TLD)
     -   Outcomes measured: number of passing tests (TESTS), external quality (QLTY), productivity (PROD)
     -   "Blind analysis" means the researchers committed to their analysis plan before seeing the results
-
 -   The lab workflow follows the steps of a real replication study
     -   Load the Fucci dataset and inspect its structure
     -   Apply the same exclusion criteria the original authors used
@@ -27,12 +25,10 @@
     -   Compute Cliff's delta for each outcome
     -   Compare your numbers to Table 3 of the paper
     -   If your numbers differ by more than rounding, diagnose the discrepancy before moving on
-
 -   The target values from Fucci et al. Table 3 are:
     -   TESTS: p = 0.052, Cliff's delta = 0.19
     -   QLTY: p = 0.38, Cliff's delta = 0.12
     -   PROD: p = 0.89, Cliff's delta = 0.02
-
 -   The code below loads the dataset, runs the tests, and prints a comparison table
 
 [%inc replicate_fucci.py %]
@@ -41,14 +37,12 @@
     -   Small discrepancies often trace to differences in how null values are handled or how the
         exclusion criteria are applied — track these down before calling it a match
     -   Large discrepancies suggest a substantive difference in the dataset or the test setup
-
 -   Fucci et al. [%b Fucci2017 %] followed up with a deeper analysis of the same data
     -   TDD and TLD produce similar outcomes in terms of quality and productivity
     -   What matters more is the rhythm of test-code interleaving: developers who switched
         frequently between writing tests and writing code performed better regardless of which came first
     -   The test-first vs. test-last distinction turns out to be less important than how granular
         the development cycle is
-
 -   What does this mean for your team?
     -   Nagappan et al. found TDD reduced defects by 40-90% in industrial case studies [%b Nagappan2008a %]
     -   Fucci et al. found little effect in controlled experiments
@@ -56,7 +50,6 @@
         industrial case studies capture the full complexity of real teams and real incentives
     -   The safest conclusion is that TDD is not magic, and TDD that is done badly is not better
         than thoughtful test-last development
-
 -   Wrap-up: the distinction between belief and evidence matters
     -   "We believe TDD works" is not evidence
     -   "We measured TDD and found these results" is the beginning of evidence

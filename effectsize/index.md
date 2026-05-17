@@ -7,42 +7,36 @@
 -   Explain why DeOliveiraNeto et al. found most SE papers fail to report effect sizes
 -   Use effect size to evaluate TDD outcomes from Fucci et al.
 
----
+## Lesson
 
 -   A p-value tells you whether an effect exists; an [%g effect_size "effect size" %] tells you whether it matters
     -   With N = 100,000, even a difference of 0.001 lines of code per hour can produce p < 0.05
     -   With N = 10, even a genuinely large difference may not reach significance
     -   Statistical significance and practical importance are separate questions that require separate answers
-
 -   [%g cohens_d "Cohen's d" %] measures the standardized difference between two group means
     -   d = (mean of group A − mean of group B) / pooled standard deviation
     -   The pooled standard deviation puts both groups on the same scale
     -   Rough guidelines: d ≈ 0.2 is small, d ≈ 0.5 is medium, d ≈ 0.8 is large
     -   These guidelines come from Cohen's 1977 textbook and are heuristics, not laws
-
 -   [%g cles "Common-language effect size" %] (CLES) is the probability that a randomly chosen value
     from group A is larger than a randomly chosen value from group B
     -   A CLES of 0.5 means the groups are indistinguishable; 0.7 means group A is larger 70% of the time
     -   Much easier to explain to a non-statistician than Cohen's d
     -   Compute it as the Mann-Whitney U statistic divided by n1 × n2
-
 -   [%g cliffs_delta "Cliff's delta" %] is a non-parametric effect size for ordinal data
     -   It measures the probability that a value from group A exceeds a value from group B,
         minus the probability that a value from group B exceeds a value from group A
     -   Ranges from -1 to 1; values near 0 indicate no difference; values near ±1 indicate near-total separation
     -   Prefer Cliff's delta over Cohen's d when data is ordinal or when distributions are heavily skewed
-
 -   DeOliveiraNeto et al. reviewed more than 5,000 SE papers and found that very few report effect sizes [%b DeOliveiraNeto2019 %]
     -   Papers report p-values but rarely say how large the effect is
     -   This makes it impossible to tell whether a significant result is important or trivial
     -   A paper that says "TDD reduced defects significantly (p = 0.03)" but gives no effect size
         has told you almost nothing useful for deciding whether to adopt TDD
-
 -   Furia et al. make a related point: conflicting conclusions in SE often arise from ignoring confounds,
     not from genuine disagreement about the data [%b Furia2022 %]
     -   Effect sizes help because they are more stable across analysis choices than p-values
     -   Reporting both p-values and effect sizes gives readers more to work with
-
 -   The code below loads the Fucci TDD dataset and computes Cohen's d and Cliff's delta
     for three outcome variables
 

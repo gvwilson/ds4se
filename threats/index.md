@@ -7,7 +7,7 @@
 -   Explain why GitHub data over-represents certain types of projects
 -   Apply the Kalliamvakou criteria to classify repositories as real projects or not
 
----
+## Lesson
 
 -   Bird et al. studied file ownership and defect rates in Windows Vista and Windows 7 [%b Bird2011 %]
     -   Files with low ownership (many contributors, none dominant) had significantly higher post-release defect rates
@@ -16,7 +16,6 @@
         (ownership) and the apparent effect (defect rate), making it hard to isolate the real relationship
     -   Bird et al. controlled for file size; if you do not, you cannot tell whether ownership matters or
         whether you are just rediscovering that big files are complicated
-
 -   [%g selection_bias "Selection bias" %] occurs when the sample you study is not representative of the
     population you care about
     -   GitHub hosts millions of repositories, which sounds like a comprehensive sample of software
@@ -25,13 +24,11 @@
     -   Fewer than 8% had an active pull-request workflow; most repositories had a single contributor
     -   Studying "GitHub projects" and calling the results representative of software development
         is like studying Amazon reviews and calling them representative of consumer opinion
-
 -   Kalliamvakou et al. proposed concrete criteria for identifying repositories worth studying
     -   Fewer than 5 commits: not a real project
     -   Only one contributor: not a collaborative project
     -   Last commit more than two years ago: likely abandoned
     -   Applying these filters removes most repositories from any random GitHub sample
-
 -   [%g survivorship_bias "Survivorship bias" %] is a specific form of selection bias that targets things
     that survived a process, ignoring everything that did not
     -   Ait et al. found that a large fraction of GitHub projects go inactive within months of creation,
@@ -39,39 +36,32 @@
     -   If you want to know what makes software projects succeed, studying only successful projects
         tells you what survivors look like, not what causes survival
     -   The missing projects may be the most informative data you have
-
 -   [%g hero_developer "Hero developers" %] add a confound to ownership studies [%b Majumder2019 %]
     -   In many open-source projects, one person makes more than 80% of the commits
     -   A file that appears to have "high ownership" (one dominant contributor) may simply be
         a file the hero cares about, not a file that benefits from single ownership
     -   The hero's attention, not the ownership structure, may be what reduces defects
-
 -   He et al. found that GitHub star counts are routinely inflated by bots and paid services [%b He2024 %]
     -   Millions of stars across tens of thousands of repositories appear to be fake
     -   Stars are used as a proxy for project quality and adoption in dozens of published studies
     -   A metric that can be purchased for a few dollars is not a reliable signal of anything
-
 -   Acciai et al. found systematic bias in who gets access to shared research data [%b Acciai2023 %]
     -   Researchers at high-prestige institutions are more likely to receive shared datasets
     -   This means replication attempts are not evenly distributed across the research community
     -   The studies most likely to be replicated are studies by the researchers least likely to need it
-
 -   Furia et al. argue that most observational SE studies support only correlational claims [%b Furia2023 %]
     -   Correlation describes what tends to happen together; causation describes what produces what
     -   Claiming that a correlation implies causation is one of the most common threats to validity in SE
     -   A confound, a reverse causation, or a shared underlying driver can all produce strong correlations
-
 -   The [%g observer_effect "observer effect" %] applies when programmers know they are being studied
     -   Developers in productivity studies often produce unusually clean, well-documented code
     -   Self-reported data about hours worked and task difficulty is systematically biased toward
         what respondents think the researchers want to hear
-
 -   [%g external_validity "External validity" %] asks whether findings generalize beyond the study context
     -   A study of undergraduate students in a two-hour lab session may not generalize to a professional
         team shipping production software over six months
     -   Open-source projects and proprietary commercial software differ in structure, incentives,
         and contributor motivation; findings in one setting may not transfer
-
 -   The code below loads a sample of 200 GitHub repositories, applies the Kalliamvakou criteria,
     and computes Pearson r between stars and commits
 

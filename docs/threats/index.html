@@ -68,11 +68,9 @@
 <li>Explain why GitHub data over-represents certain types of projects</li>
 <li>Apply the Kalliamvakou criteria to classify repositories as real projects or not</li>
 </ul>
-<hr/>
+<h2>Lesson</h2>
 <ul>
-<li>
-<p>Bird et al. studied file ownership and defect rates in Windows Vista and Windows 7 [<a class="bib-ref" href="../bibliography/#Bird2011">Bird2011</a>]</p>
-<ul>
+<li>Bird et al. studied file ownership and defect rates in Windows Vista and Windows 7 [<a class="bib-ref" href="../bibliography/#Bird2011">Bird2011</a>]<ul>
 <li>Files with low ownership (many contributors, none dominant) had significantly higher post-release defect rates</li>
 <li>But larger files also have more defects, and larger files tend to attract more contributors</li>
 <li>File size is a <a class="gl-ref" href="../glossary/#confound">confound</a>: a third variable that affects both the apparent cause
@@ -81,10 +79,8 @@
     whether you are just rediscovering that big files are complicated</li>
 </ul>
 </li>
-<li>
-<p><a class="gl-ref" href="../glossary/#selection_bias">Selection bias</a> occurs when the sample you study is not representative of the
-    population you care about</p>
-<ul>
+<li><a class="gl-ref" href="../glossary/#selection_bias">Selection bias</a> occurs when the sample you study is not representative of the
+    population you care about<ul>
 <li>GitHub hosts millions of repositories, which sounds like a comprehensive sample of software</li>
 <li>Kalliamvakou et al. examined 3,000 GitHub projects and found that the majority were personal
     experiments, mirrors of other repositories, or clearly abandoned [<a class="bib-ref" href="../bibliography/#Kalliamvakou2014">Kalliamvakou2014</a>]</li>
@@ -93,19 +89,15 @@
     is like studying Amazon reviews and calling them representative of consumer opinion</li>
 </ul>
 </li>
-<li>
-<p>Kalliamvakou et al. proposed concrete criteria for identifying repositories worth studying</p>
-<ul>
+<li>Kalliamvakou et al. proposed concrete criteria for identifying repositories worth studying<ul>
 <li>Fewer than 5 commits: not a real project</li>
 <li>Only one contributor: not a collaborative project</li>
 <li>Last commit more than two years ago: likely abandoned</li>
 <li>Applying these filters removes most repositories from any random GitHub sample</li>
 </ul>
 </li>
-<li>
-<p><a class="gl-ref" href="../glossary/#survivorship_bias">Survivorship bias</a> is a specific form of selection bias that targets things
-    that survived a process, ignoring everything that did not</p>
-<ul>
+<li><a class="gl-ref" href="../glossary/#survivorship_bias">Survivorship bias</a> is a specific form of selection bias that targets things
+    that survived a process, ignoring everything that did not<ul>
 <li>Ait et al. found that a large fraction of GitHub projects go inactive within months of creation,
     and these projects are almost never studied [<a class="bib-ref" href="../bibliography/#Ait2022">Ait2022</a>]</li>
 <li>If you want to know what makes software projects succeed, studying only successful projects
@@ -113,60 +105,46 @@
 <li>The missing projects may be the most informative data you have</li>
 </ul>
 </li>
-<li>
-<p><a class="gl-ref" href="../glossary/#hero_developer">Hero developers</a> add a confound to ownership studies [<a class="bib-ref" href="../bibliography/#Majumder2019">Majumder2019</a>]</p>
-<ul>
+<li><a class="gl-ref" href="../glossary/#hero_developer">Hero developers</a> add a confound to ownership studies [<a class="bib-ref" href="../bibliography/#Majumder2019">Majumder2019</a>]<ul>
 <li>In many open-source projects, one person makes more than 80% of the commits</li>
 <li>A file that appears to have "high ownership" (one dominant contributor) may simply be
     a file the hero cares about, not a file that benefits from single ownership</li>
 <li>The hero's attention, not the ownership structure, may be what reduces defects</li>
 </ul>
 </li>
-<li>
-<p>He et al. found that GitHub star counts are routinely inflated by bots and paid services [<a class="bib-ref" href="../bibliography/#He2024">He2024</a>]</p>
-<ul>
+<li>He et al. found that GitHub star counts are routinely inflated by bots and paid services [<a class="bib-ref" href="../bibliography/#He2024">He2024</a>]<ul>
 <li>Millions of stars across tens of thousands of repositories appear to be fake</li>
 <li>Stars are used as a proxy for project quality and adoption in dozens of published studies</li>
 <li>A metric that can be purchased for a few dollars is not a reliable signal of anything</li>
 </ul>
 </li>
-<li>
-<p>Acciai et al. found systematic bias in who gets access to shared research data [<a class="bib-ref" href="../bibliography/#Acciai2023">Acciai2023</a>]</p>
-<ul>
+<li>Acciai et al. found systematic bias in who gets access to shared research data [<a class="bib-ref" href="../bibliography/#Acciai2023">Acciai2023</a>]<ul>
 <li>Researchers at high-prestige institutions are more likely to receive shared datasets</li>
 <li>This means replication attempts are not evenly distributed across the research community</li>
 <li>The studies most likely to be replicated are studies by the researchers least likely to need it</li>
 </ul>
 </li>
-<li>
-<p>Furia et al. argue that most observational SE studies support only correlational claims [<a class="bib-ref" href="../bibliography/#Furia2023">Furia2023</a>]</p>
-<ul>
+<li>Furia et al. argue that most observational SE studies support only correlational claims [<a class="bib-ref" href="../bibliography/#Furia2023">Furia2023</a>]<ul>
 <li>Correlation describes what tends to happen together; causation describes what produces what</li>
 <li>Claiming that a correlation implies causation is one of the most common threats to validity in SE</li>
 <li>A confound, a reverse causation, or a shared underlying driver can all produce strong correlations</li>
 </ul>
 </li>
-<li>
-<p>The <a class="gl-ref" href="../glossary/#observer_effect">observer effect</a> applies when programmers know they are being studied</p>
-<ul>
+<li>The <a class="gl-ref" href="../glossary/#observer_effect">observer effect</a> applies when programmers know they are being studied<ul>
 <li>Developers in productivity studies often produce unusually clean, well-documented code</li>
 <li>Self-reported data about hours worked and task difficulty is systematically biased toward
     what respondents think the researchers want to hear</li>
 </ul>
 </li>
-<li>
-<p><a class="gl-ref" href="../glossary/#external_validity">External validity</a> asks whether findings generalize beyond the study context</p>
-<ul>
+<li><a class="gl-ref" href="../glossary/#external_validity">External validity</a> asks whether findings generalize beyond the study context<ul>
 <li>A study of undergraduate students in a two-hour lab session may not generalize to a professional
     team shipping production software over six months</li>
 <li>Open-source projects and proprietary commercial software differ in structure, incentives,
     and contributor motivation; findings in one setting may not transfer</li>
 </ul>
 </li>
-<li>
-<p>The code below loads a sample of 200 GitHub repositories, applies the Kalliamvakou criteria,
-    and computes Pearson r between stars and commits</p>
-</li>
+<li>The code below loads a sample of 200 GitHub repositories, applies the Kalliamvakou criteria,
+    and computes Pearson r between stars and commits</li>
 </ul>
 <div data-inc="classify_repos.py"><span aria-label="Source: threats/classify_repos.py" class="inc-path" role="img" tabindex="0" title="threats/classify_repos.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="sd">"""Apply Kalliamvakou criteria to classify GitHub repositories."""</span>
 

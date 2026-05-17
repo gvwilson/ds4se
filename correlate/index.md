@@ -7,7 +7,7 @@
 -   Evaluate model fit using R² and residual plots
 -   Explain when Spearman correlation is more appropriate than Pearson
 
----
+## Lesson
 
 -   The [%g pearson_correlation "Pearson correlation coefficient" %] r measures the strength of a linear relationship
     between two numerical variables
@@ -15,33 +15,27 @@
     -   For Python files, lines vs. functions gives r ≈ 0.806; for JavaScript, r ≈ 0.728
     -   A high r does not imply causation — something else could be driving both variables
     -   r can be misleading when the relationship is non-linear or when a handful of outliers dominate
-
 -   Always plot before computing
     -   Draw a scatter plot of the two variables; add a trend line
     -   Anscombe's quartet showed that four very different datasets can produce the same r
     -   If your scatter plot shows a curve or a cluster of extreme points pulling the line, r is the wrong summary
-
 -   [%g spearman_correlation "Spearman rank correlation" %] replaces raw values with their ranks before computing r
     -   Use Spearman when data is ordinal, heavily skewed, or contains outliers that you cannot remove
     -   Spearman measures monotonic relationships; Pearson measures only linear ones
     -   If a scatter plot shows a consistent upward trend but not a straight line, Spearman is more reliable
-
 -   Simple [%g linear_regression "linear regression" %] fits the equation y = a + bx to minimize the sum of squared errors
     -   The slope b tells you how much y changes for each unit increase in x
     -   The intercept a is the predicted value of y when x = 0 — interpret carefully, since x = 0 may not be realistic
     -   `scipy.stats.linregress` returns slope, intercept, r, p-value, and standard error of the slope
-
 -   The [%g r_squared "coefficient of determination (R²)" %] is the fraction of variance in y explained by x
     -   R² = r² for simple linear regression with one predictor
     -   R² = 0.65 means the model accounts for 65% of the variation; 35% is unexplained
     -   A high R² does not mean the model is well-specified; it only measures linear fit
-
 -   [%g residual "Residuals" %] are the differences between observed values and model predictions
     -   Plot residuals on the y-axis against predicted values on the x-axis
     -   If the plot shows a random scatter with no pattern, the linear model is plausible
     -   A fan shape (wider spread for larger predictions) indicates that prediction error grows with the outcome
     -   A curve indicates the relationship is non-linear and a straight line is the wrong model
-
 -   The code below loads Python and JavaScript function-count data, computes Pearson r,
     fits a linear model to the Python data, and reports residual statistics
 

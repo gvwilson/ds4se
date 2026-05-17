@@ -68,27 +68,21 @@
 <li>Write a <a class="gl-ref" href="../glossary/#codebook">codebook</a> that enables independent replication</li>
 <li>Identify common mistakes in reporting inter-rater reliability</li>
 </ul>
-<hr/>
+<h2>Lesson</h2>
 <ul>
-<li>
-<p>If only one person codes the data, the results reflect that person's interpretation</p>
-<ul>
+<li>If only one person codes the data, the results reflect that person's interpretation<ul>
 <li>A second independent coder is the most common check against this</li>
 <li>"Independent" means the two coders do not discuss items before recording their codes</li>
 <li>After coding independently, you measure how often they agreed</li>
 </ul>
 </li>
-<li>
-<p>Percent agreement is not enough</p>
-<ul>
+<li>Percent agreement is not enough<ul>
 <li>If two coders classify everything as "bug fix" they agree 100% of the time</li>
 <li>But they would also agree 100% of the time by random chance if the only category were "bug fix"</li>
 <li>You need a measure that corrects for how much agreement chance alone would produce</li>
 </ul>
 </li>
-<li>
-<p>Cohen's kappa corrects for chance agreement</p>
-<ul>
+<li>Cohen's kappa corrects for chance agreement<ul>
 <li>kappa = (observed agreement - expected agreement) / (1 - expected agreement)</li>
 <li>Expected agreement is what two coders would achieve if each coded items independently at random,
     according to the frequency with which each uses each category</li>
@@ -96,24 +90,18 @@
 <li>These thresholds are conventions, not laws — report the number and let readers judge</li>
 </ul>
 </li>
-<li>
-<p>Krippendorff's alpha generalizes kappa to more than two raters and to ordinal or continuous codes</p>
-<ul>
+<li>Krippendorff's alpha generalizes kappa to more than two raters and to ordinal or continuous codes<ul>
 <li>Use it when you have three or more coders or when your codes have a natural order</li>
 </ul>
 </li>
-<li>
-<p>Wang et al. used card sorting to classify reasons why bugs go unfixed in Mozilla, Eclipse, and
-    Apache OpenOffice [<a class="bib-ref" href="../bibliography/#Wang2020a">Wang2020a</a>]</p>
-<ul>
+<li>Wang et al. used card sorting to classify reasons why bugs go unfixed in Mozilla, Eclipse, and
+    Apache OpenOffice [<a class="bib-ref" href="../bibliography/#Wang2020a">Wang2020a</a>]<ul>
 <li>Two researchers sorted the same cards independently</li>
 <li>Disagreements were discussed until consensus; unresolvable cases were noted as limitations</li>
 <li>They report kappa for each classification pass, showing improvement across passes</li>
 </ul>
 </li>
-<li>
-<p>A codebook makes your coding scheme replicable</p>
-<ul>
+<li>A codebook makes your coding scheme replicable<ul>
 <li>Each code gets a name, a one or two sentence definition, at least one example of text that
     fits, and at least one example of text that does not fit</li>
 <li>A good codebook lets a researcher who was not involved in the original study reach the same
@@ -121,27 +109,21 @@
 <li>Writing a codebook forces you to articulate distinctions you might otherwise leave implicit</li>
 </ul>
 </li>
-<li>
-<p>Handling disagreements between coders</p>
-<ul>
+<li>Handling disagreements between coders<ul>
 <li>Discuss until consensus: the most common approach; produces a single agreed coding</li>
 <li>Add a "borderline" category for cases where no consensus is possible</li>
 <li>Bring in a third coder as a tiebreaker</li>
 <li>Report unresolved disagreements as a limitation; this is underused and underappreciated</li>
 </ul>
 </li>
-<li>
-<p>The most common mistake: coding together, not independently</p>
-<ul>
+<li>The most common mistake: coding together, not independently<ul>
 <li>Two coders discuss each item before recording their labels</li>
 <li>They then report high agreement as evidence of reliability</li>
 <li>This is circular: they agreed because they talked, not because the codebook is clear</li>
 <li>Independent coding must happen before any discussion</li>
 </ul>
 </li>
-<li>
-<p>The code below computes percent agreement and Cohen's kappa for two lists of labels</p>
-</li>
+<li>The code below computes percent agreement and Cohen's kappa for two lists of labels</li>
 </ul>
 <div data-inc="kappa.py"><span aria-label="Source: reliability/kappa.py" class="inc-path" role="img" tabindex="0" title="reliability/kappa.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="sd">"""Compute percent agreement and Cohen's kappa for two coders."""</span>
 
