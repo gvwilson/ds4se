@@ -2,9 +2,9 @@
 
 ## Learning Goals
 
--   State and distinguish the [%g null_hypothesis "null hypothesis" %], [%g p_value "p-value" %], and [%g confidence_interval "confidence interval" %]
--   Explain [%g type_i_error "Type I" %] and [%g type_ii_error "Type II errors" %] and why SE studies are often underpowered
--   Apply the [%g bonferroni_correction "Bonferroni correction" %] when running multiple tests
+-   State and distinguish the null hypothesis, p-value, and confidence interval
+-   Explain Type I and Type II errors and why SE studies are often underpowered
+-   Apply the Bonferroni correction when running multiple tests
 -   Run a two-sample t-test and interpret the result
 
 ---

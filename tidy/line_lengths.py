@@ -1,4 +1,5 @@
 """Compute PEP 8 line-length compliance from file data."""
+
 import polars as pl
 
 df = pl.read_csv("data/line_lengths.csv")

@@ -1,4 +1,5 @@
 """Replicate PEP 8 compliance analysis from Bafatakis et al. (2019)."""
+
 import polars as pl
 import altair as alt
 
@@ -16,10 +17,14 @@ for label, subset in [("Library", lib), ("Script", scripts)]:
     print(f"{label} non-compliance: {o / t:.1%}")
 
 # Histogram with PEP 8 limit marked
-chart = (alt.Chart(df.to_pandas())
-         .mark_bar()
-         .encode(x=alt.X("line_length:Q", bin=alt.Bin(step=10), title="Line Length (chars)"),
-                 y=alt.Y("sum(count):Q", title="Total Lines"))
-         .properties(title="Distribution of Python Line Lengths"))
+chart = (
+    alt.Chart(df.to_pandas())
+    .mark_bar()
+    .encode(
+        x=alt.X("line_length:Q", bin=alt.Bin(step=10), title="Line Length (chars)"),
+        y=alt.Y("sum(count):Q", title="Total Lines"),
+    )
+    .properties(title="Distribution of Python Line Lengths")
+)
 rule = alt.Chart({"values": [{"x": 79}]}).mark_rule(color="red").encode(x="x:Q")
 (chart + rule).save("figures/line_lengths.html")

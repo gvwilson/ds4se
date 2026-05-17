@@ -25,8 +25,6 @@
 -   A [%g box_and_whisker_plot "box-and-whisker plot" %] shows these differences clearly
     -   The box spans the 25th to 75th percentile; the center line is the median
     -   Points outside the whiskers are not necessarily errors; they are just far from typical
-    -   Adding [%g jitter "jitter" %] to individual data points prevents them from piling up
-        on top of each other when many programmers took the same number of hours
 
 -   Begel and Zimmermann asked hundreds of Microsoft engineers what questions they most
     wanted researchers to answer [%b Begel2014 %]

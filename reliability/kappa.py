@@ -1,4 +1,5 @@
 """Compute percent agreement and Cohen's kappa for two coders."""
+
 from collections import Counter
 
 
@@ -17,17 +18,40 @@ def cohen_kappa(coder_a, coder_b):
 
 if __name__ == "__main__":
     # Example: two coders classify pull request comments
-    coder_a = ["change", "question", "approve", "change", "change",
-               "question", "approve", "approve", "change", "question"]
-    coder_b = ["change", "approve", "approve", "change", "question",
-               "question", "approve", "approve", "change", "question"]
+    coder_a = [
+        "change",
+        "question",
+        "approve",
+        "change",
+        "change",
+        "question",
+        "approve",
+        "approve",
+        "change",
+        "question",
+    ]
+    coder_b = [
+        "change",
+        "approve",
+        "approve",
+        "change",
+        "question",
+        "question",
+        "approve",
+        "approve",
+        "change",
+        "question",
+    ]
     pct, kappa = cohen_kappa(coder_a, coder_b)
     print(f"Percent agreement: {pct:.1%}")
     print(f"Cohen's kappa: {kappa:.3f}")
     label = (
-        "poor" if kappa < 0.4
-        else "moderate" if kappa < 0.6
-        else "substantial" if kappa < 0.8
+        "poor"
+        if kappa < 0.4
+        else "moderate"
+        if kappa < 0.6
+        else "substantial"
+        if kappa < 0.8
         else "near-perfect"
     )
     print(f"Interpretation: {label}")

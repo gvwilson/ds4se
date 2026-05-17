@@ -3,8 +3,8 @@
 ## Learning Goals
 
 -   Extract contribution data from git commit histories using GitPython
--   Compute [%g gini_coefficient "Gini coefficients" %] and plot [%g lorenz_curve "Lorenz curves" %]
--   Identify [%g hero_developer "hero developer" %] patterns in open-source projects
+-   Compute Gini coefficients and plot Lorenz curves
+-   Identify hero developer patterns in open-source projects
 -   Recognize ethical and data-quality issues in MSR work
 
 ## Git Objects and History
@@ -41,7 +41,7 @@
 
 ## Hero Developers
 
--   Most open-source projects have one person — a [%g hero_developer "hero developer" %] — doing the majority of the work [%b Majumder2019 %]
+-   Most open-source projects have one person — a hero developer — doing the majority of the work [%b Majumder2019 %]
     -   Typically more than 80% of commits come from roughly 20% of contributors
     -   The pattern holds across projects of very different sizes and ages
 -   Hero developers create risk: if they stop contributing, the project loses most of its institutional knowledge

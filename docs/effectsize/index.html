@@ -53,6 +53,7 @@
 <li><a href="../contributing/">Contributing</a></li>
 <li><a href="../bibliography/">Bibliography</a></li>
 <li><a href="../glossary/">Glossary</a></li>
+<li><a href="../datasets/">Datasets</a></li>
 </ul>
 </div>
 <a href="https://github.com/gvwilson/ds4se">Repository</a>
@@ -63,8 +64,8 @@
 <h2>Learning Goals</h2>
 <ul>
 <li>Distinguish statistical significance from practical significance</li>
-<li>Compute <a class="gl-ref" href="../glossary/#cohens_d">Cohen's d</a>, <a class="gl-ref" href="../glossary/#cles">common-language effect size</a>, and <a class="gl-ref" href="../glossary/#cliffs_delta">Cliff's delta</a> and interpret each</li>
-<li>Explain why DeOliveiraNeto et al. found most SE papers fail to report <a class="gl-ref" href="../glossary/#effect_size">effect sizes</a></li>
+<li>Compute Cohen's d, common-language effect size, and Cliff's delta and interpret each</li>
+<li>Explain why DeOliveiraNeto et al. found most SE papers fail to report effect sizes</li>
 <li>Use effect size to evaluate TDD outcomes from Fucci et al.</li>
 </ul>
 <hr/>
@@ -127,14 +128,16 @@
 </li>
 </ul>
 <div data-inc="cohens_d.py"><span aria-label="Source: effectsize/cohens_d.py" class="inc-path" role="img" tabindex="0" title="effectsize/cohens_d.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="sd">"""Cohen's d and Cliff's delta for Fucci TDD study outcomes."""</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">polars</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pl</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+
 
 <span class="k">def</span><span class="w"> </span><span class="nf">cohens_d</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Compute Cohen's d for two arrays."""</span>
-    <span class="n">pooled_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">a</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">b</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">pooled_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">a</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">b</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="n">b</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">pooled_std</span>
+
 
 <span class="k">def</span><span class="w"> </span><span class="nf">cliffs_delta</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Compute Cliff's delta for two arrays."""</span>
@@ -142,6 +145,7 @@
     <span class="n">greater</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">a</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">b</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">)</span>
     <span class="n">less</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">a</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">b</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">y</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">greater</span> <span class="o">-</span> <span class="n">less</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
+
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"data/fucci_tdd.csv"</span><span class="p">)</span>
 <span class="n">tdd</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"approach"</span><span class="p">)</span> <span class="o">==</span> <span class="s2">"TDD"</span><span class="p">)</span>

@@ -4,8 +4,8 @@
 
 -   Design a semi-structured interview guide using appropriate question types
 -   Distinguish leading, binary, and double-barreled questions from useful interview questions
--   Choose between [%g purposive_sampling "purposive sampling" %] and [%g snowball_sampling "snowball sampling" %] and explain the trade-offs
--   Apply ethical principles from Gold & Krinke [%b Gold2020 %] to interview research design
+-   Choose between purposive sampling and snowball sampling and explain the trade-offs
+-   Apply ethical principles from [%b Gold2020 %] to interview research design
 
 ---
 

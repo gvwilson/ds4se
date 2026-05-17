@@ -1,2 +1,6 @@
 [default.extend-words]
+IST = "IST"
 Shepperd = "Shepperd"
+arange = "arange"
+ttest = "ttest"
+ttests = "ttests"

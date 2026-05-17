@@ -4,6 +4,9 @@
 [blackbox]: https://www.bluej.org/blackbox/
 [copilot]: https://github.com/features/copilot
 [gitpython]: https://gitpython.readthedocs.io/
+[numpy-github]: https://github.com/numpy/numpy
+[shell-novice-github]: https://github.com/swcarpentry/shell-novice
+[sklearn-github]: https://github.com/scikit-learn/scikit-learn
 [goodharts-law]: https://en.wikipedia.org/wiki/Goodhart%27s_law
 [ieee-xplore]: https://ieeexplore.ieee.org/
 [pep8]: https://peps.python.org/pep-0008/

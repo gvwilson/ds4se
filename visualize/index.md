@@ -2,9 +2,9 @@
 
 ## Learning Goals
 
--   Explain why visualization must precede calculation using [%g anscombes_quartet "Anscombe's quartet" %]
--   Build [%g histogram "histograms" %], [%g scatter_plot "scatter plots" %], and box plots in Altair
--   Choose between linear and [%g log_scale "log scales" %] for skewed distributions
+-   Explain why visualization must precede calculation using Anscombe's quartet
+-   Build histograms, scatter plots, and box plots in Altair
+-   Choose between linear and log scales for skewed distributions
 -   Use jitter, color, and faceting to reveal structure hidden in aggregates
 
 ## Why Visualize Before You Calculate?
@@ -48,7 +48,7 @@
 ## Box Plots
 
 -   `mark_boxplot` draws the five-number summary without any manual aggregation
-    -   The box spans the 25th to 75th [%g percentile "percentile" %]; the line inside is the [%g median "median" %]
+    -   The box spans the 25th to 75th percentile; the line inside is the median
     -   Whiskers extend to 1.5 times the interquartile range; points beyond that are shown individually
 -   Combine a box plot with a strip plot to show the raw data behind the summary
     -   Layer two charts with `chart1 + chart2`

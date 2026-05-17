@@ -2,8 +2,8 @@
 
 ## Learning Goals
 
--   Describe the three [%g mixed_methods "mixed-methods" %] designs (sequential QUAN→qual, sequential QUAL→quan, concurrent)
--   Explain when [%g triangulation "triangulation" %] strengthens a finding and when conflicting results require investigation
+-   Describe the three mixed-methods designs (sequential QUAN→qual, sequential QUAL→quan, concurrent)
+-   Explain when triangulation strengthens a finding and when conflicting results require investigation
 -   Apply the DeSouza Santos et al. example to explain what interviews added that a survey alone could not
 -   Evaluate a study's claim to be "mixed methods" using appropriate criteria
 

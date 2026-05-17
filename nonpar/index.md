@@ -2,8 +2,8 @@
 
 ## Learning Goals
 
--   Apply [%g bootstrap_resampling "bootstrap resampling" %] to compute confidence intervals without distributional assumptions
--   Run a [%g kruskal_wallis "Kruskal-Wallis test" %] and explain why it is preferable to one-way ANOVA for SE data
+-   Apply bootstrap resampling to compute confidence intervals without distributional assumptions
+-   Run a Kruskal-Wallis test and explain why it is preferable to one-way ANOVA for SE data
 -   Compute Spearman rank correlation between teacher predictions and student error data
 -   Reproduce the Brown and Altadmri finding that educators' rankings correlate poorly with Blackbox data
 

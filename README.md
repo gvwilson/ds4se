@@ -55,6 +55,7 @@ but please note that all contributors must abide by our [Code of Conduct](./CODE
 1.  [Contributing](@/contributing/)
 1.  [Bibliography](@/bibliography/)
 1.  [Glossary](@/glossary/)
+1.  [Datasets](@/datasets/)
 
 </div>
 

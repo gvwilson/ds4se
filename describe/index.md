@@ -2,7 +2,7 @@
 
 ## Learning Goals
 
--   Compute and interpret [%g mean "mean" %], median, [%g standard_deviation "standard deviation" %], and percentiles
+-   Compute and interpret mean, median, standard deviation, and percentiles
 -   Explain when mean and median diverge and what that divergence implies
 -   Recognize right-skewed distributions and choose appropriate summary statistics
 -   Use PyPI release-count data to reproduce published descriptive statistics
@@ -12,7 +12,7 @@
 -   The [%g mean "mean" %] is the sum of all values divided by the count; it is sensitive to extreme values
     -   One package on PyPI (`ccxt`) had nearly 11,000 releases at the time of the study
     -   That single package pulls the mean release count up to about 11, even though most packages have far fewer
--   The [%g median "median" %] is the middle value in a sorted list; it is not affected by extremes
+-   The median is the middle value in a sorted list; it is not affected by extremes
     -   The median PyPI release count is 4
     -   A mean of 11 and a median of 4 together tell a story: most packages are small, but a handful of extremely prolific packages distort the average
 -   When mean and median diverge substantially, report both and explain the gap
@@ -30,7 +30,7 @@
 
 ## Percentiles
 
--   The Nth [%g percentile "percentile" %] is the value below which N percent of observations fall
+-   The Nth percentile is the value below which N percent of observations fall
     -   The 25th percentile (Q1) and 75th percentile (Q3) bound the middle half of the data
     -   The 10th and 90th percentiles give a view of the tails without being as extreme as the minimum and maximum
 -   Percentiles are more informative than min/max for skewed data

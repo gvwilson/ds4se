@@ -1,5 +1,5 @@
 """Replicate Mann-Whitney U and Cliff's delta from Fucci et al. (2016)."""
-import numpy as np
+
 import polars as pl
 from scipy import stats
 
@@ -23,4 +23,6 @@ for outcome in ["TESTS", "QLTY", "PROD"]:
     u, p = stats.mannwhitneyu(a, b, alternative="two-sided")
     delta = cliffs_delta(a, b)
     pub_p, pub_d = published[outcome]
-    print(f"{outcome:<8} {u:>8.1f} {p:>10.3e} {delta:>8.3f} {pub_p:>8.3f} {pub_d:>8.3f}")
+    print(
+        f"{outcome:<8} {u:>8.1f} {p:>10.3e} {delta:>8.3f} {pub_p:>8.3f} {pub_d:>8.3f}"
+    )

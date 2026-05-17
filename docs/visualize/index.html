@@ -53,6 +53,7 @@
 <li><a href="../contributing/">Contributing</a></li>
 <li><a href="../bibliography/">Bibliography</a></li>
 <li><a href="../glossary/">Glossary</a></li>
+<li><a href="../datasets/">Datasets</a></li>
 </ul>
 </div>
 <a href="https://github.com/gvwilson/ds4se">Repository</a>
@@ -62,9 +63,9 @@
 <h1>Visualization with Altair</h1>
 <h2>Learning Goals</h2>
 <ul>
-<li>Explain why visualization must precede calculation using <a class="gl-ref" href="../glossary/#anscombes_quartet">Anscombe's quartet</a></li>
-<li>Build <a class="gl-ref" href="../glossary/#histogram">histograms</a>, <a class="gl-ref" href="../glossary/#scatter_plot">scatter plots</a>, and box plots in Altair</li>
-<li>Choose between linear and <a class="gl-ref" href="../glossary/#log_scale">log scales</a> for skewed distributions</li>
+<li>Explain why visualization must precede calculation using Anscombe's quartet</li>
+<li>Build histograms, scatter plots, and box plots in Altair</li>
+<li>Choose between linear and log scales for skewed distributions</li>
 <li>Use jitter, color, and faceting to reveal structure hidden in aggregates</li>
 </ul>
 <h2>Why Visualize Before You Calculate?</h2>
@@ -124,7 +125,7 @@
 <h2>Box Plots</h2>
 <ul>
 <li><code>mark_boxplot</code> draws the five-number summary without any manual aggregation<ul>
-<li>The box spans the 25th to 75th <a class="gl-ref" href="../glossary/#percentile">percentile</a>; the line inside is the <a class="gl-ref" href="../glossary/#median">median</a></li>
+<li>The box spans the 25th to 75th percentile; the line inside is the median</li>
 <li>Whiskers extend to 1.5 times the interquartile range; points beyond that are shown individually</li>
 </ul>
 </li>
@@ -176,25 +177,33 @@
 </li>
 </ul>
 <div data-inc="charts.py"><span aria-label="Source: visualize/charts.py" class="inc-path" role="img" tabindex="0" title="visualize/charts.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="sd">"""Altair visualization examples using Prechelt and function-count data."""</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">polars</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pl</span>
 
 <span class="c1"># Box plot of working hours by language (Prechelt)</span>
 <span class="n">prechelt</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"data/jccpprtTR.csv"</span><span class="p">)</span>
-<span class="n">chart1</span> <span class="o">=</span> <span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">prechelt</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">())</span>
-          <span class="o">.</span><span class="n">mark_boxplot</span><span class="p">()</span>
-          <span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s2">"lang:N"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Language"</span><span class="p">),</span>
-                  <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s2">"whours:Q"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Working Hours"</span><span class="p">))</span>
-          <span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"Development Time by Language"</span><span class="p">))</span>
+<span class="n">chart1</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">prechelt</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">())</span>
+    <span class="o">.</span><span class="n">mark_boxplot</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+        <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s2">"lang:N"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Language"</span><span class="p">),</span> <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s2">"whours:Q"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Working Hours"</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"Development Time by Language"</span><span class="p">)</span>
+<span class="p">)</span>
 <span class="n">chart1</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"figures/boxplot.html"</span><span class="p">)</span>
 
 <span class="c1"># Log-scale histogram of lines per file</span>
 <span class="n">funcs</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"data/py_func_counts.csv"</span><span class="p">)</span>
-<span class="n">chart2</span> <span class="o">=</span> <span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">funcs</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">())</span>
-          <span class="o">.</span><span class="n">mark_bar</span><span class="p">()</span>
-          <span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s2">"lines:Q"</span><span class="p">,</span> <span class="nb">bin</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Bin</span><span class="p">(</span><span class="n">maxbins</span><span class="o">=</span><span class="mi">30</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Lines per File"</span><span class="p">),</span>
-                  <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s2">"count():Q"</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">"log"</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Count (log)"</span><span class="p">))</span>
-          <span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"Python File Sizes (log scale)"</span><span class="p">))</span>
+<span class="n">chart2</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">funcs</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">())</span>
+    <span class="o">.</span><span class="n">mark_bar</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+        <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s2">"lines:Q"</span><span class="p">,</span> <span class="nb">bin</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Bin</span><span class="p">(</span><span class="n">maxbins</span><span class="o">=</span><span class="mi">30</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Lines per File"</span><span class="p">),</span>
+        <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s2">"count():Q"</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">"log"</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Count (log)"</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"Python File Sizes (log scale)"</span><span class="p">)</span>
+<span class="p">)</span>
 <span class="n">chart2</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"figures/file_sizes.html"</span><span class="p">)</span>
 </code></pre></div>
 </div>

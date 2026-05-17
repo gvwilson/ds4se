@@ -3,7 +3,7 @@
 ## Learning Goals
 
 -   Identify and name specific threats to validity in published SE studies
--   Distinguish [%g confound "confounds" %], [%g selection_bias "selection bias" %], and [%g survivorship_bias "survivorship bias" %]
+-   Distinguish confounds, selection bias, and survivorship bias
 -   Explain why GitHub data over-represents certain types of projects
 -   Apply the Kalliamvakou criteria to classify repositories as real projects or not
 

@@ -2,8 +2,8 @@
 
 ## Learning Goals
 
--   Choose between [%g t_test "Student's t-test" %] and [%g mann_whitney_u "Mann-Whitney U" %] based on distribution shape
--   Check [%g normality "normality" %] using [%g qq_plot "QQ plots" %] and the Shapiro-Wilk test
+-   Choose between Student's t-test and Mann-Whitney U based on distribution shape
+-   Check normality using QQ plots and the Shapiro-Wilk test
 -   Interpret and report both test statistics appropriately
 -   Recognize when a QQ plot reveals departure from normality
 

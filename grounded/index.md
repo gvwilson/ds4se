@@ -2,7 +2,7 @@
 
 ## Learning Goals
 
--   Distinguish [%g grounded_theory "grounded theory" %] from thematic analysis in terms of starting point, output, and use case
+-   Distinguish grounded theory from thematic analysis in terms of starting point, output, and use case
 -   Apply the three coding stages (open, axial, selective) to a small dataset
 -   Explain why iterative data collection is a defining feature of grounded theory
 -   Recognize when a paper claims GT but actually did thematic analysis

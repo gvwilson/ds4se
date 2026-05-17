@@ -53,6 +53,7 @@
 <li><a href="../contributing/">Contributing</a></li>
 <li><a href="../bibliography/">Bibliography</a></li>
 <li><a href="../glossary/">Glossary</a></li>
+<li><a href="../datasets/">Datasets</a></li>
 </ul>
 </div>
 <a href="https://github.com/gvwilson/ds4se">Repository</a>
@@ -63,7 +64,7 @@
 <h2>Learning Goals</h2>
 <ul>
 <li>Classify studies by type (controlled experiment, case study, survey, mining, systematic review)</li>
-<li>Explain what <a class="gl-ref" href="../glossary/#replication">replication</a> means and why <a class="gl-ref" href="../glossary/#pre_registration">pre-registration</a> prevents p-hacking</li>
+<li>Explain what replication means and why pre-registration prevents p-hacking</li>
 <li>Identify when observational studies support only correlation claims, not causal claims</li>
 <li>Read a published paper critically using a structured framework</li>
 </ul>
@@ -182,13 +183,16 @@
 </ul>
 <h2>Code</h2>
 <div data-inc="compare_results.py"><span aria-label="Source: design/compare_results.py" class="inc-path" role="img" tabindex="0" title="design/compare_results.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="sd">"""Compare replication results to published Fucci et al. (2016) values."""</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">polars</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pl</span>
 
-<span class="n">published</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s2">"outcome"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"TESTS"</span><span class="p">,</span> <span class="s2">"QLTY"</span><span class="p">,</span> <span class="s2">"PROD"</span><span class="p">],</span>
-    <span class="s2">"pub_p"</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.052</span><span class="p">,</span> <span class="mf">0.380</span><span class="p">,</span> <span class="mf">0.890</span><span class="p">],</span>
-    <span class="s2">"pub_delta"</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.19</span><span class="p">,</span> <span class="mf">0.12</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">]</span>
-<span class="p">})</span>
+<span class="n">published</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">"outcome"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"TESTS"</span><span class="p">,</span> <span class="s2">"QLTY"</span><span class="p">,</span> <span class="s2">"PROD"</span><span class="p">],</span>
+        <span class="s2">"pub_p"</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.052</span><span class="p">,</span> <span class="mf">0.380</span><span class="p">,</span> <span class="mf">0.890</span><span class="p">],</span>
+        <span class="s2">"pub_delta"</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.19</span><span class="p">,</span> <span class="mf">0.12</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">],</span>
+    <span class="p">}</span>
+<span class="p">)</span>
 
 <span class="c1"># Load your replication results (produced by tddlab/replicate_fucci.py)</span>
 <span class="k">try</span><span class="p">:</span>
@@ -196,9 +200,21 @@
     <span class="n">combined</span> <span class="o">=</span> <span class="n">published</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">replicated</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">"outcome"</span><span class="p">)</span>
     <span class="n">combined</span> <span class="o">=</span> <span class="n">combined</span><span class="o">.</span><span class="n">with_columns</span><span class="p">(</span>
         <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"rep_p"</span><span class="p">)</span> <span class="o">-</span> <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"pub_p"</span><span class="p">))</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">"p_diff"</span><span class="p">),</span>
-        <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"rep_delta"</span><span class="p">)</span> <span class="o">-</span> <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"pub_delta"</span><span class="p">))</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">"delta_diff"</span><span class="p">)</span>
+        <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"rep_delta"</span><span class="p">)</span> <span class="o">-</span> <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"pub_delta"</span><span class="p">))</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">"delta_diff"</span><span class="p">),</span>
     <span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">combined</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="s2">"outcome"</span><span class="p">,</span> <span class="s2">"pub_p"</span><span class="p">,</span> <span class="s2">"rep_p"</span><span class="p">,</span> <span class="s2">"p_diff"</span><span class="p">,</span> <span class="s2">"pub_delta"</span><span class="p">,</span> <span class="s2">"rep_delta"</span><span class="p">,</span> <span class="s2">"delta_diff"</span><span class="p">]))</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="n">combined</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="s2">"outcome"</span><span class="p">,</span>
+                <span class="s2">"pub_p"</span><span class="p">,</span>
+                <span class="s2">"rep_p"</span><span class="p">,</span>
+                <span class="s2">"p_diff"</span><span class="p">,</span>
+                <span class="s2">"pub_delta"</span><span class="p">,</span>
+                <span class="s2">"rep_delta"</span><span class="p">,</span>
+                <span class="s2">"delta_diff"</span><span class="p">,</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Could not load replication data: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"Published values:"</span><span class="p">)</span>

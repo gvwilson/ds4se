@@ -53,6 +53,7 @@
 <li><a href="../contributing/">Contributing</a></li>
 <li><a href="../bibliography/">Bibliography</a></li>
 <li><a href="../glossary/">Glossary</a></li>
+<li><a href="../datasets/">Datasets</a></li>
 </ul>
 </div>
 <a href="https://github.com/gvwilson/ds4se">Repository</a>
@@ -62,7 +63,7 @@
 <h1>Descriptive Statistics</h1>
 <h2>Learning Goals</h2>
 <ul>
-<li>Compute and interpret <a class="gl-ref" href="../glossary/#mean">mean</a>, median, <a class="gl-ref" href="../glossary/#standard_deviation">standard deviation</a>, and percentiles</li>
+<li>Compute and interpret mean, median, standard deviation, and percentiles</li>
 <li>Explain when mean and median diverge and what that divergence implies</li>
 <li>Recognize right-skewed distributions and choose appropriate summary statistics</li>
 <li>Use PyPI release-count data to reproduce published descriptive statistics</li>
@@ -74,7 +75,7 @@
 <li>That single package pulls the mean release count up to about 11, even though most packages have far fewer</li>
 </ul>
 </li>
-<li>The <a class="gl-ref" href="../glossary/#median">median</a> is the middle value in a sorted list; it is not affected by extremes<ul>
+<li>The median is the middle value in a sorted list; it is not affected by extremes<ul>
 <li>The median PyPI release count is 4</li>
 <li>A mean of 11 and a median of 4 together tell a story: most packages are small, but a handful of extremely prolific packages distort the average</li>
 </ul>
@@ -100,7 +101,7 @@
 </ul>
 <h2>Percentiles</h2>
 <ul>
-<li>The Nth <a class="gl-ref" href="../glossary/#percentile">percentile</a> is the value below which N percent of observations fall<ul>
+<li>The Nth percentile is the value below which N percent of observations fall<ul>
 <li>The 25th percentile (Q1) and 75th percentile (Q3) bound the middle half of the data</li>
 <li>The 10th and 90th percentiles give a view of the tails without being as extreme as the minimum and maximum</li>
 </ul>
@@ -153,6 +154,7 @@
 <li>If your numbers differ, check whether the dataset has been filtered or whether packages with zero releases were excluded</li>
 </ul>
 <div data-inc="pypi_stats.py"><span aria-label="Source: describe/pypi_stats.py" class="inc-path" role="img" tabindex="0" title="describe/pypi_stats.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="sd">"""Descriptive statistics for PyPI release counts."""</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">polars</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pl</span>
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"data/pypi_releases.csv"</span><span class="p">)</span>

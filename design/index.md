@@ -3,7 +3,7 @@
 ## Learning Goals
 
 -   Classify studies by type (controlled experiment, case study, survey, mining, systematic review)
--   Explain what [%g replication "replication" %] means and why [%g pre_registration "pre-registration" %] prevents p-hacking
+-   Explain what replication means and why pre-registration prevents p-hacking
 -   Identify when observational studies support only correlation claims, not causal claims
 -   Read a published paper critically using a structured framework
 

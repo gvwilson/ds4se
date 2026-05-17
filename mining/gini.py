@@ -1,4 +1,5 @@
 """Compute Gini coefficient and Lorenz curve for contributor data."""
+
 import numpy as np
 import polars as pl
 

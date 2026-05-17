@@ -2,9 +2,9 @@
 
 ## Learning Goals
 
--   Compute and interpret [%g pearson_correlation "Pearson" %] and [%g spearman_correlation "Spearman rank" %] correlations
--   Fit and interpret a simple [%g linear_regression "linear regression" %] model
--   Evaluate model fit using [%g r_squared "R²" %] and [%g residual "residual" %] plots
+-   Compute and interpret Pearson and Spearman rank correlations
+-   Fit and interpret a simple linear regression model
+-   Evaluate model fit using R² and residual plots
 -   Explain when Spearman correlation is more appropriate than Pearson
 
 ---

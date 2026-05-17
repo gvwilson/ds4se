@@ -1,5 +1,7 @@
 # Bibliography
 
+## A
+
 <span id="Acciai2023">Acciai2023</span>
 :   Claudia Acciai, Jesper W. Schneider, and Mathias W. Nielsen:
     "Estimating Social Bias in Data Sharing Behaviours: An Open Science Experiment."
@@ -23,6 +25,8 @@
     "How Do Software Architects Consider Non-Functional Requirements: An Exploratory Study."
     *Proc. International Requirements Engineering Conference (RE)*,
     2012.
+
+## B
 
 <span id="Bafatakis2019">Bafatakis2019</span>
 :   Nikolaos Bafatakis, Niels Boecker, Wenjie Boon, Martin Cabello Salazar, Jens Krinke, Gazi Oznacar, and Robert White:
@@ -54,11 +58,15 @@
     *ACM Transactions on Computing Education*,
     2017.
 
+## C
+
 <span id="Cappendijk2024">Cappendijk2024</span>
 :   Tom Cappendijk, Pepijn de Reus, and Ana Oprescu:
     "Generating Energy-Efficient Code with LLMs."
     arXiv,
     2024.
+
+## D
 
 <span id="DeOliveiraNeto2019">DeOliveiraNeto2019</span>
 :   Francisco Gomes de Oliveira Neto, Richard Torkar, Robert Feldt, Lucas Gren, Carlo A. Furia, and Ziwei Huang:
@@ -84,11 +92,15 @@
     *Information and Software Technology*,
     2006.
 
+## E
+
 <span id="ElHaji2024">ElHaji2024</span>
 :   Khalid El Haji, Enrique Larios Vargas, Egor Bogomolov, and Timofey Bryksin:
     "Using GitHub Copilot for Test Generation in Python."
     arXiv,
     2024.
+
+## F
 
 <span id="Fan2024b">Fan2024b</span>
 :   Youmei Fan, Dong Wang, Supatsara Wattanakriengkrai, Hathaichanok Damrongsiri, Christoph Treude, Hideaki Hata, and Raula Gaikovina Kula:
@@ -138,6 +150,8 @@
     *ACM Transactions on Software Engineering and Methodology*,
     2023.
 
+## G
+
 <span id="Giger2011">Giger2011</span>
 :   Emanuel Giger, Martin Pinzger, and Harald Gall:
     "Using the Gini Coefficient for Bug Prediction in Eclipse."
@@ -149,6 +163,8 @@
     "Ethical Mining: A Case Study on MSR Mining Challenges."
     *Proc. 17th Conference on Mining Software Repositories (MSR)*,
     2020.
+
+## H
 
 <span id="He2024">He2024</span>
 :   Hao He, Haoqin Yang, Philipp Burckhardt, Alexandros Kapravelos, Bogdan Vasilescu, and Christian Kästner:
@@ -168,11 +184,19 @@
     arXiv,
     2023.
 
+## I
+
+## J
+
+## K
+
 <span id="Kalliamvakou2014">Kalliamvakou2014</span>
 :   Eirini Kalliamvakou, Georgios Gousios, Kelly Blincoe, Leif Singer, Daniel M. German, and Daniela Damian:
     "The Promises and Perils of Mining GitHub."
     *Proc. 11th Working Conference on Mining Software Repositories (MSR)*,
     2014.
+
+## L
 
 <span id="Lo2015">Lo2015</span>
 :   David Lo, Nachiappan Nagappan, and Thomas Zimmermann:
@@ -180,11 +204,15 @@
     *Proc. 10th Joint Meeting on Foundations of Software Engineering (FSE)*,
     2015.
 
+## M
+
 <span id="Majumder2019">Majumder2019</span>
 :   Suvodeep Majumder, Joymallya Chakraborty, Amritanshu Agrawal, and Tim Menzies:
     "Why is Software Development Hard for Teams? An Analysis of Hero Developers."
     arXiv,
     2019.
+
+## N
 
 <span id="Nagappan2008a">Nagappan2008a</span>
 :   Nachiappan Nagappan, E. Michael Maximilien, Thirumalesh Bhat, and Laurie Williams:
@@ -203,6 +231,10 @@
     "DevEx: What Actually Drives Productivity: The Developer-Centric Approach to Measuring and Improving Productivity."
     *ACM Queue*,
     2023.
+
+## O
+
+## P
 
 <span id="Pizard2022">Pizard2022</span>
 :   Sebastián Pizard, Diego Vallespir, and Barbara Kitchenham:
@@ -224,11 +256,25 @@
     Apress,
     2019.
 
+## Q
+
+## R
+
+## S
+
 <span id="Silva2016">Silva2016</span>
 :   Danilo Silva, Nikolaos Tsantalis, and Marco Tulio Valente:
     "Why We Refactor? Confessions of GitHub Contributors."
     *Proc. 24th ACM SIGSOFT International Symposium on Foundations of Software Engineering (FSE)*,
     2016.
+
+## T
+
+## U
+
+## V
+
+## W
 
 <span id="Wang2020a">Wang2020a</span>
 :   Qingye Wang, Jinfu Chen, Weiyi Shang, Ahmed E. Hassan, and Bram Adams:
@@ -241,6 +287,12 @@
     "Tidy Data."
     *Journal of Statistical Software*,
     2014.
+
+## X
+
+## Y
+
+## Z
 
 <span id="Zieris2021">Zieris2021</span>
 :   Franz Zieris and Lutz Prechelt:

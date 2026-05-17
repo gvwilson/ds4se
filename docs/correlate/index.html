@@ -53,6 +53,7 @@
 <li><a href="../contributing/">Contributing</a></li>
 <li><a href="../bibliography/">Bibliography</a></li>
 <li><a href="../glossary/">Glossary</a></li>
+<li><a href="../datasets/">Datasets</a></li>
 </ul>
 </div>
 <a href="https://github.com/gvwilson/ds4se">Repository</a>
@@ -62,9 +63,9 @@
 <h1>Correlation and Prediction</h1>
 <h2>Learning Goals</h2>
 <ul>
-<li>Compute and interpret <a class="gl-ref" href="../glossary/#pearson_correlation">Pearson</a> and <a class="gl-ref" href="../glossary/#spearman_correlation">Spearman rank</a> correlations</li>
-<li>Fit and interpret a simple <a class="gl-ref" href="../glossary/#linear_regression">linear regression</a> model</li>
-<li>Evaluate model fit using <a class="gl-ref" href="../glossary/#r_squared">R²</a> and <a class="gl-ref" href="../glossary/#residual">residual</a> plots</li>
+<li>Compute and interpret Pearson and Spearman rank correlations</li>
+<li>Fit and interpret a simple linear regression model</li>
+<li>Evaluate model fit using R² and residual plots</li>
 <li>Explain when Spearman correlation is more appropriate than Pearson</li>
 </ul>
 <hr/>
@@ -126,6 +127,7 @@
 </li>
 </ul>
 <div data-inc="correlation.py"><span aria-label="Source: correlate/correlation.py" class="inc-path" role="img" tabindex="0" title="correlate/correlation.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="sd">"""Correlation and regression for lines vs. functions per file."""</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">polars</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pl</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
 
@@ -142,7 +144,9 @@
 <span class="n">x</span> <span class="o">=</span> <span class="n">clean_py</span><span class="p">[</span><span class="s2">"lines"</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">clean_py</span><span class="p">[</span><span class="s2">"functions"</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
 <span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">se</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Python regression: slope = </span><span class="si">{</span><span class="n">slope</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, intercept = </span><span class="si">{</span><span class="n">intercept</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, R² = </span><span class="si">{</span><span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Python regression: slope = </span><span class="si">{</span><span class="n">slope</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, intercept = </span><span class="si">{</span><span class="n">intercept</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, R² = </span><span class="si">{</span><span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span>
+<span class="p">)</span>
 <span class="n">residuals</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="p">(</span><span class="n">slope</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">intercept</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Residual std: </span><span class="si">{</span><span class="n">residuals</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>

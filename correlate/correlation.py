@@ -1,4 +1,5 @@
 """Correlation and regression for lines vs. functions per file."""
+
 import polars as pl
 from scipy import stats
 
@@ -15,6 +16,8 @@ clean_py = py.drop_nulls(["lines", "functions"]).filter(pl.col("functions") > 0)
 x = clean_py["lines"].to_numpy()
 y = clean_py["functions"].to_numpy()
 slope, intercept, r, p, se = stats.linregress(x, y)
-print(f"\nPython regression: slope = {slope:.4f}, intercept = {intercept:.2f}, R² = {r**2:.3f}")
+print(
+    f"\nPython regression: slope = {slope:.4f}, intercept = {intercept:.2f}, R² = {r**2:.3f}"
+)
 residuals = y - (slope * x + intercept)
 print(f"Residual std: {residuals.std():.2f}")

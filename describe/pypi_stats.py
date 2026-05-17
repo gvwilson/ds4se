@@ -1,4 +1,5 @@
 """Descriptive statistics for PyPI release counts."""
+
 import polars as pl
 
 df = pl.read_csv("data/pypi_releases.csv")

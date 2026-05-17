@@ -53,6 +53,7 @@
 <li><a href="../contributing/">Contributing</a></li>
 <li><a href="../bibliography/">Bibliography</a></li>
 <li><a href="../glossary/">Glossary</a></li>
+<li><a href="../datasets/">Datasets</a></li>
 </ul>
 </div>
 <a href="https://github.com/gvwilson/ds4se">Repository</a>
@@ -62,9 +63,9 @@
 <h1>The Logic of Hypothesis Testing</h1>
 <h2>Learning Goals</h2>
 <ul>
-<li>State and distinguish the <a class="gl-ref" href="../glossary/#null_hypothesis">null hypothesis</a>, <a class="gl-ref" href="../glossary/#p_value">p-value</a>, and <a class="gl-ref" href="../glossary/#confidence_interval">confidence interval</a></li>
-<li>Explain <a class="gl-ref" href="../glossary/#type_i_error">Type I</a> and <a class="gl-ref" href="../glossary/#type_ii_error">Type II errors</a> and why SE studies are often underpowered</li>
-<li>Apply the <a class="gl-ref" href="../glossary/#bonferroni_correction">Bonferroni correction</a> when running multiple tests</li>
+<li>State and distinguish the null hypothesis, p-value, and confidence interval</li>
+<li>Explain Type I and Type II errors and why SE studies are often underpowered</li>
+<li>Apply the Bonferroni correction when running multiple tests</li>
 <li>Run a two-sample t-test and interpret the result</li>
 </ul>
 <hr/>
@@ -148,6 +149,7 @@
 </li>
 </ul>
 <div data-inc="ttest.py"><span aria-label="Source: hypotest/ttest.py" class="inc-path" role="img" tabindex="0" title="hypotest/ttest.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="sd">"""Two-sample t-test comparing Python and JavaScript line lengths."""</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">polars</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pl</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
 

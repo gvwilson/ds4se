@@ -53,6 +53,7 @@
 <li><a href="../contributing/">Contributing</a></li>
 <li><a href="../bibliography/">Bibliography</a></li>
 <li><a href="../glossary/">Glossary</a></li>
+<li><a href="../datasets/">Datasets</a></li>
 </ul>
 </div>
 <a href="https://github.com/gvwilson/ds4se">Repository</a>
@@ -136,10 +137,18 @@
 </ul>
 <h2>Code</h2>
 <div data-inc="classify_snippets.py"><span aria-label="Source: aitools/classify_snippets.py" class="inc-path" role="img" tabindex="0" title="aitools/classify_snippets.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="sd">"""Classify Copilot-generated code snippets for security weaknesses."""</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">polars</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pl</span>
 
 <span class="c1"># Fu et al. security categories</span>
-<span class="n">CATEGORIES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"injection"</span><span class="p">,</span> <span class="s2">"memory_management"</span><span class="p">,</span> <span class="s2">"error_handling"</span><span class="p">,</span> <span class="s2">"cryptography"</span><span class="p">,</span> <span class="s2">"other"</span><span class="p">,</span> <span class="s2">"none"</span><span class="p">]</span>
+<span class="n">CATEGORIES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"injection"</span><span class="p">,</span>
+    <span class="s2">"memory_management"</span><span class="p">,</span>
+    <span class="s2">"error_handling"</span><span class="p">,</span>
+    <span class="s2">"cryptography"</span><span class="p">,</span>
+    <span class="s2">"other"</span><span class="p">,</span>
+    <span class="s2">"none"</span><span class="p">,</span>
+<span class="p">]</span>
 
 <span class="n">snippets</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"data/copilot_snippets.csv"</span><span class="p">)</span>
 <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
@@ -157,7 +166,14 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">has_issue</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">category</span> <span class="o">=</span> <span class="s2">"does_not_compile"</span>
-    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"id"</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">"id"</span><span class="p">],</span> <span class="s2">"compiles"</span><span class="p">:</span> <span class="n">compiles</span><span class="p">,</span> <span class="s2">"has_issue"</span><span class="p">:</span> <span class="n">has_issue</span><span class="p">,</span> <span class="s2">"category"</span><span class="p">:</span> <span class="n">category</span><span class="p">})</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s2">"id"</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">"id"</span><span class="p">],</span>
+            <span class="s2">"compiles"</span><span class="p">:</span> <span class="n">compiles</span><span class="p">,</span>
+            <span class="s2">"has_issue"</span><span class="p">:</span> <span class="n">has_issue</span><span class="p">,</span>
+            <span class="s2">"category"</span><span class="p">:</span> <span class="n">category</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
 
 <span class="n">result_df</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Tally:"</span><span class="p">)</span>

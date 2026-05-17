@@ -53,6 +53,7 @@
 <li><a href="../contributing/">Contributing</a></li>
 <li><a href="../bibliography/">Bibliography</a></li>
 <li><a href="../glossary/">Glossary</a></li>
+<li><a href="../datasets/">Datasets</a></li>
 </ul>
 </div>
 <a href="https://github.com/gvwilson/ds4se">Repository</a>
@@ -143,6 +144,7 @@
 </li>
 </ul>
 <div data-inc="kappa.py"><span aria-label="Source: reliability/kappa.py" class="inc-path" role="img" tabindex="0" title="reliability/kappa.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="sd">"""Compute percent agreement and Cohen's kappa for two coders."""</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
 
 
@@ -161,17 +163,40 @@
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
     <span class="c1"># Example: two coders classify pull request comments</span>
-    <span class="n">coder_a</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"change"</span><span class="p">,</span> <span class="s2">"question"</span><span class="p">,</span> <span class="s2">"approve"</span><span class="p">,</span> <span class="s2">"change"</span><span class="p">,</span> <span class="s2">"change"</span><span class="p">,</span>
-               <span class="s2">"question"</span><span class="p">,</span> <span class="s2">"approve"</span><span class="p">,</span> <span class="s2">"approve"</span><span class="p">,</span> <span class="s2">"change"</span><span class="p">,</span> <span class="s2">"question"</span><span class="p">]</span>
-    <span class="n">coder_b</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"change"</span><span class="p">,</span> <span class="s2">"approve"</span><span class="p">,</span> <span class="s2">"approve"</span><span class="p">,</span> <span class="s2">"change"</span><span class="p">,</span> <span class="s2">"question"</span><span class="p">,</span>
-               <span class="s2">"question"</span><span class="p">,</span> <span class="s2">"approve"</span><span class="p">,</span> <span class="s2">"approve"</span><span class="p">,</span> <span class="s2">"change"</span><span class="p">,</span> <span class="s2">"question"</span><span class="p">]</span>
+    <span class="n">coder_a</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">"change"</span><span class="p">,</span>
+        <span class="s2">"question"</span><span class="p">,</span>
+        <span class="s2">"approve"</span><span class="p">,</span>
+        <span class="s2">"change"</span><span class="p">,</span>
+        <span class="s2">"change"</span><span class="p">,</span>
+        <span class="s2">"question"</span><span class="p">,</span>
+        <span class="s2">"approve"</span><span class="p">,</span>
+        <span class="s2">"approve"</span><span class="p">,</span>
+        <span class="s2">"change"</span><span class="p">,</span>
+        <span class="s2">"question"</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">coder_b</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">"change"</span><span class="p">,</span>
+        <span class="s2">"approve"</span><span class="p">,</span>
+        <span class="s2">"approve"</span><span class="p">,</span>
+        <span class="s2">"change"</span><span class="p">,</span>
+        <span class="s2">"question"</span><span class="p">,</span>
+        <span class="s2">"question"</span><span class="p">,</span>
+        <span class="s2">"approve"</span><span class="p">,</span>
+        <span class="s2">"approve"</span><span class="p">,</span>
+        <span class="s2">"change"</span><span class="p">,</span>
+        <span class="s2">"question"</span><span class="p">,</span>
+    <span class="p">]</span>
     <span class="n">pct</span><span class="p">,</span> <span class="n">kappa</span> <span class="o">=</span> <span class="n">cohen_kappa</span><span class="p">(</span><span class="n">coder_a</span><span class="p">,</span> <span class="n">coder_b</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Percent agreement: </span><span class="si">{</span><span class="n">pct</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Cohen's kappa: </span><span class="si">{</span><span class="n">kappa</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
     <span class="n">label</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s2">"poor"</span> <span class="k">if</span> <span class="n">kappa</span> <span class="o">&lt;</span> <span class="mf">0.4</span>
-        <span class="k">else</span> <span class="s2">"moderate"</span> <span class="k">if</span> <span class="n">kappa</span> <span class="o">&lt;</span> <span class="mf">0.6</span>
-        <span class="k">else</span> <span class="s2">"substantial"</span> <span class="k">if</span> <span class="n">kappa</span> <span class="o">&lt;</span> <span class="mf">0.8</span>
+        <span class="s2">"poor"</span>
+        <span class="k">if</span> <span class="n">kappa</span> <span class="o">&lt;</span> <span class="mf">0.4</span>
+        <span class="k">else</span> <span class="s2">"moderate"</span>
+        <span class="k">if</span> <span class="n">kappa</span> <span class="o">&lt;</span> <span class="mf">0.6</span>
+        <span class="k">else</span> <span class="s2">"substantial"</span>
+        <span class="k">if</span> <span class="n">kappa</span> <span class="o">&lt;</span> <span class="mf">0.8</span>
         <span class="k">else</span> <span class="s2">"near-perfect"</span>
     <span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Interpretation: </span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>

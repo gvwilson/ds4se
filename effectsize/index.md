@@ -3,8 +3,8 @@
 ## Learning Goals
 
 -   Distinguish statistical significance from practical significance
--   Compute [%g cohens_d "Cohen's d" %], [%g cles "common-language effect size" %], and [%g cliffs_delta "Cliff's delta" %] and interpret each
--   Explain why DeOliveiraNeto et al. found most SE papers fail to report [%g effect_size "effect sizes" %]
+-   Compute Cohen's d, common-language effect size, and Cliff's delta and interpret each
+-   Explain why DeOliveiraNeto et al. found most SE papers fail to report effect sizes
 -   Use effect size to evaluate TDD outcomes from Fucci et al.
 
 ---

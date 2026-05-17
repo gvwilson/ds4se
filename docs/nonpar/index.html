@@ -53,6 +53,7 @@
 <li><a href="../contributing/">Contributing</a></li>
 <li><a href="../bibliography/">Bibliography</a></li>
 <li><a href="../glossary/">Glossary</a></li>
+<li><a href="../datasets/">Datasets</a></li>
 </ul>
 </div>
 <a href="https://github.com/gvwilson/ds4se">Repository</a>
@@ -62,8 +63,8 @@
 <h1>Non-Parametric Methods and Rank-Based Tests</h1>
 <h2>Learning Goals</h2>
 <ul>
-<li>Apply <a class="gl-ref" href="../glossary/#bootstrap_resampling">bootstrap resampling</a> to compute confidence intervals without distributional assumptions</li>
-<li>Run a <a class="gl-ref" href="../glossary/#kruskal_wallis">Kruskal-Wallis test</a> and explain why it is preferable to one-way ANOVA for SE data</li>
+<li>Apply bootstrap resampling to compute confidence intervals without distributional assumptions</li>
+<li>Run a Kruskal-Wallis test and explain why it is preferable to one-way ANOVA for SE data</li>
 <li>Compute Spearman rank correlation between teacher predictions and student error data</li>
 <li>Reproduce the Brown and Altadmri finding that educators' rankings correlate poorly with Blackbox data</li>
 </ul>
@@ -153,6 +154,7 @@
 </ul>
 <h2>Code</h2>
 <div data-inc="bootstrap.py"><span aria-label="Source: nonpar/bootstrap.py" class="inc-path" role="img" tabindex="0" title="nonpar/bootstrap.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="sd">"""Bootstrap confidence interval for Spearman correlation between educator rankings and Blackbox data."""</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">polars</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pl</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
@@ -162,13 +164,17 @@
 
 <span class="c1"># Compute Spearman r for each educator</span>
 <span class="n">educator_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"educator_"</span><span class="p">)]</span>
-<span class="n">spearman_rs</span> <span class="o">=</span> <span class="p">[</span><span class="n">stats</span><span class="o">.</span><span class="n">spearmanr</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">blackbox</span><span class="p">)</span><span class="o">.</span><span class="n">statistic</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">educator_cols</span><span class="p">]</span>
+<span class="n">spearman_rs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">stats</span><span class="o">.</span><span class="n">spearmanr</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">blackbox</span><span class="p">)</span><span class="o">.</span><span class="n">statistic</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">educator_cols</span>
+<span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Median Spearman r across educators: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">spearman_rs</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="c1"># Bootstrap 95% CI for median Spearman r</span>
 <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">spearman_rs</span><span class="p">)</span>
-<span class="n">boot_medians</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">spearman_rs</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)]</span>
+<span class="n">boot_medians</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">spearman_rs</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="p">]</span>
 <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">boot_medians</span><span class="p">,</span> <span class="p">[</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">97.5</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"95% bootstrap CI: [</span><span class="si">{</span><span class="n">lo</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">hi</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">]"</span><span class="p">)</span>
 </code></pre></div>

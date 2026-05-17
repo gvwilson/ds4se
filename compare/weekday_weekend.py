@@ -1,4 +1,5 @@
 """Compare weekday vs. weekend programmer working hours."""
+
 import polars as pl
 from scipy import stats
 
