@@ -1,1 +1,15 @@
+[acm-dl]: https://dl.acm.org/
+[altair]: https://altair-viz.github.io/
+[arXiv]: https://arxiv.org/
+[blackbox]: https://www.bluej.org/blackbox/
+[copilot]: https://github.com/features/copilot
+[gitpython]: https://gitpython.readthedocs.io/
+[goodharts-law]: https://en.wikipedia.org/wiki/Goodhart%27s_law
+[ieee-xplore]: https://ieeexplore.ieee.org/
+[pep8]: https://peps.python.org/pep-0008/
 [polars]: https://pola.rs/
+[prechelt-data]: https://www.cs.mu.oz.au/~prechelt/Biblio/jccpprtTR.pdf
+[pypi]: https://pypi.org/
+[scipy]: https://scipy.org/
+[scipy-stats]: https://docs.scipy.org/doc/scipy/reference/stats.html
+[sqlite]: https://sqlite.org/
