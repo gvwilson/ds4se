@@ -48,15 +48,44 @@ development time in hours across all languages, and compute the ratio of the
     beliefs about what works, but those beliefs often don't match the evidence in
     their own projects.
     -   Point: personal experience misleads. Data helps.
+-   Noda et al. [Noda2023] argue that developer experience (DevEx) is
+    multidimensional: flow, feedback loops, and cognitive load all matter
+    independently. Simple metrics like lines of code per day miss most of what
+    makes developers productive or miserable.
+    -   Implication: before you measure productivity, you have to decide what
+        productivity means, and that choice shapes every number you produce.
 -   Workshop map: what we will do over three days and why.
 
 Live coding: Load the Prechelt CSV with Polars. Compute the 10th, 50th, and 90th
 percentile of `whours`. Compare the 90th/10th ratio to the 105X claim in the
 paper. How do the numbers change if you restrict to Java only?
 
-Exercise: Look at the Prechelt CSV. The paper claims the Java range is 3.8–63
+Exercise 1: Look at the Prechelt CSV. The paper claims the Java range is 3.8-63
 hours (ratio 17X). Reproduce that claim: filter to Java rows, find the min and
 max of `whours`. Does your result match? If not, explain the discrepancy.
+
+Exercise 2: The Noda et al. DevEx framework [Noda2023] identifies three
+dimensions of developer experience: feedback loops, cognitive load, and flow
+state. Pick any two programming tasks you did in the last week. For each task,
+write one sentence rating it on each dimension (high/medium/low). Then write one
+sentence explaining which dimension most limited your productivity and how you
+would measure that dimension objectively.
+
+Exercise 3: Compute the 25th, 50th, and 75th percentile of `whours` for each
+language in the Prechelt data. Present the result as a Polars dataframe with
+one row per language. Which language has the smallest interquartile range? Does
+a smaller spread mean the programmers were more skilled, more constrained, or
+something else? Write two sentences.
+
+Exercise 4: Goodhart's Law says that once a measure becomes a target, it stops
+being a good measure. Pick one metric from the Begel & Zimmermann top-ten list
+(e.g., "number of bugs fixed per sprint"). Describe in two sentences how a
+developer could game that metric without actually becoming more productive.
+
+Exercise 5: Devanbu et al. [Devanbu2016] found that developers' beliefs about
+their own codebase often conflict with what the data shows. Write a two-sentence
+hypothesis about why this happens, then describe one study design (what data you
+would collect, from whom) that could test your hypothesis.
 
 ### Lesson 2: Tidy Data and the Polars Basics
 
@@ -77,6 +106,12 @@ that a substantial fraction of Python code snippets exceed the 79-character PEP
 -   Handle missing values: what `null` means in Polars; `drop_nulls` vs.
     `fill_null`.
 -   Write results back to CSV.
+-   Data availability is not guaranteed. Acciai et al. [Acciai2023] ran an audit
+    experiment in which they sent data-sharing requests to authors of published
+    papers. Response rates were significantly lower when the requester had a
+    Chinese-sounding name than an Anglo-Saxon-sounding name. The data you need
+    may exist but be inaccessible for reasons that have nothing to do with
+    technical barriers.
 
 Live coding: Load the Python file line-length dataset (collected from a local
 Python installation, same format as `unused/04_hypotest`). Each row is a file
@@ -84,11 +119,34 @@ ID, a line length, and a count of how many lines in that file have that
 length. Compute the total number of lines and the number that exceed 79
 characters. What fraction of all lines are non-compliant?
 
-Exercise: Bafatakis et al. found that compliance varies by file purpose (library
-code vs. scripts). Does your data show the same pattern if you split by
+Exercise 1: Bafatakis et al. found that compliance varies by file purpose
+(library code vs. scripts). Does your data show the same pattern if you split by
 directory (e.g., `site-packages` vs. `bin`)? Write the Polars query and report
 your finding in one sentence. If your result differs from the paper's, suggest
 one reason why.
+
+Exercise 2: The dataset has a `null` value for line length in some rows. Write
+two Polars queries: one that drops those rows and one that fills them with 0.
+Compute the non-compliance fraction both ways and report both numbers. Write one
+sentence explaining which treatment is more defensible and why.
+
+Exercise 3: Compute the number of distinct file IDs in the dataset. Then compute
+the number of files where every line is 79 characters or fewer. What fraction of
+files are fully compliant? Is the file-level compliance rate higher or lower than
+the line-level compliance rate computed in the live coding exercise? Write one
+sentence explaining which rate is more useful to report.
+
+Exercise 4: The Acciai et al. [Acciai2023] audit found systematic bias in who
+gets responses to data-sharing requests. Suppose you are replicating a study and
+the authors have not shared their data despite a published promise to do so.
+List two alternative data sources you could use instead, and write one sentence
+for each explaining what would be different about your replication as a result.
+
+Exercise 5: Take the tidy line-length data and intentionally make it untidy in
+two different ways (e.g., spread the line-length counts into one column per
+length value; combine file ID and line length into a single string column).
+Write the Polars code to read the untidy version back and restore it to the
+original tidy form. Confirm the result by checking that `shape` matches.
 
 ### Lesson 3: Grouping, Aggregating, and Joining
 
@@ -106,6 +164,11 @@ shapes.
 -   The danger of joining without checking: row counts that explode or collapse.
 -   Reshape: `pivot` and `unpivot` (when you need to go from wide to long or
     back).
+-   El Haji et al. [ElHaji2024] found that Copilot-generated tests are
+    syntactically correct but often lack meaningful assertions. The underlying
+    issue is a structured-data problem: if you store test outcomes as free text,
+    you cannot group by assertion type or aggregate across test suites. This
+    lesson's tools are exactly what you would need to analyze such data at scale.
 
 Live coding: Load the Python and JavaScript function-count datasets from
 `unused/correlation`. Each row is a file with its line count and function count.
@@ -113,11 +176,34 @@ Compute lines-per-function for each file. Group by language and compute median,
 mean, and standard deviation. Combine both datasets into one dataframe with a
 `language` column for easier comparison.
 
-Exercise: The original study found that Python has a notch in the
+Exercise 1: The original study found that Python has a notch in the
 lines-per-function histogram at x = 0 and JavaScript has a notch at a different
 place. Reproduce that finding: make a histogram for each language (using 20-line
 bins up to 200 lines). Do your histograms match the description in the lesson?
 If not, what might account for the difference?
+
+Exercise 2: Join the Python and JavaScript datasets on file name (if a file name
+appears in both datasets). How many files appear in both? How many appear in
+only one? Report these three counts. Write one sentence explaining what a
+many-to-one join on this key would do to your row counts, and why you would want
+to avoid it here.
+
+Exercise 3: Group the combined dataset by language and compute the 10th, 25th,
+75th, and 90th percentiles of lines-per-function. Report the results as a single
+Polars dataframe with one row per language and one column per percentile. Which
+language has the wider interquartile range, and what does that tell you about
+consistency of coding style?
+
+Exercise 4: Use `pivot` to reshape the combined dataset so that each row is a
+file and the columns are `python_lines_per_function` and
+`js_lines_per_function`. How many files have values for both columns? Write the
+Polars code, print the shape, and write one sentence explaining why most files
+will have a null in one of the two columns.
+
+Exercise 5: Compute the ratio of mean lines-per-function for Python to mean
+lines-per-function for JavaScript. Now compute the same ratio using medians.
+Do the two ratios tell the same story? Write two sentences explaining which
+ratio is more appropriate for this data and why.
 
 ### Lesson 4: Visualization with Altair
 
@@ -145,11 +231,34 @@ result to the figure in Prechelt's paper - same shape?). Then make a log-scale
 histogram of Python file sizes from the Session 2 dataset.  Add a faceted
 comparison of Python vs. JavaScript function lengths.
 
-Exercise: The original study shows that the histogram of lines-per-file has a
+Exercise 1: The original study shows that the histogram of lines-per-file has a
 spike at very small values. Is the spike more visible on a linear or a log Y
 axis? Make both plots. Write two sentences comparing what each one reveals.
 Then check: are the very small files empty, or do they contain only comments or
 docstrings? Write a Polars filter that lets you investigate.
+
+Exercise 2: Make a scatter plot of lines-per-file on the X axis and
+functions-per-file on the Y axis for the Python dataset. Add a color encoding
+for a size category: "small" (fewer than 50 lines), "medium" (50-500 lines),
+and "large" (more than 500 lines). Write one sentence describing the pattern
+you see in the large-file region.
+
+Exercise 3: Reproduce the Prechelt box plot with one modification: add a strip
+plot (jittered points) overlaid on each box. Use `mark_point` with a small
+random X offset. Write one sentence about what the individual points reveal that
+the box plot alone does not.
+
+Exercise 4: Create a faceted plot with one panel per language (Python,
+JavaScript) showing the distribution of lines-per-function as a histogram with
+20-line bins. Set the Y axis to the same scale in both panels. Write one
+sentence about what a shared Y axis reveals that independent Y axes would hide.
+
+Exercise 5: Anscombe's quartet is often cited to motivate visualization. Find
+or construct a fifth example: two variables where the Pearson correlation is
+between 0.9 and 1.0 but the scatter plot reveals an obvious non-linearity or
+outlier. Write the Polars code to compute the correlation, produce the scatter
+plot in Altair, and write two sentences explaining why a researcher who reported
+only the correlation would be misleading their readers.
 
 ### Lesson 5: Descriptive Statistics - What the Numbers Actually Mean
 
@@ -176,10 +285,31 @@ Compute mean, median, standard deviation, and the 10th, 25th, 75th, and 90th
 percentiles. Do these numbers match the values reported in the lesson? Plot a
 histogram at four different bin sizes and discuss which one is most honest.
 
-Exercise: The dataset contains packages with zero releases. Should you keep them
-or drop them? Compute the mean and median both ways and report the results.
+Exercise 1: The dataset contains packages with zero releases. Should you keep
+them or drop them? Compute the mean and median both ways and report the results.
 Then write one sentence explaining which is more appropriate for answering "how
 often do active packages get updated?" and why the choice matters.
+
+Exercise 2: Compute the skewness of the release-count distribution using
+`scipy.stats.skew`. Report the value. Then compute the skewness of the
+log-transformed release counts (add 1 before taking the log to handle zeros).
+Write one sentence explaining what the reduction in skewness tells you about
+which scale is more appropriate for this data.
+
+Exercise 3: Remove the top 1% of packages by release count and recompute the
+mean and median. By how much does each statistic change? Write two sentences
+explaining which statistic is more resistant to the removal of extreme values
+and what that implies for summarizing SE data in general.
+
+Exercise 4: The lesson uses PyPI data. Identify one way in which PyPI packages
+are not representative of all software projects (not just open-source ones).
+Write one sentence stating the limitation and one sentence proposing a dataset
+that would reduce it.
+
+Exercise 5: Plot the release-count distribution on a log scale using Altair.
+Now overlay a vertical line at the mean and another at the median. Write two
+sentences explaining what a reader should take away from the gap between those
+two lines.
 
 ### Lesson 6: Lab - Reproducing the Prechelt Study
 
@@ -203,6 +333,32 @@ ratio, (3) the 2.55X 75th/25th percentile ratio.
 -   Wrap-up: every statistical result is the product of dozens of small choices.
     Document them. The fact that you can reproduce the paper's numbers is not
     a coincidence - it is the whole point of sharing data and methods.
+
+Exercise 1: Reproduce the 105X best-vs-worst ratio and the 17X Java-only ratio
+from the Prechelt data. Write one sentence for each ratio explaining exactly
+which rows and which column you used to compute it.
+
+Exercise 2: The paper reports a 75th/25th percentile ratio of 2.55X. Compute
+the same ratio for each language separately. Which language has the most spread
+relative to its median? Report the ratio and write one sentence interpreting
+the result.
+
+Exercise 3: Make a scatter plot of `whours` (X axis) vs. lines of code (Y axis)
+for all participants, colored by language. Write two sentences: one describing
+the overall pattern and one identifying any language that appears to be an outlier
+cluster relative to the main trend.
+
+Exercise 4: You have now computed at least five different ratios from the same
+dataset (105X, 17X, 3.7X, 2.55X, and your per-language ratios). Write a
+paragraph of no more than four sentences summarizing what a manager should take
+away from these numbers and which single ratio you would use if you could only
+report one.
+
+Exercise 5: List three decisions you made while reproducing Prechelt's numbers
+(e.g., how you handled rows with missing values, whether you excluded any
+outliers, how you defined "language group"). For each decision, compute the
+ratio that results from making the opposite choice. By how much does the
+reported ratio change?
 
 ## Day 2: Testing Claims
 
@@ -233,6 +389,11 @@ between Python and JavaScript (the reported t-statistic is -269.67, p ≈ 0.0).
     -   Bonferroni correction: if you run K tests, require p < 0.05/K.
 -   Confidence intervals: a range that contains the true value with probability C.
     -   Usually more useful than a bare p-value.
+-   Furia et al. [Furia2022] document a long list of pitfalls in applying
+    statistical analysis to SE data: choosing the wrong test for the data type,
+    ignoring violations of test assumptions, and reporting p-values without
+    checking whether the model fits. Knowing a test exists is not the same as
+    knowing when to use it.
 
 Live coding: Load the Python and JavaScript line-length datasets from
 `unused/04_hypotest`. Run a two-sample t-test on median line lengths per file.
@@ -240,11 +401,34 @@ Compare your t-statistic and p-value to the values in the lesson. They should
 match (or be close, depending on how you aggregate). If they don't, find out
 why.
 
-Exercise: The lesson reports that the t-test gives t = -269.67 on the raw
+Exercise 1: The lesson reports that the t-test gives t = -269.67 on the raw
 counts. Reproduce that result. Then: the lesson uses all lines, including very
 short and very long ones. What happens to the t-statistic if you restrict to
 lines between 2 and 200 characters? Is the finding still significant? Should you
 apply a Bonferroni correction here? Write a two-sentence justification.
+
+Exercise 2: Run the same t-test 20 times on random subsamples of the data (each
+subsample draws 500 rows with replacement from the full dataset). Plot the
+distribution of t-statistics across those 20 runs as a histogram. Write one
+sentence describing how stable the t-statistic is and what that implies about
+reporting a single run.
+
+Exercise 3: Compute a 95% confidence interval for the difference in mean line
+lengths between Python and JavaScript files using `scipy.stats.ttest_ind` with
+`alternative='two-sided'`. Report the interval. Write one sentence explaining
+why the confidence interval conveys more information than the p-value alone.
+
+Exercise 4: A colleague tells you they tested 30 different pairs of languages
+and found five significant differences at p < 0.05. Apply the Bonferroni
+correction and report the adjusted threshold. How many of those five results
+remain significant? Write one sentence about what this means for interpreting
+large-scale comparative studies.
+
+Exercise 5: Write a short function (10-15 lines) that takes a dataframe with a
+`language` column and a `line_length` column and returns a dataframe with one
+row per pair of languages, the t-statistic, and the raw p-value. Run it on three
+language pairs in the dataset. Report the results and note which pairs would
+survive a Bonferroni correction.
 
 ### Lesson 8: Comparing Two Groups
 
@@ -253,7 +437,7 @@ weekends?
 
 Replication target: The large numbers lesson in `unused/05_largenum` - reproduce
 the reported means (weekday ≈ 6.8 hours, weekend ≈ 3.2 hours) and the t-test
-result (t ≈ 12.8, p ≈ 6.9 × 10⁻³¹).
+result (t ≈ 12.8, p ≈ 6.9 × 10^-31).
 
 -   Student's t-test: assumes the data in each group is approximately normal.
     -   `scipy.stats.ttest_ind`
@@ -267,17 +451,45 @@ result (t ≈ 12.8, p ≈ 6.9 × 10⁻³¹).
 -   Checking normality: QQ plots and the Shapiro-Wilk test.
     -   For large samples, almost everything will fail the normality test because
         the test becomes very sensitive.
+-   Fucci et al. [Fucci2018] ran a quasi-experiment with 45 undergraduates: 23
+    stayed awake all night before a programming task and 22 slept normally. The
+    sleep-deprived group produced lower-quality implementations. This is another
+    example of a two-group comparison where the groups differ on exactly one
+    controlled variable - which makes causal interpretation much more defensible
+    than in observational studies.
 
 Live coding: Load the programmer-hours dataset from `unused/05_largenum`.  Split
 into weekday/weekend. Compute means for each group and check them against the
 reported values. Run both t-test and Mann-Whitney U. Compare the p-values.  Look
 at a violin plot of each group and decide which test is more appropriate.
 
-Exercise: You reproduce the t-test result (t ≈ 12.8). Now run the Shapiro-Wilk
+Exercise 1: You reproduce the t-test result (t ≈ 12.8). Now run the Shapiro-Wilk
 normality test on each group. Does the weekend group pass? Does the weekday
 group? Given your findings, should you have used the t-test or Mann-Whitney?
 Write three sentences justifying your choice, then report what changes (if
 anything) in your conclusion.
+
+Exercise 2: The Fucci et al. [Fucci2018] sleep-deprivation study compared two
+groups of students. Suppose you had the raw implementation-quality scores for
+both groups. Describe in two sentences how you would decide which test to apply
+before looking at the p-value, and write the Python code you would run to make
+that decision.
+
+Exercise 3: Compute the ratio of the Mann-Whitney U statistic to its maximum
+possible value (which is n1 * n2). This gives the common-language effect size
+(CLES). Report the value. Write one sentence explaining what CLES means in plain
+language for the weekday/weekend comparison.
+
+Exercise 4: Plot a QQ plot for each group (weekday, weekend) by sorting the
+observed values and plotting them against the expected quantiles of a normal
+distribution. Write two sentences describing what the QQ plot reveals about each
+group's distribution.
+
+Exercise 5: Split the programmer-hours data into four groups: Monday-Wednesday,
+Thursday-Friday, Saturday, Sunday. Run a Kruskal-Wallis test across all four
+groups. Report the test statistic and p-value. Write two sentences interpreting
+the result and explaining why you would use Kruskal-Wallis rather than three
+separate Mann-Whitney tests.
 
 ### Lesson 9: Effect Size and Practical Significance
 
@@ -289,7 +501,7 @@ delta for the productivity outcome in the TDD study. The paper reports a small
 effect size for most outcomes; participants should verify that claim and report
 whether it changes their interpretation of the p-value.
 
--   Statistical significance ≠ practical significance.
+-   Statistical significance is not practical significance.
     -   With N = 100,000, even a difference of 0.001 can be "significant."
     -   With N = 10, even a large difference may not reach significance.
 -   Cohen's d: standardized difference between means.
@@ -300,6 +512,11 @@ whether it changes their interpretation of the p-value.
 -   Cliff's delta: non-parametric effect size for ordinal data.
 -   DeOliveiraNeto et al. [DeOliveiraNeto2019] reviewed 5,000+ SE papers and
     found that very few report effect sizes - a major gap in the field.
+-   Furia et al. [Furia2022] make a related point: standard frequentist analyses
+    of SE data often lead to conflicting conclusions depending on how confounds
+    are handled. Reporting only a p-value, without an effect size and a
+    sensitivity analysis, leaves readers unable to judge whether the finding is
+    robust.
 
 Live coding: Load the Fucci TDD dataset. Compute Cohen's d and Cliff's delta for
 the `PROD` (productivity) column comparing TDD and TLD groups. Do the effect
@@ -307,10 +524,34 @@ size values match the paper's description of a "small" effect? Now do the same
 for `QLTY` (quality) and `TESTS` (test count). Which outcome has the largest
 practical effect?
 
-Exercise: Compute Cohen's d for the weekday/weekend programmer-hours data from
-Session 8. The t-test found p ≈ 10⁻³¹. What is d? Is the effect "small,"
+Exercise 1: Compute Cohen's d for the weekday/weekend programmer-hours data from
+Session 8. The t-test found p ≈ 10^-31. What is d? Is the effect "small,"
 "medium," or "large" by Cohen's rough heuristic? Does that change your advice to
 a manager who is considering banning weekend work? Write two sentences.
+
+Exercise 2: Compute CLES for the weekday/weekend comparison. Write one sentence
+interpreting the value in plain English (e.g., "if you pick one weekday
+observation and one weekend observation at random, the weekday value will be
+larger X% of the time"). Then write one sentence explaining why this is easier
+to explain to a non-statistician than Cohen's d.
+
+Exercise 3: Construct a synthetic dataset where Cohen's d = 0.8 (large) but
+p > 0.05. Write the Python code that generates the data and runs the t-test,
+and report the sample size you needed to make this happen. Write one sentence
+explaining what this demonstrates about the relationship between effect size and
+statistical power.
+
+Exercise 4: DeOliveiraNeto et al. [DeOliveiraNeto2019] found that most SE papers
+do not report effect sizes. Find one of the p-values reported in the Prechelt
+analysis from Session 6 and compute the corresponding Cohen's d. Write two
+sentences arguing whether the effect size strengthens or weakens the paper's
+main claim.
+
+Exercise 5: Compute Cliff's delta for all three outcome variables in the Fucci
+TDD dataset (TESTS, QLTY, PROD). Present the results in a small table with
+columns for outcome, Cliff's delta, and a qualitative label (negligible, small,
+medium, large using the standard thresholds). Write one sentence summarizing
+what the table implies for a team considering adopting TDD.
 
 ### Lesson 10: Correlation and Prediction
 
@@ -338,10 +579,32 @@ Pearson r for lines vs. functions in each language. Your numbers should land
 near r ≈ 0.806 (Python) and r ≈ 0.728 (JavaScript). Fit a linear model to the
 Python data and plot the residuals. Is there systematic structure in the residuals?
 
-Exercise: The study uses Pearson correlation. Now compute Spearman rank
+Exercise 1: The study uses Pearson correlation. Now compute Spearman rank
 correlation on the same data. How different are the two values? For what kind
 of file would Spearman give a more reliable answer than Pearson? Identify one
 type of file in the dataset where you'd trust Spearman more, and explain why.
+
+Exercise 2: Fit a linear regression of functions-per-file on lines-per-file for
+Python. Report the slope, intercept, and R². Then predict the number of
+functions in a 500-line Python file. Write one sentence explaining whether you
+trust that prediction and why.
+
+Exercise 3: Split the Python dataset into two halves at random (set a random
+seed for reproducibility). Fit a linear model on one half and compute the R² on
+the other half (out-of-sample). Compare it to the in-sample R². Write two
+sentences explaining what the difference between the two values tells you about
+overfitting.
+
+Exercise 4: Compute Pearson r between lines-per-file and functions-per-file for
+Python, then compute it again after removing all files with more than 1,000
+lines. Report both values. Write one sentence explaining whether the correlation
+is driven primarily by the large files or by the full distribution.
+
+Exercise 5: A residual plot for the Python linear model shows that the residuals
+are larger for large files than for small files (a pattern called
+heteroscedasticity). Describe in two sentences what this means for predictions
+made by the model, and suggest one transformation of the data that might reduce
+the problem.
 
 ### Lesson 11: Confounds, Bias, and Threats to Validity
 
@@ -354,14 +617,34 @@ are not active software projects: personal experiments, mirrors, homework, or
 abandoned stubs.
 
 -   Bird et al. [Bird2011] found that files with many contributors have more bugs.
+    -   Specifically, in an analysis of Windows Vista and Windows 7, files with
+        low ownership (many contributors, none dominant) had significantly higher
+        post-release defect rates than files with a clear primary owner.
     -   But: larger files have more bugs too. Is ownership the cause, or file size?
     -   Confound: a third variable that affects both the cause and the effect.
 -   Selection bias: GitHub data over-represents successful projects.
     -   Kalliamvakou et al. [Kalliamvakou2014] found that most "projects" are
         personal experiments, mirrors, or abandoned repos - far from representative.
 -   Survivorship bias: we study software that still exists.
-    -   Ait et al. [Ait2022] found that ~80% of GitHub projects are inactive within
-        a few years - but we rarely study the failures.
+    -   Ait et al. [Ait2022] analyzed early development dynamics in GitHub
+        projects and found that a large fraction are abandoned shortly after
+        creation - but abandoned projects are almost never studied, so we
+        systematically over-estimate how healthy open-source communities are.
+-   Hero developers [Majumder2019]: in many OSS projects, one person makes more
+    than 80% of the commits. This concentration can itself be a confound: studies
+    that compare "high-ownership" to "low-ownership" files may really be comparing
+    "files the hero cares about" to "files nobody maintains."
+-   He et al. [He2024] found that GitHub star counts - the most widely used
+    popularity signal for repositories - are routinely faked by bots and
+    purchased services, undermining studies that use stars as a proxy for quality
+    or adoption.
+-   Acciai et al. [Acciai2023] found systematic bias in who gets access to shared
+    research data, meaning the datasets available to researchers are not a random
+    sample of the datasets that exist.
+-   Furia et al. [Furia2023] argue that SE studies typically report statistical
+    correlations rather than causal relations, because running large-scale
+    controlled experiments is often impossible. Treating a correlation as a
+    causal claim is one of the most common validity threats in the field.
 -   Observer effect: when programmers know they're being studied, they behave
     differently.
 -   Self-reported data: surveys about hours worked, productivity, satisfaction
@@ -376,11 +659,37 @@ and language. Apply the Kalliamvakou criteria for "not a real project" (fewer
 than 5 commits, 1 contributor, last commit more than 2 years ago). What fraction
 fails? Does it match the paper's finding of roughly 70%?
 
-Exercise (group): You are reviewing a paper that claims "teams that use daily
+Exercise 1 (group): You are reviewing a paper that claims "teams that use daily
 standups ship 30% faster." The data comes from a survey of teams that
 volunteered to participate. Using the bias types introduced today, list three
 specific threats to validity. For each one, describe a study design change that
 would reduce it - and estimate how hard that change would be in practice.
+
+Exercise 2: He et al. [He2024] found that star counts on GitHub can be faked.
+Using the 200-repo sample from the live coding exercise, compute the Pearson
+correlation between star count and number of commits. Write two sentences: one
+interpreting the correlation, and one explaining why a high correlation does not
+mean stars are a reliable quality signal.
+
+Exercise 3: Bird et al. [Bird2011] controlled for file size when studying the
+effect of code ownership on defect rates. Take the 200-repo sample and check
+whether the number of commits and the number of contributors are correlated with
+each other (compute Pearson r). Write two sentences explaining why this
+correlation matters when you try to study the effect of either variable on
+software quality.
+
+Exercise 4: Furia et al. [Furia2023] argue that observational SE data supports
+correlation claims, not causal claims. Pick any finding from Day 1 (e.g., Python
+files are longer than JavaScript files on average). Write three sentences: one
+stating the correlation, one proposing a plausible confound, and one describing
+the study design that would let you rule out that confound.
+
+Exercise 5: Ait et al. [Ait2022] found that many GitHub projects are inactive
+within a few years of creation. In the 200-repo sample, classify repos as
+"active" (last commit within 12 months) or "inactive" (last commit more than 12
+months ago). What fraction are inactive? Now compute the mean star count for
+active vs. inactive repos. Write one sentence explaining whether stars predict
+activity in this sample.
 
 ### Lesson 12: Lab - Does Test-Driven Development Work?
 
@@ -408,6 +717,34 @@ and a small difference on TESTS.
 -   Wrap-up: replicate, then extend. "We believe X" is not evidence. "We measured
     X" is the beginning of evidence. And even "We measured X" needs replication.
 
+Exercise 1: Reproduce the Mann-Whitney U test p-values and Cliff's delta values
+from Table 3 of Fucci et al. [Fucci2016] for all three outcomes (TESTS, QLTY,
+PROD). Report your values alongside the published values. For any discrepancy
+larger than 0.01, write one sentence hypothesizing why it occurred.
+
+Exercise 2: The paper excludes some participants. Rerun the analysis without
+applying any exclusion criteria and report how the p-values change. Write two
+sentences explaining whether the exclusion decisions strengthen or weaken the
+main finding.
+
+Exercise 3: Fucci et al. [Fucci2017] found that the rhythm of test-code
+interleaving matters more than test-first vs. test-last. Write one sentence
+defining an operationalization of "rhythm" that could be measured from a version
+control history. Write a second sentence describing the dataset you would need
+to test that hypothesis.
+
+Exercise 4: Compute the statistical power of the Fucci study for detecting a
+medium effect (Cliff's delta ≈ 0.3) given the actual sample size. Use
+`scipy.stats` or a power analysis library. Report the power. Write one sentence
+explaining what the power value implies for how much confidence you should place
+in the null results for QLTY and PROD.
+
+Exercise 5: Nagappan et al. [Nagappan2008a] found TDD reduced defects by 40-90%
+in industrial case studies; Fucci et al. [Fucci2016] found little effect in a
+controlled experiment. Write three sentences explaining how both findings can be
+correct at the same time, using the concepts of external validity, confounds,
+and effect size.
+
 ## Day 3: Mining Repositories and the Impact of AI
 
 Day 3 covers data collection from version control systems, more advanced
@@ -432,12 +769,19 @@ in the lesson match the description in Majumder et al.'s hero-developer study.
     -   0 = perfect equality; 1 = one person does everything.
     -   Giger et al. [Giger2011] used it to predict bug-prone files in Eclipse.
     -   Hero developers [Majumder2019]: most projects have one person who does
-        the majority of the work.
+        the majority of the work - typically more than 80% of commits from
+        roughly 20% of contributors.
+-   He et al. [He2024] found that GitHub star counts are routinely inflated by
+    bots and purchased services. If you are using stars to sample "popular"
+    repositories, you may be sampling "well-marketed" repositories instead.
+    Clean your sampling frame before you start mining.
 -   Dirty data in version control:
     -   Flint et al. [Flint2021] found that at least 35% of MSR papers use
         time-based data without cleaning it, leading to bogus results from
         wrong commit timestamps.
-    -   Gold & Krinke [Gold2020] on ethical issues in mining public repositories.
+    -   Gold & Krinke [Gold2020] on ethical issues in mining public repositories:
+        public does not mean consented to research use, and commit histories
+        contain personal information about individual developers.
 
 Live coding: Use the pre-collected commit data from
 `unused/measuring-contributions`.  Compute the Gini coefficient for three
@@ -446,11 +790,35 @@ lesson). Plot the Lorenz curve for each.  Which project has the most
 concentrated contribution history? Compare your Gini values to the scatter plots
 already in the lesson directory.
 
-Exercise: The hero-developer literature typically defines a hero as the single
+Exercise 1: The hero-developer literature typically defines a hero as the single
 contributor responsible for more than 80% of all commits. Compute this fraction
 for each of your three projects. Do any qualify? For the one with the highest
 concentration, write two sentences about what a team should consider before
 relying on that person's availability.
+
+Exercise 2: Compute the Gini coefficient for lines added rather than commit
+count for each of the three projects. Does the ranking of projects by inequality
+change? Write two sentences explaining why commit count and lines added might
+give different pictures of contribution inequality.
+
+Exercise 3: He et al. [He2024] showed that star counts can be faked. Design a
+two-step sampling procedure for selecting "representative" OSS projects that
+does not rely on star count as the primary filter. Write four sentences
+describing your procedure and what proxy for project health or popularity you
+would use instead.
+
+Exercise 4: Gold & Krinke [Gold2020] argue that mining commit histories raises
+ethical questions because the data contains information about individual
+developers. List two specific pieces of information that appear in a typical
+commit history that a developer might not expect to be used in research. For
+each one, write one sentence describing a potential harm.
+
+Exercise 5: Flint et al. [Flint2021] found that 35% of MSR papers use
+time-based data without cleaning it. In the pre-collected commit data, check
+for commits with timestamps before the project's first known public release or
+with timestamps in the future relative to the data collection date. Report how
+many such commits you find and write one sentence explaining one way they could
+arise.
 
 ### Lesson 14: Non-Parametric Methods and Rank-Based Tests
 
@@ -481,11 +849,32 @@ actual Blackbox ranking. Compute a bootstrap 95% confidence interval for the
 median Spearman r across all educators. Does your CI include the value that
 would indicate "educators are basically right"?
 
-Exercise: The paper reports that educators agree with each other more than they
+Exercise 1: The paper reports that educators agree with each other more than they
 agree with reality. Test this: compute the average Spearman r between all pairs
 of educators, and compare it to the average r between educators and the Blackbox
 data. Write three sentences interpreting what that comparison means for how
 programming courses are designed.
+
+Exercise 2: Run a Kruskal-Wallis test on the error counts grouped by error
+category (e.g., syntax errors, type errors, logic errors). Report the test
+statistic and p-value. Write two sentences explaining why you use Kruskal-Wallis
+rather than a one-way ANOVA here.
+
+Exercise 3: Compute a bootstrap 95% confidence interval for the Spearman
+correlation between the best-performing educator and the Blackbox ranking. Use
+1,000 bootstrap samples. Report the interval. Write one sentence interpreting
+whether even the best educator's rankings are reliably better than chance.
+
+Exercise 4: The bootstrap gives you a distribution of a statistic across
+resamples. Plot that distribution as a histogram for the median Spearman r from
+the live coding exercise. Mark the 2.5th and 97.5th percentiles with vertical
+lines. Write one sentence explaining what the width of the distribution tells
+you about uncertainty in your estimate.
+
+Exercise 5: Identify the three error types that educators most consistently
+over-predict relative to the Blackbox data (i.e., educators rank them as common
+but students make them rarely). Write two sentences suggesting why educators
+might systematically over-estimate the frequency of those particular errors.
 
 ### Lesson 15: Study Design and Replication
 
@@ -504,9 +893,10 @@ why published numbers sometimes can't be reproduced exactly.
     -   Mining studies (repositories, bug trackers, Stack Overflow).
     -   Systematic literature reviews.
 -   What replication means and why it matters.
-    -   Pizard et al. [Pizard2021] trained students to read and replicate
-        empirical SE studies; students who did this were better at critiquing
-        new claims.
+    -   Pizard et al. [Pizard2022] conducted a longitudinal study training
+        students to read and replicate empirical SE studies. Students who went
+        through the training were better at critiquing new claims and more likely
+        to check statistical assumptions before accepting a result.
 -   Pre-registration: committing to your hypotheses and methods before
     collecting data.
     -   Prevents p-hacking and hypothesis-after-results-known (HARKing).
@@ -515,6 +905,10 @@ why published numbers sometimes can't be reproduced exactly.
     -   Nagappan et al. [Nagappan2008a] found TDD reduced defects by 40-90%
         in industrial case studies; Fucci et al. [Fucci2016] found little effect
         in a controlled experiment. Both are valid. The settings differed.
+-   Furia et al. [Furia2023] argue that observational data in SE supports only
+    correlation claims. When a paper uses causal language ("X causes Y") but the
+    study is observational, that is a validity threat the authors may not have
+    acknowledged explicitly.
 -   Reading a paper critically:
     -   What is the research question?
     -   What are the independent and dependent variables?
@@ -527,11 +921,35 @@ in the paper. Where do they match? Where do they differ? For each discrepancy,
 write a hypothesis about why it exists (different data version, different
 exclusion rule, different test implementation).
 
-Exercise (group): Read the abstract and results section of one short SE paper (a
-different paper is provided for each group). Write a half-page critique: what do
-you trust, what do you doubt, and what one follow-up study would you run?
+Exercise 1 (group): Read the abstract and results section of one short SE paper
+(a different paper is provided for each group). Write a half-page critique: what
+do you trust, what do you doubt, and what one follow-up study would you run?
 Include: "We would know our replication had succeeded if we reproduced the
 number ___."
+
+Exercise 2: Pre-registration requires committing to your hypotheses before
+seeing the data. Write a two-paragraph pre-registration for the Session 18
+study design you plan to sketch, including your primary hypothesis, the
+statistical test you will use, the minimum effect size you consider meaningful,
+and how you will handle missing data.
+
+Exercise 3: The Pizard et al. [Pizard2022] training program taught students to
+replicate SE studies. List three specific skills you would need to replicate a
+study that reports a Gini coefficient from mining software repositories. For
+each skill, write one sentence explaining where in this workshop you practiced
+it.
+
+Exercise 4: Furia et al. [Furia2023] distinguish between predictive models
+(which forecast an outcome) and causal models (which explain why an outcome
+occurs). Find one claim from a paper covered in this workshop that uses causal
+language but is based on observational data. Quote the sentence, then rewrite
+it to accurately reflect what the data actually support.
+
+Exercise 5: A finding from Session 11 states that files with many contributors
+have more bugs [Bird2011]. Write a pre-registered study plan (four sentences) to
+test whether this finding replicates in a new dataset: state your null
+hypothesis, your sample selection criteria, your statistical test, and the
+effect size threshold below which you would consider the effect negligible.
 
 ### Lesson 16: AI Tools and Software Engineering - What Do We Actually Know?
 
@@ -558,6 +976,14 @@ development.  The field is moving fast; treat everything here as preliminary.
     -   El Haji et al. [ElHaji2024] studied Copilot for test generation: it
         produces syntactically correct tests, but they often lack meaningful
         assertions and miss edge cases.
+    -   Nguyen & Nadi [Nguyen2022] evaluated Copilot on a set of LeetCode
+        problems and found that correctness rates varied substantially by problem
+        difficulty and programming language, raising questions about which tasks
+        AI code generation is actually reliable for.
+    -   Huang et al. [Huang2023b] found that LLM-generated code can reflect
+        social biases related to age, gender, and race - for example, generating
+        different implementations depending on variable names that imply a user's
+        demographic. This is an empirical question, not a theoretical concern.
     -   Furia et al. [Furia2022, Furia2023] demonstrated that standard
         frequentist analyses of code quality often lead to conflicting conclusions
         depending on how confounds are handled.
@@ -565,6 +991,10 @@ development.  The field is moving fast; treat everything here as preliminary.
     -   Long-term effects on code maintainability.
     -   Whether AI tools help or harm junior developers' skill development.
     -   How productivity gains distribute across team roles.
+    -   Energy costs: Cappendijk et al. [Cappendijk2024] point out that the
+        electricity demands of running LLMs to generate code must be weighed
+        against any productivity benefits - a cost that is almost never included
+        in productivity studies.
 
 Live coding: Open the 20 provided Copilot-generated Python snippets. For each
 one, decide: (1) does it compile? (2) does it have an obvious security issue?
@@ -572,12 +1002,37 @@ one, decide: (1) does it compile? (2) does it have an obvious security issue?
 results. Compare to Fu et al.'s reported distribution across categories. Your
 sample is tiny; how wide would the confidence interval be around your fraction?
 
-Exercise: You are asked to run a study at your company to determine whether
+Exercise 1: You are asked to run a study at your company to determine whether
 Copilot increases developer productivity. You have six months and can recruit 20
 developers. Sketch a study design: what you'll measure, what you'll control,
 what your comparison condition is, and what three threats to validity you're
 most worried about. Then: which of Fucci's methodological choices (multi-site,
 blind analysis, pre-specified outcomes) would you borrow, and why?
+
+Exercise 2: Huang et al. [Huang2023b] found that LLM-generated code can reflect
+social biases. Design a minimal experiment to test whether Copilot generates
+different code quality or different variable naming conventions depending on
+whether the prompt uses a stereotypically male vs. female name for a developer
+persona. Write three sentences: the hypothesis, the operationalization of "code
+quality," and one threat to validity in your design.
+
+Exercise 3: Cappendijk et al. [Cappendijk2024] argue that energy consumption of
+LLM-generated code should be included in productivity studies. Identify one
+existing Copilot productivity study (you may use GitHub's own published reports)
+and write two sentences explaining what data you would need to add an energy
+cost estimate to its reported productivity gains.
+
+Exercise 4: Nguyen & Nadi [Nguyen2022] found that Copilot's correctness rate
+varies by problem difficulty. If you were designing a benchmark to evaluate a
+new code-generation tool fairly, what three categories of tasks would you
+include and why? Write one sentence per category.
+
+Exercise 5: El Haji et al. [ElHaji2024] found that Copilot-generated tests lack
+meaningful assertions. Write a short rubric (four criteria, one sentence each)
+for manually evaluating whether a unit test is adequate. Apply your rubric to
+two of the 20 provided snippets and report your scores. Write one sentence about
+whether your rubric is reliable enough to use in a research study without
+inter-rater reliability checks.
 
 ### Lesson 17: Reading and Critiquing the Literature
 
@@ -606,7 +1061,7 @@ inputs.
     find relevant. Many practitioners don't read research at all. That is a
     two-way problem.
 
-Exercise (pairs): Each pair receives a different short paper.
+Exercise 1 (pairs): Each pair receives a different short paper.
     -   Identify the research question, independent variable, dependent variable,
         sample size, and statistical method.
     -   Find one thing the authors did well methodologically.
@@ -617,6 +1072,30 @@ Exercise (pairs): Each pair receives a different short paper.
         and sample size, confirm the degrees of freedom).
     -   Present in two minutes to the group. Report: "We reproduced / could not
         reproduce the claim that ___."
+
+Exercise 2: Pick any paper discussed in this workshop that you did not author
+the replication for. Read the threats-to-validity section. List every threat the
+authors acknowledge, then list at least one threat they do not acknowledge. Write
+two sentences explaining why the unacknowledged threat matters and how serious
+you think it is.
+
+Exercise 3: Lo et al. [Lo2015] found that many practitioners do not read
+research. Write a one-paragraph plain-language summary of any one study from
+this workshop, aimed at a software developer who has never read an academic
+paper. Your summary must include the main finding, the sample size, and one
+reason to be cautious about generalizing the result.
+
+Exercise 4: Take any table of results from a paper covered in this workshop.
+Identify one number in the table that you can verify by computing it from other
+numbers in the same paper (e.g., a percentage computed from a count and a total,
+or a Cohen's d computed from means and standard deviations). Compute it. Does it
+match? Write one sentence about what a mismatch would imply.
+
+Exercise 5: A preprint on arXiv claims that a new code review tool reduces
+review time by 40% based on a study of 8 developers over two weeks. List four
+red flags in that claim. For each one, write one sentence explaining what
+additional information would let you evaluate whether the flag is a serious
+problem or a minor limitation.
 
 ### Lesson 18: Capstone - Design Your Own Study
 
@@ -670,6 +1149,353 @@ Write a one-page study design:
 
 No new code required. This is about thinking clearly about evidence.
 
+Reflection questions:
+
+Reflection 1: Looking back across all 18 sessions, which single concept changed
+how you think about software engineering claims you encounter in blog posts,
+conference talks, or vendor marketing? Write three sentences: state the concept,
+describe a specific claim you have seen that the concept helps you evaluate, and
+explain what question you would now ask before accepting that claim.
+
+Reflection 2: You have replicated results from at least five published studies.
+In which replication did your numbers diverge most from the published values?
+Write two sentences describing the divergence and your best explanation for it.
+Then write one sentence about what that experience implies for how much weight
+you should put on a single published result.
+
+Reflection 3: The workshop covered controlled experiments, observational studies,
+and mining studies. For the study you designed in Part 2, which type did you
+end up with? Write two sentences explaining one thing you would need to change
+about your design to move it one step closer to a controlled experiment, and one
+sentence about whether that change is feasible.
+
+Reflection 4: Noda et al. [Noda2023] argue that developer productivity is
+multidimensional. If your employer asked you to evaluate whether a new tool
+increases team productivity, write three sentences describing the measurement
+approach you would use, drawing on what you learned about effect sizes,
+statistical tests, and threats to validity in this workshop.
+
+## Day 4: Analyzing Qualitative Data
+
+Day 4 covers qualitative and mixed-method research. Quantitative methods tell
+you what happened and how often; qualitative methods tell you why. Both are
+necessary for a complete picture of software engineering practice.
+
+### Lesson 19: What Qualitative Data Looks Like in SE Research
+
+Motivating question: Why do developers abandon projects they started?
+
+-   Qualitative data in SE: interview transcripts, open survey responses, code
+    review comments, issue tracker text, commit messages, Stack Overflow posts.
+    -   Different from quantitative data: not counts or measurements, but language.
+    -   The goal is to understand meaning, not frequency.
+-   Hoda [Hoda2024] provides a practitioner-focused overview of qualitative
+    methods in SE: types of data, collection techniques, and common pitfalls.
+    -   Qualitative work is not "easier" than quantitative work. It is harder
+        to do rigorously and harder to teach participants to trust.
+-   When qualitative methods are the right choice:
+    -   You do not yet know what the important variables are.
+    -   The phenomenon involves judgment, motivation, or social context.
+    -   Numbers exist but do not explain the pattern.
+-   Ait et al. [Ait2022] show that most GitHub projects go inactive within a
+    few years - but the survival data alone cannot explain why.
+    -   Interviews with maintainers reveal: burnout, loss of interest, employer
+        pressure, feeling underappreciated by users.
+    -   The quantitative result raises the question; the qualitative result
+        begins to answer it.
+-   Concrete example: Silva et al. [Silva2016] analyzed developers' stated
+    motivations for refactoring by reading 548 commit messages and classifying
+    them into themes. The data source is quantitative (GitHub), but the
+    analysis is qualitative (reading and interpreting text).
+
+Exercise 1: Find five recent commit messages in any open-source repository on
+GitHub. For each one, write one sentence describing the developer's apparent
+motivation. Compare your interpretations with a partner. Where did you agree?
+Where did you disagree, and why?
+
+Exercise 2: The Ait et al. study counts inactive projects. Write three interview
+questions you would ask a former maintainer to understand why they stopped
+contributing. Make each question open-ended and non-leading.
+
+Exercise 3: A colleague proposes to measure "developer satisfaction" by counting
+positive and negative words in commit messages. Identify two ways this approach
+might mislead you that a survey with open-ended questions would not.
+
+Exercise 4: List three SE phenomena that you think quantitative methods handle
+well and three that you think require qualitative investigation. For each
+qualitative example, say what question you would be trying to answer.
+
+Exercise 5: Read the abstract of Hoda [Hoda2024]. What does the author identify
+as the most common mistake researchers make when analyzing qualitative data?
+Write one sentence summarizing the mistake and one sentence explaining how you
+would avoid it.
+
+### Lesson 20: Thematic Analysis
+
+Motivating question: What do developers actually find frustrating about code review?
+
+-   Thematic analysis: a method for identifying, analyzing, and reporting
+    patterns (themes) within textual data.
+    -   Not the same as counting keywords. Themes capture meaning, not words.
+    -   The researcher is the instrument. Transparency about choices matters.
+-   The six-step process (Braun & Clarke):
+    -   Familiarize yourself with the data: read everything, take notes.
+    -   Generate initial codes: label segments with what they are about.
+    -   Search for themes: group codes into candidate themes.
+    -   Review themes: check that each theme holds together and is distinct.
+    -   Define and name themes: write a clear description of each.
+    -   Write up: use quotes from the data to illustrate each theme.
+-   Aghajani et al. [Aghajani2019] analyzed 878 documentation artifacts from
+    mailing lists, Stack Overflow, issue trackers, and pull requests. They
+    identified themes such as "incorrect documentation" and "incomplete examples"
+    through open reading, not keyword search.
+-   Fan et al. [Fan2024b] used thematic analysis on community discussions about
+    protestware (developers sabotaging their own packages). Themes included
+    "normative disagreement" and "platform responsibility."
+-   Deductive vs. inductive coding:
+    -   Deductive: you start with a predefined framework and code against it.
+    -   Inductive: themes emerge from the data without a prior framework.
+    -   Most SE qualitative work is inductive on first pass, then deductive
+        on replication.
+
+Exercise 1: Read ten Stack Overflow comments on any Python or JavaScript
+question. Generate at least five initial codes for what the comments are doing
+(e.g., "corrects error in accepted answer," "asks for clarification"). Group
+your codes into two or three candidate themes. Write one sentence describing
+each theme.
+
+Exercise 2: Aghajani et al. sorted documentation issues into categories. Pick
+one category from their taxonomy and find three real examples of it in the
+documentation of any open-source library you have used. Write one sentence per
+example explaining why it fits the category.
+
+Exercise 3: A study codes GitHub issue comments as "positive," "neutral," or
+"negative" using a sentiment analysis library. Identify two types of comments
+where automatic sentiment scoring would give the wrong label, and explain why.
+
+Exercise 4: Thematic analysis requires the researcher to make interpretive
+choices. Describe one choice you made in Exercise 1 where a different researcher
+might have coded the same text differently. How would you document that choice
+in a published paper?
+
+Exercise 5: Find the threats-to-validity section of any qualitative SE paper.
+What threat does the author identify most prominently? Is the proposed mitigation
+convincing? Write three sentences evaluating it.
+
+### Lesson 21: Coding Schemes and Inter-Rater Reliability
+
+Motivating question: How do we know whether two researchers reading the same
+data are seeing the same thing?
+
+-   The coding problem: if only one person codes the data, the results reflect
+    that person's interpretation, not necessarily the data.
+    -   Solution: two independent coders, then measure agreement.
+-   Cohen's kappa: agreement beyond chance.
+    -   kappa = (observed agreement - expected agreement) / (1 - expected agreement)
+    -   kappa < 0.4: poor; 0.4-0.6: moderate; 0.6-0.8: substantial; > 0.8: near-perfect.
+    -   These thresholds are conventions, not laws. Report the number; let readers judge.
+-   Krippendorff's alpha: handles more than two raters and ordinal/continuous codes.
+-   Wang et al. [Wang2020a] used card sorting to classify reasons why bugs go
+    unfixed in Mozilla, Eclipse, and Apache OpenOffice. Two researchers sorted
+    independently; disagreements were resolved by discussion. They report kappa
+    for each classification pass.
+-   The codebook: a written description of each code with examples and
+    non-examples. A good codebook lets a third party code the same data
+    and reach the same conclusions.
+-   Handling disagreements:
+    -   Discuss until consensus (most common).
+    -   Add a "borderline" category.
+    -   Bring in a third coder as tiebreaker.
+    -   Report unresolved disagreements as a limitation.
+-   Common mistake: coding all the data together rather than independently,
+    then claiming high agreement.
+
+Exercise 1: Take the ten Stack Overflow comments you coded in Lesson 20. Give
+the same comments to a partner who uses your codebook but has not discussed them
+with you. Compute the percentage agreement and Cohen's kappa. Is the kappa above
+0.6? If not, identify one code definition that was ambiguous and revise it.
+
+Exercise 2: Write a three-code codebook for classifying pull request review
+comments as "requesting a change," "asking a question," or "approving." Apply it
+to ten real review comments from any public GitHub repository. Then give the
+codebook and comments to a partner and compute kappa.
+
+Exercise 3: Wang et al. report kappa values for each coding pass. Why might
+kappa improve between the first and second pass? Give two reasons other than
+"we practiced."
+
+Exercise 4: A researcher codes 200 issue comments solo and reports 95% internal
+consistency. What is wrong with this claim, and what should the researcher
+have done instead?
+
+Exercise 5: Compute the expected agreement for a two-category coding scheme
+where coder A assigns 60% of items to category 1 and coder B assigns 70% to
+category 1. Use this to compute the kappa you would need to achieve if the
+observed agreement were 80%. Is that kappa acceptable by the common thresholds?
+
+### Lesson 22: Grounded Theory (Practical Introduction)
+
+Motivating question: What makes pair programming productive, and how would you
+find out without knowing in advance what to look for?
+
+-   Grounded theory (GT): a method for building theory from data rather than
+    testing a pre-specified hypothesis.
+    -   Appropriate when the phenomenon is not well understood and no existing
+        theory fits.
+    -   Produces a conceptual model, not a p-value.
+-   The three coding stages (Strauss & Corbin version):
+    -   Open coding: read the data and label concepts freely, without constraint.
+    -   Axial coding: connect concepts by identifying causes, conditions, and
+        consequences.
+    -   Selective coding: identify the core category that integrates everything else.
+-   Constant comparison: as you code new data, compare it to everything coded so far.
+    -   This is what makes GT iterative, not just a fancy name for thematic analysis.
+-   Theoretical saturation: stop collecting data when new interviews stop
+    producing new concepts.
+    -   Saturation is a judgment call, not a formula. Report the evidence for it.
+-   Zieris & Prechelt [Zieris2021] used GT to study pair programming skill.
+    They interviewed and observed professional developers and derived a model of
+    what distinguishes productive from unproductive pairing, without starting
+    from an existing taxonomy.
+-   Barke et al. [Barke2019] used GT to study role conflict in self-organizing
+    agile teams. Interviews revealed that role ambiguity was both a source of
+    conflict and, paradoxically, a source of flexibility.
+-   GT is frequently misused: claiming GT when you actually did thematic analysis
+    is common in SE papers. The distinguishing mark is iterative data collection
+    driven by emerging theory, not sequential collection followed by coding.
+
+Exercise 1: Read the abstract of Zieris & Prechelt [Zieris2021]. What is the
+core category they identify? Write one sentence explaining how that category
+connects the other concepts in their model.
+
+Exercise 2: You interview five developers about how they decide which bugs to fix
+first. Your open codes include: "customer pressure," "ease of fix," "affects many
+users," "personal interest," and "manager says so." Propose two axial codes that
+group these into broader categories and explain your grouping.
+
+Exercise 3: A paper claims to use grounded theory but collected all data before
+any coding began. Explain in two sentences why this violates a core GT principle
+and what consequence that has for the resulting theory.
+
+Exercise 4: Theoretical saturation is often invoked without evidence. Design a
+simple check: what would you record during data collection that would let a
+reader judge whether saturation was actually reached?
+
+Exercise 5: Compare thematic analysis (Lesson 20) and grounded theory (this
+lesson) on three dimensions: starting point, output, and appropriate use case.
+Write one sentence per dimension per method (six sentences total).
+
+### Lesson 23: Interviews and Survey Open-Ends
+
+Motivating question: How do practitioners actually decide whether to adopt a
+new tool, and what would you need to ask to find out?
+
+-   Semi-structured interviews: a prepared list of topics, but the interviewer
+    follows the conversation rather than reading a script.
+    -   Most common qualitative method in SE research.
+    -   Preparation matters: pilot the questions with someone not in your sample.
+-   Question types to use:
+    -   Grand tour: "Walk me through the last time you reviewed someone's code."
+    -   Experience: "Tell me about a time a tool surprised you."
+    -   Probing: "Can you say more about that?" / "What happened next?"
+-   Question types to avoid:
+    -   Leading: "Don't you think pull requests improve quality?"
+    -   Binary: "Do you use code reviews? Yes or no."
+    -   Double-barreled: "How do you feel about pair programming and mob programming?"
+-   Ameller et al. [Ameller2012] interviewed 18 developers at different companies
+    about how they handle non-functional requirements in practice. The findings
+    contradicted several textbook recommendations.
+-   Survey open-ends: shorter responses, larger N, but less depth.
+    -   Useful for validating or extending qualitative findings at scale.
+    -   Begel & Zimmermann [Begel2014] combined structured ratings with open-ended
+        responses to understand what practitioners wanted from SE researchers.
+-   Sampling in qualitative work:
+    -   Purposive sampling: select participants who have relevant experience.
+    -   Snowball sampling: ask participants to refer others.
+    -   Random sampling is rarely used and rarely appropriate.
+-   Ethical considerations: consent, anonymization, right to withdraw, data
+    retention. Gold & Krinke [Gold2020] extend these concerns to mined data
+    where participants did not explicitly consent to being studied.
+
+Exercise 1: Write five interview questions for a study about how developers
+choose between writing tests before or after writing code. Ensure at least two
+questions are grand-tour or experience questions, and none are leading.
+
+Exercise 2: Take one of your questions from Exercise 1 and rewrite it as a
+Likert-scale survey item (1 = strongly disagree, 5 = strongly agree). What
+information does the quantitative version capture that the interview question
+does not, and vice versa?
+
+Exercise 3: Ameller et al. found that developers handle non-functional
+requirements in ways that differ from textbook prescriptions. Pick one
+non-functional requirement type (performance, security, usability) and write
+two questions that would reveal how a developer actually handles it day-to-day,
+without assuming they follow any particular process.
+
+Exercise 4: A study recruits interview participants by posting on Reddit and
+Twitter. Identify two ways this sampling strategy might bias the findings and
+propose one mitigation for each.
+
+Exercise 5: You conduct 12 interviews and your supervisor asks how you know you
+have enough. Write a three-sentence response that explains theoretical saturation
+in plain language and describes one piece of evidence from your interviews that
+supports the claim.
+
+### Lesson 24: Mixed Methods
+
+Motivating question: A repository mining study finds that projects with more
+contributors have fewer bugs per commit. How would you find out why?
+
+-   Mixed methods: combining quantitative and qualitative data in a single study.
+    -   The quantitative part answers "how much" and "how often."
+    -   The qualitative part answers "why" and "in what context."
+    -   Neither is subordinate; each compensates for the other's weaknesses.
+-   Sequential designs:
+    -   Quantitative then qualitative (QUAN -> qual): mine repositories to
+        identify anomalies, then interview developers at those projects to
+        explain them.
+    -   Qualitative then quantitative (QUAL -> quan): interview developers to
+        identify hypotheses, then test those hypotheses on a large dataset.
+-   Concurrent (convergent) design: collect both types of data at the same time
+    and compare results. Use when you want triangulation.
+    -   Triangulation: if the numbers and the interviews point in the same
+        direction, confidence increases. If they conflict, investigate why.
+-   DeSouza Santos et al. [DeSouzaSantos2022] studied the impact of COVID-era
+    remote work on software teams: a survey (quantitative) identified patterns,
+    and interviews (qualitative) explained why those patterns emerged.
+    -   Finding: many teams reported improved focus but worse onboarding for
+        new hires. The interviews revealed the mechanism: async communication
+        hides the informal knowledge-sharing that happens in offices.
+-   Furia et al. [Furia2023] argue that observational SE data supports only
+    predictive claims, not causal ones. Mixed methods can help bridge that gap:
+    the qualitative component can reveal plausible causal mechanisms that the
+    quantitative data cannot confirm alone.
+-   Common pitfall: running the qualitative part as an afterthought to explain
+    away inconvenient quantitative results. Design both components together.
+
+Exercise 1: The repository mining study in the motivating question finds that
+projects with more contributors have fewer bugs per commit. Propose a follow-up
+interview study: who would you interview, what three questions would you ask,
+and what finding would lead you to revise the quantitative result?
+
+Exercise 2: DeSouza Santos et al. used a survey followed by interviews. Describe
+one finding that the survey alone could not have produced and explain why the
+interview component was necessary to obtain it.
+
+Exercise 3: Design a concurrent mixed-methods study of a single question: "Do
+developers read the documentation before filing a bug report?" Describe your
+quantitative data source, your qualitative data source, and how you would handle
+a case where they give contradictory answers.
+
+Exercise 4: A paper combines log data (quantitative) with a survey (also
+quantitative) and calls the result "mixed methods." Is this accurate? Explain in
+two sentences what is missing and why it matters.
+
+Exercise 5: Furia et al. argue that correlation data cannot establish causation.
+Pick one finding from Day 2 of this workshop and describe a qualitative follow-up
+study that would provide evidence (though not proof) for a causal interpretation
+of that finding.
+
 ## Datasets Used in This Workshop
 
 All datasets are included in the repository or available at the URLs below.  No
@@ -692,6 +1518,9 @@ dataset requires a login.
 
 ## Key References
 
+Acciai et al. (2023). Ethnic, gender and status-related bias in scientists'
+data-sharing willingness. Preregistered randomized audit experiment.
+
 Ait et al. (2022). An empirical study on the survival rate of GitHub projects.
 MSR 2022.
 
@@ -709,6 +1538,8 @@ software quality. FSE 2011.
 
 Brown & Altadmri (2017). Novice Java programming mistakes: large-scale data
 vs. educator beliefs. *TOCE*.
+
+Cappendijk et al. (2024). Energy consumption of LLM-generated code.
 
 DeOliveiraNeto et al. (2019). Evolution of statistical analysis in empirical
 software engineering research. *JSS*.
@@ -732,28 +1563,66 @@ development using a multi-site blind analysis approach. *TOSEM*.
 Fucci et al. (2017). A dissection of the test-driven development process: does
 it really matter to test-first or to test-last? *IEEE TSE*.
 
+Fucci et al. (2018). Need for sleep: the impact of a night of sleep deprivation
+on novice developers' performance. *ICSE*.
+
 Furia et al. (2022). Applying Bayesian analysis guidelines to empirical software
 engineering data.
+
+Furia et al. (2023). Causal inference in empirical software engineering.
+
+Aghajani et al. (2019). Software documentation issues unveiled. ICSE 2019.
+
+Ameller et al. (2012). How do software architects consider non-functional
+requirements? *IEEE RE*.
+
+Barke et al. (2019). Doing agile versus being agile in SE education. *ICSE*.
+
+DeSouza Santos et al. (2022). Pandemic programming: how COVID-19 affects
+software developers and how their organizations responded. *EMSE*.
+
+Fan et al. (2024). Protestware and the open-source community. MSR 2024.
 
 Giger, Pinzger & Gall (2011). Using the Gini coefficient for bug prediction in
 Eclipse. *IWPSE-EVOL*.
 
+Hoda (2024). Qualitative research in software engineering. *EMSE*.
+
+Silva et al. (2016). Why we refactor? Confessions of GitHub contributors.
+FSE 2016.
+
+Wang et al. (2020). An empirical study of usability issues in open source
+software. *EMSE*.
+
+Zieris & Prechelt (2021). On understanding how developers use the Eclipse IDE.
+ICPC 2021.
+
 Gold & Krinke (2020). Ethical mining. MSR 2020.
+
+He et al. (2024). Fake stars in GitHub repositories.
+
+Huang et al. (2023). Social bias in LLM-generated code.
 
 Kalliamvakou et al. (2014). The promises and perils of mining GitHub. MSR 2014.
 
 Lo et al. (2015). How practitioners perceive the relevance of software
 engineering research. FSE 2015.
 
+Majumder et al. (2019). Why do software projects fail? A large-scale empirical
+study of hero projects. *EMSE*.
+
 Nagappan et al. (2008). Realizing quality improvement through test-driven
 development. *EMSE*.
+
+Nguyen & Nadi (2022). An empirical evaluation of GitHub Copilot's code
+suggestions. MSR 2022.
 
 Noda et al. (2023). DevEx: what actually drives productivity. *CACM*.
 
 Patitsas et al. (2016). Evidence that computer science grades are not bimodal.
 ICER 2016.
 
-Pizard et al. (2021). Training students in evidence-based software engineering
+Pizard et al. (2022). Training students in evidence-based software engineering
 and systematic reviews. *EMSE*.
 
 Prechelt (2000). An empirical comparison of seven programming languages.  *IEEE
