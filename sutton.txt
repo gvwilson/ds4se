@@ -1,0 +1,30 @@
+Essential topics from Sutton, "Statistics Every Programmer Needs" (Manning, 2025)
+relevant to CS undergrads studying empirical research on AI in software engineering.
+
+CORE FOUNDATIONS (essential)
+
+- Basic probability: types, rules, random variables, PDF/CDF (Ch 2)
+- Probability distributions: normal, binomial, Poisson, and conditional probability (Ch 3)
+- Linear regression: fitting, evaluating, and checking assumptions (Ch 4)
+- Logistic regression: binary outcomes, classification metrics, interpreting coefficients (Ch 5)
+
+MODELING TECHNIQUES (relevant to empirical SE studies)
+
+- Decision trees and random forests: classification, feature importance, Gini impurity (Ch 6)
+- Time series: stationarity, ARIMA, forecasting trends in software metrics over time (Ch 7)
+
+SIMULATION AND UNCERTAINTY (useful context)
+
+- Monte Carlo simulations: modeling uncertainty, generating distributions from assumptions (Ch 9)
+
+QUALITY AND CONTROL (applicable to software metrics)
+
+- Statistical quality control: control charts, process capability indices, detecting out-of-control processes (Ch 14)
+
+TOPICS TO SKIP FOR THIS COURSE
+
+- Linear programming (Ch 8): resource optimization, not empirical research
+- Decision trees for decisions (Ch 10): managerial decision-making, not ML
+- Markov analysis (Ch 11): specialized; only relevant if studying Markov models of code changes
+- Benford's law (Ch 12): fraud detection, not SE research
+- Project management/PERT (Ch 13): scheduling, not empirical analysis
